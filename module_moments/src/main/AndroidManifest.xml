@@ -1,0 +1,29 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.moment">
+
+
+    <application>
+
+        <activity
+            android:name="com.moment.activity.MomentHotDiscussInfoActivity"
+
+            android:theme="@style/SwipeBackStyle" />
+        <activity
+            android:name="com.moment.activity.MomentAnchorInfoActivity"
+
+            android:theme="@style/SwipeBackStyle" />
+        <activity
+            android:name="com.personal.AnchorPersonalPage"
+
+            android:theme="@style/SwipeBackStyle" />
+        <activity
+            android:name="com.personal.ExpertPersonalPage"
+
+            android:theme="@style/SwipeBackStyle" />
+        <activity
+            android:name="com.personal.UserPersonalPage"
+
+            android:theme="@style/SwipeBackStyle" />
+    </application>
+
+</manifest>

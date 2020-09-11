@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 默认主题 Tab 颜色-->
+    <style name="TabNormal" parent="Base.Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">@color/colorRed</item>
+        <item name="tabRippleColor">@android:color/transparent</item>
+        <item name="tabSelectedTextColor">#040404</item>
+        <item name="tabTextColor">#B8B8B8</item>
+        <item name="tabIndicatorFullWidth">false</item>
+    </style>
+
+    <style name="MyRadioButton" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/grey_dd</item>
+        <item name="colorControlActivated">@color/color_FF513E</item>
+    </style>
+
+    <!-- 拖拽view-->
+    <declare-styleable name="AttachButton">
+        <!--是否需要自动吸边-->
+        <attr name="customIsAttach" format="boolean" />
+        <!--是否可拖曳-->
+        <attr name="customIsDrag" format="boolean" />
+    </declare-styleable>
+
+    <style name="TabNormalWhite" parent="Base.Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">#FFFFFF</item>
+        <item name="tabRippleColor">@android:color/transparent</item>
+        <item name="tabSelectedTextColor">#FFFFFF</item>
+        <item name="tabTextColor">#FFFFFF</item>
+        <item name="tabIndicatorFullWidth">false</item>
+    </style>
+
+    <style name="Theme.Crop" parent="Theme.AppCompat.NoActionBar">
+        <item name="listPreferredItemHeightSmall">48dp</item>
+        <item name="switchStyle">@android:style/Widget.CompoundButton</item>
+        <item name="android:displayOptions" />
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:actionBarStyle">@style/Holo.ActionBar</item>
+        <!--        <item name="android:colorBackground">@null</item>-->
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <!--        <item name="android:windowBackground">@drawable/filtershow_tiled_background</item>-->
+        <item name="android:windowBackground">#000000</item>
+    </style>
+
+    <style name="Holo.ActionBar" parent="android:Widget.Holo.ActionBar">
+        <item name="android:displayOptions">useLogo|showHome</item>
+        <item name="android:background">@drawable/actionbar_translucent</item>
+        <item name="android:backgroundStacked">@null</item>
+    </style>
+    <declare-styleable name="SeparatedEditText">
+        <attr name="password" format="boolean" />
+        <attr name="showCursor" format="boolean" />
+        <attr name="separateType" format="reference|integer" />
+        <attr name="maxLength" format="integer" />
+        <attr name="corner" format="dimension" />
+        <attr name="borderColor" format="color|reference" />
+        <attr name="blockColor" format="color|reference" />
+        <attr name="textColor" format="color|reference" />
+        <attr name="blockSpacing" format="dimension" />
+        <attr name="cursorDuration" format="integer" />
+        <attr name="cursorWidth" format="dimension" />
+        <attr name="cursorColor" format="color|reference" />
+        <attr name="borderWidth" format="dimension" />
+    </declare-styleable>
+
+    <integer name="type_hollow">1</integer>
+    <integer name="type_solid">2</integer>
+    <integer name="type_underline">3</integer>
+
+    <style name="dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+
+    <declare-styleable name="SideslipDeleteLayout">
+        <attr name="swipeEnable" format="boolean" />
+        <attr name="ios" format="boolean" />
+        <attr name="leftSwipe" format="boolean" />
+    </declare-styleable>
+
+
+    <declare-styleable name="PageGridView">
+        <!--每页大小-->
+        <attr name="pageSize" format="integer|reference" />
+        <!--是否显示指示点-->
+        <attr name="isShowIndicator" format="boolean" />
+        <!--选中指示点-->
+        <attr name="selectedIndicator" format="reference" />
+        <!--未选中指示点-->
+        <attr name="unSelectedIndicator" format="reference" />
+        <!--指示器位置-->
+        <attr name="indicatorGravity" format="enum">
+            <enum name="left" value="0" />
+            <enum name="center" value="1" />
+            <enum name="right" value="2" />
+        </attr>
+        <!--指示器左内边距-->
+        <attr name="indicatorPaddingLeft" format="dimension" />
+        <!--指示器右内边距-->
+        <attr name="indicatorPaddingRight" format="dimension" />
+        <!--指示器上内边距-->
+        <attr name="indicatorPaddingTop" format="dimension" />
+        <!--指示器下内边距-->
+        <attr name="indicatorPaddingBottom" format="dimension" />
+        <!--指示器内边距-->
+        <attr name="indicatorPadding" format="dimension" />
+        <!--指示器背景颜色-->
+        <attr name="indicatorBackground" format="color" />
+
+        <!--ViewPager背景资源-->
+        <attr name="vpBackground" format="reference|color" />
+
+        <!--ViewPager 内边距-->
+        <attr name="vpPadding" format="dimension" />
+        <!--列数-->
+        <attr name="numColumns" format="integer|reference" />
+        <!--Item布局-->
+        <attr name="itemView" format="reference" />
+
+    </declare-styleable>
+
+    <!-- RewardAnim -->
+    <declare-styleable name="RewardLayout">
+        <attr name="max_gift" format="integer" />
+        <attr name="gift_item_layout" format="reference" />
+    </declare-styleable>
+
+    <style name="FloatWindowAnimation">
+        <item name="android:windowEnterAnimation">@anim/anim_float_window_enter</item>
+        <item name="android:windowExitAnimation">@anim/anim_float_window_exit</item>
+    </style>
+    <!--底部弹框动画-->
+    <style name="bottomDialog">
+        <item name="android:windowEnterAnimation">@anim/bottom_dialog_in</item>
+        <item name="android:windowExitAnimation">@anim/bottom_dialog_out</item>
+    </style>
+
+</resources>

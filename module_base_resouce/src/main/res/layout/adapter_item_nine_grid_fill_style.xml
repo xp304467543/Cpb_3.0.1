@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <RelativeLayout
+            android:id="@+id/topWave"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="@dimen/dp_60"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.customer.component.WaveView
+                android:id="@+id/circleWave"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <ImageView
+                android:id="@+id/imgMomentsDiscussHolderPhoto"
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
+                android:layout_centerInParent="true"
+                android:contentDescription="@string/app_name"
+                android:src="@mipmap/ic_base_user" />
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/tvMomentsDiscussHolderName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_12"
+            android:layout_marginTop="@dimen/dp_14"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/sp_14"
+            app:layout_constraintStart_toEndOf="@+id/topWave"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="主播昵称" />
+
+        <ImageView
+            android:id="@+id/imgAnchorSex"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginStart="@dimen/dp_15"
+            android:layout_marginTop="@dimen/dp_14"
+            app:layout_constraintLeft_toRightOf="@+id/tvMomentsDiscussHolderName"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvMomentsDiscussHolderTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:textColor="@color/color_999999"
+            android:textSize="@dimen/sp_12"
+            app:layout_constraintStart_toEndOf="@+id/topWave"
+            app:layout_constraintTop_toBottomOf="@+id/tvMomentsDiscussHolderName"
+            tools:text="2019 -10 -10 123213" />
+
+        <TextView
+            android:id="@+id/tvMomentsDiscussHolderTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:paddingStart="@dimen/dp_15"
+            android:paddingEnd="@dimen/dp_10"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/sp_16"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/topWave"
+            tools:text="妈的妈的妈的妈的" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <com.lib.basiclib.base.xui.widget.imageview.nine.NineGridImageView
+        android:id="@+id/ngl_images"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:layout_weight="1"
+        app:ngiv_imgGap="@dimen/dp_10"
+        app:ngiv_showStyle="fill"
+        app:ngiv_singleImgSize="@dimen/dp_120" />
+
+    <com.lib.basiclib.base.xui.widget.imageview.RadiusImageView
+        android:id="@+id/imgManage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        app:riv_corner_radius="@dimen/dp_10" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_8"
+        android:gravity="end"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/linDianZan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_15"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:orientation="horizontal"
+            android:padding="@dimen/dp_5"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:id="@+id/imgHotDiscussHolderDianZan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/app_name"
+                android:src="@mipmap/ic_dianzan" />
+
+            <TextView
+                android:id="@+id/tvHotDiscussHolderDianZan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_6"
+                android:gravity="center"
+                android:textColor="@color/color_999999"
+                android:textSize="@dimen/sp_12"
+                tools:text="445" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/linReply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_15"
+            android:layout_marginEnd="@dimen/dp_5"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="@dimen/dp_5"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:id="@+id/imgHotDiscussHolderReply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/ic_live_reply"
+                android:contentDescription="@string/app_name" />
+
+            <TextView
+                android:id="@+id/tvLiveHotDiscussHolderReply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_6"
+                android:gravity="center"
+                android:textColor="@color/color_999999"
+                android:textSize="@dimen/sp_12"
+                tools:text="445" />
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>
+

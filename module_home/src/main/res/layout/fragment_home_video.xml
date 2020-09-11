@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_36"
+        android:orientation="horizontal"
+        tools:ignore="RtlSymmetry">
+
+        <com.lib.basiclib.widget.tab.MagicIndicator
+            android:id="@+id/videoTab"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginEnd="@dimen/dp_5"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/imgVideoMore"
+            android:layout_width="@dimen/dp_36"
+            android:layout_height="match_parent"
+            android:padding="@dimen/dp_10"
+            android:src="@drawable/seletor_movie" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/videoVP"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dp_2"
+            android:overScrollMode="never" />
+
+        <RelativeLayout
+            android:id="@+id/layoutHolder"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvHolder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:drawableTop="@mipmap/ic_no_video"
+                android:drawablePadding="25dp"
+                android:gravity="center"
+                android:text="暂无视频" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvRetry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/dp_50"
+                android:layout_centerHorizontal="true"
+                android:drawablePadding="@dimen/dp_10"
+                android:text="重新获取"
+                android:drawableTop="@drawable/alivc_refresh_orange"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+</LinearLayout>

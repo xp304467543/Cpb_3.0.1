@@ -1,0 +1,17 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion versions.android_compile_sdk
+
+    defaultConfig {
+        minSdkVersion versions.android_min_sdk
+        targetSdkVersion versions.android_target_sdk
+
+        consumerProguardFiles 'proguard-rules.pro'
+    }
+}
+
+dependencies {
+    compileOnly "androidx.appcompat:appcompat:1.2.0"
+    compileOnly project(':fragmentation')
+}

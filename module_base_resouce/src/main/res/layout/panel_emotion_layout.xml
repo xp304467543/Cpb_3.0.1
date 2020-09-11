@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/panel_emotion_layout"
+    android:orientation="vertical">
+
+    <com.customer.component.panel.emotion.EmotionPagerView
+        android:id="@+id/vpEmotion"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <com.customer.component.panel.IndicatorView
+        android:id="@+id/indicatorViewPanel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/dp_10"
+        app:indicatorCornerRadius="8dp"
+        app:indicatorItemCount="2"
+        app:indicatorItemHeight="8dp"
+        app:indicatorItemSpace="8dp"
+        app:indicatorItemType="typeCircle"
+        app:indicatorItemWidth="8dp"
+        app:indicatorNormalColor="@color/grey_97"
+        app:indicatorSelectedColor="@color/colorRed" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:id="@+id/emotion1"
+            android:layout_width="80dp"
+            android:background="@color/grey_f5f7fa"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/dp_10"
+                android:src="@drawable/g1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/emotion2"
+            android:layout_width="80dp"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/dp_10"
+                android:src="@drawable/smiley" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+</LinearLayout>

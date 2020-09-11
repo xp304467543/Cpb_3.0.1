@@ -1,0 +1,150 @@
+<com.customer.component.panel.view.PanelSwitchLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/panel_switch_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    android:orientation="vertical">
+
+    <!-- 内容区域 -->
+    <!-- edit_view 指定一个 EditText 用于输入 ，必须项-->
+    <!-- empty_view 指定用户点击该 ID 对应的 View 时实现面板或者输入法隐藏，非必须项 -->
+    <com.customer.component.panel.view.content.LinearContentContainer
+        android:id="@+id/content_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:linear_edit_view="@id/edit_text_panel">
+
+        <com.scwang.smart.refresh.layout.SmartRefreshLayout
+            android:id="@+id/chartSmartRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:paddingStart="@dimen/dp_10"
+            tools:ignore="RtlSymmetry">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycleChat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/panel_bg"
+            android:gravity="bottom"
+            android:minHeight="@dimen/dp_60"
+            android:orientation="vertical"
+            android:paddingBottom="7.5dp">
+
+
+            <LinearLayout
+                android:id="@+id/bottomLayout"
+                android:layout_width="match_parent"
+                android:gravity="center_vertical"
+                android:layout_height="45dp"
+                android:orientation="horizontal">
+                <!-- 输入入口 -->
+                <com.lib.basiclib.base.round.RoundTextView
+                    android:id="@+id/vipCanInput"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_45"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_8"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="VIP1 即可发言哦~"
+                    android:textColor="@color/white"
+                    android:visibility="gone"
+                    app:rv_backgroundColor="#d7d6d6"
+                    app:rv_backgroundPressColor="#d7d6d6"
+                    app:rv_cornerRadius="@dimen/dp_28" />
+
+                <com.lib.basiclib.base.round.RoundRelativeLayout
+                    android:id="@+id/inPutLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="36dp"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_8"
+                    android:layout_weight="1"
+                    app:rv_backgroundColor="@color/color_F5F7FA"
+                    app:rv_cornerRadius="@dimen/dp_30">
+
+                    <EditText
+                        android:id="@+id/edit_text_panel"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/dp_5"
+                        android:layout_toStartOf="@+id/emotion_btn"
+                        android:background="@null"
+                        android:gravity="center_vertical"
+                        android:hint="@string/live_room_say"
+                        android:imeOptions="actionSearch"
+                        android:maxEms="200"
+                        android:maxLines="1"
+                        android:minHeight="@dimen/dp_35"
+                        android:paddingStart="@dimen/dp_8"
+                        android:paddingEnd="@dimen/dp_0"
+                        android:paddingBottom="@dimen/dp_3"
+                        android:textSize="@dimen/sp_12" />
+
+                    <!-- 表情入口 -->
+                    <ImageView
+                        android:id="@+id/emotion_btn"
+                        android:layout_width="@dimen/dp_40"
+                        android:layout_height="@dimen/dp_40"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/dp_5"
+                        android:padding="@dimen/dp_8"
+                        android:src="@mipmap/ic_emoji" />
+
+                </com.lib.basiclib.base.round.RoundRelativeLayout>
+
+                <TextView
+                    android:id="@+id/panel_send"
+                    android:layout_width="@dimen/dp_70"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:background="@drawable/button_red_background"
+                    android:gravity="center"
+                    android:text="@string/live_room_send"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_14"
+                    android:visibility="gone" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </com.customer.component.panel.view.content.LinearContentContainer>
+
+
+    <!-- 面板区域，仅能包含PanelView-->
+    <com.customer.component.panel.view.panel.PanelContainer
+        android:id="@+id/panel_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_F5F7FA">
+
+        <!-- 每一项面板 -->
+        <!-- panel_layout 用于指定面板该 ID 对应的布局 ，必须项-->
+        <!-- panel_trigger 用于用户点击该 ID 对应的 View 时切换到该面板 -->
+        <!-- panel_toggle  用于当该面板显示时 ，用户再次点击 panel_trigger 对应的 View 时是否回切输入法-->
+        <com.customer.component.panel.view.panel.PanelView
+            android:id="@+id/panel_emotion"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:panel_layout="@layout/panel_emotion_layout"
+            app:panel_trigger="@id/emotion_btn" />
+
+    </com.customer.component.panel.view.panel.PanelContainer>
+</com.customer.component.panel.view.PanelSwitchLayout>

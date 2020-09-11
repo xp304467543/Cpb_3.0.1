@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--错误视图容器-->
+    <LinearLayout
+        android:id="@id/errorContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@id/tvError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/app_recycler_error"
+            android:textColor="@color/text_black" />
+
+            <com.lib.basiclib.base.round.RoundTextView
+            android:id="@id/tvErrorRetry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_24"
+            android:paddingLeft="@dimen/dp_24"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_24"
+            android:paddingBottom="@dimen/dp_10"
+            android:text="@string/app_click_retry"
+            android:textColor="@color/white"
+            app:rv_backgroundColor="?attr/colorPrimary"
+            app:rv_cornerRadius="@dimen/dp_24"
+            app:rv_isRippleEnable="true" />
+
+    </LinearLayout>
+
+    <!--空图容器-->
+    <LinearLayout
+        android:id="@id/emptyContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@id/tvEmpty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/app_recycler_empty"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/sp_16" />
+
+    </LinearLayout>
+
+    <!--加载视图容器-->
+    <LinearLayout
+        android:id="@id/loadingContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <androidx.core.widget.ContentLoadingProgressBar
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="@dimen/dp_42"
+            android:layout_height="@dimen/dp_42"
+            android:layout_gravity="center" />
+    </LinearLayout>
+
+</FrameLayout>

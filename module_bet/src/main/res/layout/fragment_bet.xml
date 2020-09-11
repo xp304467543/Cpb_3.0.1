@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/imgBetBg"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:contentDescription="@string/app_name"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_them_default_top"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/betStateView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+
+    <RelativeLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:layout_below="@+id/betStateView">
+
+        <TextView
+            android:id="@+id/tvBet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="购彩"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16" />
+
+        <ImageView
+            android:id="@+id/betRefresh"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_40"
+            android:layout_marginEnd="@dimen/dp_5"
+            android:layout_toStartOf="@+id/tvLineOffset"
+            android:padding="@dimen/dp_5"
+            android:src="@mipmap/ic_white_refresh" />
+
+        <TextView
+            android:id="@+id/tvLineOffset"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:layout_marginEnd="@dimen/dp_5"
+            android:layout_toStartOf="@+id/tvLineDelay"
+            android:gravity="center"
+            android:text="线路 1"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/tvLineDelay"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_40"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/dp_5"
+            android:gravity="center"
+            android:textColor="@color/colorGreen" />
+
+    </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/topBar">
+
+            <com.customer.component.web.ZpWebView
+                android:id="@+id/lotteryWeb"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+            <com.customer.component.web.ZpWebView
+                android:id="@+id/gameWeb"
+                android:visibility="gone"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+
+        </RelativeLayout>
+
+
+</RelativeLayout>

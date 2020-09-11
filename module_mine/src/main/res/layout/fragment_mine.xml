@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:overScrollMode="never">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imgMineBg"
+            android:layout_width="match_parent"
+            android:layout_height="216dp"
+            android:src="@drawable/ic_them_default_top"
+            android:scaleType="fitXY"
+            android:contentDescription="@string/app_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <!--状态栏-->
+        <View
+            android:id="@+id/statusViewMine"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_45"
+            android:background="@color/transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <!-- 未登录-->
+        <RelativeLayout
+            android:id="@+id/containerNoLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/statusViewMine">
+
+            <TextView
+                android:id="@+id/tvWelcome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mine_welcome"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_20"
+                tools:ignore="RelativeOverlap" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvWelcome"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="@string/mine_login_text"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_14" />
+
+
+            <com.lib.basiclib.base.round.RoundTextView
+                android:id="@+id/tvLogin"
+                android:layout_width="@dimen/dp_68"
+                android:layout_height="@dimen/dp_32"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="@string/login_in"
+                android:textColor="@color/color_FF513E"
+                app:rv_backgroundColor="@color/white"
+                app:rv_cornerRadius="@dimen/dp_16" />
+
+        </RelativeLayout>
+
+        <!-- 已登录 -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/containerLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_20"
+            app:layout_constraintTop_toBottomOf="@+id/statusViewMine">
+
+            <ImageView
+                android:id="@+id/imgMineUserAvatar"
+                android:layout_width="@dimen/dp_60"
+                android:layout_height="@dimen/dp_60"
+                android:layout_marginTop="@dimen/dp_15"
+                android:background="@mipmap/ic_base_user"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvMineUserNickName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_15"
+                android:textColor="@color/color_FFFFFF"
+                android:textSize="@dimen/sp_18"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/imgMineUserAvatar"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="用户名" />
+
+            <ImageView
+                android:id="@+id/imgMineLevel"
+                android:layout_width="@dimen/dp_28"
+                android:layout_height="@dimen/dp_15"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_5"
+                android:contentDescription="@string/app_name"
+                android:visibility="gone"
+                app:layout_constraintStart_toEndOf="@+id/tvMineUserNickName"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <com.lib.basiclib.base.round.RoundTextView
+                android:id="@+id/tvMineUserId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_15"
+                android:layout_marginTop="@dimen/dp_5"
+                android:paddingStart="@dimen/dp_5"
+                android:paddingEnd="@dimen/dp_5"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_12"
+                app:layout_constraintStart_toEndOf="@+id/imgMineUserAvatar"
+                app:layout_constraintTop_toBottomOf="@+id/tvMineUserNickName"
+                app:rv_backgroundColor="#4DFFE1AC"
+                app:rv_cornerRadius="@dimen/dp_9"
+                tools:text="ID: 45555555" />
+
+            <TextView
+                android:id="@+id/tvMineUserOther"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_15"
+                android:layout_marginTop="@dimen/dp_5"
+                android:textColor="@color/color_FFFFFF"
+                android:textSize="@dimen/sp_12"
+                app:layout_constraintStart_toEndOf="@+id/imgMineUserAvatar"
+                app:layout_constraintTop_toBottomOf="@+id/tvMineUserId"
+                tools:text="6关注  |  80粉丝  |  46获赞" />
+
+            <TextView
+                android:id="@+id/tvMineProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_5"
+                android:ellipsize="end"
+                android:maxEms="18"
+                android:maxLines="1"
+                android:text="@string/mine_say_some"
+                android:textColor="@color/color_FFFFFF"
+                android:textSize="@dimen/sp_12"
+                app:layout_constraintStart_toStartOf="@+id/tvMineUserOther"
+                app:layout_constraintTop_toBottomOf="@+id/tvMineUserOther" />
+
+
+            <ImageView
+                android:id="@+id/imgPersonal"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:padding="10dp"
+                android:src="@mipmap/arrow_right_white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.customer.component.LCardView
+            android:id="@+id/lContainer"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_88"
+            android:layout_marginStart="@dimen/dp_12"
+            android:layout_marginTop="@dimen/dp_150"
+            android:layout_marginEnd="@dimen/dp_12"
+            app:cornerRadius="@dimen/dp_6"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingStart="@dimen/dp_15"
+                android:paddingEnd="@dimen/dp_15">
+
+                <TextView
+                    android:id="@+id/tvFirst"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_16"
+                    android:text="@string/mine_balance"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/sp_12"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvBalance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_6"
+                    android:text="@string/mine_base_balance"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/sp_22"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvFirst" />
+
+                <TextView
+                    android:id="@+id/tvRefreshMooney"
+                    android:layout_width="@dimen/dp_40"
+                    android:layout_height="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dp_15"
+                    android:layout_marginEnd="@dimen/dp_15"
+                    android:background="@drawable/color_yellow_round"
+                    android:gravity="center"
+                    android:text="@string/mine_refresh"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_11"
+                    app:layout_constraintEnd_toEndOf="@+id/mineViewLine"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/mineViewLine"
+                    android:layout_width="@dimen/dp_1"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginBottom="@dimen/dp_10"
+                    android:background="@color/color_F5F7FA"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvSecond"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_15"
+                    android:layout_marginTop="@dimen/dp_16"
+                    android:text="@string/mine_diamond"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/sp_12"
+                    app:layout_constraintStart_toStartOf="@+id/mineViewLine"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvDiamondBalance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_15"
+                    android:layout_marginTop="@dimen/dp_6"
+                    android:text="@string/mine_diamond_balance"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/sp_22"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/mineViewLine"
+                    app:layout_constraintTop_toBottomOf="@+id/tvFirst" />
+
+                <TextView
+                    android:id="@+id/tvChangeDiamond"
+                    android:layout_width="@dimen/dp_40"
+                    android:layout_height="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dp_15"
+                    android:background="@drawable/color_orange_round"
+                    android:gravity="center"
+                    android:text="@string/mine_exchange"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_11"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.customer.component.LCardView>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDepositMoney"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_40"
+            android:layout_marginTop="@dimen/dp_20"
+            android:drawablePadding="@dimen/dp_10"
+            android:gravity="center"
+            android:text="@string/mine_deposit"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/sp_12"
+            app:drawableTopCompat="@mipmap/ic_mine_deposit"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lContainer" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDrawMoney"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_20"
+            android:drawablePadding="@dimen/dp_10"
+            android:gravity="center"
+            android:text="@string/mine_draw_money"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/sp_12"
+            app:drawableTopCompat="@mipmap/ic_mine_wallet"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lContainer" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvAttention"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_40"
+            android:drawablePadding="@dimen/dp_10"
+            android:gravity="center"
+            android:text="@string/mine_attention"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/sp_12"
+            app:drawableTopCompat="@mipmap/ic_mine_attention"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lContainer" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_20"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/tvAttention">
+
+            <com.customer.component.MineItemView
+                android:id="@+id/containerMessageCenter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:ItemIcon="@drawable/ic_mine_default_1"
+                app:ItemName="消息中心" />
+
+            <com.customer.component.MineItemView
+                android:id="@+id/containerMineCheck"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:ItemIcon="@drawable/ic_mine_default_2"
+                app:ItemName="我的账单" />
+
+            <com.customer.component.MineItemView
+                android:id="@+id/containerMainSkin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:ItemIcon="@drawable/ic_mine_default_3"
+                app:ItemName="主题皮肤" />
+
+            <com.customer.component.MineItemView
+                android:id="@+id/containerAnchorGet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:ItemIcon="@drawable/ic_mine_default_4"
+                app:ItemName="主播招募" />
+
+            <com.customer.component.MineItemView
+                android:id="@+id/containerGameReport"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:ItemIcon="@drawable/ic_mine_default_5"
+                app:ItemName="游戏报表" />
+
+            <com.customer.component.MineItemView
+                android:id="@+id/containerTuiReport"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:ItemIcon="@drawable/ic_mine_default_6"
+                app:ItemName="推广报表" />
+
+            <com.customer.component.MineItemView
+                android:id="@+id/containerFeedBack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:ItemIcon="@drawable/ic_mine_default_7"
+                app:ItemName="意见反馈" />
+
+            <com.customer.component.MineItemView
+                android:id="@+id/containerContactCustomer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:ItemIcon="@drawable/ic_mine_default_8"
+                app:ItemName="联系客服" />
+
+            <com.customer.component.MineItemView
+                android:id="@+id/containerGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:ItemIcon="@drawable/ic_mine_default_9"
+                app:ItemName="官方交流群" />
+
+            <com.customer.component.MineItemView
+                android:id="@+id/containerSetting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:ItemIcon="@drawable/ic_mine_default_10"
+                app:ItemName="设置" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_30"/>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

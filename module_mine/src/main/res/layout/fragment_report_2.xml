@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.scwang.smart.refresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/smartVip"
+    android:background="@color/color_F5F7FA">
+
+    <com.scwang.smart.refresh.header.ClassicsHeader
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srlDrawableProgress="@drawable/ic_progress_puzzle"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvVip"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/vipHolder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:drawablePadding="@dimen/dp_15"
+            android:gravity="center"
+            android:visibility="gone"
+            android:text="暂无会员数据"
+            app:drawableTopCompat="@mipmap/ic_zanwudashang" />
+    </RelativeLayout>
+
+
+    <com.scwang.smart.refresh.footer.ClassicsFooter
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srlDrawableProgress="@drawable/ic_progress_puzzle"/>
+
+</com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
+

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/title_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dkplayer_controller_height"
+        android:background="@drawable/standard_controller_top_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="@dimen/dkplayer_controller_height"
+            android:layout_height="@dimen/dkplayer_controller_height"
+            android:layout_gravity="center"
+            android:padding="@dimen/dkplayer_controller_icon_padding"
+            android:src="@drawable/dkplayer_ic_action_arrow_back" />
+
+        <LinearLayout
+            android:id="@+id/topLin"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:gravity="center_vertical">
+
+
+            <com.lib.basiclib.base.xui.widget.imageview.RadiusImageView
+                android:id="@+id/imgAvatar"
+                android:layout_width="27dp"
+                android:layout_height="27dp"
+                android:src="@mipmap/ic_base_user"
+                app:riv_is_circle="true" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_8"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvNickName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="13sp"
+                    tools:ignore="SmallSp"
+                    tools:text="萨达所" />
+
+                <TextView
+                    android:id="@+id/tvPeopleNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    tools:ignore="SmallSp"
+                    tools:text="298人" />
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btAttention"
+                android:layout_width="50dp"
+                android:layout_height="22dp"
+                android:layout_marginStart="@dimen/dp_8"
+                android:background="@drawable/button_red_background"
+                android:gravity="center"
+                android:text="＋ 关注"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_10" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                tools:ignore="NestedWeights" />
+
+            <TextView
+                android:id="@+id/tvRoomId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_20"
+                android:gravity="center"
+                android:textColor="#f5f5f5"
+                android:textSize="12sp"
+                tools:text="萨达所" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</FrameLayout>

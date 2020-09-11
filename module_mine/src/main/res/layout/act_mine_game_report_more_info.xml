@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <View
+        android:id="@+id/gameInfoStateView"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="@dimen/dp_45">
+
+        <ImageView
+            android:id="@+id/gameInfoImgBack"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingStart="@dimen/dp_20"
+            android:paddingEnd="@dimen/dp_10"
+            android:src="@mipmap/ic_arrow_back_black" />
+
+        <TextView
+            android:id="@+id/gameInfoPageTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="团队统计"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/sp_16" />
+
+        <ImageView
+            android:id="@+id/gameInfoImgDate"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:padding="@dimen/dp_10"
+            android:paddingStart="@dimen/dp_15"
+            android:paddingEnd="@dimen/dp_20"
+            android:src="@mipmap/ic_date"
+             />
+
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp_10">
+
+        <TextView
+            android:id="@+id/tv_all"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_red_background"
+            android:gravity="center"
+            android:text="全部"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/tv_01"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="@dimen/dp_15"
+            android:layout_marginEnd="@dimen/dp_15"
+            android:layout_weight="1"
+            android:background="@drawable/button_grey_background"
+            android:gravity="center"
+            android:text="未结算"
+            android:textColor="@color/color_333333" />
+
+        <TextView
+            android:id="@+id/tv_02"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_grey_background"
+            android:gravity="center"
+            android:text="已结算"
+            android:textColor="@color/color_333333" />
+
+    </LinearLayout>
+
+    <com.lib.basiclib.base.round.RoundLinearLayout
+        android:id="@+id/recordTop_1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_5"
+        android:visibility="gone"
+        app:rv_backgroundColor="@color/color_F5F7FA"
+        app:rv_cornerRadius="@dimen/dp_2">
+
+        <TextView
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:text="时间"
+            android:textColor="@color/color_999999"
+            android:textSize="@dimen/sp_12" />
+
+        <TextView
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:text="期号"
+            android:textColor="@color/color_999999"
+            android:textSize="@dimen/sp_12" />
+
+        <TextView
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="号码"
+            android:textColor="@color/color_999999"
+            android:textSize="@dimen/sp_12" />
+
+        <TextView
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="赔率"
+            android:textColor="@color/color_999999"
+            android:textSize="@dimen/sp_12" />
+
+        <TextView
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="金额"
+            android:textColor="@color/color_999999"
+            android:textSize="@dimen/sp_12" />
+
+    </com.lib.basiclib.base.round.RoundLinearLayout>
+
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+        android:id="@+id/smBetRecord_1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.scwang.smart.refresh.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlDrawableProgress="@drawable/ic_progress_puzzle" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvGameReportInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:overScrollMode="never" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvBetRecordHolder_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/dp_30"
+                android:drawableTop="@mipmap/ic_zanwudashang"
+                android:drawablePadding="@dimen/dp_15"
+                android:gravity="center"
+                android:text="暂无报表记录"
+                android:textColor="@color/color_333333"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <com.scwang.smart.refresh.footer.ClassicsFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlDrawableProgress="@drawable/ic_progress_puzzle" />
+
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+</LinearLayout>

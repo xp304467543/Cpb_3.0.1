@@ -1,0 +1,25 @@
+ext.versions = [
+        // 系统级别的版本号
+        android_compile_sdk: 29,
+        android_min_sdk    : 19,
+        android_target_sdk : 29,
+        version_code       : 1,
+        version_name       : "1.0",
+        component_version  : "1.8.3.2",
+]
+
+//组件
+ext.plugin = [
+        component: "com.github.xiaojinzi123.Component:component-impl-rx:${versions.component_version}-androidx",
+        compiler : "com.github.xiaojinzi123.Component:component-compiler:${versions.component_version}-androidx",
+        qmui: "com.qmuiteam:arch-compiler:2.0.0-alpha10"//UI
+]
+
+//类库
+ext.base = [
+
+]
+
+//第三方
+ext.libs = [
+]

@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_F5F7FA"
+    android:fitsSystemWindows="true">
+
+    <com.customer.component.DragButton
+        android:id="@+id/floatButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_30"
+        android:src="@mipmap/ic_live_more_select"
+        app:backgroundTint="@color/white"
+        app:elevation="6dp"
+        app:rippleColor="@color/white"
+        app:pressedTranslationZ="6dp"
+        app:fabSize="mini"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_bar"
+        />
+
+    <RelativeLayout
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+        <!-- ==========================Marquee========================================= -->
+        <LinearLayout
+            android:id="@+id/liveTopNotice"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_34"
+            android:background="@color/color_EBF0F6"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/dp_10"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="RtlSymmetry">
+
+            <ImageView
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_15"
+                android:background="@mipmap/ic_live_chat_system"
+                android:contentDescription="@string/app_name" />
+
+            <TextView
+                android:id="@+id/mtvLiveRoom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/dp_5"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/sp_12" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+        android:id="@+id/chartSmartRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/dp_55"
+        android:paddingStart="@dimen/dp_10"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_bar"
+        tools:ignore="RtlSymmetry">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycleChat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
+    <!-- ==========================购彩  / 红包  /棋牌========================================= -->
+
+    <LinearLayout
+        android:id="@+id/imgThree"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_15"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/inputLayout"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/liveRedTips"
+            android:layout_width="@dimen/dp_44"
+            android:layout_height="@dimen/dp_58"
+            android:contentDescription="@string/app_name"
+            android:padding="@dimen/dp_2"
+            android:src="@mipmap/ic_live_chat_red_envelope_tips"
+            android:tag="tip_view_top"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/imgBuyLotteryQp"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_50"
+            android:layout_marginTop="@dimen/dp_20"
+            android:contentDescription="@string/app_name"
+            android:padding="@dimen/dp_2"
+            android:src="@mipmap/ic_live_room_buy_qp" />
+
+        <ImageView
+            android:id="@+id/imgBuyLottery"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_50"
+            android:layout_marginTop="@dimen/dp_20"
+            android:contentDescription="@string/app_name"
+            android:padding="@dimen/dp_2"
+            android:src="@mipmap/ic_live_room_buy" />
+
+
+    </LinearLayout>
+
+
+    <!-- vip进场-->
+    <TextView
+        android:id="@+id/tvVipEnter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_40"
+        android:background="@mipmap/ic_vip_enter"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/dp_10"
+        android:paddingEnd="@dimen/dp_15"
+        android:textSize="@dimen/sp_14"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/inputLayout"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.lib.basiclib.base.round.RoundLinearLayout
+        android:id="@+id/linEnter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_15"
+        android:animateLayoutChanges="true"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_5"
+        android:paddingEnd="@dimen/dp_10"
+        app:layout_constraintBottom_toTopOf="@+id/inputLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:rv_backgroundColor="#2CF1F1F1"
+        android:visibility="gone"
+        app:rv_cornerRadius="@dimen/dp_15"
+        tools:ignore="UseCompoundDrawables">
+
+        <ImageView
+            android:id="@+id/imgEnterImg"
+            android:layout_width="@dimen/dp_34"
+            android:layout_height="@dimen/dp_14"
+            android:layout_marginTop="@dimen/dp_2"
+            android:contentDescription="@string/app_name" />
+
+        <TextView
+            android:id="@+id/tvEnterContent"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/dp_5"
+            android:gravity="center"
+            android:textColor="@color/color_999999"
+            android:textSize="@dimen/sp_12" />
+    </com.lib.basiclib.base.round.RoundLinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/inputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_55"
+        android:background="@drawable/panel_bg"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvVipCan"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp_35"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_weight="1"
+                android:background="@drawable/button_grey_background"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/dp_10"
+                android:paddingEnd="@dimen/dp_10"
+                android:text="VIP1 即可发言哦~"
+                android:textColor="@color/grey_97"
+                android:textSize="@dimen/sp_13"
+               />
+
+            <TextView
+                android:id="@+id/tvInput"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp_35"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_weight="1"
+                android:visibility="gone"
+                android:background="@drawable/button_grey_background"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/dp_10"
+                android:paddingEnd="@dimen/dp_10"
+                android:text="@string/mine_say_some"
+                android:textColor="@color/grey_97"
+                android:textSize="@dimen/sp_13" />
+
+            <ImageView
+                android:id="@+id/imgShake"
+                android:layout_width="@dimen/dp_25"
+                android:layout_height="@dimen/dp_25"
+                android:layout_marginEnd="@dimen/dp_15"
+                android:contentDescription="@string/app_name"
+                android:src="@mipmap/jingcai" />
+
+            <ImageView
+                android:id="@+id/imgRecharge"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_25"
+                android:layout_marginEnd="@dimen/dp_15"
+                android:contentDescription="@string/app_name" />
+
+            <ImageView
+                android:id="@+id/imgRed"
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_25"
+                android:layout_marginEnd="@dimen/dp_15"
+                android:contentDescription="@string/app_name"
+                android:src="@mipmap/ic_live_chat_red_envelope" />
+
+            <ImageView
+                android:id="@+id/imgGift"
+                android:layout_width="@dimen/dp_25"
+                android:layout_height="@dimen/dp_25"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:contentDescription="@string/app_name"
+                android:src="@mipmap/ic_live_chat_gift" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvNoInput"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_45"
+            android:background="@color/white"
+            android:gravity="center"
+            android:text="未开播禁止发言"
+            android:textColor="@color/grey_e6"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+    <com.lib.basiclib.base.round.RoundTextView
+        android:id="@+id/tvMoreInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/dp_65"
+        android:padding="@dimen/dp_8"
+        android:text="@string/live_news"
+        android:textColor="@color/colorOrange"
+        android:textSize="@dimen/sp_12"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_goneMarginBottom="@dimen/dp_60"
+        app:rv_backgroundColor="#FFFFFF"
+        app:rv_cornerRadius="@dimen/dp_6" />
+    <!-- 礼物界面 -->
+    <com.customer.component.gift.RewardLayout
+        android:id="@+id/rewardLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical"
+        app:gift_item_layout="@layout/gift_animation_item"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_bar"
+        app:max_gift="3" />
+
+    <!--  开奖通知 1-->
+    <com.lib.basiclib.base.round.RoundTextView
+        android:id="@+id/tvAnchorOpenPrise"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_120"
+        android:drawableStart="@mipmap/ic_live_star"
+        android:drawablePadding="@dimen/dp_8"
+        android:padding="@dimen/dp_8"
+        android:paddingStart="@dimen/dp_10"
+        android:textColor="@color/color_666666"
+        android:textSize="@dimen/sp_13"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:rv_backgroundColor="@color/white"
+        app:rv_cornerRadius_BL="@dimen/dp_5"
+        app:rv_cornerRadius_TL="@dimen/dp_5"
+        app:rv_strokeColor="@color/grey_dd"
+        app:rv_strokeWidth="0.1dp"
+        tools:ignore="RtlSymmetry" />
+    <!--  开奖通知 2-->
+    <com.lib.basiclib.base.round.RoundTextView
+        android:id="@+id/tvAnchorOpenPrise2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_160"
+        android:drawableStart="@mipmap/ic_live_star"
+        android:drawablePadding="@dimen/dp_8"
+        android:padding="@dimen/dp_8"
+        android:paddingStart="@dimen/dp_10"
+        android:textColor="@color/color_666666"
+        android:textSize="@dimen/sp_13"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:rv_backgroundColor="@color/white"
+        app:rv_cornerRadius_BL="@dimen/dp_5"
+        app:rv_cornerRadius_TL="@dimen/dp_5"
+        app:rv_strokeColor="@color/grey_dd"
+        app:rv_strokeWidth="0.1dp"
+        tools:ignore="RtlSymmetry" />
+</androidx.constraintlayout.widget.ConstraintLayout>

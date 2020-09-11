@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.home">
+
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <application>
+
+        <meta-data
+            android:name="host_component"
+            android:value="Home" />
+
+        <activity
+            android:name=".live.LiveRoomActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+        <activity
+            android:name="com.login.LoginAct"
+            android:theme="@style/SwipeBackStyle" />
+        <activity
+            android:name=".children.NewsAct"
+            android:theme="@style/SwipeBackStyle" />
+        <activity
+            android:name=".children.LivePreAct"
+            android:theme="@style/SwipeBackStyle" />
+        <activity
+            android:name=".children.MoreAnchorAct"
+            android:theme="@style/SwipeBackStyle" />
+        <activity
+            android:name=".video.more.VideoMoreActivity"
+            android:theme="@style/SwipeBackStyle" />
+        <activity
+            android:name=".video.search.VideoSearchAct"
+            android:theme="@style/SwipeBackStyle" />
+        <activity
+            android:name=".video.play.VideoPlayAct"
+            android:configChanges="keyboard|orientation|screenSize"
+            android:theme="@style/SwipeBackStyle" />
+        <activity android:name=".live.search.LiveSearchActivity"
+            android:configChanges="keyboard|orientation|screenSize"
+            android:theme="@style/SwipeBackStyle"/>
+        <activity
+            android:name="com.home.live.children.TexsA"
+            android:configChanges="keyboard|orientation|screenSize"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+    </application>
+</manifest>

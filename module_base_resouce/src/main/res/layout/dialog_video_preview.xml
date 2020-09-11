@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+
+    <com.lib.basiclib.base.round.RoundLinearLayout
+        android:id="@+id/rContent"
+        android:layout_width="275dp"
+        android:layout_height="190dp"
+        android:layout_marginStart="@dimen/dp_30"
+        android:layout_marginEnd="@dimen/dp_30"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:rv_backgroundColor="@color/white"
+        app:rv_cornerRadius="@dimen/dp_10">
+
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_25"
+            android:text="登录提示"
+            android:textColor="@color/color_333333"
+            android:textSize="15sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/toLogin"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/button_red_background"
+            android:gravity="center"
+            android:text="登录试看完整版本"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_12" />
+
+        <com.lib.basiclib.base.round.RoundTextView
+            android:id="@+id/toPerView"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="32dp"
+            android:gravity="center"
+            android:text="试看"
+            android:textColor="@color/color_FF513E"
+            android:textSize="@dimen/sp_12"
+            app:rv_cornerRadius="23dp"
+            app:rv_strokeColor="@color/color_FF513E"
+            app:rv_strokeWidth="1dp" />
+
+    </com.lib.basiclib.base.round.RoundLinearLayout>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_40"
+        android:src="@mipmap/ic_close_round"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rContent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

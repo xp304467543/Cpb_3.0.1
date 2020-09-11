@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="drawerLayout" type="id"/>
+    <item name="drawerContent" type="id"/>
+    <item name="navigationView" type="id"/>
+    <item name="pageContainer" type="id"/>
+    <item name="baseDialogTitle" type="id"/>
+    <item name="baseWebProgressBar" type="id"/>
+    <item name="smartRefreshLayout" type="id"/>
+    <item name="recyclerView" type="id"/>
+    <item name="baseWebView" type="id"/>
+    <item name="baseTvLoadingMessage" type="id"/>
+    <item name="errorContainer" type="id"/>
+    <item name="tvError" type="id"/>
+    <item name="navLayout" type="id"/>
+    <item name="tvTitle" type="id"/>
+    <item name="tvErrorRetry" type="id"/>
+    <item name="emptyContainer" type="id"/>
+    <item name="tvEmpty" type="id"/>
+    <item name="loadingContainer" type="id"/>
+    <item name="tabLayout" type="id"/>
+    <item name="viewPager" type="id"/>
+    <item name="floatingActionButton" type="id"/>
+    <item name="tvPopItem" type="id"/>
+    <item name="appBarLayout" type="id"/>
+    <item name="statusView" type="id"/>
+    <item name="toolbar" type="id"/>
+    <item name="placeholder" type="id"/>
+    <item name="bottomBar" type="id"/>
+    <item name="container" type="id"/>
+
+    <!--SuperTextView-->
+    <item name="sLeftViewId" type="id" />
+    <item name="sCenterViewId" type="id" />
+    <item name="sCenterEditTextId" type="id" />
+    <item name="sRightViewId" type="id" />
+    <item name="sLeftImgId" type="id" />
+    <item name="sRightImgId" type="id" />
+    <item name="sRightCheckBoxId" type="id" />
+    <item name="sRightSwitchId" type="id" />
+
+    <!--CommomTextView-->
+    <item name="cLeftTextId" type="id" />
+    <item name="cRightTextId" type="id" />
+    <item name="cCenterTextId" type="id" />
+
+    <item name="cCenterBaseLineId" type="id" />
+
+    <item name="cLeftTopTextId" type="id" />
+    <item name="cLeftBottomTextId" type="id" />
+
+    <item name="cCenterTopTextId" type="id" />
+    <item name="cCenterBottomTextId" type="id" />
+
+    <item name="cRightTopTextId" type="id" />
+    <item name="cRightBottomTextId" type="id" />
+
+    <item name="cLeftImageViewId" type="id" />
+    <item name="cRightImageViewId" type="id" />
+
+    <!--ExpandableTextView-->
+    <item name="expandable_text" type="id" />
+    <item name="expand_collapse" type="id" />
+
+    <!--MultipleStatusView-->
+    <item name="empty_view" type="id"/>
+    <item name="error_view" type="id"/>
+    <item name="loading_view" type="id"/>
+    <item name="content_view" type="id"/>
+    <item name="no_network_view" type="id"/>
+
+    <!--Preview-->
+    <item name="item_image_key" type="id" />
+
+    <!--Snackbar-->
+    <item name="snackbar_action" type="id" />
+    <item name="snackbar_text" type="id" />
+
+    <!--EasyIndicator-->
+    <item name="view_pager" type="id"/>
+
+    <!--XUIItemViewsAdapter-->
+    <item name="xui_tab_segment_item_id" type="id"/>
+    <item name="xui_view_can_not_cache_tag" type="id"/>
+</resources>

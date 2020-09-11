@@ -1,0 +1,26 @@
+# Project exclude paths
+/.gradle/
+/app/build/
+/app/build/intermediates/javac/debug/classes/
+/fragmentation/build/
+/fragmentation/build/intermediates/javac/debug/classes/
+/fragmentation_core/build/
+/fragmentation_core/build/intermediates/javac/debug/classes/
+/fragmentation_swipeback/build/
+/fragmentation_swipeback/build/intermediates/javac/debug/classes/
+/module_base/build/
+/module_base/build/intermediates/javac/debug/classes/
+/module_base_player/build/
+/module_base_player/build/intermediates/javac/debug/classes/
+/module_base_resouce/build/
+/module_base_resouce/build/intermediates/javac/debug/classes/
+/module_bet/build/
+/module_bet/build/intermediates/javac/debug/classes/
+/module_home/build/
+/module_home/build/intermediates/javac/debug/classes/
+/module_lottery/build/
+/module_lottery/build/intermediates/javac/debug/classes/
+/module_mine/build/
+/module_mine/build/intermediates/javac/debug/classes/
+/module_moments/build/
+/module_moments/build/intermediates/javac/debug/classes/

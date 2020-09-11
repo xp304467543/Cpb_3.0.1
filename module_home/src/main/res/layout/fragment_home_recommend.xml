@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent">
+
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+        android:id="@+id/homeSmartRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.scwang.smart.refresh.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlDrawableProgress="@drawable/ic_progress_puzzle"/>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.lib.basiclib.widget.banner.RadiusImageBanner
+                    android:id="@+id/BannerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    app:bb_barPaddingBottom="20dp"
+                    app:bb_indicatorHeight="4dp"
+                    app:bb_indicatorWidth="10dp"
+                    app:bb_scale="0.4317" />
+
+                <!--Marquee -->
+                <com.lib.basiclib.base.round.RoundRelativeLayout
+                    android:id="@+id/Marquee"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_35"
+                    android:layout_marginStart="@dimen/dp_14"
+                    android:layout_marginEnd="@dimen/dp_14"
+                    app:rv_backgroundColor="@color/color_FFFFFF"
+                    app:rv_backgroundPressColor="@color/color_FFFFFF"
+                    app:rv_cornerRadius="@dimen/dp_15">
+
+                    <TextView
+                        android:id="@+id/ivNotice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/dp_14"
+                        android:textSize="@dimen/sp_13"
+                        android:text="公告"
+                        android:textColor="@color/color_FF513E"
+                        tools:ignore="ContentDescription" />
+
+                    <com.customer.component.MarqueeTextView
+                        android:id="@+id/tvNoticeMassages"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:layout_marginEnd="@dimen/dp_10"
+                        android:layout_toEndOf="@+id/ivNotice"
+                        android:ellipsize="marquee"
+                        android:gravity="center"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:padding="@dimen/dp_6"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true"
+                        android:textColor="@color/color_notice_message"
+                        android:textSize="@dimen/sp_12"
+                        tools:text="我是推送消息!我是推送消息!我是推送消息!我是推送消息!我是推送消息!" />
+                </com.lib.basiclib.base.round.RoundRelativeLayout>
+
+                <com.lib.basiclib.base.round.RoundLinearLayout
+                    android:id="@+id/lotteryTypeContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="240dp"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/dp_5"
+                    android:paddingBottom="@dimen/dp_5"
+                    android:visibility="gone"
+                    app:rv_backgroundColor="@color/white"
+                    app:rv_cornerRadius="@dimen/dp_10">
+
+                    <com.lib.basiclib.widget.tab.MagicIndicator
+                        android:id="@+id/switchLotteryTab"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_34"
+                        android:layout_gravity="center_horizontal" />
+
+                    <androidx.viewpager.widget.ViewPager
+                        android:id="@+id/homeLotteryVP"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_8"
+                        android:overScrollMode="never" />
+                </com.lib.basiclib.base.round.RoundLinearLayout>
+
+
+
+                <ImageView
+                    android:id="@+id/imgAd2"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_60"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:scaleType="fitXY"
+                    android:contentDescription="@string/app_name"
+                    android:src="@color/color_EBF0F6" />
+
+                <com.customer.component.DescribeTitleView
+                    android:id="@+id/desHotRecommend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvHotLive"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_6"
+                    android:layout_marginEnd="@dimen/dp_6"
+                    android:overScrollMode="never" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="10dp">
+
+                    <com.customer.component.DescribeTitleView
+                        android:id="@+id/desLivePre"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/tvPreMore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="@dimen/dp_10"
+                        android:gravity="center"
+                        android:text="@string/home_look_more"
+                        android:textColor="@color/color_FF513E"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvLivePreview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:overScrollMode="never"
+                    app:layout_constraintTop_toBottomOf="@+id/tvPreMore" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="10dp">
+
+                    <com.customer.component.DescribeTitleView
+                        android:id="@+id/desNes"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/tvNewsMore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="@dimen/dp_10"
+                        android:gravity="center"
+                        android:text="@string/home_look_more"
+                        android:textColor="@color/color_FF513E"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvNews"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:overScrollMode="never" />
+
+                <ImageView
+                    android:id="@+id/imgAd"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_60"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:contentDescription="@string/app_name"
+                    android:src="@color/color_EBF0F6" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="10dp">
+
+                    <com.customer.component.DescribeTitleView
+                        android:id="@+id/desAnchorRecommend"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/tvAnchorMore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="@dimen/dp_10"
+                        android:gravity="center"
+                        android:text="@string/home_look_more"
+                        android:textColor="@color/color_FF513E"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvAnchorRecommend"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_6"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:layout_marginEnd="@dimen/dp_6"
+                    android:overScrollMode="never" />
+
+                <com.customer.component.DescribeTitleView
+                    android:id="@+id/desExpert"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvExpertHot"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_2"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:overScrollMode="never" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="@dimen/sp_20"
+                    android:paddingBottom="@dimen/dp_30"
+                    android:text="@string/list_more"
+                    android:textColor="@color/color_CCCCCC"
+                    android:textSize="@dimen/sp_12"
+                    app:layout_constraintTop_toBottomOf="@+id/rvExpertHot" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+</FrameLayout>

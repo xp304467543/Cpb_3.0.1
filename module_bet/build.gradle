@@ -1,0 +1,31 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+android {
+     compileSdkVersion versions.android_compile_sdk
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        minSdkVersion versions.android_min_sdk
+        targetSdkVersion versions.android_target_sdk
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                // 配置业务模块的模块名称
+                arguments = ["HOST": "Bet"]
+            }
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    kapt plugin.compiler
+    api project(':module_base_resouce')
+}

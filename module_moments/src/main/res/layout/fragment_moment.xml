@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        app:elevation="@dimen/dp_0">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
+
+            <View
+                android:id="@+id/stateViewMoment"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_scrollFlags="enterAlwaysCollapsed" />
+
+            <ImageView
+                android:id="@+id/skinMoment"
+                android:layout_width="match_parent"
+                android:layout_height="216dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_them_default_top" />
+
+            <TextView
+                android:id="@+id/topMoment"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_30"
+                android:gravity="center"
+                android:textSize="@dimen/sp_16"
+                android:textColor="@color/white"
+                android:text="@string/moments"
+                android:layout_below="@+id/stateViewMoment" />
+            <!-- Banner -->
+            <com.lib.basiclib.widget.banner.RadiusImageBanner
+                android:id="@+id/momentBannerView"
+                android:layout_below="@+id/topMoment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                app:bb_barPaddingBottom="20dp"
+                app:bb_indicatorHeight="4dp"
+                app:bb_indicatorWidth="10dp"
+                app:bb_scale="0.4317" />
+        </RelativeLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/dp_30"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <com.lib.basiclib.widget.tab.MagicIndicator
+            android:id="@+id/momentsTab"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_34"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_gravity="center_horizontal" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/color_EEEEEE" />
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/xViewPageMoments"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:overScrollMode="never" />
+
+
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

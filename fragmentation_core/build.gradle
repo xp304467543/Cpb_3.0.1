@@ -1,0 +1,33 @@
+apply plugin: 'com.android.library'
+//apply plugin: 'bintray-release'
+
+android {
+    compileSdkVersion versions.android_compile_sdk
+
+    defaultConfig {
+        minSdkVersion versions.android_min_sdk
+        targetSdkVersion versions.android_target_sdk
+
+        consumerProguardFiles 'proguard-rules.pro'
+    }
+
+
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    compileOnly "androidx.appcompat:appcompat:1.2.0"
+}
+
+//publish {
+//    artifactId = 'fragmentation-core'
+//    userOrg = rootProject.userOrg
+//    groupId = rootProject.groupId
+//    uploadName = 'Fragmentation-Core'
+//    publishVersion = rootProject.publishVersion
+//    description = rootProject.desc
+//    website = rootProject.website
+//    licences = rootProject.licences
+//}

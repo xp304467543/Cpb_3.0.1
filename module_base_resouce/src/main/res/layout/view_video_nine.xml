@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_20"
+        android:gravity="center_vertical">
+
+        <com.lib.basiclib.base.round.RoundTextView
+            android:id="@+id/tvMoveLine"
+            android:layout_width="4dp"
+            android:layout_height="16dp"
+            app:rv_backgroundColor="@color/text_red"
+            app:rv_cornerRadius="@dimen/dp_10" />
+
+        <TextView
+            android:id="@+id/tvVideoTitle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/dp_5"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:shadowColor="#40000000"
+            android:shadowDx="0"
+            android:shadowDy="4"
+            android:shadowRadius="1"
+            android:textColor="@color/color_333333"
+            android:textSize="15sp"
+            tools:text="萨达所" />
+
+        <TextView
+            android:id="@+id/tvMoreVideo"
+            android:layout_width="@dimen/dp_80"
+            android:layout_height="match_parent"
+            android:gravity="end"
+            android:shadowColor="#40000000"
+            android:shadowDx="0"
+            android:shadowDy="4"
+            android:shadowRadius="1"
+            android:text="更多 ＞"
+            android:textColor="@color/color_333333" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:orientation="horizontal">
+
+        <com.customer.component.VideoNineViewChild
+            android:id="@+id/nine1"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_190"
+            android:layout_weight="1" />
+
+        <com.customer.component.VideoNineViewChild
+            android:id="@+id/nine2"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_190"
+            android:layout_weight="1" />
+
+        <com.customer.component.VideoNineViewChild
+            android:id="@+id/nine3"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_190"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.customer.component.VideoNineViewChild
+            android:id="@+id/nine4"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_190"
+            android:layout_weight="1" />
+
+        <com.customer.component.VideoNineViewChild
+            android:id="@+id/nine5"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_190"
+            android:layout_weight="1" />
+
+        <com.customer.component.VideoNineViewChild
+            android:id="@+id/nine6"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_190"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvChange"
+        android:layout_width="@dimen/dp_150"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_14"
+        android:gravity="center"
+        android:shadowColor="#40000000"
+        android:shadowDx="0"
+        android:shadowDy="4"
+        android:shadowRadius="1"
+        android:text="换一批"
+        android:textColor="@color/color_666666" />
+
+    <View
+        android:id="@+id/viewBlank"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_60"
+        android:layout_marginTop="@dimen/dp_10"/>
+</LinearLayout>

@@ -1,0 +1,741 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!--统一适配dp值-->
+    <dimen name="dp_0">0dp</dimen>
+    <dimen name="dp_0_5">0.5dp</dimen>
+    <dimen name="dp_1">1dp</dimen>
+    <dimen name="dp_2">2dp</dimen>
+    <dimen name="dp_3">3dp</dimen>
+    <dimen name="dp_4">4dp</dimen>
+    <dimen name="dp_5">5dp</dimen>
+    <dimen name="dp_6">6dp</dimen>
+    <dimen name="dp_7">7dp</dimen>
+    <dimen name="dp_8">8dp</dimen>
+    <dimen name="dp_9">9dp</dimen>
+    <dimen name="dp_10">10dp</dimen>
+    <dimen name="dp_11">11dp</dimen>
+    <dimen name="dp_12">12dp</dimen>
+    <dimen name="dp_13">13dp</dimen>
+    <dimen name="dp_14">14dp</dimen>
+    <dimen name="dp_15">15dp</dimen>
+    <dimen name="dp_16">16dp</dimen>
+    <dimen name="dp_17">17dp</dimen>
+    <dimen name="dp_18">18dp</dimen>
+    <dimen name="dp_19">19dp</dimen>
+    <dimen name="dp_20">20dp</dimen>
+    <dimen name="dp_21">21dp</dimen>
+    <dimen name="dp_22">22dp</dimen>
+    <dimen name="dp_23">23dp</dimen>
+    <dimen name="dp_24">24dp</dimen>
+    <dimen name="dp_25">25dp</dimen>
+    <dimen name="dp_26">26dp</dimen>
+    <dimen name="dp_27">27dp</dimen>
+    <dimen name="dp_28">28dp</dimen>
+    <dimen name="dp_29">29dp</dimen>
+    <dimen name="dp_30">30dp</dimen>
+    <dimen name="dp_31">31dp</dimen>
+    <dimen name="dp_32">32dp</dimen>
+    <dimen name="dp_33">33dp</dimen>
+    <dimen name="dp_34">34dp</dimen>
+    <dimen name="dp_35">35dp</dimen>
+    <dimen name="dp_36">36dp</dimen>
+    <dimen name="dp_37">37dp</dimen>
+    <dimen name="dp_38">38dp</dimen>
+    <dimen name="dp_39">39dp</dimen>
+    <dimen name="dp_40">40dp</dimen>
+    <dimen name="dp_41">41dp</dimen>
+    <dimen name="dp_42">42dp</dimen>
+    <dimen name="dp_43">43dp</dimen>
+    <dimen name="dp_44">44dp</dimen>
+    <dimen name="dp_45">45dp</dimen>
+    <dimen name="dp_46">46dp</dimen>
+    <dimen name="dp_47">47dp</dimen>
+    <dimen name="dp_48">48dp</dimen>
+    <dimen name="dp_49">49dp</dimen>
+    <dimen name="dp_50">50dp</dimen>
+    <dimen name="dp_51">51dp</dimen>
+    <dimen name="dp_52">52dp</dimen>
+    <dimen name="dp_53">53dp</dimen>
+    <dimen name="dp_54">54dp</dimen>
+    <dimen name="dp_55">55dp</dimen>
+    <dimen name="dp_56">56dp</dimen>
+    <dimen name="dp_57">57dp</dimen>
+    <dimen name="dp_58">58dp</dimen>
+    <dimen name="dp_59">59dp</dimen>
+    <dimen name="dp_60">60dp</dimen>
+    <dimen name="dp_61">61dp</dimen>
+    <dimen name="dp_62">62dp</dimen>
+    <dimen name="dp_63">63dp</dimen>
+    <dimen name="dp_64">64dp</dimen>
+    <dimen name="dp_65">65dp</dimen>
+    <dimen name="dp_66">66dp</dimen>
+    <dimen name="dp_67">67dp</dimen>
+    <dimen name="dp_68">68dp</dimen>
+    <dimen name="dp_69">69dp</dimen>
+    <dimen name="dp_70">70dp</dimen>
+    <dimen name="dp_71">71dp</dimen>
+    <dimen name="dp_72">72dp</dimen>
+    <dimen name="dp_73">73dp</dimen>
+    <dimen name="dp_74">74dp</dimen>
+    <dimen name="dp_75">75dp</dimen>
+    <dimen name="dp_76">76dp</dimen>
+    <dimen name="dp_77">77dp</dimen>
+    <dimen name="dp_78">78dp</dimen>
+    <dimen name="dp_79">79dp</dimen>
+    <dimen name="dp_80">80dp</dimen>
+    <dimen name="dp_81">81dp</dimen>
+    <dimen name="dp_82">82dp</dimen>
+    <dimen name="dp_83">83dp</dimen>
+    <dimen name="dp_84">84dp</dimen>
+    <dimen name="dp_85">85dp</dimen>
+    <dimen name="dp_86">86dp</dimen>
+    <dimen name="dp_87">87dp</dimen>
+    <dimen name="dp_88">88dp</dimen>
+    <dimen name="dp_89">89dp</dimen>
+    <dimen name="dp_90">90dp</dimen>
+    <dimen name="dp_91">91dp</dimen>
+    <dimen name="dp_92">92dp</dimen>
+    <dimen name="dp_93">93dp</dimen>
+    <dimen name="dp_94">94dp</dimen>
+    <dimen name="dp_95">95dp</dimen>
+    <dimen name="dp_96">96dp</dimen>
+    <dimen name="dp_97">97dp</dimen>
+    <dimen name="dp_98">98dp</dimen>
+    <dimen name="dp_99">99dp</dimen>
+    <dimen name="dp_100">100dp</dimen>
+
+
+    <dimen name="dp_101">101dp</dimen>
+    <dimen name="dp_1022">102dp</dimen>
+    <dimen name="dp_103">103dp</dimen>
+    <dimen name="dp_104">104dp</dimen>
+    <dimen name="dp_105">105dp</dimen>
+    <dimen name="dp_106">106dp</dimen>
+    <dimen name="dp_107">107dp</dimen>
+    <dimen name="dp_108">108dp</dimen>
+    <dimen name="dp_109">109dp</dimen>
+    <dimen name="dp_110">110dp</dimen>
+    <dimen name="dp_111">111dp</dimen>
+    <dimen name="dp_112">112dp</dimen>
+    <dimen name="dp_113">113dp</dimen>
+    <dimen name="dp_114">114dp</dimen>
+    <dimen name="dp_115">115dp</dimen>
+    <dimen name="dp_116">116dp</dimen>
+    <dimen name="dp_117">117dp</dimen>
+    <dimen name="dp_118">118dp</dimen>
+    <dimen name="dp_119">119dp</dimen>
+    <dimen name="dp_120">120dp</dimen>
+    <dimen name="dp_121">121dp</dimen>
+    <dimen name="dp_122">122dp</dimen>
+    <dimen name="dp_123">123dp</dimen>
+    <dimen name="dp_124">124dp</dimen>
+    <dimen name="dp_125">125dp</dimen>
+    <dimen name="dp_126">126dp</dimen>
+    <dimen name="dp_127">127dp</dimen>
+    <dimen name="dp_128">128dp</dimen>
+    <dimen name="dp_129">129dp</dimen>
+    <dimen name="dp_130">130dp</dimen>
+    <dimen name="dp_131">131dp</dimen>
+    <dimen name="dp_132">132dp</dimen>
+    <dimen name="dp_133">133dp</dimen>
+    <dimen name="dp_134">134dp</dimen>
+    <dimen name="dp_135">135dp</dimen>
+    <dimen name="dp_136">136dp</dimen>
+    <dimen name="dp_137">137dp</dimen>
+    <dimen name="dp_138">138dp</dimen>
+    <dimen name="dp_139">139dp</dimen>
+    <dimen name="dp_140">140dp</dimen>
+    <dimen name="dp_141">141dp</dimen>
+    <dimen name="dp_142">142dp</dimen>
+    <dimen name="dp_143">143dp</dimen>
+    <dimen name="dp_144">144dp</dimen>
+    <dimen name="dp_145">145dp</dimen>
+    <dimen name="dp_146">146dp</dimen>
+    <dimen name="dp_147">147dp</dimen>
+    <dimen name="dp_148">148dp</dimen>
+    <dimen name="dp_149">149dp</dimen>
+    <dimen name="dp_150">150dp</dimen>
+    <dimen name="dp_151">151dp</dimen>
+    <dimen name="dp_152">152dp</dimen>
+    <dimen name="dp_153">153dp</dimen>
+    <dimen name="dp_154">154dp</dimen>
+    <dimen name="dp_155">155dp</dimen>
+    <dimen name="dp_156">156dp</dimen>
+    <dimen name="dp_157">157dp</dimen>
+    <dimen name="dp_158">158dp</dimen>
+    <dimen name="dp_159">159dp</dimen>
+    <dimen name="dp_160">160dp</dimen>
+    <dimen name="dp_161">161dp</dimen>
+    <dimen name="dp_162">162dp</dimen>
+    <dimen name="dp_163">163dp</dimen>
+    <dimen name="dp_164">164dp</dimen>
+    <dimen name="dp_165">165dp</dimen>
+    <dimen name="dp_166">166dp</dimen>
+    <dimen name="dp_167">167dp</dimen>
+    <dimen name="dp_168">168dp</dimen>
+    <dimen name="dp_169">169dp</dimen>
+    <dimen name="dp_170">170dp</dimen>
+    <dimen name="dp_171">171dp</dimen>
+    <dimen name="dp_172">172dp</dimen>
+    <dimen name="dp_173">173dp</dimen>
+    <dimen name="dp_174">174dp</dimen>
+    <dimen name="dp_175">175dp</dimen>
+    <dimen name="dp_176">176dp</dimen>
+    <dimen name="dp_177">177dp</dimen>
+    <dimen name="dp_178">178dp</dimen>
+    <dimen name="dp_179">179dp</dimen>
+    <dimen name="dp_180">180dp</dimen>
+    <dimen name="dp_181">181dp</dimen>
+    <dimen name="dp_182">182dp</dimen>
+    <dimen name="dp_183">183dp</dimen>
+    <dimen name="dp_184">184dp</dimen>
+    <dimen name="dp_185">185dp</dimen>
+    <dimen name="dp_186">186dp</dimen>
+    <dimen name="dp_187">187dp</dimen>
+    <dimen name="dp_188">188dp</dimen>
+    <dimen name="dp_189">189dp</dimen>
+    <dimen name="dp_190">190dp</dimen>
+    <dimen name="dp_191">191dp</dimen>
+    <dimen name="dp_192">192dp</dimen>
+    <dimen name="dp_193">193dp</dimen>
+    <dimen name="dp_194">194dp</dimen>
+    <dimen name="dp_195">195dp</dimen>
+    <dimen name="dp_196">196dp</dimen>
+    <dimen name="dp_197">197dp</dimen>
+    <dimen name="dp_198">198dp</dimen>
+    <dimen name="dp_199">199dp</dimen>
+    <dimen name="dp_200">200dp</dimen>
+    <dimen name="dp_300">300dp</dimen>
+
+    <!--字体单位大小-->
+    <dimen name="sp_1">1sp</dimen>
+    <dimen name="sp_2">2sp</dimen>
+    <dimen name="sp_3">3sp</dimen>
+    <dimen name="sp_4">4sp</dimen>
+    <dimen name="sp_5">5sp</dimen>
+    <dimen name="sp_6">6sp</dimen>
+    <dimen name="sp_7">7sp</dimen>
+    <dimen name="sp_8">8sp</dimen>
+    <dimen name="sp_9">9sp</dimen>
+    <dimen name="sp_10">10sp</dimen>
+    <dimen name="sp_11">11sp</dimen>
+    <dimen name="sp_12">12sp</dimen>
+    <dimen name="sp_13">13sp</dimen>
+    <dimen name="sp_14">14sp</dimen>
+    <dimen name="sp_15">15sp</dimen>
+    <dimen name="sp_16">16sp</dimen>
+    <dimen name="sp_17">17sp</dimen>
+    <dimen name="sp_18">18sp</dimen>
+    <dimen name="sp_19">19sp</dimen>
+    <dimen name="sp_20">20sp</dimen>
+    <dimen name="sp_21">21sp</dimen>
+    <dimen name="sp_22">22sp</dimen>
+    <dimen name="sp_23">23sp</dimen>
+    <dimen name="sp_24">24sp</dimen>
+    <dimen name="sp_25">25sp</dimen>
+    <dimen name="sp_26">26sp</dimen>
+    <dimen name="sp_27">27sp</dimen>
+    <dimen name="sp_28">28sp</dimen>
+    <dimen name="sp_29">29sp</dimen>
+    <dimen name="sp_30">30sp</dimen>
+    <dimen name="sp_31">31sp</dimen>
+    <dimen name="sp_32">32sp</dimen>
+    <dimen name="sp_33">33sp</dimen>
+    <dimen name="sp_34">34sp</dimen>
+    <dimen name="sp_35">35sp</dimen>
+    <dimen name="sp_36">36sp</dimen>
+    <dimen name="sp_37">37sp</dimen>
+    <dimen name="sp_38">38sp</dimen>
+    <dimen name="sp_39">39sp</dimen>
+    <dimen name="sp_40">40sp</dimen>
+    <dimen name="sp_41">41sp</dimen>
+    <dimen name="sp_42">42sp</dimen>
+    <dimen name="sp_43">43sp</dimen>
+    <dimen name="sp_44">44sp</dimen>
+    <dimen name="sp_45">45sp</dimen>
+    <dimen name="sp_46">46sp</dimen>
+    <dimen name="sp_47">47sp</dimen>
+    <dimen name="sp_48">48sp</dimen>
+    <dimen name="sp_49">49sp</dimen>
+    <dimen name="sp_50">50sp</dimen>
+    <dimen name="sp_51">51sp</dimen>
+    <dimen name="sp_52">52sp</dimen>
+    <dimen name="sp_53">53sp</dimen>
+    <dimen name="sp_54">54sp</dimen>
+    <dimen name="sp_55">55sp</dimen>
+    <dimen name="sp_56">56sp</dimen>
+    <dimen name="sp_57">57sp</dimen>
+    <dimen name="sp_58">58sp</dimen>
+    <dimen name="sp_59">59sp</dimen>
+    <dimen name="sp_60">60sp</dimen>
+
+    <!--额外的大小配置-->
+    <dimen name="design_bottom_navigation_text_size" tools:override="true">12sp</dimen>
+    <dimen name="design_bottom_navigation_active_text_size" tools:override="true">12sp</dimen>
+
+
+    <!--全局样式-->
+    <dimen name="xui_config_content_spacing_horizontal_tablet_big">20dp
+    </dimen> <!-- margin 和 padding 等使用的内容通用水平间距 -->
+    <dimen name="xui_config_content_spacing_horizontal_tablet_small">16dp
+    </dimen> <!-- margin 和 padding 等使用的内容通用水平间距 -->
+    <dimen name="xui_config_content_spacing_horizontal_phone">12dp
+    </dimen> <!-- margin 和 padding 等使用的内容通用水平间距 -->
+
+    <dimen name="xui_config_content_spacing_vertical_tablet_big">12dp
+    </dimen> <!-- margin 和 padding 等使用的内容通用垂直间距 -->
+    <dimen name="xui_config_content_spacing_vertical_tablet_small">10dp
+    </dimen> <!-- margin 和 padding 等使用的内容通用垂直间距 -->
+    <dimen name="xui_config_content_spacing_vertical_phone">7.5dp
+    </dimen> <!-- margin 和 padding 等使用的内容通用垂直间距 -->
+
+    <dimen name="xui_config_simple_list_item_height_tablet_big">61dp</dimen>
+    <dimen name="xui_config_simple_list_item_height_tablet_small">49dp</dimen>
+    <dimen name="xui_config_simple_list_item_height_phone">41dp</dimen>
+
+    <dimen name="xui_config_simple_list_icon_size_tablet_big">26dp</dimen>
+    <dimen name="xui_config_simple_list_icon_size_tablet_small">24dp</dimen>
+    <dimen name="xui_config_simple_list_icon_size_phone">22dp</dimen>
+
+    <!--   xui splash view -->
+    <dimen name="xui_config_app_logo_bottom">250dp</dimen>
+    <dimen name="xui_config_company_logo_bottom">80dp</dimen>
+
+    <dimen name="xui_alpha_pressed">0.5</dimen>
+    <dimen name="xui_alpha_disabled">0.5</dimen>
+
+    <dimen name="default_xui_general_shadow_elevation">14dp</dimen>
+    <dimen name="default_xui_general_shadow_alpha">0.25</dimen>
+
+    <dimen name="xui_guide_btn_padding_horizontal_table_big">60dp</dimen>
+    <dimen name="xui_guide_btn_padding_vertical_table_big">16dp</dimen>
+    <dimen name="xui_guide_btn_margin_bottom_table_big">50dp</dimen>
+
+    <dimen name="xui_guide_btn_padding_horizontal_table_small">45dp</dimen>
+    <dimen name="xui_guide_btn_padding_vertical_table_small">12dp</dimen>
+    <dimen name="xui_guide_btn_margin_bottom_table_small">38dp</dimen>
+
+    <dimen name="xui_guide_btn_padding_horizontal_phone">30dp</dimen>
+    <dimen name="xui_guide_btn_padding_vertical_phone">8dp</dimen>
+    <dimen name="xui_guide_btn_margin_bottom_phone">25dp</dimen>
+
+    <!-- ActionBar-->
+    <dimen name="xui_actionbar_height_tablet_big">70dp</dimen>
+    <dimen name="xui_actionbar_height_tablet_small">60dp</dimen>
+    <dimen name="xui_actionbar_height_phone">52dp</dimen>
+
+    <dimen name="xui_actionbar_title_text_size_tablet_big">24sp</dimen>
+    <dimen name="xui_actionbar_title_text_size_tablet_small">21sp</dimen>
+    <dimen name="xui_actionbar_title_text_size_phone">18sp</dimen>
+
+    <dimen name="xui_actionbar_action_text_size_tablet_big">22sp</dimen>
+    <dimen name="xui_actionbar_action_text_size_tablet_small">18sp</dimen>
+    <dimen name="xui_actionbar_action_text_size_phone">15sp</dimen>
+
+    <dimen name="xui_actionbar_sub_text_size_tablet_big">16sp</dimen>
+    <dimen name="xui_actionbar_sub_text_size_tablet_small">14sp</dimen>
+    <dimen name="xui_actionbar_sub_text_size_phone">12sp</dimen>
+
+    <dimen name="xui_actionbar_action_padding_tablet_big">7dp</dimen>
+    <dimen name="xui_actionbar_action_padding_tablet_small">6dp</dimen>
+    <dimen name="xui_actionbar_action_padding_phone">5dp</dimen>
+
+    <dimen name="xui_actionbar_side_text_padding_tablet_big">18dp</dimen>
+    <dimen name="xui_actionbar_side_text_padding_tablet_small">16dp</dimen>
+    <dimen name="xui_actionbar_side_text_padding_phone">14dp</dimen>
+
+    <!-- ShadowButton-->
+    <dimen name="default_shadow_button_radius">2dp</dimen>
+
+    <!--RoundButton-->
+    <dimen name="default_rb_border_width">1dp</dimen>
+    <dimen name="default_rb_radius">5dp</dimen>
+
+    <!--ShadowDrawable-->
+    <dimen name="default_sd_shadow_radius">8dp</dimen>
+    <dimen name="default_sd_shape_radius">5dp</dimen>
+
+    <!--SwitchButton-->
+    <dimen name="swb_md_thumb_ripple_size">42dp</dimen>
+    <dimen name="swb_md_thumb_solid_inset">11dp</dimen>
+    <dimen name="swb_md_thumb_shadow_inset">11dp</dimen>
+    <dimen name="swb_md_thumb_shadow_inset_top">11dp</dimen>
+    <dimen name="swb_md_thumb_shadow_inset_bottom">10dp</dimen>
+    <dimen name="swb_md_thumb_solid_size">20dp</dimen>
+    <dimen name="swb_md_thumb_shadow_size">21dp</dimen>
+    <dimen name="swb_md_thumb_shadow_offset">2dp</dimen>
+
+    <!-- 自适应Textview-->
+    <dimen name="default_aftv_min_textsize">10sp</dimen>
+    <dimen name="default_aftv_max_textsize">14sp</dimen>
+
+    <!-- SuperTextView-->
+    <dimen name="default_stv_text_size">15sp</dimen>
+    <dimen name="default_stv_margin">10dp</dimen>
+
+    <!-- Button-->
+    <dimen name="default_btn_view_radius_tablet_big">7dp</dimen>
+    <dimen name="default_btn_view_width_tablet_big">148dp</dimen>
+    <dimen name="default_btn_view_height_tablet_big">52dp</dimen>
+    <dimen name="default_btn_view_text_size_tablet_big">21sp</dimen>
+    <dimen name="default_btn_view_border_width_tablet_big">1dp</dimen>
+
+    <dimen name="default_btn_view_radius_tablet_small">5dp</dimen>
+    <dimen name="default_btn_view_width_tablet_small">112dp</dimen>
+    <dimen name="default_btn_view_height_tablet_small">38dp</dimen>
+    <dimen name="default_btn_view_text_size_tablet_small">16sp</dimen>
+    <dimen name="default_btn_view_border_width_tablet_small">1dp</dimen>
+
+    <dimen name="default_btn_view_radius_phone">5dp</dimen>
+    <dimen name="default_btn_view_width_phone">104dp</dimen>
+    <dimen name="default_btn_view_height_phone">32dp</dimen>
+    <dimen name="default_btn_view_text_size_phone">13sp</dimen>
+    <dimen name="default_btn_view_border_width_phone">0.5dp</dimen>
+
+    <dimen name="xui_config_icon_drawable_padding_tablet_big">12dp</dimen>
+    <dimen name="xui_config_icon_drawable_padding_tablet_small">9dp</dimen>
+    <dimen name="xui_config_icon_drawable_padding_phone">7dp</dimen>
+
+    <!-- ClearEditText-->
+    <dimen name="default_clear_icon_size">24dp</dimen>
+
+    <!-- MaterialEditText-->
+    <dimen name="default_edittext_components_spacing">8dp</dimen>
+    <dimen name="default_bottom_ellipsis_height">4dp</dimen>
+    <dimen name="default_floating_label_text_size">12sp</dimen>
+    <dimen name="default_bottom_text_size">12sp</dimen>
+
+    <!-- VerifyCodeEditText-->
+    <dimen name="default_vcet_width">21dp</dimen>
+    <dimen name="default_vcet_pwd_radius">5dp</dimen>
+    <dimen name="default_vcet_text_size">16sp</dimen>
+
+    <!--StatefulLayout-->
+    <dimen name="default_stf_progressbar_size_tablet_big">75dp</dimen>
+    <dimen name="default_stf_progressbar_size_tablet_small">65dp</dimen>
+    <dimen name="default_stf_progressbar_size_phone">60dp</dimen>
+
+    <dimen name="default_stf_tip_img_size_tablet_big">105dp</dimen>
+    <dimen name="default_stf_tip_img_size_tablet_small">90dp</dimen>
+    <dimen name="default_stf_tip_img_size_phone">80dp</dimen>
+
+    <!--MaterialSpinner-->
+    <dimen name="default_ms_padding_left_size_tablet_big">13dp</dimen>
+    <dimen name="default_ms_padding_top_size_tablet_big">11dp</dimen>
+    <dimen name="default_ms_item_height_size_tablet_big">45dp</dimen>
+    <dimen name="default_ms_dropdown_offset_tablet_big">3dp</dimen>
+    <dimen name="default_ms_arrow_size_tablet_big">12dp</dimen>
+
+    <dimen name="default_ms_padding_left_size_tablet_small">10dp</dimen>
+    <dimen name="default_ms_padding_top_size_tablet_small">8dp</dimen>
+    <dimen name="default_ms_item_height_size_tablet_small">35dp</dimen>
+    <dimen name="default_ms_dropdown_offset_tablet_small">2dp</dimen>
+    <dimen name="default_ms_arrow_size_tablet_small">10dp</dimen>
+
+    <dimen name="default_ms_padding_left_size_phone">8dp</dimen>
+    <dimen name="default_ms_padding_top_size_phone">6.5dp</dimen>
+    <dimen name="default_ms_item_height_size_phone">30dp</dimen>
+    <dimen name="default_ms_dropdown_offset_phone">1dp</dimen>
+    <dimen name="default_ms_arrow_size_phone">8dp</dimen>
+
+    <!-- DropDownMenu-->
+    <dimen name="default_ddm_underline_height">1dp</dimen>
+    <dimen name="default_ddm_divider_width">0.5dp</dimen>
+    <dimen name="default_ddm_divider_margin">10dp</dimen>
+    <dimen name="default_ddm_menu_text_size">14sp</dimen>
+    <dimen name="default_ddm_menu_text_padding_horizontal">5dp</dimen>
+    <dimen name="default_ddm_menu_text_padding_vertical">12dp</dimen>
+
+
+    <!--WheelView-->
+    <dimen name="default_wheel_view_text_size">20sp</dimen>
+    <dimen name="picker_view_topbar_padding">20dp</dimen>
+    <dimen name="picker_view_topbar_height">44dp</dimen>
+
+    <!--MaterialSearchView-->
+    <dimen name="default_search_icon_padding">12dp</dimen>
+    <dimen name="default_search_view_text_padding">65dp</dimen>
+    <dimen name="default_search_view_text_size">16sp</dimen>
+
+    <!-- TabControlView-->
+    <dimen name="default_tcv_text_size">14sp</dimen>
+    <dimen name="default_tcv_stroke_width">1dp</dimen>
+
+    <!--ProgressView-->
+    <dimen name="default_pv_trace_width">16dp</dimen>
+    <dimen name="default_pv_progress_text_size">28sp</dimen>
+    <dimen name="default_pv_corner_radius">5dp</dimen>
+    <dimen name="default_pv_horizontal_text_size">14sp</dimen>
+    <dimen name="default_pv_zone_length">22dp</dimen>
+    <dimen name="default_pv_zone_width">6dp</dimen>
+    <dimen name="default_pv_zone_padding">16dp</dimen>
+    <dimen name="default_pv_zone_corner_radius">8dp</dimen>
+
+    <!--BannerLayout-->
+    <dimen name="default_recycler_banner_itemSpace">10dp</dimen>
+    <dimen name="default_recycler_banner_indicatorSize">5dp</dimen>
+    <dimen name="default_recycler_banner_indicatorSpace">4dp</dimen>
+    <dimen name="default_recycler_banner_indicatorMarginLeft">16dp</dimen>
+    <dimen name="default_recycler_banner_indicatorMarginRight">0dp</dimen>
+    <dimen name="default_recycler_banner_indicatorMarginBottom">11dp</dimen>
+
+    <!--*********************************************
+    *                  MaterialDialog               *
+    **********************************************-->
+    <!-- Margin around the dialog, excluding the button bar -->
+    <!-- Total title margin bottom is 16, but we split this between content and title -->
+    <dimen name="md_title_frame_margin_bottom">12dp</dimen>
+    <dimen name="md_title_frame_margin_bottom_less">6dp</dimen>
+    <!-- The desired padding when no title is visible,
+         This plus md_content_padding_top should equals md_dialog_frame_margin -->
+    <dimen name="md_notitle_vertical_padding">16dp</dimen>
+    <dimen name="md_notitle_vertical_padding_more">20dp</dimen>
+
+    <dimen name="md_button_min_width">72dp</dimen>
+    <!-- Above and below buttons, 36+6+6=48 for the height of the button frame -->
+    <dimen name="md_button_inset_vertical">6dp</dimen>
+    <dimen name="md_button_inset_horizontal">4dp</dimen>
+    <dimen name="md_button_textpadding_horizontal">1dp</dimen>
+
+    <dimen name="default_md_button_padding_horizontal_phone">8dp</dimen>
+    <dimen name="default_md_button_padding_horizontal_tablet_small">12dp</dimen>
+    <dimen name="default_md_button_padding_horizontal_tablet_big">16dp</dimen>
+
+    <dimen name="md_button_padding_vertical">4dp</dimen>
+    <dimen name="md_button_padding_horizontal_internalexternal">32dp</dimen>
+    <!-- 16dp - 4dp (inset from background drawable) -->
+    <dimen name="md_button_padding_frame_side">12dp</dimen>
+    <dimen name="md_neutral_button_margin">12dp</dimen>
+
+    <!-- actual content padding bottom is 16dp, but we split between button bar and content -->
+    <dimen name="md_content_padding_top">8dp</dimen>
+    <dimen name="md_content_padding_bottom">8dp</dimen>
+    <dimen name="md_button_frame_vertical_padding">8dp</dimen>
+
+    <dimen name="default_md_button_height_phone">48dp</dimen>
+    <dimen name="default_md_button_height_tablet_small">55dp</dimen>
+    <dimen name="default_md_button_height_tablet_big">70dp</dimen>
+
+    <!--文字大小-->
+    <dimen name="default_md_title_textsize_tablet_big">28sp</dimen>
+    <dimen name="default_md_dialog_frame_margin_tablet_big">32dp</dimen>
+    <dimen name="default_md_button_textsize_tablet_big">22sp</dimen>
+    <dimen name="default_md_content_textsize_tablet_big">22sp</dimen>
+    <dimen name="default_md_explain_textsize_tablet_big">18sp</dimen>
+    <dimen name="default_md_listitem_textsize_tablet_big">22sp</dimen>
+    <dimen name="default_md_icon_margin_tablet_big">9dp</dimen>
+    <dimen name="default_md_icon_max_size_tablet_big">40dp</dimen>
+
+    <dimen name="default_md_title_textsize_tablet_small">21sp</dimen>
+    <dimen name="default_md_dialog_frame_margin_tablet_small">24dp</dimen>
+    <dimen name="default_md_button_textsize_tablet_small">16sp</dimen>
+    <dimen name="default_md_content_textsize_tablet_small">16sp</dimen>
+    <dimen name="default_md_explain_textsize_tablet_small">14sp</dimen>
+    <dimen name="default_md_listitem_textsize_tablet_small">16sp</dimen>
+    <dimen name="default_md_icon_margin_tablet_small">7dp</dimen>
+    <dimen name="default_md_icon_max_size_tablet_small">30dp</dimen>
+
+    <dimen name="default_md_title_textsize_phone">19sp</dimen>
+    <dimen name="default_md_dialog_frame_margin_phone">25dp</dimen>
+    <dimen name="default_md_button_textsize_phone">15sp</dimen>
+    <dimen name="default_md_content_textsize_phone">15sp</dimen>
+    <dimen name="default_md_explain_textsize_phone">13sp</dimen>
+    <dimen name="default_md_listitem_textsize_phone">15sp</dimen>
+    <dimen name="default_md_icon_margin_phone">6dp</dimen>
+    <dimen name="default_md_icon_max_size_phone">28dp</dimen>
+
+
+    <dimen name="default_md_dialog_frame_margin">24dp</dimen>
+    <dimen name="default_md_icon_max_size">40dp</dimen>
+
+    <dimen name="md_listitem_height">48dp</dimen>
+    <dimen name="md_listitem_control_margin">6dp</dimen>
+    <dimen name="md_icon_margin">16dp</dimen>
+
+    <dimen name="md_listitem_margin_left">24dp</dimen>
+    <dimen name="md_action_corner_radius">2dp</dimen>
+    <dimen name="md_divider_height">1dp</dimen>
+
+    <dimen name="md_bg_corner_radius">7dp</dimen>
+    <dimen name="circular_progress_border">4dp</dimen>
+    <dimen name="md_listitem_vertical_margin">12dp</dimen>
+    <dimen name="md_listitem_vertical_margin_choice">8dp</dimen>
+
+    <dimen name="default_md_dialog_max_width_tablet_big">590dp</dimen>
+    <dimen name="default_md_dialog_max_width_tablet_small">440dp</dimen>
+    <dimen name="default_md_dialog_max_width_phone">305dp</dimen>
+
+    <dimen name="default_md_dialog_vertical_margin_tablet_big">100dp</dimen>
+    <dimen name="default_md_dialog_vertical_margin_tablet_small">75dp</dimen>
+    <dimen name="default_md_dialog_vertical_margin_phone">52dp</dimen>
+
+    <dimen name="default_md_dialog_horizontal_margin_tablet_big">54dp</dimen>
+    <dimen name="default_md_dialog_horizontal_margin_tablet_small">40dp</dimen>
+    <dimen name="default_md_dialog_horizontal_margin_phone">28dp</dimen>
+
+    <dimen name="default_md_preference_content_inset_tablet_big">42dp</dimen>
+    <dimen name="default_md_preference_content_inset_tablet_small">28dp</dimen>
+    <dimen name="default_md_preference_content_inset_phone">16dp</dimen>
+
+    <dimen name="default_md_simpleitem_height_tablet_big">76dp</dimen>
+    <dimen name="default_md_simplelist_icon_tablet_big">52dp</dimen>
+    <dimen name="default_md_simplelist_icon_margin_tablet_big">25dp</dimen>
+    <dimen name="default_md_simplelist_icon_padding_tablet_big">8dp</dimen>
+
+    <dimen name="default_md_simpleitem_height_tablet_small">62dp</dimen>
+    <dimen name="default_md_simplelist_icon_tablet_small">40dp</dimen>
+    <dimen name="default_md_simplelist_icon_margin_tablet_small">20dp</dimen>
+    <dimen name="default_md_simplelist_icon_padding_tablet_small">6dp</dimen>
+
+    <dimen name="default_md_simpleitem_height_phone">50dp</dimen>
+    <dimen name="default_md_simplelist_icon_phone">30dp</dimen>
+    <dimen name="default_md_simplelist_icon_margin_phone">18dp</dimen>
+    <dimen name="default_md_simplelist_icon_padding_phone">5dp</dimen>
+
+    <dimen name="xui_list_divider_height_table">1dp</dimen>
+    <dimen name="xui_list_divider_height_phone">0.5dp</dimen>
+
+    <dimen name="xui_config_separator_height_tablet_big">3dp</dimen>
+    <dimen name="xui_config_separator_height_tablet_small">2dp</dimen>
+    <dimen name="xui_config_separator_height_phone">1dp</dimen>
+    <!--*********************************************
+    *                  Text Size                    *
+    **********************************************-->
+    <!--标题文字大小-->
+    <dimen name="xui_config_size_title_text_tablet_big">24sp</dimen>
+    <!--正文内容文字大小-->
+    <dimen name="xui_config_size_content_text_tablet_big">22sp</dimen>
+    <!--辅助说明文字大小-->
+    <dimen name="xui_config_size_explain_text_tablet_big">16sp</dimen>
+
+    <!--标题文字大小-->
+    <dimen name="xui_config_size_title_text_tablet_small">21sp</dimen>
+    <!--正文内容文字大小-->
+    <dimen name="xui_config_size_content_text_tablet_small">18sp</dimen>
+    <!--辅助说明文字大小-->
+    <dimen name="xui_config_size_explain_text_tablet_small">14sp</dimen>
+
+    <!--标题文字大小-->
+    <dimen name="xui_config_size_title_text_phone">18sp</dimen>
+    <!--正文内容文字大小-->
+    <dimen name="xui_config_size_content_text_phone">15sp</dimen>
+    <!--辅助说明文字大小-->
+    <dimen name="xui_config_size_explain_text_phone">12sp</dimen>
+
+    <!--*********************************************
+    *                  EditText                     *
+    **********************************************-->
+    <dimen name="xui_config_size_edittext_input_text_tablet_big">20sp</dimen>
+    <dimen name="xui_config_size_edittext_helper_text_tablet_big">12sp</dimen>
+    <dimen name="xui_config_size_edittext_components_spacing_tablet_big">10dp</dimen>
+    <dimen name="xui_config_size_edittext_left_padding_tablet_big">17dp</dimen>
+    <dimen name="xui_config_size_edittext_radius_tablet_big">5dp</dimen>
+    <dimen name="xui_config_size_edittext_height_tablet_big">40dp</dimen>
+
+    <dimen name="xui_config_size_edittext_input_text_tablet_small">15sp</dimen>
+    <dimen name="xui_config_size_edittext_helper_text_tablet_small">9sp</dimen>
+    <dimen name="xui_config_size_edittext_components_spacing_tablet_small">8dp</dimen>
+    <dimen name="xui_config_size_edittext_left_padding_tablet_small">13dp</dimen>
+    <dimen name="xui_config_size_edittext_radius_tablet_small">4dp</dimen>
+    <dimen name="xui_config_size_edittext_height_tablet_small">30dp</dimen>
+
+    <dimen name="xui_config_size_edittext_input_text_phone">13sp</dimen>
+    <dimen name="xui_config_size_edittext_helper_text_phone">8sp</dimen>
+    <dimen name="xui_config_size_edittext_components_spacing_phone">7dp</dimen>
+    <dimen name="xui_config_size_edittext_left_padding_phone">10dp</dimen>
+    <dimen name="xui_config_size_edittext_radius_phone">4dp</dimen>
+    <dimen name="xui_config_size_edittext_height_phone">30dp</dimen>
+
+    <!--**********************************************
+    *                  xui popup                    *
+    ***********************************************-->
+    <dimen name="xui_popup_width_tablet_big">232dp</dimen>
+    <dimen name="xui_popup_width_tablet_small">174dp</dimen>
+    <dimen name="xui_popup_width_phone">133dp</dimen>
+
+    <dimen name="xui_tip_popup_padding_top_tablet_big">12dp</dimen>
+    <dimen name="xui_tip_popup_padding_top_tablet_small">9dp</dimen>
+    <dimen name="xui_tip_popup_padding_top_phone">8dp</dimen>
+
+    <dimen name="xui_tip_popup_padding_left_tablet_big">18dp</dimen>
+    <dimen name="xui_tip_popup_padding_left_tablet_small">15dp</dimen>
+    <dimen name="xui_tip_popup_padding_left_phone">12dp</dimen>
+
+    <!--**********************************************
+    *                 Spinner                        *
+    ***********************************************-->
+    <dimen name="xui_config_size_spinner_text_tablet_big">20sp</dimen>
+    <dimen name="xui_config_size_spinner_text_tablet_small">15sp</dimen>
+    <dimen name="xui_config_size_spinner_text_phone">13sp</dimen>
+
+    <dimen name="default_spinner_icon_padding_size">20dp</dimen>
+
+    <!--**********************************************
+    *                 Dialog                         *
+    ***********************************************-->
+    <dimen name="xui_dialog_radius_size_tablet_big">10dp</dimen>
+    <dimen name="xui_dialog_loading_padding_size_tablet_big">40dp</dimen>
+    <dimen name="xui_dialog_loading_min_size_tablet_big">250dp</dimen>
+    <dimen name="xui_loading_view_size_tablet_big">135dp</dimen>
+    <dimen name="xui_loading_view_width_tablet_big">6dp</dimen>
+    <dimen name="xui_loading_margin_size_tablet_big">14dp</dimen>
+    <dimen name="mini_loading_view_size_tablet_big">40dp</dimen>
+
+    <dimen name="xui_dialog_radius_size_tablet_small">8dp</dimen>
+    <dimen name="xui_dialog_loading_padding_size_tablet_small">30dp</dimen>
+    <dimen name="xui_dialog_loading_min_size_tablet_small">150dp</dimen>
+    <dimen name="xui_loading_view_size_tablet_small">100dp</dimen>
+    <dimen name="xui_loading_view_width_tablet_small">5dp</dimen>
+    <dimen name="xui_loading_margin_size_tablet_small">10dp</dimen>
+    <dimen name="mini_loading_view_size_tablet_small">30dp</dimen>
+
+    <dimen name="xui_dialog_radius_size_phone">7dp</dimen>
+    <dimen name="xui_dialog_loading_padding_size_phone">26dp</dimen>
+    <dimen name="xui_dialog_loading_min_size_phone">100dp</dimen>
+    <dimen name="xui_loading_view_size_phone">78dp</dimen>
+    <dimen name="xui_loading_view_width_phone">4dp</dimen>
+    <dimen name="xui_loading_margin_size_phone">6dp</dimen>
+    <dimen name="mini_loading_view_size_phone">20dp</dimen>
+
+    <dimen name="xui_dialog_mini_loading_padding_size_tablet_big">30dp</dimen>
+    <dimen name="xui_dialog_mini_loading_min_size_tablet_big">200dp</dimen>
+    <dimen name="xui_dialog_mini_loading_padding_size_tablet_small">25dp</dimen>
+    <dimen name="xui_dialog_mini_loading_min_size_tablet_small">140dp</dimen>
+    <dimen name="xui_dialog_mini_loading_padding_size_phone">18dp</dimen>
+    <dimen name="xui_dialog_mini_loading_min_size_phone">90dp</dimen>
+
+    <dimen name="xui_mini_loading_margin_size_tablet_big">25dp</dimen>
+    <dimen name="xui_mini_loading_margin_size_tablet_small">18dp</dimen>
+    <dimen name="xui_mini_loading_margin_size_phone">12dp</dimen>
+
+    <dimen name="xui_mini_loading_view_size_tablet_big">45dp</dimen>
+    <dimen name="xui_mini_loading_view_size_tablet_small">35dp</dimen>
+    <dimen name="xui_mini_loading_view_size_phone">25dp</dimen>
+
+    <dimen name="xui_loading_text_size_tablet_big">21sp</dimen>
+    <dimen name="xui_loading_text_size_tablet_small">16sp</dimen>
+    <dimen name="xui_loading_text_size_phone">12sp</dimen>
+
+
+    <!-- 提示标点 -->
+    <dimen name="xui_tips_point_size">8dp</dimen>
+
+    <!--**********************************************
+    *                TabSegment                  *
+    **********************************************-->
+    <dimen name="xui_tab_segment_indicator_height">2dp</dimen>
+    <dimen name="xui_tab_segment_text_size">16sp</dimen>
+    <dimen name="xui_tab_sign_count_view_minSize_with_text">16dp</dimen>
+    <dimen name="xui_tab_sign_count_view_minSize">8dp</dimen>
+
+    <!--*********************************************
+    *              xui common list                  *
+    **********************************************-->
+    <dimen name="xui_list_item_height">56dp</dimen>
+    <dimen name="xui_list_item_height_higher">103dp</dimen>
+    <dimen name="xui_group_list_section_header_footer_padding_vertical">8dp</dimen>
+    <dimen name="xui_group_list_section_header_footer_text_size">13sp</dimen>
+
+
+</resources>

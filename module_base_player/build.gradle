@@ -1,0 +1,39 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+        ndk {
+//            使用abiFilters筛选你需要的so
+            abiFilters "armeabi-v7a","armeabi", "x86", "mips"
+        }
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api project(':module_base')
+    //阿里云播放器
+    api 'com.aliyun.sdk.android:AliyunPlayer:5.1.4-full'
+    api 'com.alivc.conan:AlivcConan:1.0.3'
+    api 'com.aliyun.sdk.android:AlivcArtc:5.1.4'
+    api 'com.aliyun.sdk.android:AlivcArtp:5.1.4'
+    api 'com.aliyun.dpa:oss-android-sdk:2.9.4'
+}

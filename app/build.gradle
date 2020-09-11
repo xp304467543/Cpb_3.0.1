@@ -1,0 +1,91 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.xiaojinzi.component.plugin'
+apply plugin: 'kotlin-kapt'
+
+def properties = rootProject.getPublishProperty()
+// versionCode 采用自增处理，详情查看version_code.properties文件，getVersionCode（）方法
+// 在工程主gradle文件上进行定义。该方法只对alpha和beta的release包进行versionCode加一。如果需
+// 要打正式包，需要进行手动更新
+
+def publishVersionCode = rootProject.getVersionCode()
+android {
+    signingConfigs {
+        release {
+            storeFile file('/Users/qingtian/AndroidStudioProjects/Cpb_3.0/config/keystore/caipiaobao.jks')
+            storePassword 'caipiaobao2019'
+            keyAlias = 'caipiaobao'
+            keyPassword 'caipiaobao2019'
+        }
+    }
+    compileSdkVersion versions.android_compile_sdk
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        applicationId "com.fh.lg"
+        minSdkVersion versions.android_min_sdk
+        targetSdkVersion versions.android_target_sdk
+        versionCode Integer.valueOf(publishVersionCode)
+        versionName '1.0.0'
+        multiDexEnabled true
+        ndk {
+//            使用abiFilters筛选你需要的so
+            abiFilters "armeabi-v7a","armeabi", "x86", "mips"
+        }
+
+        buildConfigField "Boolean", "ENV_SWITCH", properties['ENV_SWITCH']
+        buildConfigField "Boolean", "ENV_LOG", properties['ENV_LOG']
+        buildConfigField "Integer", "ENV_DEVELOP", properties['ENV_DEVELOP']
+        signingConfig signingConfigs.release
+        javaCompileOptions {
+            annotationProcessorOptions {
+                // 配置业务模块的模块名称
+                arguments = ["HOST": "App"]
+            }
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            shrinkResources false
+            zipAlignEnabled false
+            signingConfig signingConfigs.release
+//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/beans.xml'
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    kapt plugin.compiler
+//    kapt plugin.qmui
+    api project(':module_base_resouce')
+    api project(':module_home')
+    api project(':module_lottery')
+    api project(':module_moments')
+    api project(':module_mine')
+    api project(':module_bet')
+}

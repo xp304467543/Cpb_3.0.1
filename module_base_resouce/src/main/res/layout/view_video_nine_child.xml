@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.customer.component.LCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_190"
+    app:shadowSize="@dimen/dp_10"
+    app:cornerRadius="@dimen/dp_5"
+    app:elevationAffectShadowSize="true"
+    app:shadowColor="@color/grey_dd"
+    app:shadowStartAlpha="200">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imgVideoCover"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_0"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_placeholder"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/tvBottom"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_20"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/dp_5"
+            android:paddingEnd="@dimen/dp_5"
+            app:layout_constraintBottom_toTopOf="@+id/tvBottom">
+
+            <ImageView
+                android:id="@+id/imgP"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:gravity="center_vertical"
+                android:src="@mipmap/ic_video_show"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toTopOf="@+id/tvBottom"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/tvWatchNum"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginStart="@dimen/dp_4"
+                android:textColor="@color/white"
+                android:textSize="9sp"
+                app:layout_constraintBottom_toTopOf="@+id/tvBottom"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="99999999" />
+
+            <TextView
+                android:id="@+id/tvTimeLong"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textColor="@color/white"
+                android:ellipsize="end"
+                android:textSize="9sp"
+                app:layout_constraintBottom_toTopOf="@+id/tvBottom"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="00:00:00" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/tvBottom"
+            android:layout_width="match_parent"
+            android:layout_height="26dp"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/dp_2"
+            android:textColor="@color/text_black"
+            android:textSize="9sp"
+            android:maxEms="9"
+            android:ellipsize="end"
+            android:maxLines="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:ignore="RtlSymmetry"
+            tools:text="是分散分是分散分是分散分" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.customer.component.LCardView>

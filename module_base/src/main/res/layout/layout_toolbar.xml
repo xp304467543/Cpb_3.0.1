@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:layout_marginEnd="@dimen/dp_10"
+    android:background="?attr/colorPrimary"
+    android:theme="@style/ToolbarTheme"
+    app:contentInsetStartWithNavigation="0dp"
+    app:popupTheme="@style/ToolbarMenuPopTheme"
+    app:titleTextAppearance="@style/ToolbarTextAppearance"
+    tools:layout_height="@dimen/dp_56">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:lines="1"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_16"
+        tools:text="小明体育" />
+
+
+</androidx.appcompat.widget.Toolbar>
