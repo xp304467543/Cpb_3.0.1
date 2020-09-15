@@ -79,7 +79,7 @@ class MinePresenter : BaseMvpPresenter<MineFragment>() {
         if (mView.isActive()) {
             MineApi.getUserBalance {
                 onSuccess {
-                    mView.tvBalance.text = it.balance.toString()
+                    mView.tvBalance?.text = it.balance.toString()
 //                    mView.setBalance(it.balance.toString())
                 }
                 onFailed {

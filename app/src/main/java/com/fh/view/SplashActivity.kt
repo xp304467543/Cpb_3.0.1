@@ -46,6 +46,7 @@ class SplashActivity : Activity(), CancelAdapt {
     }
 
     private fun initContent() {
+        startActivity(Intent(baseContext, MainActivity::class.java))
         btEnter.setOnClickListener {
             if (!FastClickUtil.isFastClickActivity(this.localClassName)) {
                 startActivity(Intent(baseContext, MainActivity::class.java))

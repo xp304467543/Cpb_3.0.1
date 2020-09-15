@@ -13,4 +13,6 @@ import com.lib.basiclib.base.fragment.BaseFragment
 interface BetService{
 
    fun getBetFragment(): BaseFragment
+
+   fun getGameFragment(): BaseFragment
 }

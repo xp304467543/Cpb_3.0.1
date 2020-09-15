@@ -89,8 +89,8 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
             tvTitle.setText(TextUtils.isEmpty(mPickerOptions.textContentTitle) ? "" : mPickerOptions.textContentTitle);//默认为空
 
             //设置color
-            btnSubmit.setTextColor(ViewUtils.INSTANCE.getColor(R.color.radius_button_color_blue));
-            btnCancel.setTextColor(ViewUtils.INSTANCE.getColor(R.color.radius_button_color_blue));
+            btnSubmit.setTextColor(ViewUtils.INSTANCE.getColor(R.color.text_red));
+            btnCancel.setTextColor(ViewUtils.INSTANCE.getColor(R.color.black));
             tvTitle.setTextColor(mPickerOptions.textColorTitle);
             if (isDialog()) {
                 if (TextUtils.isEmpty(tvTitle.getText().toString())) {

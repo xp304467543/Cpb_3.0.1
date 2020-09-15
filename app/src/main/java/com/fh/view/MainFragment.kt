@@ -7,19 +7,24 @@ import androidx.core.content.ContextCompat
 import com.customer.component.dialog.BottomWebSelect
 import com.customer.component.dialog.DialogSystemNotice
 import com.customer.component.dialog.DialogVersion
-import com.customer.data.*
+import com.customer.data.HomeJumpToMine
+import com.customer.data.HomeJumpToMineCloseLive
+import com.customer.data.ToBetView
+import com.customer.data.UserInfoSp
 import com.customer.data.home.HomeApi
 import com.customer.data.mine.ChangeSkin
 import com.customer.utils.RxPermissionHelper
 import com.fh.R
-import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.thread.EventThread
 import com.lib.basiclib.base.fragment.BaseContentFragment
 import com.lib.basiclib.base.fragment.BaseFragment
 import com.lib.basiclib.base.fragment.PlaceholderFragment
 import com.lib.basiclib.utils.ViewUtils
-import com.services.*
+import com.services.BetService
+import com.services.HomeService
+import com.services.LotteryService
+import com.services.MineService
 import com.tbruyelle.rxpermissions2.RxPermissions
 import com.xiaojinzi.component.impl.service.ServiceManager
 import cuntomer.them.ITheme
@@ -66,18 +71,15 @@ class MainFragment : BaseContentFragment(), ITheme {
     private fun initFragments() {
         val homeFragment = ServiceManager.get(HomeService::class.java)?.getHomeFragment()
             ?: PlaceholderFragment.newInstance()
+        val gameFragment = ServiceManager.get(BetService::class.java)?.getGameFragment()
+            ?: PlaceholderFragment.newInstance()
         val lotteryFragment = ServiceManager.get(LotteryService::class.java)?.getLotteryFragment()
-            ?: PlaceholderFragment.newInstance()
-        val betFragment = ServiceManager.get(BetService::class.java)?.getBetFragment()
-            ?: PlaceholderFragment.newInstance()
-        val momentsFragment = ServiceManager.get(MomentsService::class.java)?.getMomentsFragment()
             ?: PlaceholderFragment.newInstance()
         val mineFragment = ServiceManager.get(MineService::class.java)?.getMineFragment()
             ?: PlaceholderFragment.newInstance()
         mFragments.add(homeFragment)
+        mFragments.add(gameFragment)
         mFragments.add(lotteryFragment)
-        mFragments.add(betFragment)
-        mFragments.add(momentsFragment)
         mFragments.add(mineFragment)
         loadMultipleRootFragment(
             R.id.mainContainer,
@@ -85,14 +87,13 @@ class MainFragment : BaseContentFragment(), ITheme {
             mFragments[0],
             mFragments[1],
             mFragments[2],
-            mFragments[3],
-            mFragments[4]
+            mFragments[3]
         )
     }
 
     override fun initData() {
         checkDialog()
-        getUpDate()
+//        getUpDate()
         getNotice()
     }
 
@@ -101,24 +102,14 @@ class MainFragment : BaseContentFragment(), ITheme {
         tabHome.setOnClickListener {
             showHideFragment(mFragments[0])
         }
-        tabLotteryOpen.setOnClickListener {
+        tabGame.setOnClickListener {
             showHideFragment(mFragments[1])
         }
-        rlCenter.setOnClickListener {
-            if (bottomWebSelect == null) bottomWebSelect = BottomWebSelect(requireContext())
-            bottomWebSelect?.setSelectListener {
-                tabBetting.isChecked = true
-                showHideFragment(mFragments[2])
-                RxBus.get().post(WebSelect(it))
-                RxBus.get().post(WebSelect(it))
-            }
-            bottomWebSelect?.show()
-        }
-        tabFriends.setOnClickListener {
-            showHideFragment(mFragments[3])
+        tabLotteryOpen.setOnClickListener {
+            showHideFragment(mFragments[2])
         }
         tabMine.setOnClickListener {
-            showHideFragment(mFragments[4])
+            showHideFragment(mFragments[3])
         }
     }
 
@@ -187,7 +178,7 @@ class MainFragment : BaseContentFragment(), ITheme {
                         R.drawable.button_tab_lottery
                     ), null, null
                 )
-                tabFriends.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                tabGame.setCompoundDrawablesRelativeWithIntrinsicBounds(
                     null, ViewUtils.getDrawable(
                         R.drawable.button_tab_quiz
                     ), null, null
@@ -202,7 +193,7 @@ class MainFragment : BaseContentFragment(), ITheme {
                         R.drawable.button_tab_lottery
                     ), null, null
                 )
-                tabFriends.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                tabGame.setCompoundDrawablesRelativeWithIntrinsicBounds(
                     null, ViewUtils.getDrawable(
                         R.drawable.button_tab_quiz
                     ), null, null
@@ -225,7 +216,7 @@ class MainFragment : BaseContentFragment(), ITheme {
                             R.drawable.tab_bottom_menu_text_selector
                         )
                     )
-                    tabFriends.setTextColor(
+                    tabGame.setTextColor(
                         ContextCompat.getColorStateList(
                             requireContext(),
                             R.drawable.tab_bottom_menu_text_selector
@@ -250,9 +241,8 @@ class MainFragment : BaseContentFragment(), ITheme {
                 drawable4?.setBounds(0, 0, ViewUtils.dp2px(30), ViewUtils.dp2px(30))
                 tabHome.setCompoundDrawables(null, drawable1, null, null)
                 tabLotteryOpen.setCompoundDrawables(null, drawable2, null, null)
-                tabFriends.setCompoundDrawables(null, drawable3, null, null)
+                tabGame.setCompoundDrawables(null, drawable3, null, null)
                 tabMine.setCompoundDrawables(null, drawable4, null, null)
-                img_protruding.background = ViewUtils.getDrawable(R.drawable.ic_tab_new_year_5)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     tabHome.setTextColor(
                         ContextCompat.getColorStateList(
@@ -266,7 +256,7 @@ class MainFragment : BaseContentFragment(), ITheme {
                             R.drawable.tab_bottom_menu_text_selector
                         )
                     )
-                    tabFriends.setTextColor(
+                    tabGame.setTextColor(
                         ContextCompat.getColorStateList(
                             requireContext(),
                             R.drawable.tab_bottom_menu_text_selector
@@ -291,9 +281,8 @@ class MainFragment : BaseContentFragment(), ITheme {
                 drawable4?.setBounds(0, 0, ViewUtils.dp2px(30), ViewUtils.dp2px(30))
                 tabHome.setCompoundDrawables(null, drawable1, null, null)
                 tabLotteryOpen.setCompoundDrawables(null, drawable2, null, null)
-                tabFriends.setCompoundDrawables(null, drawable3, null, null)
+                tabGame.setCompoundDrawables(null, drawable3, null, null)
                 tabMine.setCompoundDrawables(null, drawable4, null, null)
-                img_protruding.background = ViewUtils.getDrawable(R.drawable.ic_tab_d5_5)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     tabHome.setTextColor(
                         ContextCompat.getColorStateList(
@@ -307,7 +296,7 @@ class MainFragment : BaseContentFragment(), ITheme {
                             R.drawable.tab_them_text_middle
                         )
                     )
-                    tabFriends.setTextColor(
+                    tabGame.setTextColor(
                         ContextCompat.getColorStateList(
                             requireContext(),
                             R.drawable.tab_them_text_middle
@@ -332,9 +321,8 @@ class MainFragment : BaseContentFragment(), ITheme {
                 drawable4?.setBounds(0, 0, ViewUtils.dp2px(30), ViewUtils.dp2px(25))
                 tabHome.setCompoundDrawables(null, drawable1, null, null)
                 tabLotteryOpen.setCompoundDrawables(null, drawable2, null, null)
-                tabFriends.setCompoundDrawables(null, drawable3, null, null)
+                tabGame.setCompoundDrawables(null, drawable3, null, null)
                 tabMine.setCompoundDrawables(null, drawable4, null, null)
-                img_protruding.background = ViewUtils.getDrawable(R.drawable.ic_tab_love_3)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     tabHome.setTextColor(
                         ContextCompat.getColorStateList(
@@ -348,7 +336,7 @@ class MainFragment : BaseContentFragment(), ITheme {
                             R.drawable.tab_them_text_love
                         )
                     )
-                    tabFriends.setTextColor(
+                    tabGame.setTextColor(
                         ContextCompat.getColorStateList(
                             requireContext(),
                             R.drawable.tab_them_text_love
@@ -405,9 +393,7 @@ class MainFragment : BaseContentFragment(), ITheme {
      */
     @Subscribe(thread = EventThread.MAIN_THREAD)
     fun toBetView(eventBean: ToBetView) {
-        if (tabMine!=null) tabBetting?.isChecked = true
-        showHideFragment(mFragments[2])
-        RxBus.get().post(WebSelect(eventBean.pos))
+
     }
 
 }

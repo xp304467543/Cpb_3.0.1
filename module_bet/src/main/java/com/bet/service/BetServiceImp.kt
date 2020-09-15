@@ -1,6 +1,7 @@
 package com.bet.service
 
-import com.bet.BetFragment
+import com.bet.GameMainFragment
+import com.bet.old.BetFragment
 import com.services.BetService
 import com.xiaojinzi.component.anno.ServiceAnno
 
@@ -18,4 +19,7 @@ open class BetServiceImp : BetService {
         return BetFragment()
     }
 
+    override fun getGameFragment(): GameMainFragment {
+        return GameMainFragment()
+    }
 }

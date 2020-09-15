@@ -330,8 +330,8 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme {
             setGone(containerLogin)
             setGone(containerSetting)
             setVisible(containerNoLogin)
-            tvBalance.text = "0.00"
-            tvDiamondBalance.text = "0"
+            tvBalance?.text = "0.00"
+            tvDiamondBalance?.text = "0"
         }
     }
 
@@ -346,7 +346,7 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme {
     @Subscribe(thread = EventThread.MAIN_THREAD)
     fun upDataMineUserDiamond(eventBean: MineUserDiamond) {
         if (isSupportVisible){
-            tvDiamondBalance.text = eventBean.diamond
+            tvDiamondBalance?.text = eventBean.diamond
             mPresenter.getUserBalance()
         }
 

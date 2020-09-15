@@ -8,5 +8,11 @@
         <meta-data
             android:name="host_component"
             android:value="Home" />
+
+        <activity
+            android:name=".GameLotteryBetActivity"
+            android:theme="@style/SwipeBackStyle" />
+        <activity android:name=".GameLotteryBetToolsActivity"
+            android:theme="@style/SwipeBackStyle" />
     </application>
 </manifest>

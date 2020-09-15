@@ -31,7 +31,8 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     api project(':module_base')
     //阿里云播放器
-    api 'com.aliyun.sdk.android:AliyunPlayer:5.1.4-full'
+//    api 'com.aliyun.sdk.android:AliyunPlayer:5.1.4-full'
+    api (name:'AliyunPlayer-5.1.5-full',ext:'aar')
     api 'com.alivc.conan:AlivcConan:1.0.3'
     api 'com.aliyun.sdk.android:AlivcArtc:5.1.4'
     api 'com.aliyun.sdk.android:AlivcArtp:5.1.4'

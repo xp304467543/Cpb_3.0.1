@@ -140,15 +140,19 @@ interface ApiRouter {
     @HostAndPathAnno("Mine/recharge")
     fun toMineRecharge(@ParameterAnno("index") msg1: Int)
 
-    //
+    //用户
     @HostAndPathAnno("Moment/UserPersonalPage")
     fun toUserPage(@ParameterAnno(UserConstant.FOLLOW_ID) id: String)
-
+    //主播
     @HostAndPathAnno("Moment/AnchorPersonalPage")
     fun toAnchorPage(@ParameterAnno(UserConstant.FOLLOW_ID) id: String)
-
+    //专家
     @HostAndPathAnno("Moment/ExpertPersonalPage")
     fun toExpertPage(
         @ParameterAnno(UserConstant.FOLLOW_ID) id: String,
         @ParameterAnno(UserConstant.FOLLOW_lottery_ID) lotteryId: String)
+
+    //棋牌游戏
+    @HostAndPathAnno("BetMain/gameLotteryBet")
+    fun toLotteryGame(@ParameterAnno("gameLotteryId") lotteryId: String,@ParameterAnno("gameLotteryName") lotteryName: String)
 }

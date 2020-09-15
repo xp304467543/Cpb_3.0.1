@@ -63,9 +63,9 @@ public class SophixStubApplication extends SophixApplication {
     public void onCreate() {
         super.onCreate();
         //code 必填（代理）  normal 选填（官方）
-        List<String> tags = new ArrayList<>();
-        tags.add("normal");
-        SophixManager.getInstance().setTags(tags);
-        SophixManager.getInstance().queryAndLoadNewPatch();
+//        List<String> tags = new ArrayList<>();
+//        tags.add("normal");
+//        SophixManager.getInstance().setTags(tags);
+//        SophixManager.getInstance().queryAndLoadNewPatch();
     }
 }

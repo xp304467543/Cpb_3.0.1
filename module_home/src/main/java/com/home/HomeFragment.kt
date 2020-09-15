@@ -19,7 +19,6 @@ import com.hwangjr.rxbus.thread.EventThread
 import com.lib.basiclib.base.adapter.BaseFragmentPageAdapter
 import com.lib.basiclib.base.fragment.BaseFragment
 import com.lib.basiclib.base.mvp.BaseMvpFragment
-import com.lib.basiclib.base.xui.widget.popupwindow.bar.CookieBar
 import com.lib.basiclib.utils.StatusBarUtils
 import com.lib.basiclib.utils.ViewUtils
 import com.lib.basiclib.widget.tab.ViewPagerHelper
@@ -69,7 +68,6 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme {
         initViewPager()
         initTopTab()
         setTheme(UserInfoSp.getThem())
-//        names.text= " 二次修改111111111111"
     }
 
     override fun initEvent() {
@@ -100,7 +98,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme {
     }
 
     private fun initViewPager() {
-        val fragments = arrayListOf<BaseFragment>(HomeRecommendFragment(), HomeVideoFragment())
+        val fragments = arrayListOf<BaseFragment>(HomeRecommendNewFragment(), HomeVideoFragment())
         val adapter = BaseFragmentPageAdapter(childFragmentManager, fragments)
         homeSwitchViewPager.adapter = adapter
     }
@@ -112,7 +110,8 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme {
         commonNavigator.adapter = TabScaleAdapter(
             titleList = mDataList,
             viewPage = homeSwitchViewPager,
-            colorText = ViewUtils.getColor(R.color.white),
+            normalColor = ViewUtils.getColor(R.color.white),
+            selectedColor =  ViewUtils.getColor(R.color.white),
             colorLine = ViewUtils.getColor(R.color.white)
         )
         homeSwitchVideoTab.navigator = commonNavigator

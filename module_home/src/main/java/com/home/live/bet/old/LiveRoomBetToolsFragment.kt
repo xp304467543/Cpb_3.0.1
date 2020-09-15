@@ -39,15 +39,16 @@ class LiveRoomBetToolsFragment : BottomDialogFragment() {
             livBetTab?.newTab()?.setText("玩法规则")?.let { livBetTab?.addTab(it) }
         }
     }
-//
+
     override fun initData() {
+
     }
-//
+
     override fun initFragment() {
         liveBetViewPager = rootView?.findViewById(R.id.liveBetViewPager)
         liveBetViewPager?.removeAllViews()
 
-//        //初始化viewPager
+       //初始化viewPager
         val fragments= arrayListOf(
             ServiceManager.get(LotteryService::class.java)?.getLuZhuFragment(arguments?.getString("LOTTERY_ID") ?: "1",arguments?.getString("issue") ?: "1"),
             ServiceManager.get(LotteryService::class.java)?.getHistoryFragment(arguments?.getString("LOTTERY_ID") ?: "1",arguments?.getString("issue") ?: "1"),
@@ -57,7 +58,6 @@ class LiveRoomBetToolsFragment : BottomDialogFragment() {
         liveBetViewPager?.adapter = pagerAdapter
         liveBetViewPager?.currentItem = 0
         liveBetViewPager?.offscreenPageLimit = fragments.size
-//
         liveBetViewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {}
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}

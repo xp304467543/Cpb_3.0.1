@@ -1,6 +1,7 @@
 package com.home.service
 
 import com.home.HomeFragment
+import com.home.live.bet.old.LiveRoomBetToolsRulesFragment
 import com.services.HomeService
 import com.xiaojinzi.component.anno.ServiceAnno
 
@@ -16,5 +17,9 @@ open class HomeServiceImp : HomeService {
 
     override fun getHomeFragment(): HomeFragment {
         return HomeFragment()
+    }
+
+    override fun getRulerFragment(lotteryId:String): LiveRoomBetToolsRulesFragment {
+        return LiveRoomBetToolsRulesFragment.newInstance(lotteryId)
     }
 }

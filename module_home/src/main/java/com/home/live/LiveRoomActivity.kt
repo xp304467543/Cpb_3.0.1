@@ -211,7 +211,7 @@ class LiveRoomActivity : BaseNormalMvpActivity<LiveActPresenter>() {
         if (data.live_status == "1") {
             setGone(noAnchor)
             data.liveInfo?.get(2)?.liveUrl?.originPullUrl?.let {
-                LiveRoomHelper.videoView?.setUrl(it)
+                LiveRoomHelper.videoView?.setUrl(mp4)
                 LiveRoomHelper.videoView?.start()
             }
         } else {

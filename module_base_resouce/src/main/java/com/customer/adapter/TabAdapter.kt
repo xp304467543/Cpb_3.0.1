@@ -27,15 +27,17 @@ import com.lib.basiclib.widget.tab.buildins.commonnavigator.titles.SimplePagerTi
 class TabScaleAdapter(
     private var titleList: ArrayList<String>,
     private var viewPage: ViewPager,
-    private var colorText: Int,
-    private var colorLine: Int
+    private var normalColor: Int,
+    private var selectedColor: Int,
+    private var colorLine: Int,
+    private var textSize:Float = 18F
 ) : CommonNavigatorAdapter() {
     override fun getTitleView(context: Context?, index: Int): IPagerTitleView {
         val simplePagerTitleView: SimplePagerTitleView = ScaleTransitionPagerTitleView(context)
         simplePagerTitleView.text = titleList[index]
-        simplePagerTitleView.textSize = 18F
-        simplePagerTitleView.normalColor = colorText
-        simplePagerTitleView.selectedColor = colorText
+        simplePagerTitleView.textSize = textSize
+        simplePagerTitleView.normalColor = normalColor
+        simplePagerTitleView.selectedColor = selectedColor
         simplePagerTitleView.setOnClickListener {
             viewPage.currentItem = index
         }

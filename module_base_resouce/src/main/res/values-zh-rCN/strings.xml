@@ -5,7 +5,7 @@
     <string name="tab_live">直播</string>
     <string name="tab_lottery">开奖</string>
     <string name="tab_betting">投注</string>
-    <string name="tab_quiz">友圈</string>
+    <string name="tab_quiz">游戏</string>
     <string name="tab_mine">我的</string>
     <string name="no_data">暂无数据</string>
     <string name="new_message">有新消息</string>
@@ -33,7 +33,7 @@
     <string name="home_live_pre">直播预告</string>
     <string name="home_live_recommend">主播推荐</string>
     <string name="home_live_expert">专家红单</string>
-    <string name="home_look_more">查看更多  ＞</string>
+    <string name="home_look_more">查看更多</string>
     <string name="home_lottery">彩票</string>
     <string name="home_red">红包</string>
     <string name="home_attention">关注</string>

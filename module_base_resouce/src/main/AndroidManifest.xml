@@ -20,7 +20,6 @@
             android:theme="@style/SwipeBackStyle" />
         <activity
             android:name="com.customer.component.activity.RechargeWebAct"
-
             android:theme="@style/SwipeBackStyle" />
 
         <provider
@@ -37,5 +36,6 @@
             android:name="com.customer.component.utakephoto.crop.CropActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/Theme.Crop" />
+
     </application>
 </manifest>

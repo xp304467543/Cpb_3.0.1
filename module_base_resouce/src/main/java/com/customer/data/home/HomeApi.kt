@@ -1,15 +1,15 @@
 package com.customer.data.home
 
 import android.text.TextUtils
-import cuntomer.api.AllEmptySubscriber
 import com.customer.data.UserInfoSp
 import com.customer.data.moments.MomentsAnchorListResponse
 import com.rxnetgo.rxcache.CacheMode
+import cuntomer.api.AllEmptySubscriber
 import cuntomer.api.AllSubscriber
 import cuntomer.api.ApiSubscriber
-import cuntomer.net.BaseApi
 import cuntomer.api.EmptySubscriber
 import cuntomer.bean.BaseApiBean
+import cuntomer.net.BaseApi
 
 /**
  *
@@ -127,16 +127,24 @@ object HomeApi : BaseApi {
     private const val USER_MESSAGE_NEW = "api/v1_1/live/get_notice_new/"
 
 
+
+    //热门游戏
+    private const val HOT_GAME = "user/hot-games"
+
+    //获取新消息通知
+    private const val GAME_DATA = "fhchess/game/"
+
+
     /**
      * 配置服务器地址
      *
      *   key 2f7029b2f5ae72e0f39675db34bca71c
      */
-    fun getSystemUrl(function: ApiSubscriber<SystemUrl>.() -> Unit){
+    fun getSystemUrl(function: ApiSubscriber<SystemUrl>.() -> Unit) {
         val subscriber = object : ApiSubscriber<SystemUrl>() {}
         subscriber.function()
         getSystemApi().post<SystemUrl>("ApiService.list")
-            .params("key","2f7029b2f5ae72e0f39675db34bca71c")
+            .params("key", "2f7029b2f5ae72e0f39675db34bca71c")
             .subscribe(subscriber)
     }
 
@@ -253,7 +261,6 @@ object HomeApi : BaseApi {
     }
 
 
-
     /**
      * 是否有新消息
      */
@@ -269,7 +276,11 @@ object HomeApi : BaseApi {
     /**
      * 初始化直播间(进入直播间)
      */
-    fun enterLiveRoom(anchorId: String = "", client_ip: String = "", function: ApiSubscriber<HomeLiveEnterRoomResponse>.() -> Unit) {
+    fun enterLiveRoom(
+        anchorId: String = "",
+        client_ip: String = "",
+        function: ApiSubscriber<HomeLiveEnterRoomResponse>.() -> Unit
+    ) {
         val subscriber = object : ApiSubscriber<HomeLiveEnterRoomResponse>() {}
         subscriber.function()
         getApi()
@@ -309,7 +320,10 @@ object HomeApi : BaseApi {
     /**
      * 初始直播间打赏排行
      */
-    fun getRankList(anchorId: String = "", function: ApiSubscriber<List<HomeLiveRankList>>.() -> Unit) {
+    fun getRankList(
+        anchorId: String = "",
+        function: ApiSubscriber<List<HomeLiveRankList>>.() -> Unit
+    ) {
         val subscriber = object : ApiSubscriber<List<HomeLiveRankList>>() {}
         subscriber.function()
         getApi().get<List<HomeLiveRankList>>(HOME_INIT_REWARD_LIST)
@@ -333,7 +347,10 @@ object HomeApi : BaseApi {
     /**
      * 初始主播信息
      */
-    fun getLiveAnchorInfo(anchorId: String = "", function: ApiSubscriber<HomeLiveAnchorInfoBean>.() -> Unit) {
+    fun getLiveAnchorInfo(
+        anchorId: String = "",
+        function: ApiSubscriber<HomeLiveAnchorInfoBean>.() -> Unit
+    ) {
         val subscriber = object : ApiSubscriber<HomeLiveAnchorInfoBean>() {}
         subscriber.function()
         getApi().get<HomeLiveAnchorInfoBean>(
@@ -346,7 +363,12 @@ object HomeApi : BaseApi {
     /**
      * 获取主播动态
      */
-    fun getAnchorDynamic(anchorId: String = "", page: String = "1", limit: String = "10", function: ApiSubscriber<List<MomentsAnchorListResponse>>.() -> Unit) {
+    fun getAnchorDynamic(
+        anchorId: String = "",
+        page: String = "1",
+        limit: String = "10",
+        function: ApiSubscriber<List<MomentsAnchorListResponse>>.() -> Unit
+    ) {
         val subscriber = object : ApiSubscriber<List<MomentsAnchorListResponse>>() {}
         subscriber.function()
         getApi().get<List<MomentsAnchorListResponse>>(
@@ -373,7 +395,13 @@ object HomeApi : BaseApi {
     /**
      * 资讯列表
      */
-    fun getNewsList(type: String = "", neednew: String = "", page: String = "1", limit: String = "10", function: ApiSubscriber<List<HomeNewsResponse>>.() -> Unit) {
+    fun getNewsList(
+        type: String = "",
+        neednew: String = "",
+        page: String = "1",
+        limit: String = "10",
+        function: ApiSubscriber<List<HomeNewsResponse>>.() -> Unit
+    ) {
         val subscriber = object : ApiSubscriber<List<HomeNewsResponse>>() {}
         subscriber.function()
         getApi().get<List<HomeNewsResponse>>(
@@ -389,7 +417,10 @@ object HomeApi : BaseApi {
     /**
      * 资讯详情
      */
-    fun getNewsInfo(info_id: String, function: ApiSubscriber<List<HomeNesInfoResponse>>.() -> Unit) {
+    fun getNewsInfo(
+        info_id: String,
+        function: ApiSubscriber<List<HomeNesInfoResponse>>.() -> Unit
+    ) {
         val subscriber = object : ApiSubscriber<List<HomeNesInfoResponse>>() {}
         subscriber.function()
         getApi().get<List<HomeNesInfoResponse>>(
@@ -415,7 +446,10 @@ object HomeApi : BaseApi {
     /**
      * 搜索主播
      */
-    fun getSearchAnchor(search_content: String, function: ApiSubscriber<HomeAnchorSearch>.() -> Unit) {
+    fun getSearchAnchor(
+        search_content: String,
+        function: ApiSubscriber<HomeAnchorSearch>.() -> Unit
+    ) {
         val subscriber = object : ApiSubscriber<HomeAnchorSearch>() {}
         subscriber.function()
         getApi().get<HomeAnchorSearch>(HOME_SEARCH)
@@ -440,7 +474,13 @@ object HomeApi : BaseApi {
     /**
      * 禁言  禁言时间 单位分钟-不传使用后台配置时间 0-永久禁言
      */
-    fun forBiddenWords(opertate_user: Int, ban_user: String, room_id: String, ban_time: String, function: EmptySubscriber.() -> Unit) {
+    fun forBiddenWords(
+        opertate_user: Int,
+        ban_user: String,
+        room_id: String,
+        ban_time: String,
+        function: EmptySubscriber.() -> Unit
+    ) {
         val subscriber = EmptySubscriber()
         subscriber.function()
         val request = getApi().post<String>(FORBIDDEN_WORDS)
@@ -455,7 +495,14 @@ object HomeApi : BaseApi {
     /**
      * 发红包
      */
-    fun homeLiveSendRedEnvelope(anchorId: String, amount: String, num: String, text: String, password: String, function: ApiSubscriber<HomeLiveRedEnvelopeBean>.() -> Unit) {
+    fun homeLiveSendRedEnvelope(
+        anchorId: String,
+        amount: String,
+        num: String,
+        text: String,
+        password: String,
+        function: ApiSubscriber<HomeLiveRedEnvelopeBean>.() -> Unit
+    ) {
         val subscriber = object : ApiSubscriber<HomeLiveRedEnvelopeBean>() {}
         subscriber.function()
         getApi().post<HomeLiveRedEnvelopeBean>(
@@ -474,7 +521,10 @@ object HomeApi : BaseApi {
     /**
      * 直播间红包队列
      */
-    fun homeLiveRedList(anchorId: String, function: ApiSubscriber<List<HomeLiveRedRoom>>.() -> Unit) {
+    fun homeLiveRedList(
+        anchorId: String,
+        function: ApiSubscriber<List<HomeLiveRedRoom>>.() -> Unit
+    ) {
         val subscriber = object : ApiSubscriber<List<HomeLiveRedRoom>>() {}
         subscriber.function()
         val request = getApi().get<List<HomeLiveRedRoom>>(
@@ -516,7 +566,11 @@ object HomeApi : BaseApi {
     /**
      * 主播关注or取关 增加用户关注
      */
-    fun attentionAnchorOrUser(anchor_id: String, follow_id: String, function: ApiSubscriber<Attention>.() -> Unit) {
+    fun attentionAnchorOrUser(
+        anchor_id: String,
+        follow_id: String,
+        function: ApiSubscriber<Attention>.() -> Unit
+    ) {
         val subscriber = object : ApiSubscriber<Attention>() {}
         subscriber.function()
         val request = getApi().post<Attention>(
@@ -547,7 +601,13 @@ object HomeApi : BaseApi {
     /**
      * 送礼物
      */
-    fun setGift(userId: Int, anchorId: String, gift_id: String, gift_num: String, function: EmptySubscriber.() -> Unit) {
+    fun setGift(
+        userId: Int,
+        anchorId: String,
+        gift_id: String,
+        gift_num: String,
+        function: EmptySubscriber.() -> Unit
+    ) {
         val subscriber = EmptySubscriber()
         subscriber.function()
         getApi().post<String>(HOME_LIVE_SEND_GIFT)
@@ -612,6 +672,18 @@ object HomeApi : BaseApi {
             .params("page", 1)
             .params("limit", 1)
             .subscribe(subscriber)
+    }
+
+    /**
+     * 首页游戏
+     */
+    fun getHomeGame(): ApiSubscriber<List<Game>> {
+        val subscriber = object : ApiSubscriber<List<Game>>() {}
+        getApiOther()
+            .get<List<Game>>(HOT_GAME)
+            .subscribe(subscriber)
+        return subscriber
+
     }
 
 }

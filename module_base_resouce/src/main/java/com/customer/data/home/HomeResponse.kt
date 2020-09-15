@@ -188,3 +188,6 @@ data class SystemNotice(
     var msg_id: String?, var msg_type: String?, var content: String?, var create_time: String?
     , var createtime_txt: String?
 )
+
+//首页游戏
+data class Game(var game_id: String?, var name: String?, var img_url: String?)

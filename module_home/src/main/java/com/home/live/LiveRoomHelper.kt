@@ -17,6 +17,7 @@ import com.customer.data.DanMu
 import com.customer.data.UserInfoSp
 import com.customer.player.video.PipManager
 import com.customer.player.video.TagVideo
+import com.customer.player.video.Utils
 import com.customer.player.video.controller.LiveControlView
 import com.customer.player.video.controller.StandardLiveController
 import com.customer.player.video.danmaku.DanMuView
@@ -79,6 +80,7 @@ object LiveRoomHelper {
         mPIPManager?.name = activity.name
         mPIPManager?.avatar = activity.avatar
         videoView  = VideoViewManager.instance().get(TagVideo.PIP)
+        Utils.removeViewFormParent(videoView)
         controller = StandardLiveController(activity)
         initController(activity)
         videoView?.setVideoController(controller)

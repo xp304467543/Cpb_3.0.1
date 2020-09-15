@@ -56,7 +56,7 @@ class HomeHotLiveAdapter : BaseRecyclerAdapter<HomeHotLiveResponse>() {
         if (data?.red_paper_num ?: 0 > 0) {
             ViewUtils.setVisible(holder.findView(R.id.imgTag))
         } else ViewUtils.setGone(holder.findView(R.id.imgTag))
-        if (data?.daxiu!!) {
+        if (data?.daxiu == true) {
             ViewUtils.setVisible(holder.findView(R.id.tiaodan))
         } else ViewUtils.setGone(holder.findView(R.id.tiaodan))
     }

@@ -90,7 +90,8 @@ public class TitleView extends FrameLayout implements IControlComponent {
         tvNickName.setText(name);
         tvPeopleNum.setText(num+" 人");
         tvRoomId.setText("房间号 "+roomId);
-        GlideUtil.INSTANCE.loadImage(getContext(),avatar,imgAvatar);
+        Activity activity = PlayerUtils.scanForActivity(getContext());
+        if (!activity.isDestroyed()) GlideUtil.INSTANCE.loadImage(getContext(),avatar,imgAvatar);
     }
 
     public void setIsAttention(Boolean isAttention){

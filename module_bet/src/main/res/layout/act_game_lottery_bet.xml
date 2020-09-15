@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/gameBetStateView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/white" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgGameBack"
+            android:layout_width="@dimen/dp_60"
+            android:layout_height="match_parent"
+            android:padding="18dp"
+            android:src="@mipmap/ic_arrow_back_black" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvGameLotteryName"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:drawableEnd="@mipmap/ic_arrow_down"
+            android:drawablePadding="@dimen/dp_3"
+            android:gravity="center"
+            android:textColor="#FF333333"
+            android:textSize="@dimen/sp_15"
+            tools:text="٩( 'ω' )و get！" />
+
+        <TextView
+            android:id="@+id/imgGameTools"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/dp_15"
+            android:gravity="center"
+            android:text="助赢工具"
+            android:textColor="#FF999999"
+            android:textSize="@dimen/sp_13" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/linOpen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/dp_15"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingEnd="@dimen/dp_15"
+        app:layout_constraintTop_toBottomOf="@+id/view3">
+
+        <TextView
+            android:id="@+id/tvOpenCount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/sp_12"
+            android:textStyle="bold"
+            tools:text="50623672期开奖结果" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="封盘  "
+            android:textColor="@color/color_999999"
+            android:textSize="@dimen/sp_12" />
+
+        <TextView
+            android:id="@+id/tvCloseTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_8"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/sp_12"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvAtNext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开奖  "
+            android:textColor="@color/color_999999"
+            android:textSize="@dimen/sp_12" />
+
+        <TextView
+            android:id="@+id/tvOpenTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_8"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/sp_12"
+            android:textStyle="bold"
+            tools:text="09:38" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_62">
+
+        <LinearLayout
+            android:id="@+id/linLotteryOpenCode"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_62"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/dp_10"
+            android:paddingEnd="@dimen/dp_15" />
+
+        <com.github.ybq.android.spinkit.SpinKitView
+            android:id="@+id/tvOpenCodePlaceHolder"
+            style="@style/SpinKitView.Small.ThreeBounce"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_62"
+            android:background="@color/white"
+            android:gravity="center"
+            app:SpinKit_Color="@color/line_grey" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_2"
+        android:background="@color/color_F5F7FA" />
+</LinearLayout>

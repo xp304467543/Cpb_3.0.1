@@ -14,7 +14,7 @@ object DebugUtils {
     /**
      * 是否是内部使用的一些东西，发布到外界需要设置为false
      */
-    private var isEnvLog = false
+    private var isEnvLog = true
 
     /**
      * 是否能切换环境，默认不能切换环境
