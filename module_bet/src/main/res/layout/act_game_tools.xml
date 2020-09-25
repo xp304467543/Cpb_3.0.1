@@ -23,7 +23,7 @@
         android:background="@color/color_F5F7FA"/>
 
     <androidx.viewpager.widget.ViewPager
-        android:id="@+id/gameBetViewPager"
+        android:id="@+id/gameBetToolsViewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 </LinearLayout>

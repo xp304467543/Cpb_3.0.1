@@ -88,3 +88,6 @@ data class AnchorAttention(val androidId:String, val isFlow:Boolean)
 data class WebSelect(val pos:Int)
 
 data class ToBetView(val pos:Int)
+
+//投注彩种变化
+data class ChangeLottery(val lotteryId:String)

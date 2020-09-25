@@ -131,8 +131,21 @@
             app:SpinKit_Color="@color/line_grey" />
     </RelativeLayout>
 
-    <View
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_2"
-        android:background="@color/color_F5F7FA" />
+        android:layout_height="wrap_content"
+        android:background="#FFF5F7F9"
+        android:orientation="vertical">
+        <com.lib.basiclib.widget.tab.MagicIndicator
+            android:id="@+id/gameIndicator"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_40"
+            android:layout_gravity="center_horizontal" />
+
+    </LinearLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/gameBetViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </LinearLayout>

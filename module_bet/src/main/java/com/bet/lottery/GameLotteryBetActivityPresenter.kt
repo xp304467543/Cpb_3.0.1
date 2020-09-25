@@ -1,4 +1,4 @@
-package com.bet
+package com.bet.lottery
 
 import android.annotation.SuppressLint
 import android.os.CountDownTimer
@@ -42,6 +42,8 @@ class GameLotteryBetActivityPresenter : BaseMvpPresenter<GameLotteryBetActivity>
     fun getLotteryOpenCode(lotteryId: String) {
         handler?.removeCallbacks(runnable)
         mTimer?.stop()
+        if (mView.tvCloseTime != null) mView.tvCloseTime?.text = "--:--"
+        if (timerClose != null) timerClose?.cancel()
         LotteryApi.getLotteryNewCode(lotteryId) {
             onSuccess {
                 if (mView.isActive()) {
@@ -55,8 +57,7 @@ class GameLotteryBetActivityPresenter : BaseMvpPresenter<GameLotteryBetActivity>
 
                                 override fun onFinish() {
                                     if (mView.tvOpenTime != null) mView.tvOpenTime.text = "--:--"
-                                    mTimer?.stop()
-                                    getLotteryOpenCode(it.lottery_id ?: "1")
+                                    getLotteryOpenCode(lotteryId)
                                     mView.setVisible(mView.tvOpenCodePlaceHolder)
                                 }
 
@@ -72,7 +73,8 @@ class GameLotteryBetActivityPresenter : BaseMvpPresenter<GameLotteryBetActivity>
                         mTimer?.start()
                         setContainerCode(it.lottery_id, it.code)
                         mView.setGone(mView.tvOpenCodePlaceHolder)
-                        countDownTimerClose(it.next_lottery_end_time ?: 0)
+                        mView.betFragment?.lotteryInfo(it.issue?:"-1", lotteryId,true)
+                        countDownTimerClose(it.issue?:"-1", lotteryId,it.next_lottery_end_time ?: 0)
                         isOpenCode = true
                     } else {
                         mTimer?.stop()
@@ -84,7 +86,7 @@ class GameLotteryBetActivityPresenter : BaseMvpPresenter<GameLotteryBetActivity>
                         }
                         handler = Handler()
                         runnable = Runnable {
-                            getLotteryOpenCode(it.lottery_id ?: "1")
+                            getLotteryOpenCode(lotteryId)
                         }
                         handler?.postDelayed(runnable, 5000)
                     }
@@ -142,7 +144,7 @@ class GameLotteryBetActivityPresenter : BaseMvpPresenter<GameLotteryBetActivity>
     //封盘倒计时
     private var isOpenCode = false  //封盘 判断
     private var timerClose: CountDownTimer? = null
-    private fun countDownTimerClose(millisUntilFinished: Long) {
+    private fun countDownTimerClose(issue:String,lotteryId: String,millisUntilFinished: Long) {
         if (timerClose != null) timerClose?.cancel()
         val timeCountDown = millisUntilFinished * 1000
         timerClose = object : CountDownTimer(timeCountDown, 1000) {
@@ -170,6 +172,7 @@ class GameLotteryBetActivityPresenter : BaseMvpPresenter<GameLotteryBetActivity>
 
             override fun onFinish() {
                 isOpenCode = false
+                mView.betFragment?.lotteryInfo(issue, lotteryId,false)
                 if (mView.tvCloseTime != null) mView.tvCloseTime.text = "--:--"
             }
         }

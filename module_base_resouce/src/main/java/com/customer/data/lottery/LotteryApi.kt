@@ -152,6 +152,7 @@ object LotteryApi : BaseApi {
             .get<List<LotteryPlayListResponse>>(GUESS_PLAY_LIST)
             .cacheMode(CacheMode.NONE)
             .params("lottery_id", lotteryId)
+            .params("client_type", 4)
             .subscribe(subscriber)
     }
 

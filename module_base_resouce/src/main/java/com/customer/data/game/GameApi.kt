@@ -1,7 +1,5 @@
 package com.customer.data.game
 
-import com.customer.data.UserInfoSp
-import com.customer.data.lottery.LotteryCodeNewResponse
 import cuntomer.api.ApiSubscriber
 import cuntomer.net.BaseApi
 
@@ -28,7 +26,6 @@ object GameApi : BaseApi {
         subscriber.function()
         getApiOther()
             .get<ArrayList<GameAll>>(GAME_ALL)
-            .headers("Authorization", UserInfoSp.getTokenWithBearer())
             .subscribe(subscriber)
     }
 

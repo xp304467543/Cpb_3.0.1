@@ -26,6 +26,7 @@
             android:theme="@style/SwipeBackStyle" />
         <activity
             android:name=".children.MoreAnchorAct"
+            android:configChanges="keyboard|orientation|screenSize"
             android:theme="@style/SwipeBackStyle" />
         <activity
             android:name=".video.more.VideoMoreActivity"

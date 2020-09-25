@@ -18,13 +18,14 @@ data class LotteryTypeResponse(
     var logo_url: String?,
     var video_url: String? = ""
 )
+
 data class LotteryCodeTrendResponse(
-    var id: Int ?= 0,
+    var id: Int? = 0,
     var lottery_id: String? = "0",
-    var property_id: String ?= "0",
-    var issue: String ?= "",
-    var open_code: String ?= "",
-    var created: String ?= "",
+    var property_id: String? = "0",
+    var issue: String? = "",
+    var open_code: String? = "",
+    var created: String? = "",
     val trending: List<Int>? = null
 )
 
@@ -52,11 +53,11 @@ data class LotteryCodeLuZhuResponse(
 )
 
 data class LotteryExpertPaleyResponse(
-    var id: String ?="0", var nickname: String ?="0", var expert_id: String ?="0",
-    var lottery_id: String ?="0", var method: String ?="0", var issue: String ?="0",
-    var code: String ?="0", var hit_rate: String ?="0", var is_right: String ?="0",
-    var created: String ?="0", var avatar: String ?="0", var profit_rate: String ?="0",
-    var winning: String ?="0", var last_10_games: List<String>? = null
+    var id: String? = "0", var nickname: String? = "0", var expert_id: String? = "0",
+    var lottery_id: String? = "0", var method: String? = "0", var issue: String? = "0",
+    var code: String? = "0", var hit_rate: String? = "0", var is_right: String? = "0",
+    var created: String? = "0", var avatar: String? = "0", var profit_rate: String? = "0",
+    var winning: String? = "0", var last_10_games: List<String>? = null
 )
 
 
@@ -90,20 +91,39 @@ data class PlayUnitData(
     val play_sec_combo: Int?,
     val play_sec_data: List<PlaySecData>,
     val play_sec_id: Int?,
-    val play_sec_name: String?
+    val play_sec_name: String?,
+    val play_sec_merge_name:String?,
+    var isSelected: Boolean = false
 ) : Parcelable
 
 @Parcelize
 data class PlaySecData(
-    val play_class_cname: String?,
-    val play_class_id: Int?,
-    val play_sec_name: String?,
-    val play_class_name: String?,
-    val play_odds: Double?,
+    val play_class_cname: String? = "",
+    val play_class_id: Int? = 0,
+    val play_sec_name: String? = "",
+    val play_sec_cname:String?="",
+    val play_class_name: String? = "",
+    val play_odds: String? ="0",
     var playName: String? = "",
     var isSelected: Boolean = false,
-    var money: String ?="0"
+    var money: String? = "0",
+    var play_sec_id: Int? = 0,
+    var title: String = "",
+    var type: String = ""
 ) : Parcelable
+
+//快捷数据
+data class PlaySecDataKj(
+    var play_sec_id: Int? = 0,
+    val play_sec_name: String? = "",
+    val play_sec_cname: String? = "",
+    val play_sec_merge_name:String?="",
+    val play_class_id: Int? = 0,
+    val play_class_name: String? = "",
+    val play_class_cname: String? = "",
+    val play_odds:String? ="0",
+    var isSelected: Boolean = false,
+    var type: String = "")
 
 data class PlayMoneyData(
     val play_sum_id: Int?,
@@ -111,6 +131,7 @@ data class PlayMoneyData(
     val play_sum_name: String?
 
 )
+
 
 data class BetBean(
     val play_sec_name: String?,
@@ -124,7 +145,7 @@ data class BetShareBean(
     val play_bet_sum: String?,
     val play_class_cname: String?,
     val play_class_name: String?,
-    val play_odds: Double?,
+    val play_odds: String?,
     val play_sec_name: String?,
     var isShow: Boolean = false
 )

@@ -74,10 +74,8 @@ class LotteryPresenter : BaseMvpPresenter<LotteryFragment>() {
                                 override fun onTick(millisUntilFinished: Long) {
                                     setTime(millisUntilFinished)
                                 }
-
                                 override fun onFinish() {
                                     if (mView.tvOpenTime != null) mView.tvOpenTime.text = "开奖中..."
-                                    mTimer?.stop()
                                     getLotteryOpenCode(it.lottery_id ?: "1")
                                     mView.setVisible(mView.tvOpenCodePlaceHolder)
                                 }

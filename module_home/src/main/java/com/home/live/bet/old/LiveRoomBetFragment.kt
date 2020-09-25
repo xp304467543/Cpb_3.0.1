@@ -561,8 +561,7 @@ class LiveRoomBetFragment : BottomDialogFragment() {
                             val radio = RadioButton(context)
                             if (radio != null) {
                                 radio.buttonDrawable = null
-                                radio.background =
-                                    ViewUtils.getDrawable(R.drawable.lottery_bet_radio)
+                                radio.background = ViewUtils.getDrawable(R.drawable.lottery_bet_radio)
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) radio.setTextColor(
                                     context?.getColorStateList(R.drawable.color_radio_bet)
                                 )

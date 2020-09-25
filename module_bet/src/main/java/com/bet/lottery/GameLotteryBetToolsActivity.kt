@@ -1,9 +1,10 @@
-package com.bet
+package com.bet.lottery
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
+import com.bet.R
 import com.google.android.material.tabs.TabLayout
 import com.lib.basiclib.base.activity.BaseNavActivity
 import com.services.HomeService
@@ -43,10 +44,10 @@ class GameLotteryBetToolsActivity : BaseNavActivity() {
             ServiceManager.get(HomeService::class.java)?.getRulerFragment(lotteryId)
         )
         val   pagerAdapter = ViewPagerAdapter(supportFragmentManager, fragments)
-        gameBetViewPager?.adapter = pagerAdapter
-        gameBetViewPager?.currentItem = 0
-        gameBetViewPager?.offscreenPageLimit = fragments.size
-        gameBetViewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        gameBetToolsViewPager?.adapter = pagerAdapter
+        gameBetToolsViewPager?.currentItem = 0
+        gameBetToolsViewPager?.offscreenPageLimit = fragments.size
+        gameBetToolsViewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {}
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
             override fun onPageSelected(position: Int) {
@@ -57,7 +58,7 @@ class GameLotteryBetToolsActivity : BaseNavActivity() {
             override fun onTabReselected(p0: TabLayout.Tab?) {}
             override fun onTabUnselected(p0: TabLayout.Tab?) {}
             override fun onTabSelected(p0: TabLayout.Tab?) {
-                gameBetViewPager?.currentItem = p0?.position ?: 0
+                gameBetToolsViewPager?.currentItem = p0?.position ?: 0
             }
 
         })

@@ -24,6 +24,7 @@ class BaseFragmentPageAdapter : FragmentStatePagerAdapter {
         this.mFragments = fragments
     }
 
+
     constructor(manager: FragmentManager, fragments: Array<Any>) : super(manager,BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
         this.mFragments = fragments.toList()
     }

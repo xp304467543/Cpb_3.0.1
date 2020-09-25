@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.AppCompatTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tvGameType"
+    android:gravity="center"
+    android:layout_marginTop="@dimen/dp_10"
+    android:textSize="@dimen/sp_13"
+    android:textColor="@color/color_333333"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+
