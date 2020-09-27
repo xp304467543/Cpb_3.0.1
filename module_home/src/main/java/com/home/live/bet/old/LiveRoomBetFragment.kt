@@ -11,6 +11,7 @@ import android.view.Gravity
 import android.view.View
 import android.widget.*
 import androidx.viewpager.widget.ViewPager
+import com.customer.data.LotteryResetDiamond
 import com.customer.data.UserInfoSp
 import com.customer.data.lottery.LotteryApi
 import com.customer.data.lottery.LotteryPlayListResponse

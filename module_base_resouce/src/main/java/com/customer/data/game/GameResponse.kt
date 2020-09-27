@@ -21,3 +21,6 @@ data class GameAllChild0(val name:String?,val list:ArrayList<GameAllChild1>?,val
 
 @Parcelize
 data class GameAllChild1(val type:String?,val id:String?,val img_url:String?,val name:String?,val itemType:Int = 0): Parcelable
+
+
+data class Game060(val url:String?)

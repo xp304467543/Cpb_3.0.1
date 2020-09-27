@@ -44,12 +44,6 @@ class BottomLotterySelectDialog(context: Context, val title: ArrayList<String>) 
         mOptionsPickerView.setLineSpacing(80f)
         mOptionsPickerView.setSelectedItemTextColor(ViewUtils.getColor(R.color.black))
         mOptionsPickerView.setNormalItemTextColor(ViewUtils.getColor(R.color.grey_e6))
-        mOptionsPickerView.setOnOptionsSelectedListener { _, opt1Data, _, _, _, _ ->
-            if (!opt1Data.isNullOrEmpty()) tvLotteryWheelSure.isEnabled = true
-        }
-        mOptionsPickerView.setOnPickerScrollStateChangedListener {
-            tvLotteryWheelSure.isEnabled = false
-        }
         tvWheelCancel.setOnClickListener {
             dismiss()
         }

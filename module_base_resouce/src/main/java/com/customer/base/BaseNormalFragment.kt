@@ -1,5 +1,6 @@
 package com.customer.base
 
+import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -29,12 +30,7 @@ abstract class BaseNormalFragment<P : IMvpContract.Presenter<*>> : Fragment(), I
 
     private lateinit var mDelegate: PageViewDelegate
 
-    override fun onCreateView(
-        @NonNull inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
+    override fun onCreateView(@NonNull inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mPresenter = attachPresenter()
         attachView()
         super.onCreateView(inflater, container, savedInstanceState)
@@ -180,7 +176,7 @@ abstract class BaseNormalFragment<P : IMvpContract.Presenter<*>> : Fragment(), I
     }
 
     override fun hidePageLoadingDialog() {
-
+        mDelegate.hidePageLoadingDialog()
     }
 
     override fun showPageEmpty(msg: String?) {
@@ -192,7 +188,7 @@ abstract class BaseNormalFragment<P : IMvpContract.Presenter<*>> : Fragment(), I
     }
 
     override fun showPageLoadingDialog(msg: String?) {
-
+        mDelegate.showPageLoadingDialog(context,msg)
     }
 
     override fun onDestroy() {

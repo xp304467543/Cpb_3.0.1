@@ -152,7 +152,7 @@ interface ApiRouter {
         @ParameterAnno(UserConstant.FOLLOW_ID) id: String,
         @ParameterAnno(UserConstant.FOLLOW_lottery_ID) lotteryId: String)
 
-    //棋牌游戏
+    //彩票游戏
     @HostAndPathAnno("BetMain/gameLotteryBet")
     fun toLotteryGame(@ParameterAnno("gameLotteryId") lotteryId: String,@ParameterAnno("gameLotteryName") lotteryName: String)
 }

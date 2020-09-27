@@ -3,12 +3,12 @@ package com.home
 import android.text.TextUtils
 import androidx.recyclerview.widget.GridLayoutManager
 import com.customer.ApiRouter
+import com.customer.adapter.HomeHotLiveAdapter
 import com.customer.data.UserInfoSp
 import com.customer.data.home.Game
 import com.customer.data.home.HomeHotLiveResponse
 import com.customer.data.home.HomeSystemNoticeResponse
 import com.home.adapter.HomeGameRvAdapter
-import com.home.adapter.HomeHotLiveAdapter
 import com.lib.basiclib.base.mvp.BaseMvpFragment
 import com.lib.basiclib.base.xui.widget.banner.widget.banner.BannerItem
 import com.lib.basiclib.utils.FastClickUtil

@@ -101,7 +101,7 @@ data class PlaySecData(
     val play_class_cname: String? = "",
     val play_class_id: Int? = 0,
     val play_sec_name: String? = "",
-    val play_sec_cname:String?="",
+    var play_sec_cname:String?="",
     val play_class_name: String? = "",
     val play_odds: String? ="0",
     var playName: String? = "",

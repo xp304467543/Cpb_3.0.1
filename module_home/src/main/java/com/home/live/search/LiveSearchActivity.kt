@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import com.customer.ApiRouter
+import com.customer.adapter.HomeHotLiveAdapter
 import com.customer.data.home.HomeAnchorRecommend
 import com.customer.data.home.HomeAnchorSearch
 import com.customer.data.home.HomeApi
 import com.home.R
-import com.home.adapter.HomeHotLiveAdapter
 import com.lib.basiclib.base.activity.BaseNavActivity
 import com.lib.basiclib.base.round.RoundTextView
 import com.lib.basiclib.utils.FastClickUtil

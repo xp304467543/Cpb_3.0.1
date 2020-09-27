@@ -8,7 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.customer.component.dialog.DialogGlobalTips
 import com.customer.component.dialog.LoadingDialog
-import com.customer.data.HomeJumpToMine
+import com.customer.data.HomeJumpToMineCloseLive
+import com.customer.data.LotteryResetDiamond
 import com.customer.data.UserInfoSp
 import com.customer.data.lottery.BetBean
 import com.customer.data.lottery.BetShareBean
@@ -138,7 +139,7 @@ class LiveRoomBetAccessFragment : BottomDialogFragment() {
                         if (UserDiamond < (totalMoney.toBigDecimal())) {
                             val tips = context?.let { it1 -> DialogGlobalTips(it1, "您的钻石不足,请兑换钻石", "确定", "取消", "") }
                             tips?.setConfirmClickListener {
-                                RxBus.get().post(HomeJumpToMine(true))
+                                RxBus.get().post(HomeJumpToMineCloseLive(true))
                                 dismiss()
                             }
                             tips?.show()
@@ -148,7 +149,7 @@ class LiveRoomBetAccessFragment : BottomDialogFragment() {
                         if (UserBalance < (totalMoney.toBigDecimal())) {
                             val tips = context?.let { it1 -> DialogGlobalTips(it1, "您余额不足,请充值", "确定", "取消", "") }
                             tips?.setConfirmClickListener {
-                                RxBus.get().post(HomeJumpToMine(true))
+                                RxBus.get().post(HomeJumpToMineCloseLive(true))
                                 dismiss()
                             }
                             tips?.show()
@@ -162,13 +163,14 @@ class LiveRoomBetAccessFragment : BottomDialogFragment() {
                         val issue = arguments?.getString("issue")
                         val jsonRes = arguments?.getParcelableArrayList<LotteryBet>("lotteryBet")
                         val bean = arrayListOf<BetBean>()
+                        LogUtils.e("************--->"+jsonRes)
                         if (jsonRes != null) {
                             for (js in jsonRes) {
                                 val result = BetBean(js.result.play_sec_name, js.result.play_class_name, js.result.money)
                                 bean.add(result)
                             }
                             val followUser = arguments?.getString("followUserId") ?: "0"
-                            lotteryBet(id ?: "", issue ?: "", bean, followUser, jsonRes[0].playName)
+                            lotteryBet(id ?: "", issue ?: "", bean, followUser)
                         }
                     } catch (e: Exception) {
                          ToastUtils.showToast(e.message.toString())
@@ -201,7 +203,8 @@ class LiveRoomBetAccessFragment : BottomDialogFragment() {
      * 投注 跟投
      * play_bet_follow_user	跟投用户id，默认0为正常投注
      */
-    private fun lotteryBet(play_bet_lottery_id: String, play_bet_issue: String, order_detail: ArrayList<BetBean>, play_bet_follow_user: String, playName: String) {
+    private fun lotteryBet(play_bet_lottery_id: String, play_bet_issue: String, order_detail: ArrayList<BetBean>, play_bet_follow_user: String) {
+       LogUtils.e("************--->"+order_detail)
         orderMap = hashMapOf()
         val goon = GsonBuilder().disableHtmlEscaping().create()
         val orderString = goon.toJson(order_detail).toString()
@@ -220,7 +223,7 @@ class LiveRoomBetAccessFragment : BottomDialogFragment() {
                     if (UserInfoSp.getUserType() == "1" && (arguments?.getBoolean("isFollow") == false)) {
                         val dialog = context?.let { it1 -> DialogGlobalTips(it1, "投注成功", "分享方案", "确定", "") }
                         dialog?.setConfirmClickListener {
-                            getShareOrder(playName)
+                            getShareOrder()
                         }
                         dialog?.show()
                     } else context?.let { it1 -> DialogGlobalTips(it1, "投注成功", "确定", "", "").show() }
@@ -238,15 +241,12 @@ class LiveRoomBetAccessFragment : BottomDialogFragment() {
     }
 
     //拼接分享注单
-    private fun getShareOrder(name: String) {
-//        LogUtils.e("---->>>"+arguments?.getParcelableArrayList<LotteryBet>("lotteryBet"))
+    private fun getShareOrder() {
         val jsonRes = arguments?.getParcelableArrayList<LotteryBet>("lotteryBet")
         val goon = GsonBuilder().disableHtmlEscaping().create()
         val bean = arrayListOf<BetShareBean>()
-//        val typeName = arguments?.getString("lotteryNameType") ?: ""
         if (jsonRes != null) {
             for (js in jsonRes) {
-//                typeName + name
                 val result = BetShareBean(js.playName, js.result.money, js.result.play_class_cname,
                         js.result.play_class_name, js.result.play_odds, js.result.play_sec_name)
                 bean.add(result)
@@ -258,11 +258,9 @@ class LiveRoomBetAccessFragment : BottomDialogFragment() {
         json.put("lottery_cid", arguments?.getString("lotteryName") ?: "")
         json.put("order_detail", goon.toJson(bean))
         json.put("isBalance", arguments?.getBoolean("isBalanceBet"))
-//        LogUtils.e("---->>>"+json)
         RxBus.get().post(LotteryShareBet(true, json))
     }
-
-    fun initLoading() {
+    private fun initLoading() {
         loadingDialog = context?.let { LoadingDialog(it) }
         loadingDialog?.setCanceledOnTouchOutside(false)
 

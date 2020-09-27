@@ -89,5 +89,8 @@ data class WebSelect(val pos:Int)
 
 data class ToBetView(val pos:Int)
 
+//重置
+data class LotteryResetDiamond(var reset: Boolean)
+
 //投注彩种变化
 data class ChangeLottery(val lotteryId:String)

@@ -6,6 +6,7 @@ import android.view.Gravity
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import com.bet.R
+import com.customer.component.dialog.GlobalDialog
 import com.customer.data.lottery.LotteryApi
 import com.customer.data.mine.MineApi
 import com.lib.basiclib.base.mvp.BaseMvpPresenter
@@ -79,7 +80,9 @@ class GameLotteryBetFragment1Presenter : BaseMvpPresenter<GameLotteryBetFragment
 
     @SuppressLint("SetTextI18n")
      fun setTotal() {
-        mView.betCount = if (mView.betList.isEmpty()) 1 else (mView.betList.size)
+        if (mView.rightTop.contains("二中") || mView.rightTop.contains("三中")){
+                mView.betCount = 1
+            }else mView.betCount = if (mView.betList.isEmpty()) 1 else (mView.betList.size)
         mView.tvGameBetCount.text = "共" + (mView.betCount) + "注"
         mView.tvGameTotalMoney.text = (mView.betTotalMoney * (mView.betCount)).toString()
     }
@@ -97,9 +100,6 @@ class GameLotteryBetFragment1Presenter : BaseMvpPresenter<GameLotteryBetFragment
                         if (mView.is_bl_play == 0) {
                             if ( mView.tvUserDiamond != null)  mView.tvUserDiamond.text =  mView.userDiamond
                         }
-                    }
-                    onFailed {
-                        ToastUtils.showToast(it.getMsg())
                     }
                 }
             }
@@ -120,7 +120,7 @@ class GameLotteryBetFragment1Presenter : BaseMvpPresenter<GameLotteryBetFragment
                 }
             }
             onFailed {
-                ToastUtils.showToast(it.getMsg())
+                GlobalDialog.showError(mView.requireActivity(), it)
             }
         }
         getUserDiamond()

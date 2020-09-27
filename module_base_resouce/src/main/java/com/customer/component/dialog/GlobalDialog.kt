@@ -22,10 +22,10 @@ object GlobalDialog {
 
     //未登录
     fun notLogged(context: Activity, horizontal: Boolean = false) {
-        loginTipsDialog = DialogLoginTips(context, horizontal)
+      loginTipsDialog = DialogLoginTips(context, horizontal)
         spClear()
         if (!loginTipsDialog?.isShowing!!) { if (context.isFinishing) { return }
-            loginTipsDialog?.show()
+           loginTipsDialog?.show()
         }
     }
 

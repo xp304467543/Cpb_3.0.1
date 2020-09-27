@@ -4,11 +4,15 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.bet.R
 import com.customer.data.ChangeLottery
+import com.customer.data.HomeJumpToMine
 import com.customer.data.lottery.LotteryTypeResponse
 import com.hwangjr.rxbus.RxBus
+import com.hwangjr.rxbus.annotation.Subscribe
+import com.hwangjr.rxbus.thread.EventThread
 import com.lib.basiclib.base.mvp.BaseMvpActivity
 import com.lib.basiclib.base.xui.adapter.FragmentAdapter
 import com.lib.basiclib.base.xui.widget.picker.widget.OptionsPickerView
@@ -24,7 +28,9 @@ import com.lib.basiclib.widget.tab.buildins.commonnavigator.abs.IPagerTitleView
 import com.lib.basiclib.widget.tab.buildins.commonnavigator.indicators.LinePagerIndicator
 import com.lib.basiclib.widget.tab.buildins.commonnavigator.titles.ClipPagerTitleView
 import com.lib.basiclib.widget.tab.buildins.commonnavigator.titles.badge.BadgePagerTitleView
+import com.services.HomeService
 import com.xiaojinzi.component.anno.RouterAnno
+import com.xiaojinzi.component.impl.service.ServiceManager
 import kotlinx.android.synthetic.main.act_game_lottery_bet.*
 
 /**
@@ -47,6 +53,8 @@ class GameLotteryBetActivity : BaseMvpActivity<GameLotteryBetActivityPresenter>(
         GameLotteryBetActivityPresenter()
 
     override fun isOverride() = true
+
+    override fun isRegisterRxBus() = true
 
     override fun isSwipeBackEnable() = true
 
@@ -79,12 +87,12 @@ class GameLotteryBetActivity : BaseMvpActivity<GameLotteryBetActivityPresenter>(
     }
 
     var betFragment : GameLotteryBetFragment1? = null
-    var orderFragment:GameLotteryBetFragment2 ? = null
+    var orderFragment:Fragment ? = null
     var hotFragment: GameLotteryBetFragment3 ? = null
     private fun initGameViewPager(){
         val dataList = arrayListOf("投注区","我的注单","热门直播")
         if (betFragment == null )betFragment = GameLotteryBetFragment1.newInstance(lotteryId)
-        if (orderFragment == null )orderFragment = GameLotteryBetFragment2.newInstance(lotteryId)
+        if (orderFragment == null )orderFragment = ServiceManager.get(HomeService::class.java)?.getRecordFragment()
         if (hotFragment == null )hotFragment = GameLotteryBetFragment3.newInstance(lotteryId)
         val fragments = listOf(betFragment, orderFragment, hotFragment)
         gameBetViewPager.offscreenPageLimit = 3
@@ -141,5 +149,13 @@ class GameLotteryBetActivity : BaseMvpActivity<GameLotteryBetActivityPresenter>(
             .setContentTextSize(18)
             .build()
         gameOptions?.setPicker(final)
+    }
+
+    /**
+     * 跳转mine
+     */
+    @Subscribe(thread = EventThread.MAIN_THREAD)
+    fun onClickMine(clickMine: HomeJumpToMine) {
+        finish()
     }
 }

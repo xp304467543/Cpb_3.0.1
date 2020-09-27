@@ -90,7 +90,6 @@ class HomeRecommendPresenter : BaseMvpPresenter<HomeRecommendFragment>() {
 
                 }
                 resultGetAd.onSuccess { GlideUtil.loadGrayscaleImage(mView.requireContext(),it[0].image_url, mView.imgAd,15)
-
                     mView.imgAd.setOnClickListener { _->
                         Router.withApi(ApiRouter::class.java).toGlobalWeb(it[0].url.toString())
                     }

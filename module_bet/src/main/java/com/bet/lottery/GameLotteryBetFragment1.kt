@@ -12,20 +12,27 @@ import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bet.R
 import com.customer.base.BaseNormalFragment
+import com.customer.component.dialog.BottomBetAccessDialog
+import com.customer.component.dialog.DialogGlobalTips
+import com.customer.component.dialog.GlobalDialog
 import com.customer.data.ChangeLottery
+import com.customer.data.HomeJumpToMine
+import com.customer.data.LotteryResetDiamond
+import com.customer.data.UserInfoSp
 import com.customer.data.lottery.LotteryPlayListResponse
 import com.customer.data.lottery.PlaySecData
 import com.customer.data.lottery.PlaySecDataKj
 import com.customer.data.lottery.PlayUnitData
+import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.thread.EventThread
 import com.lib.basiclib.base.recycle.BaseRecyclerAdapter
 import com.lib.basiclib.base.recycle.RecyclerViewHolder
 import com.lib.basiclib.base.xui.adapter.recyclerview.XLinearLayoutManager
-import com.lib.basiclib.utils.LogUtils
 import com.lib.basiclib.utils.ToastUtils
 import com.lib.basiclib.utils.ViewUtils
 import kotlinx.android.synthetic.main.game_bet_fragment1.*
+import java.math.BigDecimal
 
 /**
  *
@@ -62,6 +69,8 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
     var is_bl_play = 1 //是否余额投注，默认0不是，1是
 
     var issue = "-1" //奖期
+
+    var nextIssue = "-1" //投注奖期
 
     var lotteryId = "-1" //彩种ID
 
@@ -118,7 +127,7 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                 imgIcon?.setBackgroundResource(R.mipmap.ic_diamond_big)
                 tvEnd?.text = "钻"
                 if (tvUserDiamond != null) tvUserDiamond.text = userDiamond
-                minMonty = 0
+                is_bl_play = 0
                 minMonty = 10
                 betTotalMoney = 10
                 mPresenter.setTotal()
@@ -135,6 +144,10 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
         }
 
         tvBetSubmit.setOnClickListener {
+            if (!UserInfoSp.getIsLogin()){
+                GlobalDialog.notLogged(requireActivity())
+                return@setOnClickListener
+            }
             if (!isOpen) {
                 ToastUtils.showToast("当前期已封盘或已开奖，请购买下一期")
                 return@setOnClickListener
@@ -143,10 +156,53 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                 ToastUtils.showToast("未选择任何玩法或投注金额,请选择后再提交")
                 return@setOnClickListener
             }
+            //余额不足
+            val m1 = BigDecimal(tvGameTotalMoney.text.toString())
+            if (is_bl_play == 0){
+               if (userDiamond!="-1"){
+                   val m2 = BigDecimal(userDiamond)
+                  if (m2.compareTo(m1) == -1){
+                      val tips = context?.let { it1 -> DialogGlobalTips(it1, "您的钻石余额不足,请充值", "兑换钻石", "取消", "") }
+                      tips?.setConfirmClickListener {
+                          RxBus.get().post(HomeJumpToMine(true))
+                          tips.dismiss()
+                      }
+                      tips?.show()
+                      return@setOnClickListener
+                  }
+               }else mPresenter.getUserBalance()
+            }else{
+                if (userBalance!="-1"){
+                    val m2 = BigDecimal(userBalance)
+                    if ( m2.compareTo(m1) == -1){
+                        val tips = context?.let { it1 -> DialogGlobalTips(it1, "您的余额不足,请充值", "充值", "取消", "") }
+                        tips?.setConfirmClickListener {
+                            RxBus.get().post(HomeJumpToMine(true))
+                            tips.dismiss()
+                        }
+                        tips?.show()
+                        return@setOnClickListener
+                    }
+                }else mPresenter.getUserBalance()
+            }
             when {
                 rightTop.contains("二中") -> {
                     if (betList.size < 2) {
                         ToastUtils.showToast("二中二必须选择2个号码")
+                        return@setOnClickListener
+                    } else{
+                        val newBetList = arrayListOf<PlaySecData>()
+                        val playClassName = betList[0].play_class_name +"," +betList[1].play_class_name
+                        val playClassCname = betList[0].play_class_cname  +"," + betList[1].play_class_cname
+                        val bean =  PlaySecData(
+                            play_class_name = playClassName,
+                            play_sec_name = betList[0].play_sec_name,
+                            play_sec_cname = betList[0].play_sec_cname ,
+                            play_class_cname = playClassCname ,
+                            play_odds = betList[0].play_odds
+                        )
+                        newBetList.add(bean)
+                        context?.let { it1 -> BottomBetAccessDialog(it1,lotteryId,rightTop,nextIssue,is_bl_play,tvGameTotalMoney.text.toString(),newBetList).show() }
                         return@setOnClickListener
                     }
                 }
@@ -154,10 +210,24 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                     if (betList.size < 3) {
                         ToastUtils.showToast("三中三必须选择3个号码")
                         return@setOnClickListener
+                    } else{
+                        val newBetList = arrayListOf<PlaySecData>()
+                        val playClassName = betList[0].play_class_name + "," + betList[1].play_class_name +"," + betList[2].play_class_name
+                        val playClassCname = betList[0].play_class_cname + "," + betList[1].play_class_cname  + "," + betList[2].play_class_cname
+                        val bean =  PlaySecData(
+                            play_class_name = playClassName,
+                            play_sec_name = betList[0].play_sec_name,
+                            play_sec_cname = betList[0].play_sec_cname,
+                            play_class_cname =  playClassCname,
+                            play_odds = betList[0].play_odds
+                        )
+                        newBetList.add(bean)
+                        context?.let { it1 -> BottomBetAccessDialog(it1,lotteryId,rightTop,nextIssue,is_bl_play,tvGameTotalMoney.text.toString(),newBetList).show() }
+                        return@setOnClickListener
                     }
                 }
             }
-//            ToastUtils.showToast("未选择任何玩法或投注金额,请选择后再提交")
+            context?.let { it1 -> BottomBetAccessDialog(it1,lotteryId,rightTop,nextIssue,is_bl_play,tvGameTotalMoney.text.toString(),betList).show() }
         }
 
         etGameBetPlayMoney.addTextChangedListener(object : TextWatcher {
@@ -200,11 +270,11 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
     }
 
     //当前开奖状态，封盘等等
-    fun lotteryInfo(mIssue: String, mLotteryId: String, open: Boolean) {
+    fun lotteryInfo(mIssue: String,nextIssue:String, mLotteryId: String, open: Boolean) {
         this.issue = mIssue
         this.lotteryId = mLotteryId
         this.isOpen = open
-        ToastUtils.showToast("---" + isOpen)
+        this.nextIssue = nextIssue
     }
 
     private fun initRecycle() {
@@ -316,13 +386,10 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                             if (!item.play_sec_data.isNullOrEmpty()) {
                                 for ((index, result) in item.play_sec_data.withIndex()) {
                                     if (index == 0) listData.add(
-                                        PlaySecData(
-                                            title = item.play_sec_cname,
-                                            type = "lm_full"
-                                        )
+                                        PlaySecData(title = item.play_sec_cname, type = "lm_full")
                                     )  //一行占满
-                                    if (result.play_sec_id != 0 && pos == 0) result.type =
-                                        "lm_4" //一行四个
+                                    if (result.play_sec_id != 0 && pos == 0)  result.type = "lm_4"  //一行四个
+                                    result.title = item.play_sec_cname
                                     listData.add(result)
                                 }
                             }
@@ -343,7 +410,10 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                                             type = "zh_full"
                                         )
                                     )  //一行占满
-                                    if (result.play_sec_id != 0) result.type = "zh_5" //一行五个
+                                    if (result.play_sec_id != 0) {
+                                        result.type = "zh_5"
+                                        result.play_sec_cname = item.play_sec_cname
+                                    } //一行五个
                                     listData.add(result)
                                 }
                             }
@@ -396,7 +466,10 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                                             type = "full"
                                         )
                                     )  //一行占满
-                                    if (result.play_sec_id != 0) result.type = "dh_10_5" //一行五个
+                                    if (result.play_sec_id != 0) {
+                                        result.title = item.play_sec_cname
+                                        result.type = "dh_10_5"
+                                    } //一行五个
                                     listData.add(result)
                                 }
                             }
@@ -411,6 +484,7 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                         for (item in it) {
                             if (!item.play_sec_data.isNullOrEmpty()) {
                                 for (result in item.play_sec_data) {
+                                    result.playName = it[0].play_sec_cname
                                     listData.add(result)
                                 }
                             }
@@ -472,7 +546,8 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                         play_sec_name = data?.play_sec_name ?: "-1",
                         play_class_name = data?.play_class_name ?: "-1",
                         play_sec_cname = data?.title ?: "-1",
-                        play_class_cname = data?.play_class_cname ?: "-1"
+                        play_class_cname = data?.play_class_cname ?: "-1",
+                        play_odds = data?.play_odds ?: "-1"
 
                     )
                     notifyItemChanged(position)
@@ -567,7 +642,10 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                                         play_sec_name = data.play_sec_merge_name ?: "-1",
                                         play_class_name = item.play_class_name ?: "-1",
                                         play_sec_cname = data.play_sec_cname ?: "-1",
-                                        play_class_cname = item.play_class_cname ?: "-1"
+                                        play_class_cname = item.play_class_cname ?: "-1",
+                                        play_odds = item.play_odds?:"-1",
+                                        title = data.play_sec_cname ?: "-1"
+
                                     )
                                 )
                             }
@@ -593,14 +671,16 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                             kjContentList.add(
                                 PlaySecData(
                                     play_class_name = data.play_class_name,
-                                    play_class_cname = data.play_class_cname
+                                    play_class_cname = data.play_class_cname,
+                                    play_odds = data.play_odds
                                 )
                             )
                         else
                             kjContentList.remove(
                                 PlaySecData(
                                     play_class_name = data?.play_class_name,
-                                    play_class_cname = data?.play_class_cname
+                                    play_class_cname = data?.play_class_cname,
+                                    play_odds = data?.play_odds
                                 )
                             )
 
@@ -611,7 +691,10 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                                         play_sec_name = item.play_sec_name ?: "-1",
                                         play_class_name = data.play_class_name ?: "-1",
                                         play_sec_cname = item.play_sec_cname ?: "-1",
-                                        play_class_cname = data.play_class_cname ?: "-1"
+                                        play_class_cname = data.play_class_cname ?: "-1",
+                                        play_odds = data.play_odds?:"-1",
+                                        title = item.play_sec_cname ?: "-1"
+
                                     )
                                 )
                             }
@@ -620,14 +703,11 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                             for (res in betList) {
                                 if (res.play_class_name == data?.play_class_name) {
                                     intList.add(res)
-                                    LogUtils.e("------->" + res)
                                 }
                             }
                             for (count in intList) {
-                                LogUtils.e("------->" + count)
                                 betList.remove(count)
                             }
-                            LogUtils.e("-->" + betList)
                         }
                     }
                     if (betList.isNotEmpty()) setVisible(bottomGameBetLayout) else setGone(
@@ -685,7 +765,8 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                         data?.play_sec_name ?: "-1",
                         data?.play_class_name ?: "-1",
                         data?.title ?: "-1",
-                        data?.play_class_cname ?: "-1"
+                        data?.play_class_cname ?: "-1",
+                        data?.play_odds ?: "-1"
 
                     )
                     notifyItemChanged(position)
@@ -720,10 +801,9 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                     data?.isSelected == true,
                     data?.play_sec_name ?: "-1",
                     data?.play_class_name ?: "-1",
-                    data?.play_sec_cname ?: "-1",
-                    data?.play_class_cname ?: "-1"
-
-
+                    data?.playName ?: "-1",
+                    data?.play_class_cname ?: "-1",
+                    data?.play_odds ?: "-1"
                 )
                 notifyItemChanged(position)
             }
@@ -745,6 +825,7 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
     var currentTriple = 0 //记录三中三选了几个
 
     inner class AdapterDM : BaseRecyclerAdapter<PlaySecData>() {
+        var currentRightTop = "-1"
 
         override fun getItemLayoutId(viewType: Int) = R.layout.adapter_game_bet_content
 
@@ -756,13 +837,20 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
             tv2.text = data?.play_odds.toString()
             changeBg(data?.isSelected, container, tv1, tv2)
             holder.itemView.setOnClickListener {
+                val title =  when{
+                    (rightTop.contains("一中")) -> "一中一"
+                    (rightTop.contains("二中")) -> "二中二"
+                    (rightTop.contains("三中")) -> "三中三"
+                    else -> ""
+                }
                 val bean = PlaySecData(
-                    play_sec_name = data?.play_sec_name ?: "-1",
-                    play_class_name = data?.play_class_name ?: "-1"
+                    play_sec_name = currentRightTop ,
+                    play_class_name = data?.play_class_name ?: "-1",
+                    play_sec_cname = title,
+                    play_class_cname = data?.play_class_cname ?: "-1",
+                    play_odds = data?.play_odds ?: "-1"
                 )
-                var title = "-1"
                 if (rightTop.contains("一中")) {
-                    title = "一中一"
                     if (currentSingle == 1) {
                         if (!betList.contains(bean)) {
                             ToastUtils.showToast("一中一最多选1个号码")
@@ -770,7 +858,6 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                         } else currentSingle--
                     } else currentSingle++
                 } else if (rightTop.contains("二中")) {
-                    title = "二中二"
                     if (currentDouble == 2) {
                         if (!betList.contains(bean)) {
                             ToastUtils.showToast("二中二最多选2个号码")
@@ -780,7 +867,6 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                         if (!betList.contains(bean)) currentDouble++ else currentDouble--
                     }
                 } else if (rightTop.contains("三中")) {
-                    title = "三中三"
                     if (currentTriple == 3) {
                         if (!betList.contains(bean)) {
                             ToastUtils.showToast("三中三最多选3个号码")
@@ -794,10 +880,12 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
 
                 addOrDeleteBetData(
                     data?.isSelected == true,
-                    data?.play_sec_name ?: "-1",
-                    data?.play_class_name ?: "-1",
+                    currentRightTop,
+                    play_class_name = data?.play_class_name ?: "-1",
                     play_sec_cname = title,
-                    play_class_cname = data?.play_class_cname ?: "-1"
+                    play_class_cname = data?.play_class_cname ?: "-1",
+                    play_odds = data?.play_odds ?: "-1"
+
                 )
                 notifyItemChanged(position)
             }
@@ -850,14 +938,15 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                         data?.isSelected == true,
                         data?.play_sec_name ?: "-1",
                         data?.play_class_name ?: "-1",
-                        data?.title ?: "-1",
-                        data?.play_class_cname ?: "-1"
+                        data?.play_sec_cname ?: "-1",
+                        data?.play_class_cname ?: "-1",
+                        data?.play_odds ?: "-1"
+
                     )
                     notifyItemChanged(position)
                 }
             }
         }
-
         fun resetData() {
             for (item in this.data) {
                 if (item.isSelected) item.isSelected = false
@@ -907,6 +996,7 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
             if (currentPos == position) {
                 rightTop = data?.play_sec_cname.toString()
                 data?.isSelected = true
+                dmAdapter?.currentRightTop = data?.play_sec_data?.get(0)?.play_sec_name?:"-1"
             } else data?.isSelected = false
             changeBg(data?.isSelected, container, tv1, tv2)
             if (currentPos == 0) dmAdapter?.refresh(data?.play_sec_data)
@@ -918,7 +1008,6 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                 notifyDataSetChanged()
             }
         }
-
         fun resetData() {
             for (item in this.data) {
                 if (item.isSelected) item.isSelected = false
@@ -932,26 +1021,24 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
         play_sec_name: String,
         play_class_name: String,
         play_sec_cname: String,
-        play_class_cname: String
-    ) {
+        play_class_cname: String,
+        play_odds: String) {
         val bean = PlaySecData(
             play_sec_name = play_sec_name,
             play_class_name = play_class_name,
             play_sec_cname = play_sec_cname,
-            play_class_cname = play_class_cname
-        )
+            play_class_cname = play_class_cname,
+            play_odds = play_odds)
         if (isAdd) {
             betList.add(bean)
         } else betList.remove(bean)
-        LogUtils.e("===*****---->" + betList)
         if (rightTop.contains("二中")) {
             if (betList.size > 1) setVisible(bottomGameBetLayout) else setGone(bottomGameBetLayout)
         } else if (rightTop.contains("三中")) {
             if (betList.size > 2) setVisible(bottomGameBetLayout) else setGone(bottomGameBetLayout)
         } else {
-            if (betList.isNotEmpty()) setVisible(bottomGameBetLayout) else setGone(
-                bottomGameBetLayout
-            )
+            if (betList.isNotEmpty()) setVisible(bottomGameBetLayout) else setGone(bottomGameBetLayout)
+
         }
         mPresenter.setTotal()
     }
@@ -1000,6 +1087,9 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
         kjContentList.clear()
         kjList.clear()
         setGone(bottomGameBetLayout)
+        currentDouble = 0
+        currentSingle = 0
+        currentTriple = 0
     }
 
 
@@ -1026,6 +1116,13 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
             resetAdapter()
             mPresenter.getPlayList(eventBean.lotteryId)
         }
+    }
+
+
+    //余额更新
+    @Subscribe(thread = EventThread.MAIN_THREAD)
+    fun lotteryBet(eventBean: LotteryResetDiamond) {
+        mPresenter.getUserBalance()
     }
 
     companion object {

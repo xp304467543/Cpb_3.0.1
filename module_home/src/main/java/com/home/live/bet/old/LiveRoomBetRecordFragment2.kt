@@ -82,7 +82,7 @@ class LiveRoomBetRecordFragment2 : BaseNormalFragment() {
     }
 
 
-    private fun getResponse() {
+    private fun getResponse(isLoadMore:Boolean = false) {
         adapter?.currentSel = currentSel
         val res = LotteryApi.getLotteryBetHistory(2, page = index, is_bl_play = currentSel)
         res.onSuccess {
@@ -91,17 +91,15 @@ class LiveRoomBetRecordFragment2 : BaseNormalFragment() {
             if (!it.isNullOrEmpty()) {
                 ViewUtils.setVisible(recordTop)
                 ViewUtils.setGone(tvBetRecordHolder)
-                adapter?.refresh(it)
+               if (isLoadMore)adapter?.loadMore(it) else adapter?.refresh(it)
             } else {
                 if (index == 1) {
                     adapter?.clear()
                     rvBetRecord?.removeAllViews()
                     ViewUtils.setVisible(tvBetRecordHolder)
-                    smBetRecord?.setEnableAutoLoadMore(false)
-                    smBetRecord?.setEnableRefresh(false)
                 } else {
                     index--
-                    smBetRecord?.setEnableAutoLoadMore(false)
+                    smBetRecord?.finishLoadMore()
                 }
             }
 

@@ -373,7 +373,7 @@ class MainFragment : BaseContentFragment(), ITheme {
     fun onClickMine(clickMine: HomeJumpToMine) {
         if (clickMine.jump) {
            if (tabMine!=null) tabMine?.isChecked = true
-            showHideFragment(mFragments[4])
+            showHideFragment(mFragments[3])
         }
     }
 
@@ -384,7 +384,7 @@ class MainFragment : BaseContentFragment(), ITheme {
     fun homeJumpToMineCloseLive(clickMine: HomeJumpToMineCloseLive) {
         if (clickMine.jump) {
             if (tabMine!=null) tabMine?.isChecked = true
-            showHideFragment(mFragments[4])
+            showHideFragment(mFragments[3])
         }
     }
 

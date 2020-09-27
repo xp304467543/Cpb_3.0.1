@@ -73,8 +73,8 @@ class GameLotteryBetActivityPresenter : BaseMvpPresenter<GameLotteryBetActivity>
                         mTimer?.start()
                         setContainerCode(it.lottery_id, it.code)
                         mView.setGone(mView.tvOpenCodePlaceHolder)
-                        mView.betFragment?.lotteryInfo(it.issue?:"-1", lotteryId,true)
-                        countDownTimerClose(it.issue?:"-1", lotteryId,it.next_lottery_end_time ?: 0)
+                        mView.betFragment?.lotteryInfo(it.issue?:"-1",it.next_issue?:"-1", lotteryId,true)
+                        countDownTimerClose(it.issue?:"-1",it.next_issue?:"-1", lotteryId,it.next_lottery_end_time ?: 0)
                         isOpenCode = true
                     } else {
                         mTimer?.stop()
@@ -144,7 +144,7 @@ class GameLotteryBetActivityPresenter : BaseMvpPresenter<GameLotteryBetActivity>
     //封盘倒计时
     private var isOpenCode = false  //封盘 判断
     private var timerClose: CountDownTimer? = null
-    private fun countDownTimerClose(issue:String,lotteryId: String,millisUntilFinished: Long) {
+    private fun countDownTimerClose(issue:String,nextIssue:String,lotteryId: String,millisUntilFinished: Long) {
         if (timerClose != null) timerClose?.cancel()
         val timeCountDown = millisUntilFinished * 1000
         timerClose = object : CountDownTimer(timeCountDown, 1000) {
@@ -172,7 +172,7 @@ class GameLotteryBetActivityPresenter : BaseMvpPresenter<GameLotteryBetActivity>
 
             override fun onFinish() {
                 isOpenCode = false
-                mView.betFragment?.lotteryInfo(issue, lotteryId,false)
+                mView.betFragment?.lotteryInfo(issue, nextIssue,lotteryId,false)
                 if (mView.tvCloseTime != null) mView.tvCloseTime.text = "--:--"
             }
         }

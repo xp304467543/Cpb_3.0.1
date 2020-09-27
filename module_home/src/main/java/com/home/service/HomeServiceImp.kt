@@ -1,7 +1,11 @@
 package com.home.service
 
+import androidx.fragment.app.Fragment
+import com.customer.data.home.HomeHotLiveResponse
 import com.home.HomeFragment
+import com.home.live.bet.LiveRoomBetRecordFragment
 import com.home.live.bet.old.LiveRoomBetToolsRulesFragment
+import com.lib.basiclib.base.recycle.BaseRecyclerAdapter
 import com.services.HomeService
 import com.xiaojinzi.component.anno.ServiceAnno
 
@@ -22,4 +26,9 @@ open class HomeServiceImp : HomeService {
     override fun getRulerFragment(lotteryId:String): LiveRoomBetToolsRulesFragment {
         return LiveRoomBetToolsRulesFragment.newInstance(lotteryId)
     }
+
+    override fun getRecordFragment(): Fragment {
+        return LiveRoomBetRecordFragment()
+    }
+
 }

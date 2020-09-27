@@ -4,14 +4,14 @@ import android.graphics.Typeface
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.customer.adapter.HomeHotLiveAdapter
 import com.customer.data.HomeJumpToMine
 import com.customer.data.JumpToBuyLottery
-import com.customer.utils.JsonUtils
-import com.home.R
-import com.home.adapter.HomeHotLiveAdapter
 import com.customer.data.home.HomeApi
 import com.customer.data.home.HomeHotLiveResponse
 import com.customer.data.home.HomeLiveAnchor
+import com.customer.utils.JsonUtils
+import com.home.R
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.thread.EventThread
 import com.lib.basiclib.base.activity.BaseNavActivity

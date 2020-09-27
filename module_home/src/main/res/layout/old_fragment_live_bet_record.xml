@@ -8,6 +8,7 @@
 
 
     <RelativeLayout
+        android:id="@+id/topLayout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_50">
 
@@ -29,6 +30,7 @@
     </RelativeLayout>
 
     <View
+        android:id="@+id/viewLine"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:background="@color/grey_dd" />

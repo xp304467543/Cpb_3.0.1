@@ -1,9 +1,9 @@
-package com.home.adapter
+package com.customer.adapter
 
 import com.customer.ApiRouter
 import com.glide.GlideUtil
-import com.home.R
 import com.customer.data.home.HomeHotLiveResponse
+import com.fh.module_base_resouce.R
 import com.lib.basiclib.base.recycle.BaseRecyclerAdapter
 import com.lib.basiclib.base.recycle.RecyclerViewHolder
 import com.lib.basiclib.utils.ViewUtils

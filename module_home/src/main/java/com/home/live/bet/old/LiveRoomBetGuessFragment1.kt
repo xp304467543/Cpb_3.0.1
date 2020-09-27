@@ -73,53 +73,56 @@ class LiveRoomBetGuessFragment1 : BaseNormalFragment() {
                 when (this.play_sec_cname) {
                     "二中二" -> {
                         if (moreSelect == null) moreSelect = arrayListOf()
-                        if (!play_sec_data?.get(position)?.isSelected!!) {
-                            moreSelect?.add(Bet2Bean(play_sec_data?.get(position)?.play_class_cname.toString(),
-                                play_sec_data?.get(position)?.play_class_name.toString()
+                        if (!play_sec_data.get(position).isSelected) {
+                            moreSelect?.add(Bet2Bean(
+                                play_sec_data[position].play_class_cname.toString(),
+                                play_sec_data.get(position).play_class_name.toString()
                             ))
                             if (moreSelect?.size!! > 2) {
-                                moreSelect?.remove(Bet2Bean(play_sec_data?.get(position)?.play_class_cname.toString(),
-                                    play_sec_data?.get(position)?.play_class_name.toString()
+                                moreSelect?.remove(Bet2Bean(
+                                    play_sec_data[position].play_class_cname.toString(),
+                                    play_sec_data[position].play_class_name.toString()
                                 ))
                                 ToastUtils.showToast("二中二最多选2个号码")
                             } else {
-                                play_sec_data?.get(position)?.isSelected = true
+                                play_sec_data[position].isSelected = true
                                 adapter?.notifyDataSetChanged()
                                 if (moreSelect?.size == 2) {
-                                    val data = PlaySecData(moreSelect!![0].play_class_cname + "," + moreSelect!![1].play_class_cname, play_sec_data?.get(position)?.play_class_id,
-                                        play_sec_data?.get(position)?.play_sec_name,
-                                            moreSelect!![0].play_class_name + "," + moreSelect!![1].play_class_name, play_sec_data?.get(position)?.play_odds, isSelected = true)
-                                    val bean = LotteryBet(data, this.play_sec_cname!!)
+                                    val data = PlaySecData(moreSelect!![0].play_class_cname + "," + moreSelect!![1].play_class_cname, play_sec_data[position].play_class_id,
+                                        play_sec_data[position].play_sec_name,
+                                            play_class_name = moreSelect!![0].play_class_name + "," + moreSelect!![1].play_class_name, play_odds = play_sec_data[position].play_odds, isSelected = true)
+                                    val bean = LotteryBet(data, this.play_sec_cname)
                                     RxBus.get().post(bean)
                                 }
                             }
                         } else {
-                            moreSelect?.remove(Bet2Bean(play_sec_data?.get(position)?.play_class_cname.toString(),
-                                play_sec_data?.get(position)?.play_class_name.toString()
+                            moreSelect?.remove(Bet2Bean(play_sec_data.get(position).play_class_cname.toString(),
+                                play_sec_data.get(position).play_class_name.toString()
                             ))
-                            play_sec_data?.get(position)?.isSelected = false
+                            play_sec_data.get(position).isSelected = false
                             adapter?.notifyDataSetChanged()
-                            RxBus.get().post(LotteryBet(play_sec_data?.get(position)!!,
-                                this.play_sec_cname!!
+                            RxBus.get().post(LotteryBet(
+                                play_sec_data[position],
+                                this.play_sec_cname
                             ))
                         }
                         RxBus.get().post(LotteryCurrent(this.play_sec_cname,moreSelect?.size?:0))
                     }
                     "三中三" -> {
                         if (threeSelect == null) threeSelect = arrayListOf()
-                        if (!play_sec_data?.get(position)?.isSelected) {
-                            threeSelect?.add(Bet2Bean(play_sec_data?.get(position)?.play_class_cname.toString(),
-                                play_sec_data?.get(position)?.play_class_name.toString()
+                        if (!play_sec_data.get(position).isSelected) {
+                            threeSelect?.add(Bet2Bean(play_sec_data.get(position).play_class_cname.toString(),
+                                play_sec_data.get(position).play_class_name.toString()
                             ))
                             if (threeSelect?.size!! > 3) {
-                                threeSelect?.remove(Bet2Bean(play_sec_data?.get(position).play_class_cname, play_sec_data[position].play_class_name))
+                                threeSelect?.remove(Bet2Bean(play_sec_data.get(position).play_class_cname, play_sec_data[position].play_class_name))
                                 ToastUtils.showToast("三中三最多选3个号码")
                             } else {
                                 play_sec_data[position].isSelected = true
                                 adapter?.notifyDataSetChanged()
                                 if (threeSelect?.size == 3) {
                                     val data = PlaySecData(threeSelect!![0].play_class_cname + "," + threeSelect!![1].play_class_cname + "," + threeSelect!![2].play_class_cname, play_sec_data[position].play_class_id, play_sec_data[position].play_sec_name,
-                                            threeSelect!![0].play_class_name + "," + threeSelect!![1].play_class_name + "," + threeSelect!![2].play_class_name, play_sec_data[position].play_odds, isSelected = true)
+                                            play_class_name = threeSelect!![0].play_class_name + "," + threeSelect!![1].play_class_name + "," + threeSelect!![2].play_class_name, play_odds = play_sec_data[position].play_odds, isSelected = true)
                                     val bean = LotteryBet(data, this.play_sec_cname)
                                     RxBus.get().post(bean)
                                 }
@@ -201,60 +204,60 @@ class LiveRoomBetGuessFragment1 : BaseNormalFragment() {
                             } else {
                                 play_sec_data[position].isSelected = true
                                 adapter?.notifyDataSetChanged()
-                                RxBus.get().post(LotteryBet(play_sec_data?.get(position)!!,
-                                    this.play_sec_cname!!
+                                RxBus.get().post(LotteryBet(
+                                    play_sec_data[position],
+                                    this.play_sec_cname
                                 ))
                             }
                         } else {
-                            singleSelect4?.remove(Bet2Bean(play_sec_data?.get(position)?.play_class_cname.toString(), play_sec_data[position].play_class_name))
-                            play_sec_data?.get(position)?.isSelected  = false
+                            singleSelect4?.remove(Bet2Bean(play_sec_data.get(position).play_class_cname.toString(), play_sec_data[position].play_class_name))
+                            play_sec_data.get(position).isSelected  = false
                             adapter?.notifyDataSetChanged()
-                            RxBus.get().post(LotteryBet(play_sec_data?.get(position)!!,
-                                this.play_sec_cname!!
+                            RxBus.get().post(LotteryBet(play_sec_data.get(position),
+                                this.play_sec_cname
                             ))
                         }
 
                     }
                     "一中五" -> {
                         if (singleSelect5 == null) singleSelect5 = arrayListOf()
-                        if (!play_sec_data?.get(position)?.isSelected) {
-                            singleSelect5?.add(Bet2Bean(play_sec_data?.get(position)?.play_class_cname.toString(),
-                                play_sec_data?.get(position)?.play_class_name.toString()
+                        if (!play_sec_data.get(position).isSelected) {
+                            singleSelect5?.add(Bet2Bean(play_sec_data.get(position).play_class_cname.toString(),
+                                play_sec_data.get(position).play_class_name.toString()
                             ))
                             if (singleSelect5?.size!! > 1) {
-                                singleSelect5?.remove(Bet2Bean(play_sec_data?.get(position)?.play_class_cname.toString(),
-                                    play_sec_data?.get(position)?.play_class_name.toString()
+                                singleSelect5?.remove(Bet2Bean(play_sec_data.get(position).play_class_cname.toString(),
+                                    play_sec_data.get(position).play_class_name.toString()
                                 ))
                                 ToastUtils.showToast("一中五最多选1个号码")
                             } else {
-                                play_sec_data?.get(position)?.isSelected = true
+                                play_sec_data.get(position).isSelected = true
                                 adapter?.notifyDataSetChanged()
                                 RxBus.get().post(LotteryBet(
-                                    play_sec_data?.get(position)!!,
-                                    this.play_sec_cname!!
+                                    play_sec_data.get(position),
+                                    this.play_sec_cname
                                 ))
                             }
                         } else {
-                            singleSelect5?.remove(Bet2Bean(play_sec_data?.get(position)?.play_class_cname.toString(),
-                                play_sec_data?.get(position)?.play_class_name.toString()
+                            singleSelect5?.remove(Bet2Bean(play_sec_data.get(position).play_class_cname.toString(),
+                                play_sec_data.get(position).play_class_name.toString()
                             ))
-                            play_sec_data?.get(position)?.isSelected = false
+                            play_sec_data.get(position).isSelected = false
                             adapter?.notifyDataSetChanged()
-                            RxBus.get().post(LotteryBet(play_sec_data?.get(position)!!, this.play_sec_cname!!))
+                            RxBus.get().post(LotteryBet(play_sec_data.get(position), this.play_sec_cname))
                         }
 
                     }
 
                     else -> {
-                        if (!play_sec_data?.get(position)?.isSelected) {
-                            play_sec_data?.get(position)?.isSelected = true
+                        if (!play_sec_data.get(position).isSelected) {
+                            play_sec_data.get(position).isSelected = true
                             adapter?.notifyDataSetChanged()
                         } else {
-                            play_sec_data?.get(position)?.isSelected = false
+                            play_sec_data.get(position).isSelected = false
                             adapter?.notifyDataSetChanged()
                         }
-                        RxBus.get().post(LotteryBet(play_sec_data?.get(position)!!, this.play_sec_cname.toString()
-                        ))
+                        RxBus.get().post(LotteryBet(play_sec_data.get(position), this.play_sec_cname))
                     }
                 }
 

@@ -28,11 +28,9 @@ data class LotteryReset(var reset: Boolean)
 //当前选择的
 data class LotteryCurrent(var name: String?,var size:Int?)
 
-//重置
-data class LotteryResetDiamond(var reset: Boolean)
-
 //钻石不足
 data class LotteryDiamondNotEnough(var reset: Boolean)
 
 //分享注单
 data class LotteryShareBet(var reset: Boolean,var order: JSONObject)
+
