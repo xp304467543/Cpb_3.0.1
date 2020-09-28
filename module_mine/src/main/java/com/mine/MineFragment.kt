@@ -14,15 +14,12 @@ import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.thread.EventThread
 import com.lib.basiclib.base.mvp.BaseMvpFragment
 import com.lib.basiclib.utils.FastClickUtil
-import com.mine.children.MineAnchorRecruitAct
-import com.mine.children.MineAttentionAct
-import com.mine.children.MineBillAct
-import com.mine.children.MinePersonalAct
 import com.xiaojinzi.component.anno.RouterAnno
 import com.xiaojinzi.component.impl.Router
 import com.customer.component.dialog.GlobalDialog
 import com.customer.data.mine.ChangeSkin
 import com.lib.basiclib.utils.ViewUtils
+import com.mine.children.*
 import com.mine.children.skin.MineSkinAct
 import cuntomer.them.ITheme
 import cuntomer.them.Theme
@@ -99,6 +96,16 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme {
 
         }
 
+        tvMoneyChange.setOnClickListener {
+            if (!UserInfoSp.getIsLogin()) {
+                GlobalDialog.notLogged(requireActivity())
+                return@setOnClickListener
+            }
+            if (!FastClickUtil.isFastClick()) {
+                startActivity(Intent(activity,MineMoneyCenterAct::class.java))
+            }
+        }
+
         tvChangeDiamond.setOnClickListener {
             if (!UserInfoSp.getIsLogin()) {
                 GlobalDialog.notLogged(requireActivity())
@@ -114,7 +121,18 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme {
             }
         }
 
-        tvRefreshMooney.setOnClickListener {
+        tvBalance.setOnClickListener {
+            if (!UserInfoSp.getIsLogin()) {
+                GlobalDialog.notLogged(requireActivity())
+                return@setOnClickListener
+            }
+            if (!FastClickUtil.isFastClick()) {
+                mPresenter.getUserBalance()
+                mPresenter.getUserDiamond()
+            }
+        }
+
+        tvDiamondBalance.setOnClickListener {
             if (!UserInfoSp.getIsLogin()) {
                 GlobalDialog.notLogged(requireActivity())
                 return@setOnClickListener

@@ -107,8 +107,13 @@
             android:theme="@style/SwipeBackStyle" />
         <activity
             android:name=".children.skin.MineSkinInfoAct"
+            android:theme="@style/SwipeBackStyle" />
 
+        <activity
+            android:name=".children.MineMoneyCenterAct"
             android:theme="@style/SwipeBackStyle" />
     </application>
+
+
 
 </manifest>

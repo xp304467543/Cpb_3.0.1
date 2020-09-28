@@ -14,7 +14,7 @@ import com.lib.basiclib.app.BaseApplication
  */
 @SuppressLint("ShowToast")
 object ToastUtils {
-    private var toast: Toast? = null //实现不管我们触发多少次Toast调用，都只会持续一次Toast显示的时长
+    var toast: Toast? = null //实现不管我们触发多少次Toast调用，都只会持续一次Toast显示的时长
 
     /**
      * 短时间显示Toast【居下】

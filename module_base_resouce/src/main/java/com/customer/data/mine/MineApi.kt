@@ -3,6 +3,7 @@ package com.customer.data.mine
 import android.text.TextUtils
 import com.customer.data.MineUserDiamond
 import com.customer.data.UserInfoSp
+import com.customer.data.login.LoginApi
 import com.customer.utils.AESUtils
 import com.google.gson.Gson
 import com.rxnetgo.rxcache.CacheMode
@@ -156,6 +157,27 @@ object MineApi : BaseApi {
 
     //投注记录
     private const val LOTTERY_BET_HISTORY = "guess/play_bet_history"
+
+    //第三方平台
+    private const val THIRD = "user/third-platform"
+
+    //棋牌余额
+    private const val CHESS_MONEY ="fhchess/balance"
+
+    //AG余额
+    private const val AG_MONEY ="ag/balance"
+
+    //棋牌上分
+    private const val CHESS_UP ="fhchess/transfer-out"
+
+    //棋牌下分
+    private const val CHESS_DOWN ="fhchess/transfer-in"
+
+    //AG上分
+    private const val AG_UP ="ag/transfer-out"
+
+    //AG下分
+    private const val AG_DOWN ="ag/transfer-in"
 
     /**
      * 获取用户信息
@@ -919,6 +941,74 @@ object MineApi : BaseApi {
             .headers("Authorization", UserInfoSp.getTokenWithBearer())
             .params("avatar", "data:image/png;base64,$str")
             .subscribe(subscriber)
+    }
+
+
+    /**
+     * 第三方平台
+     */
+    fun getThird(function: ApiSubscriber<ArrayList<Third>>.() -> Unit){
+        val subscriber = object : ApiSubscriber<ArrayList<Third>>() {}
+        subscriber.function()
+        getApiOther().get<ArrayList<Third>>(THIRD)
+            .headers("Authorization", UserInfoSp.getTokenWithBearer())
+            .subscribe(subscriber)
+    }
+
+    /**
+     * 棋牌余额
+     */
+    fun getChessMoney(function: ApiSubscriber<AgMoney>.() -> Unit){
+        val subscriber = object : ApiSubscriber<AgMoney>() {}
+        subscriber.function()
+        getApiOther().get<AgMoney>(CHESS_MONEY)
+            .headers("Authorization", UserInfoSp.getTokenWithBearer())
+            .subscribe(subscriber)
+    }
+
+    /**
+     * AG余额
+     */
+    fun getAgMoney(function: ApiSubscriber<AgMoney>.() -> Unit){
+        val subscriber = object : ApiSubscriber<AgMoney>() {}
+        subscriber.function()
+        getApiOther().get<AgMoney>(AG_MONEY)
+            .headers("Authorization", UserInfoSp.getTokenWithBearer())
+            .subscribe(subscriber)
+    }
+
+    /**
+     * AG 上分 下分
+     */
+    fun getAgMoneyUpOrDown(upOrDown: Boolean,amount:String,function: AllEmptySubscriber.() -> Unit){
+        val subscriber = AllEmptySubscriber()
+        subscriber.function()
+        val map = hashMapOf<String, Any>()
+        map["amount"] = amount
+        AESUtils.encrypt(UserInfoSp.getRandomStr(), Gson().toJson(map))?.let {
+            getApiOther().post<String>(if (upOrDown) AG_UP else AG_DOWN).isMultipart(true)
+                .params("datas", it)
+                .headers("Authorization", UserInfoSp.getTokenWithBearer())
+                .subscribe(subscriber)
+        }
+    }
+
+
+    /**
+     * 棋牌 上分 下分
+     */
+    fun getChessMoneyUpOrDown(upOrDown: Boolean,amount:String,function: AllEmptySubscriber.() -> Unit){
+        val subscriber = AllEmptySubscriber()
+        subscriber.function()
+        val map = hashMapOf<String, Any>()
+        map["amount"] = amount
+        AESUtils.encrypt(UserInfoSp.getRandomStr(), Gson().toJson(map))?.let {
+            getApiOther().post<String>(if (upOrDown) CHESS_UP else CHESS_DOWN).isMultipart(true)
+                .headers("Authorization", UserInfoSp.getTokenWithBearer())
+                .params("datas", it)
+                .subscribe(subscriber)
+        }
+
     }
 
 }

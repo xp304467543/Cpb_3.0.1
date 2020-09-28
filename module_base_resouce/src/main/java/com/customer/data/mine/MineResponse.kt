@@ -290,4 +290,8 @@ data class BetLotteryBean(
 )
 
 
+data class AgMoney(val bl:String?)
+
+data class Third(val name:String?,val name_cn:String?)
+
 data class StartBanner(var type: String?, var image_url: String?, var url: String?)

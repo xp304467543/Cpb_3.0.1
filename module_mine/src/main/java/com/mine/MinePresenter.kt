@@ -77,13 +77,14 @@ class MinePresenter : BaseMvpPresenter<MineFragment>() {
     @SuppressLint("SetTextI18n")
     fun getUserBalance() {
         if (mView.isActive()) {
-            MineApi.getUserBalance {
-                onSuccess {
-                    mView.tvBalance?.text = it.balance.toString()
-//                    mView.setBalance(it.balance.toString())
-                }
-                onFailed {
-                    GlobalDialog.showError(mView.requireActivity(), it)
+            if (mView.isActive()){
+                MineApi.getUserBalance {
+                    onSuccess {
+                        mView.tvBalance?.text = it.balance.toString()
+                    }
+                    onFailed {
+                        GlobalDialog.showError(mView.requireActivity(), it)
+                    }
                 }
             }
         }
@@ -92,12 +93,13 @@ class MinePresenter : BaseMvpPresenter<MineFragment>() {
     //获取钻石
     fun getUserDiamond() {
         MineApi.getUserDiamond {
-            onSuccess {
-                RxBus.get().post(it)
-//                getUserDiamondSuccessListener?.invoke(it.diamond)
-            }
-            onFailed {
+            if (mView.isActive()){
+                onSuccess {
+                    RxBus.get().post(it)
+                }
+                onFailed {
 //                getUserDiamondFailedListener?.invoke(it)
+                }
             }
         }
     }

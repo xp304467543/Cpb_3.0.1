@@ -1,5 +1,6 @@
 package com.lib.basiclib.base.xui.widget.popupwindow.popup;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -45,18 +46,16 @@ public abstract class XUIBasePopup {
      *
      * @param context Context
      */
+    @SuppressLint("ClickableViewAccessibility")
     public XUIBasePopup(Context context) {
         mContext = context;
         mPopupWindow = new PopupWindow(context);
-        mPopupWindow.setTouchInterceptor(new OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
-                    mPopupWindow.dismiss();
-                    return false;
-                }
+        mPopupWindow.setTouchInterceptor((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
+                mPopupWindow.dismiss();
                 return false;
             }
+            return false;
         });
 
         mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);

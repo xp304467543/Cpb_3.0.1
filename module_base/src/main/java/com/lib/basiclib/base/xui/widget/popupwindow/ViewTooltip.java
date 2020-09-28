@@ -410,6 +410,7 @@ public class ViewTooltip {
         public void setText(String text) {
             if (mChildView instanceof TextView) {
                 ((TextView) mChildView).setText(Html.fromHtml(text));
+                mChildView.setPadding(10,10,10,10);
             }
             postInvalidate();
         }
