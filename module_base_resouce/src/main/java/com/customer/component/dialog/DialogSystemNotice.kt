@@ -19,13 +19,13 @@ import kotlinx.android.synthetic.main.dialog_system_notice.*
 class DialogSystemNotice(context: Context) : Dialog(context){
 
     init {
-        window!!.setWindowAnimations(R.style.BaseDialogAnim)
+        window?.setWindowAnimations(R.style.BaseDialogAnim)
         setContentView(R.layout.dialog_system_notice)
-        window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        window!!.setGravity(Gravity.CENTER or Gravity.CENTER)
-        val lp = window!!.attributes
+        window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        window?.setGravity(Gravity.CENTER or Gravity.CENTER)
+        val lp = window?.attributes
 //      lp.alpha = 0.7f // 透明度
-        window!!.attributes = lp
+        window?.attributes = lp
         setCanceledOnTouchOutside(true)
         btNotice.setOnClickListener {
             dismiss()

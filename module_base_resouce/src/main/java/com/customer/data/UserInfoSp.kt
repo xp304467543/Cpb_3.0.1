@@ -384,7 +384,7 @@ object UserInfoSp {
     }
 
     /**
-     * 主题 1-默认 2-春节 3-中秋 4-情人节
+     * 主题 1-默认 2-春节 3-中秋 4-情人节 5-国庆
      */
     fun putThem(int: Int) {
         SpUtils.putInt("ThemSelect", int)
@@ -403,6 +403,9 @@ object UserInfoSp {
             }
             4 -> {
                 Theme.LoverDay
+            }
+            5 ->{
+                Theme.NationDay
             }
             else -> Theme.Default
         }

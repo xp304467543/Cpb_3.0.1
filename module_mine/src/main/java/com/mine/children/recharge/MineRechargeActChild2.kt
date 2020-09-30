@@ -18,6 +18,7 @@ import com.customer.data.mine.MineUpDateMoney
 import com.customer.component.dialog.GlobalDialog
 import com.customer.data.UserInfoSp
 import com.customer.data.MineSaveBank
+import com.lib.basiclib.utils.FastClickUtil
 import com.xiaojinzi.component.impl.Router
 import kotlinx.android.synthetic.main.fragment_cash_out.*
 import java.math.BigDecimal
@@ -52,9 +53,11 @@ class MineRechargeActChild2 : BaseMvpFragment<MineRechargeActChild2Presenter>() 
 
     override fun initEvent() {
         rlAddBankItem.setOnClickListener {
-            if (UserInfoSp.getIsSetPayPassWord()) {
-                startActivity(Intent(getPageActivity(), MineAddBankCardAct::class.java))
-            } else GlobalDialog.noSetPassWord(requireActivity())
+            if (FastClickUtil.isFastClick()){
+                if (UserInfoSp.getIsSetPayPassWord()) {
+                    startActivity(Intent(getPageActivity(), MineAddBankCardAct::class.java))
+                } else GlobalDialog.noSetPassWord(requireActivity())
+            }
         }
         tvGetMoneyAll.setOnClickListener {
             etGetMoneyToBank.setText(balanceNow)

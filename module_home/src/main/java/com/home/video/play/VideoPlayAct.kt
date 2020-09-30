@@ -85,27 +85,29 @@ class VideoPlayAct : BaseMvpActivity<VideoPlayActPresenter>() {
         adapter?.setOnItemClickListener{
             itemView, item, position ->
             isRefreshAdapter = false
+            titleViewController?.setTitle(item.title)
             item?.id?.let { mPresenter.getVideoAddress(it) }
         }
     }
 
 
+    private var titleViewController:VodTitleView?=null
     private fun initVideo() {
         val controller = StandardVideoController(this)
         val completeView = VodCompleteView(this)
         val errorView = VodErrorView(this)
         val prepareView = VodPrepareView(this)
-        val titleView = VodTitleView(this)
         val vodControlView = VodControlView(this)
         val gestureControlView = VodGestureView(this)
+        titleViewController =  VodTitleView(this)
         controller.addControlComponent(completeView)
         controller.addControlComponent(errorView)
         controller.addControlComponent(prepareView)
-        controller.addControlComponent(titleView)
+        controller.addControlComponent(titleViewController)
         controller.addControlComponent(vodControlView)
         controller.addControlComponent(gestureControlView)
         controller.addControlComponent(VodTryView(this))
-        titleView.setTitle(intent.getStringExtra("videoTitle"))
+        titleViewController?.setTitle(intent.getStringExtra("videoTitle"))
         thumb = prepareView.findViewById(R.id.thumb) //封面图
         controller.setCanChangePosition(true)
         controller.setEnableOrientation(false)

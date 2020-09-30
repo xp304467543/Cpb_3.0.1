@@ -17,7 +17,7 @@ class DialogCommentsSuccess (context: Context) : Dialog(context) {
     init {
         setContentView(R.layout.dialog_comment_success)
         window?.setBackgroundDrawableResource(R.color.transparent)
-//        val lp = window!!.attributes
+//        val lp = window?.attributes
 //        lp.width = ViewUtils.dp2px(210)
 //        lp.height = ViewUtils.dp2px(194)
     }  }

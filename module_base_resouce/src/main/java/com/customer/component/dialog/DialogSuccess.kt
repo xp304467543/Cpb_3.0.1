@@ -19,13 +19,13 @@ import kotlinx.android.synthetic.main.dialog_success.*
 class DialogSuccess (context: Context, content: String, img: Int) : Dialog(context) {
     init {
         setContentView(R.layout.dialog_success)
-        window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        window!!.setGravity(Gravity.CENTER or Gravity.CENTER)
-        val lp = window!!.attributes
-        lp.width = ViewUtils.dp2px(190) // 宽度
-        lp.height = ViewUtils.dp2px(80)  // 高度
+        window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        window?.setGravity(Gravity.CENTER or Gravity.CENTER)
+        val lp = window?.attributes
+        lp?.width = ViewUtils.dp2px(190) // 宽度
+        lp?.height = ViewUtils.dp2px(80)  // 高度
 //      lp.alpha = 0.7f // 透明度
-        window!!.attributes = lp
+        window?.attributes = lp
         setCanceledOnTouchOutside(true)
         initText(content, img)
     }

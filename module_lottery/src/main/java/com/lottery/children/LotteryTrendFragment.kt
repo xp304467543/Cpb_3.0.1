@@ -117,7 +117,7 @@ class LotteryTrendFragment : BaseNormalFragment<LotteryTrendPresenter>() {
                 this.typeSelect = LotteryConstant.TYPE_17
                 tvTrendSelectAll.text = "冠军"
             }
-            "1", "10" -> { //5码
+            "1", "10","28" -> { //5码
                 this.limit = "10"
                 this.typeSelect = LotteryConstant.TYPE_19
             }
@@ -139,7 +139,7 @@ class LotteryTrendFragment : BaseNormalFragment<LotteryTrendPresenter>() {
                     .build()
                 bottomWheelViewDialog?.setPicker(list)
             }
-            "1", "10" -> { //5码
+            "1", "10","28" -> { //5码
                 val listForm = arrayListOf("前三形态", "中三形态", "后三形态")
                 bottomFormWheelViewDialog = OptionsPickerBuilder(context){v, options1, options2, options3 ->
                     this.typeSelect = listForm[options1]

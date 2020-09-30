@@ -37,11 +37,11 @@ object ApiConstant {
 
     const val API_MOMENTS_TEST = "http://121.127.228.235:18000/forum/"
 
-    const val API_LOTTERY_BET_TEST = "http://156.227.88.24:18306/"
+    const val API_LOTTERY_BET_TEST = "http://18.136.235.23:18306/"
 
     const val API_VIDEO_TEST ="http://47.244.212.147:18306"
 
-    const val isTest = true
+    const val   isTest = false
 
 
 

@@ -30,7 +30,27 @@ class MineGameReportMorePresenter : BaseMvpPresenter<MineGameReportMoreAct>() {
                 }
             }
             onFailed {
-                ToastUtils.showToast("获取失败")
+                ToastUtils.showToast(it.getMsg())
+            }
+        }
+    }
+
+    fun getGameInfo(index:Int, start: String, end: String){
+        MineApi.getGameInfo(index,start,end){
+            onSuccess { it ->
+                if (mView.isActive()){
+                    mView.lotteryAdapter?.clear()
+                    if (it.isNullOrEmpty()){
+                        mView.gameAdapter?.notifyDataSetChanged()
+                        mView.setVisible(R.id.place_holder)
+                    }else{
+                        mView.setGone(R.id.place_holder)
+                        mView.gameAdapter?.refresh(it)
+                    }
+                }
+                onFailed {
+                    ToastUtils.showToast(it.getMsg())
+                }
             }
         }
     }

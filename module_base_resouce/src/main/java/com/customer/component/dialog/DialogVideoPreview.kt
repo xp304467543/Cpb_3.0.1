@@ -22,8 +22,8 @@ class DialogVideoPreview (context: Context) : Dialog(context, R.style.dialog){
     }
 
     init {
-        window!!.setWindowAnimations(R.style.BaseDialogAnim)
-        window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        window?.setWindowAnimations(R.style.BaseDialogAnim)
+        window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         setContentView(R.layout.dialog_video_preview)
         close.setOnClickListener { dismiss() }
         toPerView.setOnClickListener { setIsLoginListener?.invoke(true) }

@@ -26,8 +26,8 @@ class DialogSendRed(context: Context, val isHor: Boolean) : Dialog(context) {
 
 
     init {
-        window!!.setWindowAnimations(R.style.BaseDialogAnim)
-        window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        window?.setWindowAnimations(R.style.BaseDialogAnim)
+        window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         window?.setDimAmount(0.2f)
         if (isHor) {  //是否横屏显示
             setContentView(R.layout.dialog_send_red_hor)

@@ -66,12 +66,12 @@ class LotteryExpertFragment : BaseNormalFragment<LotteryExpertFragmentPresenter>
                             lotteryExpertPlanSmartRefreshLayout.finishLoadMore()
                         }
                         if (adapter != null && it.isNotEmpty()) {
+                            setGone(holderNone)
                             if (load == 0) {
                                 adapter?.refresh(it)
                             } else adapter?.loadMore(it)
                         } else if (lotteryExpertPlanSmartRefreshLayout != null) {
-                            if (load != 0)
-                                lotteryExpertPlanSmartRefreshLayout.setNoMoreData(true)
+                            if (load != 0) lotteryExpertPlanSmartRefreshLayout.setNoMoreData(true) else setVisible(holderNone)
                         }
                         setGone(expertPlaceHolder)
                     }

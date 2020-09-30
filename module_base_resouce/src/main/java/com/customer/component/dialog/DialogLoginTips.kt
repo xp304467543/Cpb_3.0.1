@@ -32,12 +32,12 @@ class DialogLoginTips (context: Context, val horizontal: Boolean) : Dialog(conte
 
 
     init {
-        window!!.setWindowAnimations(R.style.BaseDialogAnim)
+        window?.setWindowAnimations(R.style.BaseDialogAnim)
         setContentView(R.layout.dialog_login_tips)
-        val lp = window!!.attributes
-        window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        lp.height = ViewUtils.dp2px(330)
-        window!!.attributes = lp
+        val lp = window?.attributes
+        window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        lp?.height = ViewUtils.dp2px(330)
+        window?.attributes = lp
         initEvent()
     }
 

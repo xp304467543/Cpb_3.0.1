@@ -119,7 +119,7 @@ class LiveActPresenter : BaseMvpPresenter<LiveRoomActivity>() {
                         content.add(bean)
                     }
                     if (mView.bottomHorGiftWindow != null) {
-                        mView.bottomHorGiftWindow!!.setData(type, content)
+                        mView.bottomHorGiftWindow?.setData(type, content)
                     }
                 }
                 onFailed {

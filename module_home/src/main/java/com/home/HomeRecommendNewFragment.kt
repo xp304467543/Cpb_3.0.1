@@ -1,21 +1,36 @@
 package com.home
 
+import android.content.Context
+import android.content.Intent
 import android.text.TextUtils
 import androidx.recyclerview.widget.GridLayoutManager
 import com.customer.ApiRouter
 import com.customer.adapter.HomeHotLiveAdapter
+import com.customer.component.dialog.GlobalDialog
+import com.customer.component.rain.RainViewGroup
+import com.customer.data.ToBetView
 import com.customer.data.UserInfoSp
+import com.customer.data.game.GameApi
 import com.customer.data.home.Game
 import com.customer.data.home.HomeHotLiveResponse
 import com.customer.data.home.HomeSystemNoticeResponse
-import com.home.adapter.HomeGameRvAdapter
+import com.customer.data.mine.ChangeSkin
+import com.glide.GlideUtil
+import com.home.children.MoreAnchorAct
+import com.hwangjr.rxbus.RxBus
+import com.hwangjr.rxbus.annotation.Subscribe
+import com.hwangjr.rxbus.thread.EventThread
 import com.lib.basiclib.base.mvp.BaseMvpFragment
+import com.lib.basiclib.base.recycle.BaseRecyclerAdapter
+import com.lib.basiclib.base.recycle.RecyclerViewHolder
 import com.lib.basiclib.base.xui.widget.banner.widget.banner.BannerItem
 import com.lib.basiclib.utils.FastClickUtil
+import com.lib.basiclib.utils.ToastUtils
 import com.xiaojinzi.component.impl.Router
 import cuntomer.them.ITheme
 import cuntomer.them.Theme
 import kotlinx.android.synthetic.main.fragment_home_recommend_new.*
+
 
 /**
  *
@@ -25,8 +40,6 @@ import kotlinx.android.synthetic.main.fragment_home_recommend_new.*
  *
  */
 class HomeRecommendNewFragment : BaseMvpFragment<HomeRecommendNewPresenter>(), ITheme {
-
-
 
 
     override fun attachView() = mPresenter.attachView(this)
@@ -59,6 +72,21 @@ class HomeRecommendNewFragment : BaseMvpFragment<HomeRecommendNewPresenter>(), I
         }
     }
 
+    override fun initEvent() {
+        tvHotLiveMore?.setOnClickListener {
+            if (!FastClickUtil.isFastClick()) startActivity(
+                Intent(
+                    requireActivity(),
+                    MoreAnchorAct::class.java
+                )
+            )
+        }
+
+        tvGameMore?.setOnClickListener {
+            if (!FastClickUtil.isFastClick()) RxBus.get().post(ToBetView(1))
+        }
+    }
+
 
 
     fun upDateBanner(data: List<BannerItem>?) {
@@ -69,7 +97,7 @@ class HomeRecommendNewFragment : BaseMvpFragment<HomeRecommendNewPresenter>(), I
                 result.add(BannerItem())
             }
         } else result = data
-        if (BannerView!=null){
+        if (BannerView != null) {
             BannerView?.setSource(result)?.startScroll()
             BannerView?.setOnItemClickListener { view, item, position ->
                 if (!FastClickUtil.isFastClick()) {
@@ -81,7 +109,7 @@ class HomeRecommendNewFragment : BaseMvpFragment<HomeRecommendNewPresenter>(), I
     }
 
     //========= 公告 =========
-     fun upDateSystemNotice(data: List<HomeSystemNoticeResponse>?) {
+    fun upDateSystemNotice(data: List<HomeSystemNoticeResponse>?) {
         val result = ArrayList<String>()
         val sb = StringBuffer()
         if (data != null && data.isNotEmpty()) {
@@ -95,12 +123,12 @@ class HomeRecommendNewFragment : BaseMvpFragment<HomeRecommendNewPresenter>(), I
     }
 
     //游戏列表
-    var gameAdapter: HomeGameRvAdapter?=null
-    private fun upDateGame(){
+    var gameAdapter: HomeGameRvAdapter? = null
+    private fun upDateGame() {
         val it: List<Game>
         it = ArrayList()
         for (index in 1..6) {
-            it.add(Game(name = "加载中...", img_url = "", game_id = "-1"))
+            it.add(Game(name = "加载中...", img_url = "", id = "-1", type = ""))
         }
         gameAdapter = HomeGameRvAdapter(context)
         val gridLayoutManager = object : GridLayoutManager(context, 3) {
@@ -142,8 +170,77 @@ class HomeRecommendNewFragment : BaseMvpFragment<HomeRecommendNewPresenter>(), I
         hotLiveAdapter?.refresh(it)
     }
 
+    inner class HomeGameRvAdapter(var context: Context?) : BaseRecyclerAdapter<Game>() {
+        override fun getItemLayoutId(viewType: Int): Int {
+            return R.layout.adapter_lotteryview
+        }
 
-
+        override fun bindData(holder: RecyclerViewHolder, position: Int, item: Game?) {
+            context?.let {
+                GlideUtil.loadImage(
+                    it,
+                    item?.img_url,
+                    holder.getImageView(R.id.imgLotteryType)
+                )
+            }
+            holder.text(R.id.tvLotteryTypeName, item?.name)
+            holder.itemView.setOnClickListener {
+                if (!FastClickUtil.isFastClick()) {
+                    if (!UserInfoSp.getIsLogin()){
+                        GlobalDialog.notLogged(requireActivity())
+                        return@setOnClickListener
+                    }
+                    when (item?.type) {
+                        "lott" -> {
+                            Router.withApi(ApiRouter::class.java).toLotteryGame(item.id ?: "-1", item.name ?: "未知")
+                        }
+                        "fh_chess" -> {
+                            showPageLoadingDialog()
+                            GameApi.get060(item.id.toString()) {
+                                onSuccess {
+                                    hidePageLoadingDialog()
+                                    Router.withApi(ApiRouter::class.java)
+                                        .toGlobalWeb(it.url.toString())
+                                }
+                                onFailed {
+                                    hidePageLoadingDialog()
+                                    ToastUtils.showToast(it.getMsg())
+                                }
+                            }
+                        }
+                        "ag_live" -> {
+                            showPageLoadingDialog()
+                            GameApi.getAg {
+                                onSuccess {
+                                    hidePageLoadingDialog()
+                                    Router.withApi(ApiRouter::class.java)
+                                        .toGlobalWeb(it.url.toString())
+                                }
+                                onFailed {
+                                    hidePageLoadingDialog()
+                                    ToastUtils.showToast(it.getMsg())
+                                }
+                            }
+                        }
+                        "ag_slot" -> {
+                            showPageLoadingDialog()
+                            GameApi.getAgDZ {
+                                onSuccess {
+                                    hidePageLoadingDialog()
+                                    Router.withApi(ApiRouter::class.java)
+                                        .toGlobalWeb(it.url.toString())
+                                }
+                                onFailed {
+                                    hidePageLoadingDialog()
+                                    ToastUtils.showToast(it.getMsg())
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 
 
     //主题
@@ -161,6 +258,18 @@ class HomeRecommendNewFragment : BaseMvpFragment<HomeRecommendNewPresenter>(), I
             Theme.LoverDay -> {
 
             }
+        }
+    }
+
+    //换肤
+    @Subscribe(thread = EventThread.MAIN_THREAD)
+    fun changeSkin(eventBean: ChangeSkin) {
+        when (eventBean.id) {
+            1 -> setTheme(Theme.Default)
+            2 -> setTheme(Theme.NewYear)
+            3 -> setTheme(Theme.MidAutumn)
+            4 -> setTheme(Theme.LoverDay)
+            5 ->setTheme(Theme.NationDay)
         }
 
     }

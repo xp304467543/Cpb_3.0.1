@@ -82,13 +82,36 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/dp_38"
             android:layout_weight="1" />
+        <RelativeLayout
+            android:layout_width="22dp"
+            android:layout_height="@dimen/dp_22"
+            android:layout_marginTop="@dimen/dp_8"
+            android:layout_marginEnd="@dimen/dp_15">
+
+            <ImageView
+                android:id="@+id/imgNewTask"
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20"
+                android:src="@mipmap/ic_task" />
+
+            <com.lib.basiclib.base.round.RoundTextView
+                android:id="@+id/topDianTask"
+                android:layout_width="@dimen/dp_5"
+                android:layout_height="@dimen/dp_5"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/dp_3"
+                app:rv_backgroundColor="@color/text_red"
+                app:rv_cornerRadius="@dimen/dp_30" />
+        </RelativeLayout>
+
+
 
         <ImageView
             android:id="@+id/imgHomeTopSearch"
             android:layout_width="@dimen/dp_20"
             android:layout_height="@dimen/dp_20"
             android:layout_marginTop="@dimen/dp_8"
-            android:layout_marginEnd="@dimen/dp_25"
+            android:layout_marginEnd="@dimen/dp_15"
             android:src="@mipmap/ic_home_top_search" />
 
         <RelativeLayout

@@ -19,8 +19,8 @@ import kotlinx.android.synthetic.main.dialog_red_paper.*
 class DialogRedPaper (context: Context) : Dialog(context) {
 
     init {
-        window!!.setWindowAnimations(R.style.BaseDialogAnim)
-        window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        window?.setWindowAnimations(R.style.BaseDialogAnim)
+        window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         setContentView(R.layout.dialog_red_paper)
         window?.setDimAmount(0f)
         initViewEvent()

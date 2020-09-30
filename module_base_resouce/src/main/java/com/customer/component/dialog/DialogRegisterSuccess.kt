@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.dialog_register_success.*
  */
 class DialogRegisterSuccess (context: Context) : Dialog(context) {
     init {
+        window?.setWindowAnimations(R.style.BaseDialogAnim)
         setContentView(R.layout.dialog_register_success)
         window?.setBackgroundDrawableResource(R.color.transparent)
         setCanceledOnTouchOutside(false)

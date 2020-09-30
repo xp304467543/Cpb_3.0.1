@@ -30,6 +30,7 @@
             android:theme="@style/SwipeBackStyle" />
         <activity
             android:name=".video.more.VideoMoreActivity"
+            android:configChanges="keyboard|orientation|screenSize"
             android:theme="@style/SwipeBackStyle" />
         <activity
             android:name=".video.search.VideoSearchAct"
@@ -41,10 +42,15 @@
         <activity android:name=".live.search.LiveSearchActivity"
             android:configChanges="keyboard|orientation|screenSize"
             android:theme="@style/SwipeBackStyle"/>
+        <activity android:name=".live.children.LiveRoomPostCardAct"
+            android:theme="@style/SwipeBackStyle"/>
+        <activity android:name=".children.HomeNewHandTask"
+            android:theme="@style/SwipeBackStyle"/>
         <activity
             android:name="com.home.live.children.TexsA"
             android:configChanges="keyboard|orientation|screenSize"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+
     </application>
 </manifest>

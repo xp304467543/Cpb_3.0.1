@@ -13,6 +13,7 @@ import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.thread.EventThread
 import com.lib.basiclib.utils.FastClickUtil
+import com.lib.basiclib.utils.ViewUtils
 import com.xiaojinzi.component.anno.RouterAnno
 import cuntomer.them.ITheme
 import cuntomer.them.Theme
@@ -101,6 +102,9 @@ class LotteryFragment : BaseMvpFragment<LotteryPresenter>(),ITheme {
             Theme.LoverDay -> {
                 imgLotteryBg.setImageResource(R.drawable.ic_them_love_top)
             }
+            Theme.NationDay ->{
+                imgLotteryBg.setImageResource(R.drawable.ic_them_gq_top)
+            }
         }
         lotteryTypeAdapter?.notifyDataSetChanged()
 
@@ -114,6 +118,7 @@ class LotteryFragment : BaseMvpFragment<LotteryPresenter>(),ITheme {
             2 ->  setTheme(Theme.NewYear)
             3 ->  setTheme(Theme.MidAutumn)
             4 ->  setTheme(Theme.LoverDay)
+            5 ->setTheme(Theme.NationDay)
         }
     }
 

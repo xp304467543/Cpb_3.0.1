@@ -122,7 +122,9 @@ class MinePersonalActPresenter : BaseMvpPresenter<MinePersonalAct>() {
             }
             onFailed {
                 mView.hidePageLoadingDialog()
-                GlobalDialog.showError(mView, it)
+                mView.runOnUiThread{
+                    GlobalDialog.showError(mView, it)
+                }
             }
         }
     }
@@ -193,7 +195,7 @@ class MinePersonalActPresenter : BaseMvpPresenter<MinePersonalAct>() {
                     when (it.gender) {
                         1 -> mView.edUserSex.text = "男"
                         2 -> mView.edUserSex.text = "女"
-                        else -> mView.edUserSex.text = "未知"
+                        else -> mView.edUserSex.text = "未选择"
                     }
                     mView.publish_ed_desc.setText(it.profile)
                 }

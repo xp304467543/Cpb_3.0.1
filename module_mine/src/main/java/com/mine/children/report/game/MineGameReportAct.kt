@@ -2,6 +2,7 @@ package com.mine.children.report.game
 
 import android.content.Intent
 import com.lib.basiclib.base.mvp.BaseMvpActivity
+import com.lib.basiclib.utils.FastClickUtil
 import com.lib.basiclib.utils.TimeUtils
 import com.lib.basiclib.utils.ViewUtils
 import com.mine.R
@@ -46,7 +47,32 @@ class MineGameReportAct : BaseMvpActivity<MineGameReportPresenter>() {
             change(3)
         }
         tv_show_more.setOnClickListener {
-            startActivity(Intent(this, MineGameReportMoreAct::class.java))
+            if (!FastClickUtil.isFastClick()){
+                val intent = Intent(this, MineGameReportMoreAct::class.java)
+                intent.putExtra("indexGame",1)
+                startActivity(intent)
+            }
+        }
+        tv_show_more_qp.setOnClickListener {
+            if (!FastClickUtil.isFastClick()){
+                val intent = Intent(this, MineGameReportMoreAct::class.java)
+                intent.putExtra("indexGame",2)
+                startActivity(intent)
+            }
+        }
+        tv_show_more_agsx.setOnClickListener {
+            if (!FastClickUtil.isFastClick()){
+                val intent = Intent(this, MineGameReportMoreAct::class.java)
+                intent.putExtra("indexGame",3)
+                startActivity(intent)
+            }
+        }
+        tv_show_more_agdz.setOnClickListener {
+            if (!FastClickUtil.isFastClick()){
+                val intent = Intent(this, MineGameReportMoreAct::class.java)
+                intent.putExtra("indexGame",4)
+                startActivity(intent)
+            }
         }
     }
 

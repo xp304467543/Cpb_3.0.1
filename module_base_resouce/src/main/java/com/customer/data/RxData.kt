@@ -16,7 +16,9 @@ data class LotteryTypeSelect(var lotteryId: String?, var issiue: String?)
 
 data class HomeJumpToMine(var jump:Boolean)
 
-data class HomeJumpToMineCloseLive(var jump:Boolean)
+data class HomeJumpToMineCloseLive(var jump:Boolean,var isOpenAct:Boolean = false)
+
+data class HomeJumpTo(var isOpenAct:Boolean = false)
 
 //退出登录 设置回默认值
 data class LoginOut(var loginOut:Boolean)

@@ -69,7 +69,7 @@
                 android:maxLines="1"
                 android:text="0.00"
                 android:textColor="@color/white"
-                android:textSize="@dimen/sp_33"
+                android:textSize="@dimen/sp_28"
                 android:textStyle="bold" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -100,7 +100,7 @@
                 android:maxLines="1"
                 android:text="0.00"
                 android:textColor="@color/white"
-                android:textSize="@dimen/sp_33"
+                android:textSize="@dimen/sp_28"
                 android:textStyle="bold" />
 
             <androidx.appcompat.widget.AppCompatTextView

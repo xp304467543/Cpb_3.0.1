@@ -1,4 +1,4 @@
-package com.bet.lottery
+package com.bet.game
 
 import android.annotation.SuppressLint
 import android.os.CountDownTimer

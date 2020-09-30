@@ -1,4 +1,4 @@
-package com.bet.lottery
+package com.bet.game
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -9,6 +9,8 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import com.bet.R
 import com.customer.data.ChangeLottery
 import com.customer.data.HomeJumpToMine
+import com.customer.data.HomeJumpToMineCloseLive
+import com.customer.data.ToBetView
 import com.customer.data.lottery.LotteryTypeResponse
 import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
@@ -156,6 +158,22 @@ class GameLotteryBetActivity : BaseMvpActivity<GameLotteryBetActivityPresenter>(
      */
     @Subscribe(thread = EventThread.MAIN_THREAD)
     fun onClickMine(clickMine: HomeJumpToMine) {
+        finish()
+    }
+
+    /**
+     * live去充值
+     */
+    @Subscribe(thread = EventThread.MAIN_THREAD)
+    fun homeJumpToMineCloseLive(clickMine: HomeJumpToMineCloseLive) {
+        finish()
+    }
+
+    /**
+     * live去Bet
+     */
+    @Subscribe(thread = EventThread.MAIN_THREAD)
+    fun toBetView(eventBean: ToBetView) {
         finish()
     }
 }

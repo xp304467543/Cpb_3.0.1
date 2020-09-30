@@ -2,6 +2,7 @@ package com.home.live.children
 
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.text.Editable
@@ -82,6 +83,7 @@ class LiveRoomChild1 : BaseNormalFragment<LiveRoomChild1Presenter>() {
         initSocket()
         initChat()
         initParams()
+        if (UserInfoSp.getOpenWindow()) setVisible(floatButton) else setGone(floatButton)
     }
 
     private fun initParams() {
@@ -198,9 +200,23 @@ class LiveRoomChild1 : BaseNormalFragment<LiveRoomChild1Presenter>() {
                     )
                 }
             } else ToastUtils.showToast("请勿重复点击")
-
-
 //            context?.let { it1 -> DialogLiveRoomBet(it1).show() }
+        }
+
+        imgMouse.setOnClickListener {
+            if (!FastClickUtil.isFastClick()){
+                startActivity(Intent(activity,LiveRoomPostCardAct::class.java))
+            }
+        }
+
+        imgGame.setOnClickListener {
+            if (!FastClickUtil.isFastClick()){
+                if (!UserInfoSp.getIsLogin()) {
+                    GlobalDialog.notLogged(requireActivity())
+                    return@setOnClickListener
+                }
+                RxBus.get().post(ToBetView(2))
+            }
         }
     }
 

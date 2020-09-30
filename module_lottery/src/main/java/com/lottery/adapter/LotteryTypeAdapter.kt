@@ -37,6 +37,10 @@ class LotteryTypeAdapter : BaseRecyclerAdapter<LotteryTypeResponse>() {
                     holder.findViewById<TextView>(R.id.tvLotteryType)
                         .setBackgroundResource(R.drawable.button_purple_background)
                 }
+                Theme.NationDay ->{
+                    holder.findViewById<TextView>(R.id.tvLotteryType)
+                        .setBackgroundResource(R.drawable.button_orange_background)
+                }
                 else -> holder.findViewById<TextView>(R.id.tvLotteryType)
                     .setBackgroundResource(R.drawable.button_red_background)
             }

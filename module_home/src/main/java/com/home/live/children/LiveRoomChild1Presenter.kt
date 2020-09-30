@@ -93,7 +93,7 @@ class LiveRoomChild1Presenter(private val anchorId: String) : BaseMvpPresenter<L
                         content.add(bean)
                     }
                     if (mView.bottomGiftWindow != null) {
-                        mView.bottomGiftWindow!!.setData(type, content)
+                        mView.bottomGiftWindow?.setData(type, content)
                     }
                 }
                 onFailed { }
@@ -272,8 +272,8 @@ class LiveRoomChild1Presenter(private val anchorId: String) : BaseMvpPresenter<L
                 if (it.getCode() == 2) {
                     val dia = DialogReCharge(mView.requireActivity(), false)
                     dia.setOnSendClickListener {
-                        RxBus.get().post(HomeJumpToMineCloseLive(false))
-                        Router.withApi(ApiRouter::class.java).toMineRecharge(0)
+                        RxBus.get().post(HomeJumpToMineCloseLive(true, isOpenAct = true))
+
                     }
                     dia.show()
                 } else GlobalDialog.showError(mView.requireActivity(), it)

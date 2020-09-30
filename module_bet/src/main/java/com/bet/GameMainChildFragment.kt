@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.customer.ApiRouter
 import com.customer.base.BaseNormalFragment
+import com.customer.component.dialog.GlobalDialog
 import com.customer.data.LotteryResetDiamond
+import com.customer.data.UserInfoSp
 import com.customer.data.game.GameAll
 import com.customer.data.game.GameAllChild1
 import com.glide.GlideUtil
@@ -15,6 +17,7 @@ import com.hwangjr.rxbus.thread.EventThread
 import com.lib.basiclib.base.recycle.BaseRecyclerAdapter
 import com.lib.basiclib.base.recycle.RecyclerViewHolder
 import com.lib.basiclib.base.xui.adapter.recyclerview.XLinearLayoutManager
+import com.lib.basiclib.utils.LogUtils
 import com.xiaojinzi.component.impl.Router
 import kotlinx.android.synthetic.main.fragment_game_child.*
 
@@ -66,10 +69,10 @@ class GameMainChildFragment : BaseNormalFragment<GameMainChildFragmentPresenter>
 
 
     override fun initContentView() {
-        smartRefreshLayoutGame.setEnableOverScrollBounce(true)//是否启用越界回弹
-        smartRefreshLayoutGame.setEnableOverScrollDrag(true)//是否启用越界拖动（仿苹果效果）
-        smartRefreshLayoutGame.setEnableRefresh(false)//是否启用下拉刷新功能
-        smartRefreshLayoutGame.setEnableLoadMore(false)//是否启用上拉加载功能
+//        smartRefreshLayoutGame.setEnableOverScrollBounce(true)//是否启用越界回弹
+//        smartRefreshLayoutGame.setEnableOverScrollDrag(true)//是否启用越界拖动（仿苹果效果）
+//        smartRefreshLayoutGame.setEnableRefresh(false)//是否启用下拉刷新功能
+//        smartRefreshLayoutGame.setEnableLoadMore(false)//是否启用上拉加载功能
     }
 
 
@@ -86,17 +89,18 @@ class GameMainChildFragment : BaseNormalFragment<GameMainChildFragmentPresenter>
                             listData.add(GameAllChild1("", "", "", x.name, 1))
                         }
                         listData.add(bean)
-                        if (num == (x.list?.size)?.minus(1) ?: -1) {
+                        if (num == ((x.list?.size)?:0 - 1)) {
                             listData.add(GameAllChild1("", "", "", x.name, 2))
                         }
                     }
                 }
             }
+            LogUtils.e("=======>"+listData)
             adapter1 = Adapter1()
             rvGameType?.adapter = adapter1
             rvGameType?.layoutManager = object :StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL){
                 override fun canScrollVertically(): Boolean {
-                    return false
+                    return true
                 }
             }
             adapter1?.refresh(listData)
@@ -114,6 +118,10 @@ class GameMainChildFragment : BaseNormalFragment<GameMainChildFragmentPresenter>
             GlideUtil.loadImage(data?.img_url, holder.getImageView(R.id.imgRecentType))
             holder.text(R.id.tvGameRecentName, data?.name)
             holder.itemView.setOnClickListener {
+                if (!UserInfoSp.getIsLogin()){
+                    GlobalDialog.notLogged(requireActivity())
+                    return@setOnClickListener
+                }
                 showPageLoadingDialog("加载中...")
                 when(data?.type){
                     "lott" -> {
@@ -178,6 +186,10 @@ class GameMainChildFragment : BaseNormalFragment<GameMainChildFragmentPresenter>
                     holder.text(R.id.tvGameName, data?.name)
                     GlideUtil.loadImage(data?.img_url, holder.getImageView(R.id.imgGameType))
                     holder.itemView.setOnClickListener {
+                        if (!UserInfoSp.getIsLogin()){
+                            GlobalDialog.notLogged(requireActivity())
+                            return@setOnClickListener
+                        }
                         showPageLoadingDialog("加载中...")
                         when(data?.type){
                             "lott" -> {

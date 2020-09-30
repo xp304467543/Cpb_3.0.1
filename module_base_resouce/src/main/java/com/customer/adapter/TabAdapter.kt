@@ -7,6 +7,7 @@ import android.view.animation.DecelerateInterpolator
 import androidx.viewpager.widget.ViewPager
 import com.customer.data.UserInfoSp
 import com.fh.module_base_resouce.R
+import com.lib.basiclib.utils.LogUtils
 import com.lib.basiclib.utils.ViewUtils
 import com.lib.basiclib.widget.tab.buildins.commonnavigator.abs.CommonNavigatorAdapter
 import com.lib.basiclib.widget.tab.buildins.commonnavigator.abs.IPagerIndicator
@@ -30,7 +31,8 @@ class TabScaleAdapter(
     private var normalColor: Int,
     private var selectedColor: Int,
     private var colorLine: Int,
-    private var textSize:Float = 18F
+    private var textSize:Float = 18F,
+    private var isChange:Boolean=true
 ) : CommonNavigatorAdapter() {
     override fun getTitleView(context: Context?, index: Int): IPagerTitleView {
         val simplePagerTitleView: SimplePagerTitleView = ScaleTransitionPagerTitleView(context)
@@ -54,7 +56,10 @@ class TabScaleAdapter(
         indicator.roundRadius = ViewUtils.dp2px(3F)
         indicator.startInterpolator = AccelerateInterpolator()
         indicator.endInterpolator = DecelerateInterpolator(2F)
-        indicator.setColors(colorLine)
+        if (isChange){
+            indicator.setColors(TabThem.getTabSelect())
+        }else  indicator.setColors(colorLine)
+
         return indicator
     }
 }
@@ -136,6 +141,7 @@ object TabThem {
             2 -> ViewUtils.getColor(R.color.color_FF513E)
             3 -> ViewUtils.getColor(R.color.colorGreenPrimary)
             4 -> ViewUtils.getColor(R.color.purple)
+            5 -> ViewUtils.getColor(R.color.color_EF7E12)
             else -> ViewUtils.getColor(R.color.color_FF513E)
         }
     }

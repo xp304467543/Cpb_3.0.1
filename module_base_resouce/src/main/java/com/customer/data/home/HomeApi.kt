@@ -131,8 +131,15 @@ object HomeApi : BaseApi {
     //热门游戏
     private const val HOT_GAME = "user/hot-games"
 
-    //获取新消息通知
-    private const val GAME_DATA = "fhchess/game/"
+    //新手任务红点
+    private const val TASK_RED = "user/task-prompt"
+
+    //新手任务
+    private const val NEW_HAND_RED = "user/task-list"
+    //新手任务领取
+    private const val GET_NEW_TASK = "api/v1_1/live/task_reward/"
+    //红包雨领取
+    private const val GET_RED_RAIN = "api/v1_1/user/user_red_rain/"
 
 
     /**
@@ -683,7 +690,57 @@ object HomeApi : BaseApi {
             .get<List<Game>>(HOT_GAME)
             .subscribe(subscriber)
         return subscriber
-
     }
+
+    /**
+     * 新手任务红点
+     */
+    fun getRedTask(function: ApiSubscriber<RedTask>.() -> Unit){
+        val subscriber = object : ApiSubscriber<RedTask>() {}
+        subscriber.function()
+        getApiOther()
+            .get<RedTask>(TASK_RED)
+            .headers("Authorization", UserInfoSp.getTokenWithBearer())
+            .subscribe(subscriber)
+    }
+
+    /**
+     * 新手任务
+     */
+    fun userTask(function: ApiSubscriber<ArrayList<UserTask>>.() -> Unit){
+        val subscriber = object : ApiSubscriber<ArrayList<UserTask>>() {}
+        subscriber.function()
+        getApiOther()
+            .get<ArrayList<UserTask>>(NEW_HAND_RED)
+            .headers("Authorization", UserInfoSp.getTokenWithBearer())
+            .subscribe(subscriber)
+    }
+    /**
+     * 新手任务领取
+     */
+    fun getNewTask(task_id:String,function: ApiSubscriber<TaskGift>.() -> Unit){
+        val subscriber = object : ApiSubscriber<TaskGift>() {}
+        subscriber.function()
+        getApi()
+            .post<TaskGift>(GET_NEW_TASK)
+            .headers("token", UserInfoSp.getToken())
+            .params("task_id",task_id)
+            .subscribe(subscriber)
+    }
+
+
+    /**
+     * 新手任务领取
+     */
+    fun getRedRain(function: ApiSubscriber<RedRain>.() -> Unit){
+        val subscriber = object : ApiSubscriber<RedRain>() {}
+        subscriber.function()
+        getApi()
+            .post<RedRain>(GET_RED_RAIN)
+            .headers("token", UserInfoSp.getToken())
+            .subscribe(subscriber)
+    }
+
+
 
 }

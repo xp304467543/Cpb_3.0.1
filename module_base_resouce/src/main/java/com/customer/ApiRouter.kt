@@ -139,7 +139,9 @@ interface ApiRouter {
     //充值
     @HostAndPathAnno("Mine/recharge")
     fun toMineRecharge(@ParameterAnno("index") msg1: Int)
-
+    //个人页面
+    @HostAndPathAnno("Mine/myPage")
+    fun toMyPage()
     //用户
     @HostAndPathAnno("Moment/UserPersonalPage")
     fun toUserPage(@ParameterAnno(UserConstant.FOLLOW_ID) id: String)

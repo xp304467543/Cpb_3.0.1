@@ -35,14 +35,14 @@ class DialogDataPick(context: Context) : Dialog(context) {
 
     init {
         setContentView(R.layout.dialog_data)
-        window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        window!!.setGravity(Gravity.CENTER or Gravity.CENTER)
-        val lp = window!!.attributes
-        lp.width = ViewGroup.LayoutParams.MATCH_PARENT // 宽度
-        lp.height = ViewGroup.LayoutParams.WRAP_CONTENT   // 高度
-        lp.dimAmount = 0.3f
+        window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        window?.setGravity(Gravity.CENTER or Gravity.CENTER)
+        val lp = window?.attributes
+        lp?.width = ViewGroup.LayoutParams.MATCH_PARENT // 宽度
+        lp?.height = ViewGroup.LayoutParams.WRAP_CONTENT   // 高度
+        lp?.dimAmount = 0.3f
 //      lp.alpha = 0.7f // 透明度
-        window!!.attributes = lp
+        window?.attributes = lp
         // 设置已选的日期
         mCalendarView.selectDate = initDataCalendar()
         initDataRv()

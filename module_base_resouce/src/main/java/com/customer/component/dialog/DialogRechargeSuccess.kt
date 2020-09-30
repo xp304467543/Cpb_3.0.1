@@ -22,13 +22,13 @@ import kotlinx.android.synthetic.main.dialog_success.tvDialogText
 class DialogRechargeSuccess (context: Context, content: String, img: Int, title:String="", value: SpannableString?=null) : Dialog(context) {
     init {
         setContentView(R.layout.dialog_recharge_success)
-        window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        window!!.setGravity(Gravity.CENTER or Gravity.CENTER)
-        val lp = window!!.attributes
+        window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        window?.setGravity(Gravity.CENTER or Gravity.CENTER)
+        val lp = window?.attributes
 //        lp.width = ViewUtils.dp2px(230) // 宽度
 //        lp.height = ViewUtils.dp2px(150)  // 高度
 //      lp.alpha = 0.7f // 透明度
-        window!!.attributes = lp
+        window?.attributes = lp
         setCanceledOnTouchOutside(true)
         initText(title,content, img,value)
     }

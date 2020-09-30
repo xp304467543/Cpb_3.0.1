@@ -3,7 +3,6 @@ package com.customer.data.mine
 import android.text.TextUtils
 import com.customer.data.MineUserDiamond
 import com.customer.data.UserInfoSp
-import com.customer.data.login.LoginApi
 import com.customer.utils.AESUtils
 import com.google.gson.Gson
 import com.rxnetgo.rxcache.CacheMode
@@ -129,14 +128,23 @@ object MineApi : BaseApi {
 
     //游戏报表
     private const val GAME_REPORT_LAST = "guess/report"
-
+    //彩票游戏详情
+    private const val GAME_LOTTERY_INFO = "guess/lottery-detail-count"
     //彩票游戏
     private const val GAME_LOTTERY = "guess/lottery-count"
 
-
-    //彩票游戏详情
-    private const val GAME_LOTTERY_INFO = "guess/lottery-detail-count"
-
+    //棋牌游戏
+    private const val GAME_CHESS = "fhchess/count"
+    //棋牌详情
+    private const val GAME_CHESS_INFO = "fhchess/detail-count"
+    //AG视讯
+    private const val GAME_AGSX = "ag/live-count"
+    //AG视讯详情
+    private const val GAME_AGSX_INFO = "ag/live-detail-count"
+    //AG电子
+    private const val GAME_AGDZ = "ag/slot-count"
+    //AG电子详情
+    private const val GAME_AGDZ_INFO = "ag/slot-detail-count"
     //推广码
     private const val GET_CODE = "market/index"
 
@@ -801,7 +809,7 @@ object MineApi : BaseApi {
     }
 
     /**
-     * 彩票游戏
+     * 彩票游戏详情
      */
     fun getGameLottery(
         start: String,
@@ -818,7 +826,58 @@ object MineApi : BaseApi {
     }
 
     /**
-     * 彩票游戏
+     * 棋牌
+     */
+    fun getGamecChess(
+        start: String,
+        end: String,
+        function: ApiSubscriber<MineGameReport>.() -> Unit
+    ) {
+        val subscriber = object : ApiSubscriber<MineGameReport>() {}
+        subscriber.function()
+        getApiOther().get<MineGameReport>(GAME_CHESS)
+            .headers("Authorization", UserInfoSp.getTokenWithBearer())
+            .params("st", start)
+            .params("et", end)
+            .subscribe(subscriber)
+    }
+
+    /**
+     * AG视讯
+     */
+    fun getGameAgSx(
+        start: String,
+        end: String,
+        function: ApiSubscriber<MineGameReport>.() -> Unit
+    ) {
+        val subscriber = object : ApiSubscriber<MineGameReport>() {}
+        subscriber.function()
+        getApiOther().get<MineGameReport>(GAME_AGSX)
+            .headers("Authorization", UserInfoSp.getTokenWithBearer())
+            .params("st", start)
+            .params("et", end)
+            .subscribe(subscriber)
+    }
+
+    /**
+     * AG电子
+     */
+    fun getGameAgDz(
+        start: String,
+        end: String,
+        function: ApiSubscriber<MineGameReport>.() -> Unit
+    ) {
+        val subscriber = object : ApiSubscriber<MineGameReport>() {}
+        subscriber.function()
+        getApiOther().get<MineGameReport>(GAME_AGDZ)
+            .headers("Authorization", UserInfoSp.getTokenWithBearer())
+            .params("st", start)
+            .params("et", end)
+            .subscribe(subscriber)
+    }
+
+    /**
+     * 彩票游戏详情
      */
     fun getGameLotteryInfo(
         is_bl_play: String = "0",
@@ -831,6 +890,24 @@ object MineApi : BaseApi {
         getApiLottery().get<List<MineGameReportInfo>>(GAME_LOTTERY_INFO)
             .headers("Authorization", UserInfoSp.getTokenWithBearer())
             .params("is_bl_play", is_bl_play)
+            .params("st", start)
+            .params("et", end)
+            .subscribe(subscriber)
+    }
+
+    /**
+     * 游戏详情 2 棋牌 3 AG视讯 4 AG电子
+     */
+    fun getGameInfo(index:Int,start: String, end: String, function: ApiSubscriber<List<MineGameAgReportInfo>>.() -> Unit){
+        val url = when(index){
+            2 -> GAME_CHESS_INFO
+            3 -> GAME_AGSX_INFO
+            4 -> GAME_AGDZ_INFO
+            else -> GAME_CHESS_INFO }
+        val subscriber = object : ApiSubscriber<List<MineGameAgReportInfo>>() {}
+        subscriber.function()
+        getApiOther().get<List<MineGameAgReportInfo>>(url)
+            .headers("Authorization", UserInfoSp.getTokenWithBearer())
             .params("st", start)
             .params("et", end)
             .subscribe(subscriber)
@@ -987,8 +1064,8 @@ object MineApi : BaseApi {
         map["amount"] = amount
         AESUtils.encrypt(UserInfoSp.getRandomStr(), Gson().toJson(map))?.let {
             getApiOther().post<String>(if (upOrDown) AG_UP else AG_DOWN).isMultipart(true)
-                .params("datas", it)
                 .headers("Authorization", UserInfoSp.getTokenWithBearer())
+                .params("datas", it)
                 .subscribe(subscriber)
         }
     }

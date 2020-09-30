@@ -24,13 +24,13 @@ class DialogPassWord (context: Context, widthDia: Int, heightDia: Int) : Dialog(
 
     init {
         setContentView(R.layout.dialog_pass_word)
-        window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        window!!.setGravity(Gravity.BOTTOM)
+        window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        window?.setGravity(Gravity.BOTTOM)
         setCanceledOnTouchOutside(false)
-        val lp = window!!.attributes
-        lp.width = widthDia
-        lp.height = heightDia
-        window!!.attributes = lp
+        val lp = window?.attributes
+        lp?.width = widthDia
+        lp?.height = heightDia
+        window?.attributes = lp
         initDialog()
     }
 

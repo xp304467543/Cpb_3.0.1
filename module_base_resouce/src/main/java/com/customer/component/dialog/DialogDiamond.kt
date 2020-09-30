@@ -33,13 +33,13 @@ class DialogDiamond (context: Context, var balance: String) : Dialog(context) {
 
     init {
         setContentView(R.layout.dialog_diamond)
-        window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        window!!.setGravity(Gravity.CENTER or Gravity.CENTER)
-        val lp = window!!.attributes
-        lp.width = ViewUtils.dp2px(316) // 宽度
-        lp.height = ViewUtils.dp2px(238)  // 高度
+        window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        window?.setGravity(Gravity.CENTER or Gravity.CENTER)
+        val lp = window?.attributes
+        lp?.width = ViewUtils.dp2px(316) // 宽度
+        lp?.height = ViewUtils.dp2px(238)  // 高度
 //      lp.alpha = 0.7f // 透明度
-        window!!.attributes = lp
+        window?.attributes = lp
         setCanceledOnTouchOutside(false)
         initDialog()
     }

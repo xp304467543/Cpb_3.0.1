@@ -64,4 +64,6 @@ class VideoSearchAdapter(val context: Context,val isInLivePage:Boolean = false) 
             }
         }
     }
+
+
 }

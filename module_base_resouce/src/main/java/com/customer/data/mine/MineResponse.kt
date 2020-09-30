@@ -212,6 +212,15 @@ data class MineGameReportInfo(
     val lottery_icon: String?
 )
 
+data class MineGameAgReportInfo(
+    val game_id: String?,
+    val game_name: String?,
+    val amount: String?,
+    val prize: String?,
+    val count: String?,
+    val img_url: String? = ""
+)
+
 data class RegisterCode(var code: String)
 
 data class MineReportCode(

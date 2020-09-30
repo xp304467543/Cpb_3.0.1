@@ -4,11 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import com.customer.ApiRouter
 import com.customer.component.dialog.DialogDiamond
-import com.customer.data.UserInfoSp
 import com.customer.data.mine.UpDateUserPhoto
-import com.customer.data.urlCustomer
-import com.customer.data.LoginOut
-import com.customer.data.MineUserDiamond
 import com.glide.GlideUtil
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.thread.EventThread
@@ -17,6 +13,7 @@ import com.lib.basiclib.utils.FastClickUtil
 import com.xiaojinzi.component.anno.RouterAnno
 import com.xiaojinzi.component.impl.Router
 import com.customer.component.dialog.GlobalDialog
+import com.customer.data.*
 import com.customer.data.mine.ChangeSkin
 import com.lib.basiclib.utils.ViewUtils
 import com.mine.children.*
@@ -27,6 +24,8 @@ import kotlinx.android.synthetic.main.fragment_mine.*
 
 @RouterAnno(host = "Mine", path = "main")
 class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme {
+
+   var  isInit = false
 
     //新消息
     var msg1 = ""
@@ -70,6 +69,7 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme {
             tvBalance.text = "0.00"
             tvDiamondBalance.text = "0"
         }
+        isInit = true
     }
 
     override fun initContentView() {
@@ -83,7 +83,6 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme {
 
 
     override fun initEvent() {
-
         imgPersonal.setOnClickListener {
             if (!FastClickUtil.isFastClick())Router.withApi(ApiRouter::class.java).toUserPage(UserInfoSp.getUserId().toString())
         }
@@ -127,6 +126,7 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme {
                 return@setOnClickListener
             }
             if (!FastClickUtil.isFastClick()) {
+                tvBalance.text = "加载中"
                 mPresenter.getUserBalance()
                 mPresenter.getUserDiamond()
             }
@@ -324,6 +324,23 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme {
                 containerGroup.setBackRes(R.drawable.ic_mine_love_9)
                 containerSetting.setBackRes(R.drawable.ic_mine_love_10)
             }
+            Theme.NationDay -> {
+                tvLogin.setTextColor(ViewUtils.getColor(R.color.color_EF7E12))
+                imgMineBg.setImageResource(R.drawable.ic_them_gq_top)
+                tvDepositMoney.setCompoundDrawablesWithIntrinsicBounds(null, getDrawable(R.mipmap.ic_mine_deposit), null, null)
+                tvDrawMoney.setCompoundDrawablesWithIntrinsicBounds(null, getDrawable(R.mipmap.ic_mine_wallet), null, null)
+                tvAttention.setCompoundDrawablesWithIntrinsicBounds(null, getDrawable(R.mipmap.ic_mine_attention), null, null)
+                containerMessageCenter.setBackRes(R.drawable.ic_them_gq_1)
+                containerMineCheck.setBackRes(R.drawable.ic_them_gq_2)
+                containerMainSkin.setBackRes(R.drawable.ic_them_gq_3)
+                containerAnchorGet.setBackRes(R.drawable.ic_them_gq_4)
+                containerGameReport.setBackRes(R.drawable.ic_them_gq_5)
+                containerTuiReport.setBackRes(R.drawable.ic_them_gq_6)
+                containerFeedBack.setBackRes(R.drawable.ic_them_gq_7)
+                containerContactCustomer.setBackRes(R.drawable.ic_them_gq_8)
+                containerGroup.setBackRes(R.drawable.ic_them_gq_9)
+                containerSetting.setBackRes(R.drawable.ic_them_gq_10)
+            }
         }
     }
 
@@ -335,6 +352,7 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme {
             2 ->  setTheme(Theme.NewYear)
             3 ->  setTheme(Theme.MidAutumn)
             4 ->  setTheme(Theme.LoverDay)
+            5 ->setTheme(Theme.NationDay)
         }
 
     }
@@ -349,7 +367,7 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme {
             setGone(containerSetting)
             setVisible(containerNoLogin)
             tvBalance?.text = "0.00"
-            tvDiamondBalance?.text = "0"
+            tvDiamondBalance?.text = "0。00"
         }
     }
 

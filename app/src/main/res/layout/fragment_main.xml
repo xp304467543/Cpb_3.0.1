@@ -1,122 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.customer.component.rain.RainViewGroup xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rainView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-    <RelativeLayout
+    android:layout_height="match_parent">
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#fff"
-        tools:ignore="UselessParent">
+        android:orientation="vertical">
 
-        <FrameLayout
-            android:id="@+id/mainContainer"
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/rg_oder">
+            android:background="#fff"
+            tools:ignore="UselessParent">
 
-        </FrameLayout>
-
-
-        <RadioGroup
-            android:id="@+id/rg_oder"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_45"
-            android:paddingTop="@dimen/dp_3"
-            android:layout_alignParentBottom="true"
-            android:background="#00000000"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/tabHome"
-                android:layout_width="0dp"
+            <FrameLayout
+                android:id="@+id/mainContainer"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:background="#fff"
-                android:button="@null"
-                android:checked="true"
-                android:drawableTop="@drawable/button_tab_home"
-                android:gravity="center"
-                android:text="@string/tab_home"
-                android:textColor="@drawable/tab_bottom_menu_text_selector"
-                android:textSize="@dimen/sp_10" />
+                android:layout_above="@+id/rg_oder">
+
+            </FrameLayout>
 
 
+            <RadioGroup
+                android:id="@+id/rg_oder"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_45"
+                android:layout_alignParentBottom="true"
+                android:background="#00000000"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/dp_3">
 
-            <RadioButton
-                android:id="@+id/tabGame"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:background="#fff"
-                android:button="@null"
-                android:drawableTop="@drawable/button_tab_quiz"
-                android:gravity="center"
-                android:text="@string/tab_quiz"
-                android:textColor="@drawable/tab_bottom_menu_text_selector"
-                android:textSize="@dimen/sp_10" />
-
-            <RadioButton
-                android:id="@+id/tabLotteryOpen"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:background="#fff"
-                android:button="@null"
-                android:checked="false"
-                android:drawableTop="@drawable/button_tab_lottery"
-                android:gravity="center"
-                android:text="@string/tab_lottery"
-                android:textColor="@drawable/tab_bottom_menu_text_selector"
-                android:textSize="@dimen/sp_10" />
+                <RadioButton
+                    android:id="@+id/tabHome"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="#fff"
+                    android:button="@null"
+                    android:checked="true"
+                    android:drawableTop="@drawable/button_tab_home"
+                    android:gravity="center"
+                    android:text="@string/tab_home"
+                    android:textColor="@drawable/tab_bottom_menu_text_selector"
+                    android:textSize="@dimen/sp_10" />
 
 
+                <RadioButton
+                    android:id="@+id/tabGame"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="#fff"
+                    android:button="@null"
+                    android:drawableTop="@drawable/button_tab_quiz"
+                    android:gravity="center"
+                    android:text="@string/tab_quiz"
+                    android:textColor="@drawable/tab_bottom_menu_text_selector"
+                    android:textSize="@dimen/sp_10" />
 
-            <RadioButton
-                android:id="@+id/tabMine"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:background="#fff"
-                android:button="@null"
-                android:drawableTop="@drawable/button_tab_mine"
-                android:gravity="center"
-                android:text="@string/tab_mine"
-                android:textColor="@drawable/tab_bottom_menu_text_selector"
-                android:textSize="@dimen/sp_10" />
-        </RadioGroup>
+                <RadioButton
+                    android:id="@+id/tabLotteryOpen"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="#fff"
+                    android:button="@null"
+                    android:checked="false"
+                    android:drawableTop="@drawable/button_tab_lottery"
+                    android:gravity="center"
+                    android:text="@string/tab_lottery"
+                    android:textColor="@drawable/tab_bottom_menu_text_selector"
+                    android:textSize="@dimen/sp_10" />
 
-        <!--        <ImageView-->
-        <!--            android:id="@+id/imgLotteryBuyTips"-->
-        <!--            android:layout_width="@dimen/dp_148"-->
-        <!--            android:layout_height="@dimen/dp_30"-->
-        <!--            android:layout_above="@+id/rlCenter"-->
-        <!--            android:layout_centerHorizontal="true"-->
-        <!--            android:background="@drawable/ic_home_lottery_tips"-->
-        <!--            android:visibility="gone"-->
-        <!--            tools:ignore="contentDescription" />-->
-<!--        <RelativeLayout-->
-<!--            android:id="@+id/rlCenter"-->
-<!--            android:layout_width="70dp"-->
-<!--            android:layout_height="70dp"-->
-<!--            android:visibility="gone"-->
-<!--            android:layout_alignParentBottom="true"-->
-<!--            android:layout_centerHorizontal="true"-->
-<!--            android:layout_marginBottom="7dp"-->
-<!--            android:background="@drawable/shape_half_circle">-->
 
-<!--            <ImageView-->
-<!--                android:id="@+id/img_protruding"-->
-<!--                android:layout_width="50dp"-->
-<!--                android:layout_height="50dp"-->
-<!--                android:layout_centerInParent="true"-->
-<!--                android:background="@drawable/tab_center"-->
-<!--                android:contentDescription="@string/app_name" />-->
-<!--        </RelativeLayout>-->
-    </RelativeLayout>
-</LinearLayout>
+                <RadioButton
+                    android:id="@+id/tabMine"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="#fff"
+                    android:button="@null"
+                    android:drawableTop="@drawable/button_tab_mine"
+                    android:gravity="center"
+                    android:text="@string/tab_mine"
+                    android:textColor="@drawable/tab_bottom_menu_text_selector"
+                    android:textSize="@dimen/sp_10" />
+            </RadioGroup>
+
+            <!--        <ImageView-->
+            <!--            android:id="@+id/imgLotteryBuyTips"-->
+            <!--            android:layout_width="@dimen/dp_148"-->
+            <!--            android:layout_height="@dimen/dp_30"-->
+            <!--            android:layout_above="@+id/rlCenter"-->
+            <!--            android:layout_centerHorizontal="true"-->
+            <!--            android:background="@drawable/ic_home_lottery_tips"-->
+            <!--            android:visibility="gone"-->
+            <!--            tools:ignore="contentDescription" />-->
+            <!--        <RelativeLayout-->
+            <!--            android:id="@+id/rlCenter"-->
+            <!--            android:layout_width="70dp"-->
+            <!--            android:layout_height="70dp"-->
+            <!--            android:visibility="gone"-->
+            <!--            android:layout_alignParentBottom="true"-->
+            <!--            android:layout_centerHorizontal="true"-->
+            <!--            android:layout_marginBottom="7dp"-->
+            <!--            android:background="@drawable/shape_half_circle">-->
+
+            <!--            <ImageView-->
+            <!--                android:id="@+id/img_protruding"-->
+            <!--                android:layout_width="50dp"-->
+            <!--                android:layout_height="50dp"-->
+            <!--                android:layout_centerInParent="true"-->
+            <!--                android:background="@drawable/tab_center"-->
+            <!--                android:contentDescription="@string/app_name" />-->
+            <!--        </RelativeLayout>-->
+        </RelativeLayout>
+
+
+    </LinearLayout>
+</com.customer.component.rain.RainViewGroup>

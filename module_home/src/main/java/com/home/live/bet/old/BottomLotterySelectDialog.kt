@@ -29,12 +29,12 @@ class BottomLotterySelectDialog(context: Context, val title: ArrayList<String>) 
     }
     init {
         setContentView(R.layout.old_dialog_lottery_select)
-        window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        window!!.setGravity(Gravity.BOTTOM)
-        val lp = window!!.attributes
-        lp.width = ViewGroup.LayoutParams.MATCH_PARENT // 宽度
-        lp.dimAmount = 0.3f
-        window!!.attributes = lp
+        window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        window?.setGravity(Gravity.BOTTOM)
+        val lp = window?.attributes
+        lp?.width = ViewGroup.LayoutParams.MATCH_PARENT // 宽度
+        lp?.dimAmount = 0.3f
+        window?.attributes = lp
         val mOptionsPickerView = findViewById<com.zyyoona7.picker.OptionsPickerView<String>>(R.id.lotteryPickerView)
         mOptionsPickerView.setData(title)
         mOptionsPickerView.setTextSize(18f, true)

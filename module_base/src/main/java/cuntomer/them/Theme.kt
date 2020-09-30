@@ -27,5 +27,10 @@ enum class Theme {
     /**
      * 情人节
      */
-    LoverDay
+    LoverDay,
+
+    /**
+     * 国庆节
+     */
+    NationDay
 }

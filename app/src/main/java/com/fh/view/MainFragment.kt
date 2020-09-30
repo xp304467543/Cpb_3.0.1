@@ -4,14 +4,12 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.os.Build
 import androidx.core.content.ContextCompat
-import com.customer.component.dialog.BottomWebSelect
-import com.customer.component.dialog.DialogSystemNotice
-import com.customer.component.dialog.DialogVersion
-import com.customer.data.HomeJumpToMine
-import com.customer.data.HomeJumpToMineCloseLive
-import com.customer.data.ToBetView
-import com.customer.data.UserInfoSp
+import com.customer.ApiRouter
+import com.customer.component.dialog.*
+import com.customer.component.rain.RainViewGroup
+import com.customer.data.*
 import com.customer.data.home.HomeApi
+import com.customer.data.login.RegisterSuccess
 import com.customer.data.mine.ChangeSkin
 import com.customer.utils.RxPermissionHelper
 import com.fh.R
@@ -20,12 +18,15 @@ import com.hwangjr.rxbus.thread.EventThread
 import com.lib.basiclib.base.fragment.BaseContentFragment
 import com.lib.basiclib.base.fragment.BaseFragment
 import com.lib.basiclib.base.fragment.PlaceholderFragment
+import com.lib.basiclib.utils.FastClickUtil
+import com.lib.basiclib.utils.ToastUtils
 import com.lib.basiclib.utils.ViewUtils
 import com.services.BetService
 import com.services.HomeService
 import com.services.LotteryService
 import com.services.MineService
 import com.tbruyelle.rxpermissions2.RxPermissions
+import com.xiaojinzi.component.impl.Router
 import com.xiaojinzi.component.impl.service.ServiceManager
 import cuntomer.them.ITheme
 import cuntomer.them.Theme
@@ -98,6 +99,17 @@ class MainFragment : BaseContentFragment(), ITheme {
     }
 
 
+    private fun redRain(){
+        rainView.setIsIntercept(true)
+        //屏幕中最多显示item的数量
+        rainView?.setAmount(50);
+        //设置下落的次数。在保持密度不变的情况下，设置下落数量。例如：数量 = 50，下落次数 = 3，总共数量150。
+        // rainView.setTimes(2);
+        //设置无效循环
+        rainView?.setTimes(RainViewGroup.INFINITE)
+        rainView?.start()
+    }
+
     override fun initEvent() {
         tabHome.setOnClickListener {
             showHideFragment(mFragments[0])
@@ -111,9 +123,33 @@ class MainFragment : BaseContentFragment(), ITheme {
         tabMine.setOnClickListener {
             showHideFragment(mFragments[3])
         }
+        rainView.setOnClickListener {
+            if (!FastClickUtil.isFastClick()){
+                getRedRainAmount()
+
+            }
+        }
     }
 
 
+    private fun getRedRainAmount(){
+        HomeApi.getRedRain {
+            onSuccess {
+              val dialog = context?.let { it1 -> DialogRedRain(it1,it.amount.toString()) }
+                dialog?.setOnDismissListener {
+                    DialogRegisterSuccess(requireActivity()).show()
+                }
+                dialog?.show()
+                rainView?.stop()
+                rainView?.setIsIntercept(false)
+            }
+            onFailed {
+                ToastUtils.showToast(it.getMsg())
+                rainView?.stop()
+                rainView?.setIsIntercept(false)
+            }
+        }
+    }
 
     /***
      * 回到主页面弹出一些列的窗口
@@ -349,7 +385,46 @@ class MainFragment : BaseContentFragment(), ITheme {
                         )
                     )
                 }
-
+            }
+            Theme.NationDay -> {
+                val drawable1 = ViewUtils.getDrawable(R.drawable.ic_tab_gq_1)
+                val drawable2 = ViewUtils.getDrawable(R.drawable.ic_tab_gq_2)
+                val drawable3 = ViewUtils.getDrawable(R.drawable.ic_tab_gq_3)
+                val drawable4 = ViewUtils.getDrawable(R.drawable.ic_tab_gq_4)
+                drawable1?.setBounds(0, 0, ViewUtils.dp2px(30), ViewUtils.dp2px(25))
+                drawable2?.setBounds(0, 0, ViewUtils.dp2px(30), ViewUtils.dp2px(25))
+                drawable3?.setBounds(0, 0, ViewUtils.dp2px(30), ViewUtils.dp2px(25))
+                drawable4?.setBounds(0, 0, ViewUtils.dp2px(30), ViewUtils.dp2px(25))
+                tabHome.setCompoundDrawables(null, drawable1, null, null)
+                tabLotteryOpen.setCompoundDrawables(null, drawable2, null, null)
+                tabGame.setCompoundDrawables(null, drawable3, null, null)
+                tabMine.setCompoundDrawables(null, drawable4, null, null)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    tabHome.setTextColor(
+                        ContextCompat.getColorStateList(
+                            requireContext(),
+                            R.drawable.tab_them_text_nation
+                        )
+                    )
+                    tabLotteryOpen.setTextColor(
+                        ContextCompat.getColorStateList(
+                            requireContext(),
+                            R.drawable.tab_them_text_nation
+                        )
+                    )
+                    tabGame.setTextColor(
+                        ContextCompat.getColorStateList(
+                            requireContext(),
+                            R.drawable.tab_them_text_nation
+                        )
+                    )
+                    tabMine.setTextColor(
+                        ContextCompat.getColorStateList(
+                            requireContext(),
+                            R.drawable.tab_them_text_nation
+                        )
+                    )
+                }
             }
         }
     }
@@ -362,6 +437,7 @@ class MainFragment : BaseContentFragment(), ITheme {
             2 -> setTheme(Theme.NewYear)
             3 -> setTheme(Theme.MidAutumn)
             4 -> setTheme(Theme.LoverDay)
+            5 ->setTheme(Theme.NationDay)
         }
 
     }
@@ -381,19 +457,29 @@ class MainFragment : BaseContentFragment(), ITheme {
      * live去充值
      */
     @Subscribe(thread = EventThread.MAIN_THREAD)
-    fun homeJumpToMineCloseLive(clickMine: HomeJumpToMineCloseLive) {
-        if (clickMine.jump) {
+    fun homeJumpToMineCloseLive(clickMine: HomeJumpTo) {
             if (tabMine!=null) tabMine?.isChecked = true
             showHideFragment(mFragments[3])
+      if (clickMine.isOpenAct)  Router.withApi(ApiRouter::class.java).toMineRecharge(0)
+    }
+
+
+    //登录成功后红包雨
+    @Subscribe(thread = EventThread.MAIN_THREAD)
+    fun loginInfoResponse(eventBean: RegisterSuccess) {
+        if (eventBean.isShowDialog) {
+            redRain()
         }
     }
+
 
     /**
      * live去Bet
      */
     @Subscribe(thread = EventThread.MAIN_THREAD)
     fun toBetView(eventBean: ToBetView) {
-
+        if (tabGame!=null) tabGame?.isChecked = true
+        showHideFragment(mFragments[1])
     }
 
 }

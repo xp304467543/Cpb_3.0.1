@@ -10,10 +10,10 @@
             android:value="Home" />
 
         <activity
-            android:name=".lottery.GameLotteryBetActivity"
+            android:name=".game.GameLotteryBetActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             android:theme="@style/SwipeBackStyle" />
-        <activity android:name=".lottery.GameLotteryBetToolsActivity"
+        <activity android:name=".game.GameLotteryBetToolsActivity"
             android:theme="@style/SwipeBackStyle" />
     </application>
 </manifest>

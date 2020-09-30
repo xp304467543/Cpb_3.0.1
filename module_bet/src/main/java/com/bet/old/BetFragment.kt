@@ -357,6 +357,7 @@ class BetFragment : BaseMvpFragment<BetPresenter>(), ITheme {
             2 -> setTheme(Theme.NewYear)
             3 -> setTheme(Theme.MidAutumn)
             4 -> setTheme(Theme.LoverDay)
+            5 ->setTheme(Theme.NationDay)
         }
 
     }

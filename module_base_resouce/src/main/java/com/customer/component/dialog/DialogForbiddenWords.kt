@@ -31,12 +31,12 @@ class DialogForbiddenWords(context: Context, var data: HomeLiveTwentyNewsRespons
 
     init {
         setContentView(R.layout.dialog_forbidden_words)
-        window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        window!!.setGravity(Gravity.CENTER or Gravity.CENTER)
-        val lp = window!!.attributes
-        lp.width = ViewUtils.dp2px(316) // 宽度
+        window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        window?.setGravity(Gravity.CENTER or Gravity.CENTER)
+        val lp = window?.attributes
+        lp?.width = ViewUtils.dp2px(316) // 宽度
 //      lp.alpha = 0.7f // 透明度
-        window!!.attributes = lp
+        window?.attributes = lp
         setCanceledOnTouchOutside(false)
         initView()
     }

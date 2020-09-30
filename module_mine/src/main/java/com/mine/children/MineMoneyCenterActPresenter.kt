@@ -17,7 +17,6 @@ import java.math.BigDecimal
  */
 class MineMoneyCenterActPresenter : BaseMvpPresenter<MineMoneyCenterAct>() {
 
-
     //获取余额
     @SuppressLint("SetTextI18n")
     fun getUserBalance() {
@@ -79,26 +78,32 @@ class MineMoneyCenterActPresenter : BaseMvpPresenter<MineMoneyCenterAct>() {
 
     //上分下分  1 棋牌  2 Ag  true 上分 false 下分
     fun upAndDownMoney(index: Int, boolean: Boolean, amount: String) {
-        if (index == 1) {
-            MineApi.getChessMoneyUpOrDown(boolean, amount) {
-                onSuccess {
-                    getUserBalance()
-                    mView.hidePageLoadingDialog()
+        if (mView.isActive()){
+            if (index == 1) {
+                MineApi.getChessMoneyUpOrDown(boolean, amount) {
+                    onSuccess {
+                        mView.etMoney?.setText("")
+                        getUserBalance()
+                        mView.hidePageLoadingDialog()
+                        ToastUtils.showToast("转账成功")
+                    }
+                    onFailed {
+                        ToastUtils.showToast(it.getMsg())
+                        mView.hidePageLoadingDialog()
+                    }
                 }
-                onFailed {
-                    ToastUtils.showToast(it.getMsg())
-                    mView.hidePageLoadingDialog()
-                }
-            }
-        } else {
-            MineApi.getAgMoneyUpOrDown(boolean, amount) {
-                onSuccess {
-                    getUserBalance()
-                    mView.hidePageLoadingDialog()
-                }
-                onFailed {
-                    mView.hidePageLoadingDialog()
-                    ToastUtils.showToast(it.getMsg())
+            } else {
+                MineApi.getAgMoneyUpOrDown(boolean, amount) {
+                    onSuccess {
+                        mView.etMoney?.setText("")
+                        getUserBalance()
+                        mView.hidePageLoadingDialog()
+                        ToastUtils.showToast("转账成功")
+                    }
+                    onFailed {
+                        mView.hidePageLoadingDialog()
+                        ToastUtils.showToast(it.getMsg())
+                    }
                 }
             }
         }

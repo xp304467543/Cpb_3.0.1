@@ -387,6 +387,7 @@ class LiveRoomActivity : BaseNormalMvpActivity<LiveActPresenter>() {
     @Subscribe(thread = EventThread.MAIN_THREAD)
     fun onClickMine(clickMine: HomeJumpToMineCloseLive) {
         backListener()
+        RxBus.get().post(HomeJumpTo(clickMine.isOpenAct))
     }
     /**
      * Bet页面
@@ -395,7 +396,7 @@ class LiveRoomActivity : BaseNormalMvpActivity<LiveActPresenter>() {
     @Subscribe(thread = EventThread.MAIN_THREAD)
     fun toBet(clickMine: ToBetView) {
         backListener()
-        RxBus.get().post(WebSelect(clickMine.pos))
+//        RxBus.get().post(WebSelect(clickMine.pos))
     }
 
     //动画效果

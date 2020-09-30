@@ -60,7 +60,7 @@ object GlideUtil : AppGlideModule() {
 
     fun splashLoad(context: Context,url:String,imageView: ImageView){
         Glide.with(context).load(url).apply(initOptions())
-            .skipMemoryCache(isSkipMemoryCache()).error(getErrorImage())
+            .skipMemoryCache(isSkipMemoryCache()).error(getErrorImage(isSplash = true))
             .fallback(R.mipmap.splash).placeholder(R.mipmap.splash)
             .into(imageView)
     }
@@ -381,10 +381,11 @@ object GlideUtil : AppGlideModule() {
      * @describe 当图片加载失败的时候显示
      */
     @DrawableRes
-    private fun getErrorImage(isAvatar: Boolean = false): Int {
+    private fun getErrorImage(isAvatar: Boolean = false,isSplash:Boolean=false): Int {
         if (isAvatar) {
             return R.mipmap.ic_base_user
         }
+        if (isSplash) return  R.drawable.splash_bg
         return R.mipmap.ic_placeholder
     }
 

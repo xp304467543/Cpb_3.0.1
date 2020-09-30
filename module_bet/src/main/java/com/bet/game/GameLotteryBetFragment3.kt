@@ -1,4 +1,4 @@
-package com.bet.lottery
+package com.bet.game
 
 import android.os.Bundle
 import androidx.recyclerview.widget.GridLayoutManager
@@ -6,9 +6,6 @@ import com.bet.R
 import com.customer.adapter.HomeHotLiveAdapter
 import com.customer.base.BaseNormalFragment
 import com.customer.data.home.HomeHotLiveResponse
-import com.lib.basiclib.base.recycle.BaseRecyclerAdapter
-import com.services.HomeService
-import com.xiaojinzi.component.impl.service.ServiceManager
 import kotlinx.android.synthetic.main.game_bet_fragment3.*
 
 /**

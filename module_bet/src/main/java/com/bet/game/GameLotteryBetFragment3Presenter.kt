@@ -1,4 +1,4 @@
-package com.bet.lottery
+package com.bet.game
 
 import com.customer.data.home.HomeApi
 import com.lib.basiclib.base.mvp.BaseMvpPresenter

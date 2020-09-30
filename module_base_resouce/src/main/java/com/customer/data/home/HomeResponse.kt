@@ -173,6 +173,14 @@ data class MineNewBean(
 
 data class UpdateData(var version_data: Update?)
 
+data class RedRain(var amount: String?)
+
+data class RedTask(var prompt: Int?)
+
+data class TaskGift(val gift_type:Int?,val amount:String?)
+
+data class UserTask(var task_id: Int?,var title: String?,var status:Int?,var target:Int?,var jump:Int?,var archive:String?)
+
 data class Update(
     var enforce: Int = 0,
     var version: String?,
@@ -190,4 +198,4 @@ data class SystemNotice(
 )
 
 //首页游戏
-data class Game(var game_id: String?, var name: String?, var img_url: String?)
+data class Game(var id: String?, var name: String?, var img_url: String?,var type:String?)

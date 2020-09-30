@@ -63,13 +63,13 @@ abstract class BottomDialogFragment : DialogFragment() {
         window?.setWindowAnimations(R.style.bottomDialog)
         window?.setLayout(-1, -2)
         window?.setDimAmount(0f)
-        val params = window!!.attributes
-        params.gravity = Gravity.BOTTOM
-        params.width = resources.displayMetrics.widthPixels
+        val params = window?.attributes
+        params?.gravity = Gravity.BOTTOM
+        params?.width = resources.displayMetrics.widthPixels
         if (resetHeight == 0) {
-            params.height = if (isShowTop()) ViewUtils.getScreenHeight() * 2 / 3 else
+            params?.height = if (isShowTop()) ViewUtils.getScreenHeight() * 2 / 3 else
                 ViewUtils.getScreenHeight() * 2 / 3 - ViewUtils.dp2px(12)
-        } else params.height = resetHeight
+        } else params?.height = resetHeight
         window?.attributes = params
     }
 

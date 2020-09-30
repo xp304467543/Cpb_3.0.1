@@ -20,14 +20,14 @@ import kotlinx.android.synthetic.main.dialog_live_chat_recharge.*
 class DialogReCharge(context: Context, var isDiamond:Boolean) : Dialog(context) {
 
     init {
-        window!!.setWindowAnimations(R.style.BaseDialogAnim)
+        window?.setWindowAnimations(R.style.BaseDialogAnim)
         setContentView(R.layout.dialog_live_chat_recharge)
-        window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        window!!.setGravity(Gravity.CENTER or Gravity.CENTER)
-        val lp = window!!.attributes
-        lp.width = ViewUtils.dp2px(314) // 宽度
-        lp.height = ViewUtils.dp2px(290)  // 高度
-        window!!.attributes = lp
+        window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        window?.setGravity(Gravity.CENTER or Gravity.CENTER)
+        val lp = window?.attributes
+        lp?.width = ViewUtils.dp2px(314) // 宽度
+        lp?.height = ViewUtils.dp2px(290)  // 高度
+        window?.attributes = lp
 
         if (isDiamond){
             tvRechargeTip.text = "钻石不足,请兑换"

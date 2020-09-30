@@ -2,6 +2,7 @@ package com.mine.children
 
 import android.annotation.SuppressLint
 import com.customer.component.dialog.DialogSuccess
+import com.customer.data.UserInfoSp
 import com.customer.utils.JsonUtils
 import com.lib.basiclib.base.mvp.BaseMvpPresenter
 import com.mine.R
@@ -53,8 +54,10 @@ class MineSetPayPassWordActPresenter : BaseMvpPresenter<MineSetPayPassWordAct>()
             onSuccess {
                 mView.hidePageLoadingDialog()
                 val dialog = DialogSuccess(mView, "支付密码设置成功", R.mipmap.ic_dialog_success)
+                UserInfoSp.putIsSetPayPassWord(true)
                 dialog.setOnDismissListener { mView.finish() }
                 dialog.show()
+
             }
             onFailed {
                 mView.hidePageLoadingDialog()

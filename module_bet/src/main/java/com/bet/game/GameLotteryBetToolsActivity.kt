@@ -1,4 +1,4 @@
-package com.bet.lottery
+package com.bet.game
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

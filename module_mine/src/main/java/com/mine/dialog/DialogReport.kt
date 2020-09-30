@@ -24,14 +24,14 @@ class DialogReport(context: Context) : Dialog(context) {
 
     init {
         setContentView(R.layout.dialog_report)
-        window!!.setWindowAnimations(R.style.BaseDialogAnim)
-        window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        window!!.setGravity(Gravity.CENTER or Gravity.CENTER)
-        val lp = window!!.attributes
-        lp.width = ViewUtils.dp2px(316) // 宽度
-        lp.height = ViewGroup.LayoutParams.WRAP_CONTENT  // 高度
+        window?.setWindowAnimations(R.style.BaseDialogAnim)
+        window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        window?.setGravity(Gravity.CENTER or Gravity.CENTER)
+        val lp = window?.attributes
+        lp?.width = ViewUtils.dp2px(316) // 宽度
+        lp?.height = ViewGroup.LayoutParams.WRAP_CONTENT  // 高度
 //      lp.alpha = 0.7f // 透明度
-        window!!.attributes = lp
+        window?.attributes = lp
         initEvent()
     }
 

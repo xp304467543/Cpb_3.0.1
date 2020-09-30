@@ -11,6 +11,7 @@ import com.glide.GlideUtil
 import com.lib.basiclib.base.mvp.BaseMvpActivity
 import com.lib.basiclib.utils.FastClickUtil
 import com.mine.R
+import com.xiaojinzi.component.anno.RouterAnno
 import kotlinx.android.synthetic.main.act_mine_presonal.*
 import java.util.regex.Pattern
 
@@ -21,6 +22,7 @@ import java.util.regex.Pattern
  * @ Describe
  *
  */
+@RouterAnno(host = "Mine", path = "myPage")
 class MinePersonalAct : BaseMvpActivity<MinePersonalActPresenter>() {
     override fun attachView() = mPresenter.attachView(this)
 

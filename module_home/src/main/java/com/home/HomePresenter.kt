@@ -17,14 +17,28 @@ class HomePresenter : BaseMvpPresenter<HomeFragment>() {
     fun getNewMsg() {
         HomeApi.getIsNewMessage {
             onSuccess {
-                if (it.msgCount > 0) {
-                    mView.setVisible(mView.topDian)
-                } else {
-                    mView.setGone(mView.topDian)
+                if (mView.isActive()) {
+                    if (it.msgCount > 0) {
+                        mView.setVisible(mView.topDian)
+                    } else {
+                        mView.setGone(mView.topDian)
+                    }
+                    mView.msg1 = it.countList.`_$0`
+                    mView.msg2 = it.countList.`_$2`
+                    mView.msg3 = it.countList.`_$3`
                 }
-                mView.msg1 = it.countList.`_$0`
-                mView.msg2 = it.countList.`_$2`
-                mView.msg3 = it.countList.`_$3`
+            }
+        }
+    }
+
+    fun getRedTask() {
+        HomeApi.getRedTask {
+            onSuccess {
+                if (mView.isActive()) {
+                    if (it.prompt == 1) {
+                        mView.setVisible(mView.topDianTask)
+                    } else mView.setGone(mView.topDianTask)
+                }
             }
         }
     }

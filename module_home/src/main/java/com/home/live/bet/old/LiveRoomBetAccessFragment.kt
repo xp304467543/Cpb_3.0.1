@@ -163,7 +163,6 @@ class LiveRoomBetAccessFragment : BottomDialogFragment() {
                         val issue = arguments?.getString("issue")
                         val jsonRes = arguments?.getParcelableArrayList<LotteryBet>("lotteryBet")
                         val bean = arrayListOf<BetBean>()
-                        LogUtils.e("************--->"+jsonRes)
                         if (jsonRes != null) {
                             for (js in jsonRes) {
                                 val result = BetBean(js.result.play_sec_name, js.result.play_class_name, js.result.money)

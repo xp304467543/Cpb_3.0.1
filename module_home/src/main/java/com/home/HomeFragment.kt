@@ -3,15 +3,14 @@ package com.home
 import android.content.Intent
 import com.customer.ApiRouter
 import com.customer.adapter.TabScaleAdapter
-import com.customer.component.dialog.DialogRegisterSuccess
 import com.customer.component.dialog.GlobalDialog
 import com.customer.data.HomeJumpToMine
 import com.customer.data.LoginOut
 import com.customer.data.UserInfoSp
-import com.customer.data.login.RegisterSuccess
 import com.customer.data.mine.ChangeSkin
 import com.customer.data.mine.UpDateUserPhoto
 import com.glide.GlideUtil
+import com.home.children.HomeNewHandTask
 import com.home.live.search.LiveSearchActivity
 import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
@@ -58,6 +57,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme {
                 true
             )
             mPresenter.getNewMsg()
+            mPresenter.getRedTask()
         } else imgHomeUserIcon.setImageResource(R.mipmap.ic_base_user)
     }
 
@@ -95,6 +95,13 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme {
                startActivity(Intent(getPageActivity(),LiveSearchActivity::class.java))
             }else Router.withApi(ApiRouter::class.java).toVideoSearch()
         }
+        imgNewTask.setOnClickListener {
+            if (!UserInfoSp.getIsLogin()) {
+                GlobalDialog.notLogged(requireActivity())
+                return@setOnClickListener
+            }
+            startActivity(Intent(activity,HomeNewHandTask::class.java))
+        }
     }
 
     private fun initViewPager() {
@@ -112,7 +119,8 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme {
             viewPage = homeSwitchViewPager,
             normalColor = ViewUtils.getColor(R.color.white),
             selectedColor =  ViewUtils.getColor(R.color.white),
-            colorLine = ViewUtils.getColor(R.color.white)
+            colorLine = ViewUtils.getColor(R.color.white),
+            isChange = false
         )
         homeSwitchVideoTab.navigator = commonNavigator
         ViewPagerHelper.bind(homeSwitchVideoTab, homeSwitchViewPager)
@@ -137,6 +145,10 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme {
                 imgHomeUserRecharge.setTextColor(ViewUtils.getColor(R.color.purple))
                 imgHomeBg.setImageResource(R.drawable.ic_them_love_top)
             }
+            Theme.NationDay ->{
+                imgHomeUserRecharge.setTextColor(ViewUtils.getColor(R.color.color_EF7E12))
+                imgHomeBg.setImageResource(R.drawable.ic_them_gq_top)
+            }
         }
     }
 
@@ -148,17 +160,18 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme {
             2 ->  setTheme(Theme.NewYear)
             3 ->  setTheme(Theme.MidAutumn)
             4 ->  setTheme(Theme.LoverDay)
+            5 ->setTheme(Theme.NationDay)
         }
 
     }
 
-    //登录成功dialog
-    @Subscribe(thread = EventThread.MAIN_THREAD)
-    fun loginInfoResponse(eventBean: RegisterSuccess) {
-        if (eventBean.isShowDialog) {
-            DialogRegisterSuccess(requireActivity()).show()
-        }
-    }
+//    //登录成功dialog
+//    @Subscribe(thread = EventThread.MAIN_THREAD)
+//    fun loginInfoResponse(eventBean: RegisterSuccess) {
+//        if (eventBean.isShowDialog) {
+//            DialogRegisterSuccess(requireActivity()).show()
+//        }
+//    }
 
     //更新用户头像
     @Subscribe(thread = EventThread.MAIN_THREAD)
