@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.customer.ApiRouter
 import com.customer.adapter.HomeHotLiveAdapter
 import com.customer.component.dialog.GlobalDialog
-import com.customer.component.rain.RainViewGroup
 import com.customer.data.ToBetView
 import com.customer.data.UserInfoSp
 import com.customer.data.game.GameApi
@@ -73,6 +72,9 @@ class HomeRecommendNewFragment : BaseMvpFragment<HomeRecommendNewPresenter>(), I
     }
 
     override fun initEvent() {
+        tvGameMore?.setOnClickListener {
+            if (!FastClickUtil.isFastClick()) RxBus.get().post(ToBetView(1))
+        }
         tvHotLiveMore?.setOnClickListener {
             if (!FastClickUtil.isFastClick()) startActivity(
                 Intent(
@@ -82,9 +84,7 @@ class HomeRecommendNewFragment : BaseMvpFragment<HomeRecommendNewPresenter>(), I
             )
         }
 
-        tvGameMore?.setOnClickListener {
-            if (!FastClickUtil.isFastClick()) RxBus.get().post(ToBetView(1))
-        }
+
     }
 
 
@@ -247,16 +247,24 @@ class HomeRecommendNewFragment : BaseMvpFragment<HomeRecommendNewPresenter>(), I
     override fun setTheme(theme: Theme) {
         when (theme) {
             Theme.Default -> {
-
+                desGame.setDesNew(title = "热门游戏",isShowLine = true)
+                desHotLive.setDesNew(title = "热门直播",isShowLine = true)
             }
             Theme.NewYear -> {
-
+                desGame.setDesNew(title = "热门游戏",image = R.drawable.ic_them_newyear_5,isShowLine = false)
+                desHotLive.setDesNew(title = "热门直播",image =  R.drawable.ic_them_newyear_1,isShowLine = false)
             }
             Theme.MidAutumn -> {
-
+                desGame.setDesNew(title = "热门游戏",image = R.drawable.ic_them_middle_1,isShowLine = false)
+                desHotLive.setDesNew(title = "热门直播",image =  R.drawable.ic_them_middle_7,isShowLine = false)
             }
             Theme.LoverDay -> {
-
+                desGame.setDesNew(title = "热门游戏",image = R.drawable.ic_them_love_1,isShowLine = false)
+                desHotLive.setDesNew(title = "热门直播",image =  R.drawable.ic_them_love_7,isShowLine = false)
+            }
+            Theme.NationDay ->{
+                desGame.setDesNew(title = "热门游戏",image = R.drawable.ic_them_gq_11,isShowLine = false)
+                desHotLive.setDesNew(title = "热门直播",image =  R.drawable.ic_them_gq_12,isShowLine = false)
             }
         }
     }

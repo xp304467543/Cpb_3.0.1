@@ -367,7 +367,7 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme {
             setGone(containerSetting)
             setVisible(containerNoLogin)
             tvBalance?.text = "0.00"
-            tvDiamondBalance?.text = "0。00"
+            tvDiamondBalance?.text = "0.00"
         }
     }
 

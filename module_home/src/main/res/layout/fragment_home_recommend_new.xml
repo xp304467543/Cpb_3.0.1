@@ -81,40 +81,31 @@
                     android:paddingStart="@dimen/dp_15"
                     android:paddingEnd="0dp">
 
-                    <com.lib.basiclib.base.round.RoundTextView
-                        android:layout_width="4dp"
-                        android:layout_height="match_parent"
-                        app:rv_backgroundColor="@color/color_FF513E"
-                        app:rv_cornerRadius="@dimen/dp_10" />
-
-                    <TextView
-                        android:id="@+id/desGamePre"
+                    <com.customer.component.DescribeTitleView
+                        android:id="@+id/desGame"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_marginStart="@dimen/dp_10"
-                        android:layout_weight="1"
-                        android:text="热门游戏"
-                        android:textColor="@color/color_333333" />
+                        android:layout_weight="1" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvGameMore"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginEnd="@dimen/dp_15"
+                        android:drawableEnd="@mipmap/ic_arrow_double"
+                        android:drawablePadding="@dimen/dp_5"
                         android:gravity="center"
                         android:text="@string/home_look_more"
-                        android:drawablePadding="@dimen/dp_5"
-                        android:drawableEnd="@mipmap/ic_arrow_double"
                         android:textColor="@color/color_333333"
                         android:textSize="12sp" />
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvHotGame"
-                    android:layout_marginTop="@dimen/dp_10"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_6"
+                    android:layout_marginTop="@dimen/dp_10"
                     android:layout_marginEnd="@dimen/dp_6"
                     android:overScrollMode="never" />
 
@@ -123,45 +114,36 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
+                    android:gravity="center"
                     android:orientation="horizontal"
                     android:paddingStart="@dimen/dp_15"
                     android:paddingEnd="0dp">
 
-                    <com.lib.basiclib.base.round.RoundTextView
-                        android:layout_width="4dp"
-                        android:layout_height="match_parent"
-                        app:rv_backgroundColor="@color/color_FF513E"
-                        app:rv_cornerRadius="@dimen/dp_10" />
-
-                    <TextView
-                        android:id="@+id/desHotLivePre"
+                    <com.customer.component.DescribeTitleView
+                        android:id="@+id/desHotLive"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_marginStart="@dimen/dp_10"
-                        android:layout_weight="1"
-                        android:text="热门直播"
-                        android:textColor="@color/color_333333" />
-
+                        android:layout_weight="1" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvHotLiveMore"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginEnd="@dimen/dp_15"
+                        android:drawableEnd="@mipmap/ic_arrow_double"
+                        android:drawablePadding="@dimen/dp_5"
                         android:gravity="center"
                         android:text="@string/home_look_more"
-                        android:drawablePadding="@dimen/dp_5"
-                        android:drawableEnd="@mipmap/ic_arrow_double"
                         android:textColor="@color/color_333333"
                         android:textSize="12sp" />
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvHotLiveNew"
-                    android:layout_marginTop="@dimen/dp_10"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_6"
+                    android:layout_marginTop="@dimen/dp_10"
                     android:layout_marginEnd="@dimen/dp_6"
                     android:overScrollMode="never" />
 
@@ -169,7 +151,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_100"
                     android:gravity="center"
-                    android:textColor="@color/grey_e6"/>
+                    android:textColor="@color/grey_e6" />
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
