@@ -8,7 +8,7 @@ import com.fh.basemodle.R;
 /**
  * 倒计时Button帮助类
  *
- * @author xuexiang
+
  * @since 2018/11/22 上午12:38
  */
 public class CountDownButtonHelper {

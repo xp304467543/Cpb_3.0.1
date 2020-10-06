@@ -8,7 +8,7 @@ import androidx.viewpager.widget.ViewPager;
 /**
  * 翻转切换
  *
- * @author xuexiang
+
  * @since 2019/1/14 下午10:12
  */
 public class FlowTransformer implements ViewPager.PageTransformer {

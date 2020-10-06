@@ -197,6 +197,7 @@ class LiveRoomChild1Presenter(private val anchorId: String) : BaseMvpPresenter<L
                     )
                     mView.showToast()
                     if (!mView.getScreenFull()) RxBus.get().post(UpDataHorDiamon(true))
+                    RxBus.get().post(GiftSendSuccess(gift_id))
                 }
                 onFailed {
                     if (it.getCode() == 2) {

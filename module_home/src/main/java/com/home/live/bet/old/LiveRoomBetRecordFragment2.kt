@@ -26,9 +26,9 @@ class LiveRoomBetRecordFragment2 : BaseNormalFragment() {
 
     private var index = 1
 
-    var str = arrayListOf("钻石", "余额")
+    var str = arrayListOf( "金额","钻石")
 
-    var currentSel = "0" //默认钻石
+    var currentSel = "1" //默认钻石
 
     private var adapter: LiveRoomRecordAdapter? = null
 
@@ -62,8 +62,8 @@ class LiveRoomBetRecordFragment2 : BaseNormalFragment() {
                 index = 1
                 adapter?.clear()
                 currentSel = if (position == 0) {
-                    "0"
-                } else "1"
+                    "1"
+                } else "0"
                 getResponse()
             }
 

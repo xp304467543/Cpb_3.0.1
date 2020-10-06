@@ -26,7 +26,7 @@ import java.util.Locale;
 /**
  * 农历工具类
  *
- * @author xuexiang
+
  * @since 2019/1/1 下午7:20
  */
 public final class ChinaDateUtils {

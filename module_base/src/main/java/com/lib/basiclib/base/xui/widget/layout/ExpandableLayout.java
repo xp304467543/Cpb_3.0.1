@@ -41,7 +41,7 @@ import static com.lib.basiclib.base.xui.widget.layout.ExpandableLayout.State.EXP
 /**
  * 可伸缩的布局
  *
- * @author xuexiang
+
  * @since 2019-11-22 13:41
  */
 public class ExpandableLayout extends FrameLayout {

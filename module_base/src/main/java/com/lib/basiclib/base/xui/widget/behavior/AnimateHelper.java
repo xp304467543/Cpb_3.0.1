@@ -18,7 +18,7 @@
 package com.lib.basiclib.base.xui.widget.behavior;
 
 /**
- * @author xuexiang
+
  * @since 2019-05-10 01:03
  */
 public interface AnimateHelper {

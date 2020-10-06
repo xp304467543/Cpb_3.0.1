@@ -129,7 +129,7 @@ class MoreAnchorAct : BaseNavActivity() {
         }
     }
 
-    fun getAll(  isRefresh: Boolean) {
+    fun getAll(isRefresh: Boolean) {
         HomeApi.getAllAnchor(page, type) {
             onSuccess {
                 smartContent.setEnableLoadMore(true)
@@ -141,6 +141,10 @@ class MoreAnchorAct : BaseNavActivity() {
                 if (it.data.toString().length > 10) {
                     val content = it.data?.let { it1 -> JsonUtils.fromJson(it1, Array<HomeHotLiveResponse>::class.java) }
                     content?.let { it1 -> initAdvanceRecycle(it1,isRefresh) }
+                }else  {
+                    setVisible(emptyHolder)
+                    contentAdapter.clear()
+                    recyclerViewContent?.removeAllViews()
                 }
                 hidePageLoadingDialog()
                 smartContent.finishRefresh()

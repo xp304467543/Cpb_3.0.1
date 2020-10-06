@@ -45,7 +45,7 @@ import com.lib.basiclib.base.xui.utils.ResUtils;
 /**
  * 点击可出现水波效果的控件，作为父布局使用
  *
- * @author xuexiang
+
  * @since 2019-05-15 00:10
  */
 public class RippleView extends FrameLayout {

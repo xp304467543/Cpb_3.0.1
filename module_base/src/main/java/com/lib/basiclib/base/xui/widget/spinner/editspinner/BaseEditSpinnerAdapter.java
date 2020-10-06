@@ -5,7 +5,7 @@ import android.widget.BaseAdapter;
 /**
  * 基础可输入下拉框
  *
- * @author xuexiang
+
  * @since 2020/11/26 下午2:16
  */
 public abstract class BaseEditSpinnerAdapter extends BaseAdapter {

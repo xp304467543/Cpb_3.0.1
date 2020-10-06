@@ -48,7 +48,7 @@ import static com.lib.basiclib.base.xui.widget.imageview.preview.ui.PreviewActiv
 /**
  * 构建者
  *
- * @author xuexiang
+
  * @since 2018/12/5 上午11:46
  */
 public final class PreviewBuilder {

@@ -28,7 +28,7 @@ import com.lib.basiclib.base.xui.widget.alpha.XUIAlphaButton;
 /**
  * 封装的button，便于样式的修改
  *
- * @author xuexiang
+
  * @since 2019-06-01 20:01
  */
 public class XUIButton extends XUIAlphaButton implements IXUILayout {

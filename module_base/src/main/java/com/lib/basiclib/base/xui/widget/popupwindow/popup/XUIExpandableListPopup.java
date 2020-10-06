@@ -34,7 +34,7 @@ import com.lib.basiclib.base.xui.widget.XUIWrapContentExpandableListView;
 /**
  * 继承自 {@link XUIPopup}，在 {@link XUIPopup} 的基础上，支持显示一个可伸缩的列表。
  *
- * @author xuexiang
+
  * @since 2019-11-09 18:05
  */
 public class XUIExpandableListPopup<T extends XUIExpandableListPopup> extends XUIPopup {

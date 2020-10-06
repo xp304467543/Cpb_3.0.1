@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * 抽象的搜索过滤器
  *
- * @author xuexiang
+
  * @since 2019-12-03 00:04
  */
 public abstract class AbstractSearchFilter extends Filter {

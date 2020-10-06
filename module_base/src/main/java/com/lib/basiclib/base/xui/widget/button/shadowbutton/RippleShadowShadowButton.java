@@ -19,7 +19,7 @@ import java.util.TimerTask;
 /**
  * 可设置波纹阴影效果的Button
  *
- * @author xuexiang
+
  * @since 2019/1/14 下午10:11
  */
 public class RippleShadowShadowButton extends BaseShadowButton {

@@ -24,7 +24,7 @@ import android.view.View;
 /**
  * 缩放手势检测器
  *
- * @author xuexiang
+
  * @since 2019-10-28 10:26
  */
 class ScaleGestureDetector {

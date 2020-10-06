@@ -18,7 +18,6 @@ class MineGameReportMorePresenter : BaseMvpPresenter<MineGameReportMoreAct>() {
         MineApi.getGameLotteryInfo(is_bl_play, start, end) {
             onSuccess {
                 if (mView.isActive()){
-                    mView.lotteryAdapter?.clear()
                     if (it.isNullOrEmpty()){
                         mView.lotteryAdapter?.notifyDataSetChanged()
                         mView.setVisible(R.id.place_holder)
@@ -39,9 +38,8 @@ class MineGameReportMorePresenter : BaseMvpPresenter<MineGameReportMoreAct>() {
         MineApi.getGameInfo(index,start,end){
             onSuccess { it ->
                 if (mView.isActive()){
-                    mView.lotteryAdapter?.clear()
                     if (it.isNullOrEmpty()){
-                        mView.gameAdapter?.notifyDataSetChanged()
+                        mView.gameAdapter?.clear()
                         mView.setVisible(R.id.place_holder)
                     }else{
                         mView.setGone(R.id.place_holder)

@@ -30,7 +30,7 @@ import java.util.WeakHashMap;
 /**
  * SlideBack使用类
  *
- * @author xuexiang
+
  * @since 2019-08-30 9:30
  */
 public class SlideBack {

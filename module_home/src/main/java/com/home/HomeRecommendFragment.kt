@@ -371,31 +371,31 @@ class HomeRecommendFragment : BaseMvpFragment<HomeRecommendPresenter>(), ITheme 
     //lottery页面打开直播间
     @Subscribe(thread = EventThread.HANDLER)
     fun lotteryToLiveRoom(eventBean: LotteryToLiveRoom) {
-        if (isAdded) {
-            if (gameRoomList != null && gameRoomList?.isNotEmpty()!!) {
-                for (bean in gameRoomList!!) {
-                    if (bean.isNullOrEmpty()) return
-                    for ((index, item) in bean.withIndex()) {
-                        if (eventBean.id == item.lottery_id) {
-                            Router.withApi(ApiRouter::class.java).toLive(
-                                item.anchor_id ?: "1",
-                                item.lottery_id ?: "1",
-                                item.name ?: "未知",
-                                item.live_status ?: "0",
-                                item.online.toString(),
-                                item.game_id ?: "1",
-                                item.name ?: "未知",
-                                item.image ?: ""
-                            )
-                            return
-                        } else if (index == bean.size - 1) {
-                            ToastUtils.showToast("该彩种暂无直播")
-                        }
-                    }
-                }
-
-            }
-        }
+//        if (isAdded) {
+//            if (gameRoomList != null && gameRoomList?.isNotEmpty()!!) {
+//                for (bean in gameRoomList!!) {
+//                    if (bean.isNullOrEmpty()) return
+//                    for ((index, item) in bean.withIndex()) {
+//                        if (eventBean.id == item.lottery_id) {
+//                            Router.withApi(ApiRouter::class.java).toLive(
+//                                item.anchor_id ?: "1",
+//                                item.lottery_id ?: "1",
+//                                item.name ?: "未知",
+//                                item.live_status ?: "0",
+//                                item.online.toString(),
+//                                item.game_id ?: "1",
+//                                item.name ?: "未知",
+//                                item.image ?: ""
+//                            )
+//                            return
+//                        } else if (index == bean.size - 1) {
+//                            ToastUtils.showToast("该彩种暂无直播")
+//                        }
+//                    }
+//                }
+//
+//            }
+//        }
     }
 
     //主题

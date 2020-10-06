@@ -36,7 +36,7 @@ import com.fh.basemodle.R;
 /**
  * 指示器控件
  *
- * @author xuexiang
+
  * @since 2020/12/5 上午11:22
  */
 public class BezierBannerView extends View implements ViewPager.OnPageChangeListener {

@@ -102,8 +102,8 @@ class HomeNewHandTask : BaseNavActivity() {
                 }
                 data?.status == -4 -> {
                     btTask?.text = "已领取"
-                    btTask?.background = ViewUtils.getDrawable(R.drawable.button_task_grey_background)
-                    btTask?.setTextColor(ViewUtils.getColor(R.color.white))
+                    btTask?.background = ViewUtils.getDrawable(R.drawable.button_task_red_line_background)
+                    btTask?.setTextColor(ViewUtils.getColor(R.color.color_FF513E))
                 }
                 data?.status ?: 0 >= 0 -> {
                     when (data?.jump) {

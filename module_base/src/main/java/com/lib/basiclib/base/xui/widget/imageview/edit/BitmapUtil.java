@@ -29,7 +29,7 @@ import javax.microedition.khronos.opengles.GL10;
 /**
  * 图片工具类
  *
- * @author xuexiang
+
  * @since 2019-10-28 9:52
  */
 class BitmapUtil {

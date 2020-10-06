@@ -14,7 +14,7 @@ import androidx.annotation.IntRange;
 /**
  *
  *
- * @author xuexiang
+
  * @since 2019/3/26 下午10:53
  */
 class PartialView extends RelativeLayout {

@@ -211,9 +211,12 @@ object ViewUtils {
      * copy string to clipboard
      */
     fun copyText(text: String) {
-        val clipboard = getContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        clipboard.primaryClip
-        ClipData.newPlainText("text", text)
+        //获取剪贴板管理器：
+        val cm =  getContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        // 创建普通字符型ClipData
+        val mClipData = ClipData.newPlainText("Label", text)
+        // 将ClipData内容放到系统剪贴板里。
+        cm.setPrimaryClip(mClipData)
     }
 
     /**
@@ -368,7 +371,7 @@ object ViewUtils {
 
     // ---------------------- view的多次点击 --------------------
 
-    private const val MIN_DELAY_TIME = 1000
+    private const val MIN_DELAY_TIME = 500
     private var lastClickTime = 0L
 
     /**

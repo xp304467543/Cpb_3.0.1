@@ -14,7 +14,7 @@ import com.lib.basiclib.base.xui.widget.alpha.XUIAlphaLinearLayout;
 /**
  * BottomSheet 的ItemView
  *
- * @author xuexiang
+
  * @since 2020/11/30 下午1:58
  */
 public class BottomSheetItemView extends XUIAlphaLinearLayout {

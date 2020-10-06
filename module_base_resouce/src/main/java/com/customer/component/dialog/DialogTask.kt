@@ -30,6 +30,10 @@ class DialogTask  (context: Context,var type:Int,var  count: String) : Dialog(co
     private fun initViews() {
         when(type){
             //礼物
+            0 ->{
+                tvDiamond.text = count
+                imgType?.setBackgroundResource(R.mipmap.ic_task_diamond)
+            }
             1 ->{
                 tvDiamond.text = count
                 imgType?.setBackgroundResource(R.mipmap.ic_task_gift)

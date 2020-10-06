@@ -27,7 +27,7 @@ import com.lib.basiclib.base.xui.logs.UILog;
 /**
  * 跟踪触摸事件位置的辅助类
  *
- * @author xuexiang
+
  * @since 2020/3/11 6:12 PM
  */
 public class PosIndicator {

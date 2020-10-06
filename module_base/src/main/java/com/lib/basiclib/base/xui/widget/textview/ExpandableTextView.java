@@ -29,7 +29,7 @@ import com.lib.basiclib.base.xui.utils.ResUtils;
 /**
  * 可伸缩折叠的TextView
  *
- * @author xuexiang
+
  * @since 2019/1/14 下午10:05
  */
 public class ExpandableTextView extends LinearLayout implements View.OnClickListener {

@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 /**
  * 框架日志记录
  *
- * @author xuexiang
+
  * @since 2018/11/14 上午11:59
  */
 public final class UILog {

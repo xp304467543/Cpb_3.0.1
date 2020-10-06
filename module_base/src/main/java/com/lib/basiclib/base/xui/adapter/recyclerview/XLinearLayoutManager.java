@@ -26,7 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 /**
  * 防止数据错位导致数组越界的错误
  *
- * @author xuexiang
+
  * @since 2019-08-14 00:15
  */
 public class XLinearLayoutManager extends LinearLayoutManager {

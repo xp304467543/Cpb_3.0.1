@@ -4,20 +4,30 @@ import android.content.Context
 import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.RelativeLayout
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.customer.data.UserInfoSp
+import com.customer.data.home.GiftSendSuccess
 import com.customer.data.home.HomeLiveAnimatorBean
 import com.customer.data.home.HomeLiveGiftList
 import com.fh.module_base_resouce.R
+import com.glide.GlideUtil
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.tabs.TabLayout
 import com.hwangjr.rxbus.RxBus
+import com.hwangjr.rxbus.annotation.Subscribe
+import com.hwangjr.rxbus.thread.EventThread
+import com.lib.basiclib.base.recycle.BaseRecyclerAdapter
+import com.lib.basiclib.base.recycle.RecyclerViewHolder
 import com.lib.basiclib.utils.LogUtils
 import com.lib.basiclib.utils.ToastUtils
+import com.lib.basiclib.utils.ViewUtils
 import kotlinx.android.synthetic.main.dialog_chat_bottom_gif.*
+import java.math.BigDecimal
 
 /**
  *
@@ -32,7 +42,8 @@ class BottomGiftWindow (context: Context) : BottomSheetDialog(context) {
     var viewPager: ViewPager? = null
     private var liveGiftNumPop: LiveGiftNumPop? = null
     private var pagerAdapter: BottomGiftAdapter? = null
-    private var viewList = arrayListOf<PageGridView>()
+    private var viewList = arrayListOf<RecyclerView>()
+    private var adapterList = arrayListOf<RecycleGiftAdapter>()
     private var homeLiveGiftListBean: HomeLiveGiftList? = null
 
     init {
@@ -97,12 +108,17 @@ class BottomGiftWindow (context: Context) : BottomSheetDialog(context) {
         if (!title.isNullOrEmpty() && !content.isNullOrEmpty()) {
             for ((index, tabText) in title.withIndex()) {
                 chatGifTabView.addTab(chatGifTabView.newTab().setText(tabText))
-                val view = PageGridView(context)
-                view.setData(content[index])
-                view.setOnItemClickListener { position, homeLiveGiftList ->
-                    homeLiveGiftListBean = homeLiveGiftList
+                val view = RecyclerView(context)
+                view.layoutManager = GridLayoutManager(context,4)
+                val rvAdapter = RecycleGiftAdapter()
+                view.adapter = rvAdapter
+                adapterList.add(rvAdapter)
+                rvAdapter.refresh(content[index])
+                rvAdapter.setOnItemClickListener{
+                        itemView,item,position ->
+                    homeLiveGiftListBean = item
                     tvGiftMount.text = "1"
-                    notifyAllData(homeLiveGiftList.name.toString(), homeLiveGiftList)
+                    notifyAllData(item.name.toString(), item)
                 }
                 viewList.add(view)
             }
@@ -130,13 +146,29 @@ class BottomGiftWindow (context: Context) : BottomSheetDialog(context) {
     }
 
 
+    //发送成功
+    @Subscribe(thread = EventThread.MAIN_THREAD)
+    fun gift(eventBean: GiftSendSuccess) {
+        for (item in adapterList){
+           for (child in item.data){
+               if (child.id == eventBean.gift_id && child.free_num?:0>0){
+                   val num = child.free_num?.minus(1)
+                   child.free_num = num
+                   item.notifyDataSetChanged()
+                   return
+               }
+           }
+        }
+    }
+
+
+
     private fun notifyAllData(name: String, homeLiveGiftList: HomeLiveGiftList) {
-        if (viewList.isNotEmpty()) {
-            for (view in viewList) {
-                view.notifyAllData(name)
+        if (adapterList.isNotEmpty()) {
+            for (view in adapterList) {
+                view.changeBg(name)
             }
         }
-
         when (homeLiveGiftList.grade) {
             "middle", "high" -> {
                 countLin.visibility = View.GONE
@@ -173,6 +205,42 @@ class BottomGiftWindow (context: Context) : BottomSheetDialog(context) {
         override fun isViewFromObject(view: View, `object`: Any): Boolean {
             return view === `object`
         }
+    }
+
+    var nameCurrent = ""
+    inner class RecycleGiftAdapter : BaseRecyclerAdapter<HomeLiveGiftList>(){
+        override fun getItemLayoutId(viewType: Int): Int { return R.layout.item_view }
+        override fun bindData(holder: RecyclerViewHolder, position: Int, data: HomeLiveGiftList?) {
+            holder.text(R.id.tv_item_name,data?.name)
+            if (BigDecimal(data?.free_num?:0).compareTo(BigDecimal.ZERO) ==1){
+                holder.text(R.id.tvGiftPrise,"免费")
+            }else holder.text(R.id.tvGiftPrise,data?.amount+ " 钻石")
+
+            GlideUtil.loadImage(context,data?.icon,holder.findViewById(R.id.im_item_icon))
+            val pagerGridContainer = holder.findViewById<RelativeLayout>(R.id.pagerGridContainer)
+            if (nameCurrent == data?.name){
+                pagerGridContainer.background = ViewUtils.getDrawable(R.drawable.shape_home_live_chat_gif_selected_bg)
+            }else pagerGridContainer.background = null
+            if (data?.free_num?:0 > 0){
+                ViewUtils.setVisible(holder.findView(R.id.tvFreeNum))
+                holder.text(R.id.tvFreeNum,data?.free_num.toString())
+            }else  ViewUtils.setGone(holder.findView(R.id.tvFreeNum))
+        }
+
+        fun changeBg(name:String){
+            nameCurrent = name
+            notifyDataSetChanged()
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        RxBus.get().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        RxBus.get().unregister(this)
     }
 
 }

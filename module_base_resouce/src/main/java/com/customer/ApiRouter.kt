@@ -100,7 +100,7 @@ interface ApiRouter {
     @HostAndPathAnno("Mine/setting")
     fun toSetting()
 
-    //设置密码
+    //设置支付密码
     @HostAndPathAnno("Mine/setPassWord")
     fun toSetPassWord(@ParameterAnno("loadMode") mode: Int)
 

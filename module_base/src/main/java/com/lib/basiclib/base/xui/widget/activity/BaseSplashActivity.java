@@ -13,7 +13,7 @@ import com.lib.basiclib.base.xui.utils.Utils;
 /**
  * 基础启动页
  *
- * @author xuexiang
+
  * @since 2018/11/27 下午4:49
  */
 public abstract class BaseSplashActivity extends AppCompatActivity {

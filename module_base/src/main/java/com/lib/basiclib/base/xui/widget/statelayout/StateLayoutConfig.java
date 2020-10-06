@@ -11,7 +11,7 @@ import com.lib.basiclib.base.xui.utils.ResUtils;
 /**
  * 多状态布局的配置信息
  *
- * @author xuexiang
+
  * @since 2020/11/26 上午12:12
  */
 public class StateLayoutConfig {

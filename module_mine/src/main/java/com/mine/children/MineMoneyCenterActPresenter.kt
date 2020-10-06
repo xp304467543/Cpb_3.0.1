@@ -32,23 +32,31 @@ class MineMoneyCenterActPresenter : BaseMvpPresenter<MineMoneyCenterAct>() {
             MineApi.getChessMoney {
                 onSuccess {
                     mView.tv_3_money?.text = it.bl.toString()
-                    if (mView.tv_4_money.text.toString() == "维护中"){
+                    if (mView.tv_4_money.text.toString() == "维护中"  || mView.tv_4_money.text.toString() == "加载中" ){
                         mView.tvOtherMoney?.text = mView.tv_3_money.text.toString()
                     }else mView.tvOtherMoney?.text = BigDecimal(mView.tv_4_money.text.toString()).add(BigDecimal(mView.tv_3_money.text.toString())).toString()
+                }
+                onFailed {
+                    GlobalDialog.showError(mView, it)
                 }
             }
             MineApi.getAgMoney {
                 onSuccess {
                     mView.tv_4_money?.text = it.bl.toString()
+                    mView.hidePageLoadingDialog()
                     try {
-                        mView.tvOtherMoney?.text = BigDecimal(mView.tv_4_money.text.toString()).add(BigDecimal(mView.tv_3_money.text.toString())).toString()
-                    }catch (e:Exception){
+//                        mView.tvOtherMoney?.text = BigDecimal(mView.tv_4_money.text.toString()).add(BigDecimal(mView.tv_3_money.text.toString())).toString()
+                        if (mView.tv_4_money.text.toString() == "维护中" || mView.tv_4_money.text.toString() == "加载中") {
+                            mView.tvOtherMoney?.text = mView.tv_3_money.text.toString()
+                        } else mView.tvOtherMoney?.text = BigDecimal(mView.tv_4_money.text.toString()).add(BigDecimal(mView.tv_3_money.text.toString())).toString()
+                    } catch (e: Exception) {
                         e.printStackTrace()
                     }
                 }
                 onFailed {
                     if (it.getCode() == 16) mView.tv_4_money.text = "维护中"
                     mView.tvOtherMoney?.text = mView.tv_3_money.text.toString()
+                    mView.hidePageLoadingDialog()
                 }
             }
         }
@@ -77,8 +85,8 @@ class MineMoneyCenterActPresenter : BaseMvpPresenter<MineMoneyCenterAct>() {
     }
 
     //上分下分  1 棋牌  2 Ag  true 上分 false 下分
-    fun upAndDownMoney(index: Int, boolean: Boolean, amount: String) {
-        if (mView.isActive()){
+    fun upAndDownMoney(index: Int, boolean: Boolean, amount: String,isRecycle:Boolean = false) {
+        if (mView.isActive()) {
             if (index == 1) {
                 MineApi.getChessMoneyUpOrDown(boolean, amount) {
                     onSuccess {
@@ -105,6 +113,29 @@ class MineMoneyCenterActPresenter : BaseMvpPresenter<MineMoneyCenterAct>() {
                         ToastUtils.showToast(it.getMsg())
                     }
                 }
+            }
+        }
+    }
+
+    fun recycleAll(amount: String,amount1: String){
+        MineApi.getChessMoneyUpOrDown(false, amount) {
+            onSuccess {
+                MineApi.getAgMoneyUpOrDown(false, amount1) {
+                    onSuccess {
+                        mView.etMoney?.setText("")
+                        getUserBalance()
+                        mView.hidePageLoadingDialog()
+                        ToastUtils.showToast("转账成功")
+                    }
+                    onFailed {
+                        mView.hidePageLoadingDialog()
+                        ToastUtils.showToast(it.getMsg())
+                    }
+                }
+            }
+            onFailed {
+                ToastUtils.showToast(it.getMsg())
+                mView.hidePageLoadingDialog()
             }
         }
     }

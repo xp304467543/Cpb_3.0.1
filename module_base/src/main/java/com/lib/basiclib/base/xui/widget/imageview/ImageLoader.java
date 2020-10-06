@@ -32,7 +32,7 @@ import com.lib.basiclib.base.xui.widget.imageview.strategy.impl.GlideImageLoadSt
 /**
  * 图片加载策略管理
  *
- * @author xuexiang
+
  * @since 2019-07-26 00:27
  */
 public class ImageLoader implements IImageLoadStrategy {

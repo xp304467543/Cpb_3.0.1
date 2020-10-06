@@ -140,6 +140,8 @@ object HomeApi : BaseApi {
     private const val GET_NEW_TASK = "api/v1_1/live/task_reward/"
     //红包雨领取
     private const val GET_RED_RAIN = "api/v1_1/user/user_red_rain/"
+    //是否展示红包雨
+    private const val GET_IS_SHOW_RED = "api/v1_1/user/is_red_rain/"
 
 
     /**
@@ -663,7 +665,7 @@ object HomeApi : BaseApi {
         getApi()
             .get<UpdateData>(VERSION_UPDATE)
             .params("client_type", "android")
-            .params("version", "3.0.5")
+            .params("version", "3.1.1")
             .subscribe(subscriber)
     }
 
@@ -742,5 +744,16 @@ object HomeApi : BaseApi {
     }
 
 
+    /**
+     * 是否展示红包雨
+     */
+    fun getIsShowRed(function: ApiSubscriber<RedRain>.() -> Unit){
+        val subscriber = object : ApiSubscriber<RedRain>() {}
+        subscriber.function()
+        getApi()
+            .get<RedRain>(GET_IS_SHOW_RED)
+            .headers("token", UserInfoSp.getToken())
+            .subscribe(subscriber)
+    }
 
 }

@@ -47,7 +47,7 @@ import static android.widget.AbsListView.OnScrollListener.SCROLL_STATE_IDLE;
 /**
  * 使用RecyclerView实现轮播Banner
  *
- * @author xuexiang
+
  * @since 2019/5/29 10:52
  */
 public class BannerLayout extends FrameLayout {

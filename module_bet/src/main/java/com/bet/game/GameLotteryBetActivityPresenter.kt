@@ -3,7 +3,10 @@ package com.bet.game
 import android.annotation.SuppressLint
 import android.os.CountDownTimer
 import android.os.Handler
+import com.bet.R
+import com.customer.data.UserInfoSp
 import com.customer.data.lottery.LotteryApi
+import com.customer.utils.SoundPoolHelper
 import com.customer.utils.countdowntimer.CountDownTimerSupport
 import com.customer.utils.countdowntimer.OnCountDownTimerListener
 import com.customer.utils.countdowntimer.lotter.LotteryTypeSelectUtil
@@ -38,6 +41,7 @@ class GameLotteryBetActivityPresenter : BaseMvpPresenter<GameLotteryBetActivity>
     private var mTimer: CountDownTimerSupport? = null
     private var handler: Handler? = null
     private var runnable: Runnable? = null
+    var handlerPlay: Handler? = null
     @SuppressLint("SetTextI18n")
     fun getLotteryOpenCode(lotteryId: String) {
         handler?.removeCallbacks(runnable)
@@ -57,6 +61,7 @@ class GameLotteryBetActivityPresenter : BaseMvpPresenter<GameLotteryBetActivity>
 
                                 override fun onFinish() {
                                     if (mView.tvOpenTime != null) mView.tvOpenTime.text = "--:--"
+                                    mView.isPlay = true
                                     getLotteryOpenCode(lotteryId)
                                     mView.setVisible(mView.tvOpenCodePlaceHolder)
                                 }
@@ -76,6 +81,14 @@ class GameLotteryBetActivityPresenter : BaseMvpPresenter<GameLotteryBetActivity>
                         mView.betFragment?.lotteryInfo(it.issue?:"-1",it.next_issue?:"-1", lotteryId,true)
                         countDownTimerClose(it.issue?:"-1",it.next_issue?:"-1", lotteryId,it.next_lottery_end_time ?: 0)
                         isOpenCode = true
+                        if (mView.isPlay) {
+                            if (UserInfoSp.getIsPlaySound()) {
+                                if (handlerPlay == null) handlerPlay = Handler()
+                                handlerPlay?.post {
+                                    SoundPoolHelper(mView).playSoundWithRedId(R.raw.ring)
+                                }
+                            }
+                        }
                     } else {
                         mTimer?.stop()
                         if (!mView.isDestroyed) {

@@ -192,7 +192,7 @@ data class HomeLiveChatChildBeanNormal(var online: String?) : Parcelable
 
 //礼物列表
 data class HomeLiveGiftList(var id: String?, var type: String?, var name: String?,
-                            var amount: String?, var icon: String?, var grade: String?)
+                            var amount: String?, var icon: String?, var grade: String?,var free_num:Int?=0)
 
 
 //礼物动画Rx
@@ -217,6 +217,9 @@ data class HomeNewsBean(var info_id: String?, var title: String?, var type: Stri
                         var des: String?, var timegap: String?, var type_txt: String?,
                         var tag_txt: String?, var cover_img: List<String>? = null
 )
+
+
+data class GiftSendSuccess(var gift_id: String)
 
 //关注取关
 data class Attention(var isFollow: Boolean)

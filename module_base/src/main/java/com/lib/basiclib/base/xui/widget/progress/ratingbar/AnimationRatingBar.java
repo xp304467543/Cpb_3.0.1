@@ -13,7 +13,7 @@ import java.util.UUID;
 /**
  *
  *
- * @author xuexiang
+
  * @since 2019/3/26 下午10:50
  */
 public class AnimationRatingBar extends RatingBar {

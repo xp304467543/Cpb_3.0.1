@@ -50,7 +50,7 @@ import java.util.List;
 /**
  * 图片编辑
  *
- * @author xuexiang
+
  * @since 2019-10-28 10:08
  */
 public class PhotoEditor implements BrushViewChangeListener {

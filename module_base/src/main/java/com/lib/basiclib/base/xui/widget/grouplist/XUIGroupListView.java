@@ -95,7 +95,7 @@ import java.lang.annotation.RetentionPolicy;
  *                 .addTo(groupListView);
  * </pre>
  *
- * @author xuexiang
+
  * @since 2019/1/3 上午10:24
  */
 public class XUIGroupListView extends LinearLayout {

@@ -30,7 +30,7 @@ import androidx.core.view.ViewPropertyAnimatorListener;
 /**
  * 动画工具类
  *
- * @author xuexiang
+
  * @since 2019/1/2 下午3:59
  */
 class AnimationUtils {

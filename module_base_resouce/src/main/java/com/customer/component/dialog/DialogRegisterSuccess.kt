@@ -2,7 +2,10 @@ package com.customer.component.dialog
 
 import android.app.Dialog
 import android.content.Context
+import com.customer.ApiRouter
 import com.fh.module_base_resouce.R
+import com.lib.basiclib.utils.FastClickUtil
+import com.xiaojinzi.component.impl.Router
 import kotlinx.android.synthetic.main.dialog_register_success.*
 
 /**
@@ -21,6 +24,12 @@ class DialogRegisterSuccess (context: Context) : Dialog(context) {
         setCancelable(false)
         tvRegisterKnow.setOnClickListener {
             dismiss()
+        }
+        tvRegisterSetInfo.setOnClickListener {
+            if (!FastClickUtil.isFastClick()){
+                Router.withApi(ApiRouter::class.java).toMyPage()
+                dismiss()
+            }
         }
     }
 }

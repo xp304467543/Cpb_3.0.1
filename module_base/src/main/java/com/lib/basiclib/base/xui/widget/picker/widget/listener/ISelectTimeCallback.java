@@ -19,7 +19,7 @@ package com.lib.basiclib.base.xui.widget.picker.widget.listener;
 /**
  * 时间选择的回调
  *
- * @author xuexiang
+
  * @since 2019/1/1 下午7:07
  */
 public interface ISelectTimeCallback {

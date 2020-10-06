@@ -7,6 +7,7 @@ import com.home.R
 import com.home.video.adapter.VideoAdapter
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.thread.EventThread
+import com.lib.basiclib.base.mvp.BaseMvpNavFragment
 import com.lib.basiclib.base.xui.adapter.recyclerview.XGridLayoutManager
 import com.lib.basiclib.utils.LogUtils
 import kotlinx.android.synthetic.main.fragment_video_more.*
@@ -18,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_video_more.*
  * @ Describe
  *
  */
-class VideoMoreActivityChildFragment : BaseNormalFragment<VideoMoreActivityChildPresenter>() {
+class VideoMoreActivityChildFragment : BaseMvpNavFragment<VideoMoreActivityChildPresenter>() {
 
     var mTypeId = 1
     var mCid = 1
@@ -32,7 +33,9 @@ class VideoMoreActivityChildFragment : BaseNormalFragment<VideoMoreActivityChild
 
     override fun attachPresenter() = VideoMoreActivityChildPresenter()
 
-    override fun getLayoutRes() = R.layout.fragment_video_more
+    override fun getLayoutResID() = R.layout.fragment_video_more
+
+    override fun isOverridePage() = true
 
     override fun isRegisterRxBus() = true
 
@@ -54,18 +57,18 @@ class VideoMoreActivityChildFragment : BaseNormalFragment<VideoMoreActivityChild
     override fun initEvent() {
         smartRefreshLayoutVideoMore.setOnRefreshListener {
             mPage = 1
-            mPresenter.getMoreVideo(mTypeId,mCid,15,false,mColumn,mPage,mPerPage)
+            mPresenter.getMoreVideo(mTypeId,mCid,15,false,mColumn,mPage,mPerPage,mPageTag)
         }
         smartRefreshLayoutVideoMore.setOnLoadMoreListener {
             mPage ++
-            mPresenter.getMoreVideo(mTypeId,mCid,15,false,mColumn,mPage,mPerPage)
+            mPresenter.getMoreVideo(mTypeId,mCid,15,false,mColumn,mPage,mPerPage,mPageTag)
         }
     }
 
     override fun initData() {
 //        smartRefreshLayoutVideoMore.autoRefresh()
 
-        mPresenter.getMoreVideo(mTypeId,mCid,15,false,mColumn,mPage,mPerPage)
+        mPresenter.getMoreVideo(mTypeId,mCid,15,false,mColumn,mPage,mPerPage,mPageTag)
     }
 
     companion object {
@@ -85,30 +88,11 @@ class VideoMoreActivityChildFragment : BaseNormalFragment<VideoMoreActivityChild
     //column 变化接收
     @Subscribe(thread = EventThread.MAIN_THREAD)
     fun loginOut(eventBean: VideoColumnChange) {
-//        if (isAdded && brantUser){
             mColumn = eventBean.column
-            LogUtils.e("---VideoMoreActivityChildFragment2---"+mTypeId+"----"+mCid+"---"+mColumn+"==="+isVisible)
-            isChanged = true
-        if (!isHidden){
-            mPage = 1
-            mPresenter.getMoreVideo(mTypeId,mCid,15,false,mColumn,mPage,mPerPage)
-            isChanged = false
+        LogUtils.e("---column---"+mTypeId+"----"+mCid+"---"+mColumn+"---"+mPageTag+"isVisible="+isVisible+"isHidden"+isHidden)
+        if (isVisible){
+            mPresenter.getMoreVideo(mTypeId,mCid,15,false,mColumn,mPage,mPerPage,mPageTag)
         }
-//            smartRefreshLayoutVideoMore.autoRefresh()
-//            mPage = 1
-//            mPresenter.getMoreVideo(mTypeId,mCid,15,false,mColumn,mPage,mPerPage)
-//        }
+
     }
-
-    var isChanged = false
-
-    override fun onHiddenChanged(hidden: Boolean) {
-        if (!hidden && isChanged){
-            isChanged = false
-            mPage = 1
-            mPresenter.getMoreVideo(mTypeId,mCid,15,false,mColumn,mPage,mPerPage)
-        }
-        super.onHiddenChanged(hidden)
-    }
-
 }

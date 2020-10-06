@@ -65,7 +65,7 @@ import static android.graphics.BlurMaskFilter.Blur;
 /**
  * SpannableString相关工具类
  *
- * @author xuexiang
+
  * @since 2019/1/14 下午10:03
  */
 public final class SpanUtils {

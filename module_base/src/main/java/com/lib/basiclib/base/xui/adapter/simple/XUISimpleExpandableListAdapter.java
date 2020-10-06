@@ -38,7 +38,7 @@ import java.util.List;
 /**
  * 简易的可伸缩列表适配器
  *
- * @author xuexiang
+
  * @since 2019-11-11 14:01
  */
 public class XUISimpleExpandableListAdapter extends BaseExpandableListAdapter {

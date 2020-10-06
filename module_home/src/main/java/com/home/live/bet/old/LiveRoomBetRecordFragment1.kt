@@ -25,9 +25,9 @@ import kotlinx.android.synthetic.main.old_fragment_live_bet_record_child.*
 
 class LiveRoomBetRecordFragment1 : BaseNormalFragment() {
 
-    var str = arrayListOf("钻石", "余额")
+    var str = arrayListOf("金额","钻石")
 
-    var currentSel = "0" //默认钻石
+    var currentSel = "1" //默认余额
 
     private var index = 1
 
@@ -63,8 +63,8 @@ class LiveRoomBetRecordFragment1 : BaseNormalFragment() {
                 index = 1
                 adapter?.clear()
                 currentSel = if (position == 0) {
-                    "0"
-                } else "1"
+                    "1"
+                } else "0"
                 getResponse()
             }
 

@@ -12,6 +12,7 @@ import com.customer.data.mine.MineApi
 import com.xiaojinzi.component.anno.RouterAnno
 import com.xiaojinzi.component.impl.Router
 import com.customer.component.dialog.GlobalDialog
+import com.customer.data.AppMode
 import com.customer.data.UserInfoSp
 import com.lib.basiclib.utils.ToastUtils
 import com.lib.basiclib.utils.ViewUtils
@@ -47,8 +48,7 @@ class MineSettingAct : BaseNavActivity() {
     }
 
     override fun initData() {
-        if (!UserInfoSp.getIsSetPayPassWord()) getIsSetPayPassWord() else tvPayPassWordSet.text =
-            "支付密码修改"
+        if (!UserInfoSp.getIsSetPayPassWord()) getIsSetPayPassWord() else tvPayPassWordSet.text = "支付密码修改"
     }
 
     override fun initEvent() {
@@ -65,8 +65,11 @@ class MineSettingAct : BaseNavActivity() {
 
         //支付密码
         linSetPayPassWord.setOnClickListener {
-            if (code != 10) Router.withApi(ApiRouter::class.java)
-                .toSetPassWord(mode) else ToastUtils.showToast("钱包已被冻结")
+                if (code != 10) {
+                    if (tvPayPassWordSet.text.toString().contains("设置")){
+                        Router.withApi(ApiRouter::class.java).toSetPassWord(1)
+                    }else  Router.withApi(ApiRouter::class.java).toSetPassWord(0)
+                } else ToastUtils.showToast("钱包已被冻结")
         }
 
         //密码修改
@@ -77,8 +80,23 @@ class MineSettingAct : BaseNavActivity() {
         videoSwitch.setOnCheckedChangeListener { _, isChecked ->
             UserInfoSp.putOpenWindow(isChecked)
         }
+
+        appModeSwitch.setOnCheckedChangeListener { _, isChecked ->
+            RxBus.get().post(AppMode(isChecked))
+//            if (isChecked){
+//                UserInfoSp.putAppMode(UserInfoSp.AppMode.Pure)
+//            }else UserInfoSp.putAppMode(UserInfoSp.AppMode.Normal)
+
+        }
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (UserInfoSp.getIsSetPayPassWord()){
+            tvPayPassWordSet.text = "支付密码修改"
+            setGone(tvPayPassWordNotSet)
+        }
+    }
 
     //查询是否设置支付密码
     private fun getIsSetPayPassWord() {
@@ -88,6 +106,7 @@ class MineSettingAct : BaseNavActivity() {
                 hidePageLoadingDialog()
                 UserInfoSp.putIsSetPayPassWord(true)
                 tvPayPassWordSet.text = "支付密码修改"
+                setGone(tvPayPassWordNotSet)
             }
             onFailed {
                 hidePageLoadingDialog()

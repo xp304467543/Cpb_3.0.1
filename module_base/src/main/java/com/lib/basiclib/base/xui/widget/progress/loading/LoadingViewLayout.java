@@ -38,7 +38,7 @@ import com.lib.basiclib.base.xui.utils.ThemeUtils;
 /**
  * 自定义加载布局
  *
- * @author xuexiang
+
  * @since 2019/1/11 下午3:58
  */
 public class LoadingViewLayout extends LinearLayout implements IMessageLoader {

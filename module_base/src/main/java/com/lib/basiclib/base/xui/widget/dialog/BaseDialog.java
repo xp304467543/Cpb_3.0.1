@@ -35,7 +35,7 @@ import com.lib.basiclib.base.xui.utils.ResUtils;
  * 基类Dialog
  * 触摸Dialog屏幕以外的区域，dialog消失同时隐藏键盘
  *
- * @author xuexiang
+
  * @since 2018/12/6 下午3:29
  */
 public class BaseDialog extends AppCompatDialog {

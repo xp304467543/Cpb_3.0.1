@@ -28,7 +28,7 @@ class MineBillActChild : BaseContentFragment() {
 
     var page = 1
 
-    private var isBal = "1"  //是否是余额
+    private var isBal = "0"  //是否是余额
 
     var adapter0: Adapter0? = null
 
@@ -43,10 +43,10 @@ class MineBillActChild : BaseContentFragment() {
     override fun isSwipeBackEnable() = false
 
     override fun initContentView() {
-        smartRefreshLayoutChildBill.setEnableRefresh(true)//是否启用下拉刷新功能
-        smartRefreshLayoutChildBill.setEnableLoadMore(false)//是否启用上拉加载功能
-        smartRefreshLayoutChildBill.setEnableOverScrollBounce(true)//是否启用越界回弹
-        smartRefreshLayoutChildBill.setEnableOverScrollDrag(true)//是否启用越界拖动（仿苹果效果）
+        smartRefreshLayoutChildBill?.setEnableRefresh(true)//是否启用下拉刷新功能
+        smartRefreshLayoutChildBill?.setEnableLoadMore(false)//是否启用上拉加载功能
+        smartRefreshLayoutChildBill?.setEnableOverScrollBounce(true)//是否启用越界回弹
+        smartRefreshLayoutChildBill?.setEnableOverScrollDrag(true)//是否启用越界拖动（仿苹果效果）
         rvBill.layoutManager = XLinearLayoutManager(context)
         selectType = arguments?.getInt("typeSelect") ?: 0
         if (selectType == 1) setVisible(topLin)
@@ -71,13 +71,13 @@ class MineBillActChild : BaseContentFragment() {
     }
 
     override fun lazyInit() {
-        smartRefreshLayoutChildBill.autoRefresh()
+        smartRefreshLayoutChildBill?.autoRefresh()
     }
 
     override fun initEvent() {
         tv_start.setOnClickListener {
             page = 1
-            isBal = "1"
+            isBal = "0"
             tv_start.delegate.backgroundColor = ViewUtils.getColor(R.color.color_FF513E)
             tv_start.setTextColor(ViewUtils.getColor(R.color.white))
             tv_end.delegate.backgroundColor = ViewUtils.getColor(R.color.white)
@@ -86,14 +86,14 @@ class MineBillActChild : BaseContentFragment() {
         }
         tv_end.setOnClickListener {
             page = 1
-            isBal = "0"
+            isBal = "1"
             tv_end.delegate.backgroundColor = ViewUtils.getColor(R.color.color_FF513E)
             tv_end.setTextColor(ViewUtils.getColor(R.color.white))
             tv_start.delegate.backgroundColor = ViewUtils.getColor(R.color.white)
             tv_start.setTextColor(ViewUtils.getColor(R.color.color_999999))
             betRecord()
         }
-        smartRefreshLayoutChildBill.setOnRefreshListener {
+        smartRefreshLayoutChildBill?.setOnRefreshListener {
             page = 1
             when (selectType) {
                 0 -> {
@@ -110,7 +110,7 @@ class MineBillActChild : BaseContentFragment() {
                 }
             }
         }
-        smartRefreshLayoutChildBill.setOnLoadMoreListener {
+        smartRefreshLayoutChildBill?.setOnLoadMoreListener {
             page++
             when (selectType) {
                 0 -> {
@@ -140,17 +140,17 @@ class MineBillActChild : BaseContentFragment() {
                 } else {
                     if (page == 1) {
                         setVisible(tvHolder)
-                        smartRefreshLayoutChildBill.finishRefreshWithNoMoreData()
-                    } else smartRefreshLayoutChildBill.finishLoadMoreWithNoMoreData()
+                        smartRefreshLayoutChildBill?.finishRefreshWithNoMoreData()
+                    } else smartRefreshLayoutChildBill?.finishLoadMoreWithNoMoreData()
                 }
 
-                smartRefreshLayoutChildBill.finishRefresh()
-                smartRefreshLayoutChildBill.finishLoadMore()
+                smartRefreshLayoutChildBill?.finishRefresh()
+                smartRefreshLayoutChildBill?.finishLoadMore()
             }
             onFailed {
                 ToastUtils.showToast(it.getMsg())
-                smartRefreshLayoutChildBill.finishRefresh()
-                smartRefreshLayoutChildBill.finishLoadMore()
+                smartRefreshLayoutChildBill?.finishRefresh()
+                smartRefreshLayoutChildBill?.finishLoadMore()
             }
         }
     }
@@ -158,25 +158,27 @@ class MineBillActChild : BaseContentFragment() {
     private fun betRecord() {
         MineApi.betRecord(page, isBal) {
             onSuccess {
-                smartRefreshLayoutChildBill.setEnableRefresh(true)
-                smartRefreshLayoutChildBill.setEnableLoadMore(true)
+                setGone(tvHolder)
+                adapter1?.clear()
+                smartRefreshLayoutChildBill?.setEnableRefresh(true)
+                smartRefreshLayoutChildBill?.setEnableLoadMore(true)
                 val data = parseResult(it)
                 if (!data.isNullOrEmpty()) {
                     if (page == 1) adapter1?.refresh(data) else adapter1?.loadMore(data)
                 } else {
                     if (page == 1) {
                         setVisible(tvHolder)
-                        smartRefreshLayoutChildBill.finishRefreshWithNoMoreData()
-                    } else smartRefreshLayoutChildBill.finishLoadMoreWithNoMoreData()
+                        smartRefreshLayoutChildBill?.finishRefreshWithNoMoreData()
+                    } else smartRefreshLayoutChildBill?.finishLoadMoreWithNoMoreData()
                 }
 
-                smartRefreshLayoutChildBill.finishRefresh()
-                smartRefreshLayoutChildBill.finishLoadMore()
+                smartRefreshLayoutChildBill?.finishRefresh()
+                smartRefreshLayoutChildBill?.finishLoadMore()
             }
             onFailed {
                 ToastUtils.showToast(it.getMsg())
-                smartRefreshLayoutChildBill.finishRefresh()
-                smartRefreshLayoutChildBill.finishLoadMore()
+                smartRefreshLayoutChildBill?.finishRefresh()
+                smartRefreshLayoutChildBill?.finishLoadMore()
             }
         }
     }
@@ -184,24 +186,24 @@ class MineBillActChild : BaseContentFragment() {
     private fun getReward() {
         MineApi.getReward(page) {
             onSuccess {
-                smartRefreshLayoutChildBill.setEnableRefresh(true)
-                smartRefreshLayoutChildBill.setEnableLoadMore(true)
+                smartRefreshLayoutChildBill?.setEnableRefresh(true)
+                smartRefreshLayoutChildBill?.setEnableLoadMore(true)
                 val data = parseResult(it)
                 if (!data.isNullOrEmpty()) {
                     if (page == 1) adapter2?.refresh(data) else adapter2?.loadMore(data)
                 } else {
                     if (page == 1) {
                         setVisible(tvHolder)
-                        smartRefreshLayoutChildBill.finishRefreshWithNoMoreData()
-                    } else smartRefreshLayoutChildBill.finishLoadMoreWithNoMoreData()
+                        smartRefreshLayoutChildBill?.finishRefreshWithNoMoreData()
+                    } else smartRefreshLayoutChildBill?.finishLoadMoreWithNoMoreData()
                 }
-                smartRefreshLayoutChildBill.finishRefresh()
-                smartRefreshLayoutChildBill.finishLoadMore()
+                smartRefreshLayoutChildBill?.finishRefresh()
+                smartRefreshLayoutChildBill?.finishLoadMore()
             }
             onFailed {
                 ToastUtils.showToast(it.getMsg())
-                smartRefreshLayoutChildBill.finishRefresh()
-                smartRefreshLayoutChildBill.finishLoadMore()
+                smartRefreshLayoutChildBill?.finishRefresh()
+                smartRefreshLayoutChildBill?.finishLoadMore()
             }
         }
     }
@@ -209,25 +211,25 @@ class MineBillActChild : BaseContentFragment() {
     private fun getChange() {
         MineApi.getChange(page) {
             onSuccess {
-                smartRefreshLayoutChildBill.setEnableRefresh(true)
-                smartRefreshLayoutChildBill.setEnableLoadMore(true)
+                smartRefreshLayoutChildBill?.setEnableRefresh(true)
+                smartRefreshLayoutChildBill?.setEnableLoadMore(true)
                 val data = parseResult(it)
                 if (!data.isNullOrEmpty()) {
                     if (page == 1) adapter3?.refresh(data) else adapter3?.loadMore(data)
                 } else {
                     if (page == 1) {
                         setVisible(tvHolder)
-                        smartRefreshLayoutChildBill.finishRefreshWithNoMoreData()
-                    } else smartRefreshLayoutChildBill.finishLoadMoreWithNoMoreData()
+                        smartRefreshLayoutChildBill?.finishRefreshWithNoMoreData()
+                    } else smartRefreshLayoutChildBill?.finishLoadMoreWithNoMoreData()
                 }
 
-                smartRefreshLayoutChildBill.finishRefresh()
-                smartRefreshLayoutChildBill.finishLoadMore()
+                smartRefreshLayoutChildBill?.finishRefresh()
+                smartRefreshLayoutChildBill?.finishLoadMore()
             }
             onFailed {
                 ToastUtils.showToast(it.getMsg())
-                smartRefreshLayoutChildBill.finishRefresh()
-                smartRefreshLayoutChildBill.finishLoadMore()
+                smartRefreshLayoutChildBill?.finishRefresh()
+                smartRefreshLayoutChildBill?.finishLoadMore()
             }
         }
     }
@@ -301,6 +303,11 @@ class MineBillActChild : BaseContentFragment() {
                         holder.text(R.id.tvEnd, "+ " + data.amount + " 元")
                         holder.getImageView(R.id.imgPhoto).setImageResource(R.mipmap.ic_fanyong_1)
                     }
+                    "8" -> {
+                        holder.text(R.id.tvName, "彩金")
+                        holder.text(R.id.tvEnd, "+ " + data.amount + " 元")
+                        holder.getImageView(R.id.imgPhoto).setImageResource(R.mipmap.ic_caijin)
+                    }
                 }
             }
         }
@@ -339,8 +346,8 @@ class MineBillActChild : BaseContentFragment() {
                     data?.method_name + "  " + data?.code + "  " + data?.type
                 )
                 if (isBal == "0") {
-                    holder.text(R.id.tvGiftPrise, data?.amount + " 余额")
-                } else holder.text(R.id.tvGiftPrise, data?.amount + " 钻石")
+                    holder.text(R.id.tvGiftPrise, data?.amount + " 钻石")
+                } else holder.text(R.id.tvGiftPrise, data?.amount + " 余额")
                 if (data?.type == "中奖") {
                     holder.getImageView(R.id.imgPhoto).setImageResource(R.mipmap.icc_re_bet_get)
                 } else holder.getImageView(R.id.imgPhoto).setImageResource(R.mipmap.ic_re_bet)
@@ -410,9 +417,16 @@ class MineBillActChild : BaseContentFragment() {
                 holder.text(R.id.tvBillTile, data?.date)
             } else if (getItemViewType(position) == TYPE_CONTENT) {
                 holder.text(R.id.tvTime, data?.time)
-                holder.text(R.id.tvName, "兑换")
+                if (data?.type == "5"){
+                    holder.text(R.id.tvName, "新手任务")
+                    holder.getImageView(R.id.imgPhoto).setImageResource(R.mipmap.ic_user_task)
+                }else {
+                    holder.text(R.id.tvName, "兑换")
+                    holder.getImageView(R.id.imgPhoto).setImageResource(R.mipmap.ic_change)
+                }
+
                 holder.text(R.id.tvEnd, "+ " + data?.get_money + " 钻石")
-                holder.getImageView(R.id.imgPhoto).setImageResource(R.mipmap.ic_change)
+
             }
         }
 

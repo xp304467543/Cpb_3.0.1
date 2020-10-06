@@ -2,9 +2,8 @@
 <resources>
 
     <string-array name="sp">
+        <item>金额</item>
         <item>钻石</item>
-        <item>余额</item>
-
     </string-array>
 
 </resources>

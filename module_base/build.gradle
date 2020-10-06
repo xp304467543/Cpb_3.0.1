@@ -79,4 +79,6 @@ dependencies {
     api 'com.google.zxing:core:3.3.3'
 
     api 'com.github.yyued:SVGAPlayer-Android:2.5.2'
+
+    api 'com.qw:curtain:0.0.7'
 }

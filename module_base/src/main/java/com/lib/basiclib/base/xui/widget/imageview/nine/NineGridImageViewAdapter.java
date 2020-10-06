@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * 九宫图适配器
  *
- * @author xuexiang
+
  * @since 2020/12/9 下午10:40
  */
 public abstract class NineGridImageViewAdapter<T> {

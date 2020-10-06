@@ -26,7 +26,7 @@ import java.util.List;
 /**
  * 简易的二级适配项
  *
- * @author xuexiang
+
  * @since 2019-11-11 14:07
  */
 public class ExpandableItem {

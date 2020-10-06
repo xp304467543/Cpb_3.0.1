@@ -28,7 +28,7 @@ import com.fh.basemodle.R;
 /**
  * 提供为图片添加圆角、边框、剪裁到圆形或其他形状等功能。
  *
- * @author xuexiang
+
  * @since 2020/12/1 下午11:59
  */
 public class RadiusImageView extends AppCompatImageView {

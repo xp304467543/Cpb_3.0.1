@@ -20,7 +20,7 @@ package com.lib.basiclib.base.xui.widget.slideback.callback;
 /**
  * 侧滑事件监听
  *
- * @author xuexiang
+
  * @since 2019-08-30 9:28
  */
 public interface SlideBackCallBack {

@@ -112,13 +112,13 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
             if (isChecked) {
                 imgIcon.setBackgroundResource(R.mipmap.old_ic_ye_tz)
                 tvEnd?.text = "元"
-                if (tvUserDiamond != null) tvUserDiamond.text = userBalance
+                if (tvUserDiamond != null) tvUserDiamond?.text = userBalance
                 is_bl_play = 1
                 minMonty = 1
                 betTotalMoney = 1
                 mPresenter.setTotal()
-                etGameBetPlayMoney.setText("1")
-                etGameBetPlayMoney.setSelection("1".length)
+                etGameBetPlayMoney?.setText("1")
+                etGameBetPlayMoney?.setSelection("1".length)
                 clearRadio(true)
             }
         }
@@ -126,24 +126,24 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
             if (isChecked) {
                 imgIcon?.setBackgroundResource(R.mipmap.ic_diamond_big)
                 tvEnd?.text = "钻"
-                if (tvUserDiamond != null) tvUserDiamond.text = userDiamond
+                if (tvUserDiamond != null) tvUserDiamond?.text = userDiamond
                 is_bl_play = 0
                 minMonty = 10
                 betTotalMoney = 10
                 mPresenter.setTotal()
-                etGameBetPlayMoney.setText("10")
-                etGameBetPlayMoney.setSelection("10".length)
+                etGameBetPlayMoney?.setText("10")
+                etGameBetPlayMoney?.setSelection("10".length)
                 clearRadio(false)
             }
         }
         rb_1?.isChecked = true
 
 
-        tvReset.setOnClickListener {
+        tvReset?.setOnClickListener {
             btReset()
         }
 
-        tvBetSubmit.setOnClickListener {
+        tvBetSubmit?.setOnClickListener {
             if (!UserInfoSp.getIsLogin()){
                 GlobalDialog.notLogged(requireActivity())
                 return@setOnClickListener
@@ -296,13 +296,15 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
     }
 
     private fun modifyContent(it: LotteryPlayListResponse) {
+        if (!isActive())return
+        if (rvGameBetContent == null)return
         val name = it.play_unit_name.toString()
         when (name) {
             "两面" -> {
                 lmAdapter = AdapterLm()
-                rvGameBetContent.adapter = lmAdapter
+                rvGameBetContent?.adapter = lmAdapter
                 val layoutManager = GridLayoutManager(context, 12)
-                rvGameBetContent.layoutManager = layoutManager
+               rvGameBetContent?.layoutManager = layoutManager
                 layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                     override fun getSpanSize(position: Int): Int {
                         return when (lmAdapter?.getItemViewType(position)) {
@@ -315,9 +317,9 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
             }
             "整合", "第一球", "第二球", "第三球", "第四球", "第五球" -> {
                 zhAdapter = AdapterZH()
-                rvGameBetContent.adapter = zhAdapter
+               rvGameBetContent?.adapter = zhAdapter
                 val layoutManager = GridLayoutManager(context, 5)
-                rvGameBetContent.layoutManager = layoutManager
+               rvGameBetContent?.layoutManager = layoutManager
                 layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                     override fun getSpanSize(position: Int): Int {
                         return when (zhAdapter?.getItemViewType(position)) {
@@ -330,9 +332,9 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
             }
             "快捷" -> {
                 kjAdapter = AdapterKj()
-                rvGameBetContent.adapter = kjAdapter
+               rvGameBetContent?.adapter = kjAdapter
                 val layoutManager = GridLayoutManager(context, 10)
-                rvGameBetContent.layoutManager = layoutManager
+               rvGameBetContent?.layoutManager = layoutManager
                 layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                     override fun getSpanSize(position: Int): Int {
                         return when (kjAdapter?.getItemViewType(position)) {
@@ -345,9 +347,9 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
             }
             "单号1-10" -> {
                 dan1D10Adapter = AdapterDan1D10()
-                rvGameBetContent.adapter = dan1D10Adapter
+               rvGameBetContent?.adapter = dan1D10Adapter
                 val layoutManager = GridLayoutManager(context, 5)
-                rvGameBetContent.layoutManager = layoutManager
+               rvGameBetContent?.layoutManager = layoutManager
                 layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                     override fun getSpanSize(position: Int): Int {
                         return when (dan1D10Adapter?.getItemViewType(position)) {
@@ -359,17 +361,17 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
             }
             "冠亚军组合" -> {
                 gyhAdapter = AdapterGYH()
-                rvGameBetContent.adapter = gyhAdapter
+               rvGameBetContent?.adapter = gyhAdapter
                 val layoutManager = GridLayoutManager(context, 4)
-                rvGameBetContent.layoutManager = layoutManager
+               rvGameBetContent?.layoutManager = layoutManager
             }
             "单码", "连码", "斗牛" -> {
                 rightTopAdapter = RightTopAdapter()
                 rvRightTop.adapter = rightTopAdapter
                 rvRightTop.layoutManager = GridLayoutManager(context, 5)
                 dmAdapter = AdapterDM()
-                rvGameBetContent.adapter = dmAdapter
-                rvGameBetContent.layoutManager = GridLayoutManager(context, 5)
+               rvGameBetContent?.adapter = dmAdapter
+               rvGameBetContent?.layoutManager = GridLayoutManager(context, 5)
 
             }
         }
@@ -1134,4 +1136,6 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
             return fragment
         }
     }
+
+
 }

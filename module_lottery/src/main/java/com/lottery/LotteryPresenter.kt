@@ -2,7 +2,9 @@ package com.lottery
 
 import android.annotation.SuppressLint
 import android.os.Handler
+import android.view.View
 import com.customer.data.LotteryTypeSelect
+import com.customer.data.UserInfoSp
 import com.customer.utils.countdowntimer.CountDownTimerSupport
 import com.customer.utils.countdowntimer.OnCountDownTimerListener
 import com.customer.utils.countdowntimer.lotter.LotteryTypeSelectUtil
@@ -10,6 +12,7 @@ import com.fh.module_lottery.R
 import com.hwangjr.rxbus.RxBus
 import com.lib.basiclib.base.mvp.BaseMvpPresenter
 import com.customer.data.lottery.LotteryApi
+import com.lib.basiclib.utils.LogUtils
 import kotlinx.android.synthetic.main.fragment_lottery.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -47,24 +50,19 @@ class LotteryPresenter : BaseMvpPresenter<LotteryFragment>() {
         }
     }
 
-    private var mTimer: CountDownTimerSupport? = null
+    var mTimer: CountDownTimerSupport? = null
     var handler: Handler? = null
     var runnable: Runnable? = null
-
+    var lotteryCurrent = "0"
     @SuppressLint("SetTextI18n")
     fun getLotteryOpenCode(lotteryId: String) {
+        lotteryCurrent = lotteryId
         handler?.removeCallbacks(runnable)
-        mTimer?.stop()
         LotteryApi.getLotteryNewCode(lotteryId) {
             onSuccess {
                 if (mView.isAdded) {
                     if (!mView.isInitBottom) {
-                        RxBus.get().post(
-                            LotteryTypeSelect(
-                                it.lottery_id,
-                                it.issue
-                            )
-                        )
+                        RxBus.get().post(LotteryTypeSelect(lotteryCurrent, it.issue))
                         mView.isInitBottom = true
                     }
                     if (it.next_lottery_time?.toInt() ?: 0 > 1) {
@@ -74,9 +72,11 @@ class LotteryPresenter : BaseMvpPresenter<LotteryFragment>() {
                                 override fun onTick(millisUntilFinished: Long) {
                                     setTime(millisUntilFinished)
                                 }
+
                                 override fun onFinish() {
+                                    mTimer?.stop()
                                     if (mView.tvOpenTime != null) mView.tvOpenTime.text = "开奖中..."
-                                    getLotteryOpenCode(it.lottery_id ?: "1")
+                                    getLotteryOpenCode(lotteryCurrent)
                                     mView.setVisible(mView.tvOpenCodePlaceHolder)
                                 }
 
@@ -90,10 +90,9 @@ class LotteryPresenter : BaseMvpPresenter<LotteryFragment>() {
                         mTimer?.setMillisInFuture((it.next_lottery_time ?: 0) * 1000)
 
                         mTimer?.start()
-                        setContainerCode(it.lottery_id, it.code)
+                        setContainerCode(lotteryCurrent, it.code)
                         mView.setGone(mView.tvOpenCodePlaceHolder)
                     } else {
-                        mTimer?.stop()
                         if (mView.isSupportVisible) {
                             mView.tvOpenTime.text = "开奖中..."
                             mView.tvAtNext.text = mView.getString(R.string.lottery_next)
@@ -101,9 +100,7 @@ class LotteryPresenter : BaseMvpPresenter<LotteryFragment>() {
                             mView.setVisible(mView.tvOpenCodePlaceHolder)
                         }
                         handler = Handler()
-                        runnable = Runnable {
-                            getLotteryOpenCode(it.lottery_id ?: "1")
-                        }
+                        runnable = Runnable { getLotteryOpenCode(lotteryCurrent) }
 //                        if (!isPost) RxBus.get().post(LotteryExpertPlay(it))
                         handler?.postDelayed(runnable, 5000)
                     }
@@ -138,20 +135,15 @@ class LotteryPresenter : BaseMvpPresenter<LotteryFragment>() {
     @SuppressLint("SetTextI18n")
     fun setTime(millisUntilFinished: Long) {
         val day: Long = millisUntilFinished / (1000 * 60 * 60 * 24)/*单位 天*/
-        val hour: Long =
-            (millisUntilFinished - day * (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)/*单位 时*/
+        val hour: Long = (millisUntilFinished - day * (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)/*单位 时*/
         val minute: Long =
             (millisUntilFinished - day * (1000 * 60 * 60 * 24) - hour * (1000 * 60 * 60)) / (1000 * 60)/*单位 分*/
         val second: Long =
             (millisUntilFinished - day * (1000 * 60 * 60 * 24) - hour * (1000 * 60 * 60) - minute * (1000 * 60)) / 1000 /*单位 秒*/
         if (mView.tvOpenTime != null) {
             when {
-                day > 0 -> mView.tvOpenTime.text =
-                    dataLong(day) + "天" + dataLong(hour) + ":" + dataLong(minute) + ":" + dataLong(
-                        second
-                    )
-                hour > 0 -> mView.tvOpenTime.text =
-                    dataLong(hour) + ":" + dataLong(minute) + ":" + dataLong(second)
+                day > 0 -> mView.tvOpenTime.text = dataLong(day) + "天" + dataLong(hour) + ":" + dataLong(minute) + ":" + dataLong(second)
+                hour > 0 -> mView.tvOpenTime.text = dataLong(hour) + ":" + dataLong(minute) + ":" + dataLong(second)
                 else -> mView.tvOpenTime.text = dataLong(minute) + ":" + dataLong(second)
             }
         }

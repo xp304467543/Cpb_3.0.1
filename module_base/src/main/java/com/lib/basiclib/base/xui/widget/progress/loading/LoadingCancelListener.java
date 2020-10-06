@@ -20,7 +20,7 @@ package com.lib.basiclib.base.xui.widget.progress.loading;
 /**
  * 取消loading的监听
  *
- * @author xuexiang
+
  * @since 2019/1/14 下午10:15
  */
 public interface LoadingCancelListener {

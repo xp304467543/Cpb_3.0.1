@@ -25,7 +25,7 @@ import android.widget.FrameLayout;
 /**
  * 处理事件拦截的Layout
  *
- * @author xuexiang
+
  * @since 2019-08-30 9:31
  */
 public class SlideBackInterceptLayout extends FrameLayout {

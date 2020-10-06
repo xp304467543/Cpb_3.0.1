@@ -26,7 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 /**
  * 防止数据错位导致数组越界的错误
  *
- * @author xuexiang
+
  * @since 2019-10-14 10:21
  */
 public class XGridLayoutManager extends GridLayoutManager {

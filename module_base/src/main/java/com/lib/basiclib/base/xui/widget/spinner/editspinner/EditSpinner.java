@@ -38,7 +38,7 @@ import java.util.List;
 /**
  * 可编辑的Spinner
  *
- * @author xuexiang
+
  * @since 2018/6/5 下午5:50
  */
 public class EditSpinner extends FrameLayout implements View.OnClickListener, AdapterView.OnItemClickListener, TextWatcher {

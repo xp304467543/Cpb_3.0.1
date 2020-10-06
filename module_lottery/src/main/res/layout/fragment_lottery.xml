@@ -9,7 +9,7 @@
     <ImageView
         android:id="@+id/imgLotteryBg"
         android:layout_width="match_parent"
-        android:layout_height="216dp"
+        android:layout_height="210dp"
         android:contentDescription="@string/app_name"
         android:scaleType="fitXY"
         android:src="@drawable/ic_them_default_top"
@@ -112,7 +112,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:visibility="gone"
                         android:background="@mipmap/ic_lottery_sp"
                         android:contentDescription="@string/app_name" />
                 </LinearLayout>

@@ -31,7 +31,7 @@ import com.lib.basiclib.base.xui.widget.layout.linkage.LinkageScrollHandler;
 /**
  * 置于联动容器中的ScrollView，业务方需要继承此ScrollView
  *
- * @author xuexiang
+
  * @since 2020/3/11 7:06 PM
  */
 public class LinkageScrollView extends NestedScrollView implements ILinkageScroll {

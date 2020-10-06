@@ -203,7 +203,6 @@ class LiveRoomBetAccessFragment : BottomDialogFragment() {
      * play_bet_follow_user	跟投用户id，默认0为正常投注
      */
     private fun lotteryBet(play_bet_lottery_id: String, play_bet_issue: String, order_detail: ArrayList<BetBean>, play_bet_follow_user: String) {
-       LogUtils.e("************--->"+order_detail)
         orderMap = hashMapOf()
         val goon = GsonBuilder().disableHtmlEscaping().create()
         val orderString = goon.toJson(order_detail).toString()
@@ -224,9 +223,19 @@ class LiveRoomBetAccessFragment : BottomDialogFragment() {
                         dialog?.setConfirmClickListener {
                             getShareOrder()
                         }
+                        dialog?.setOnCancelListener {
+                            RxBus.get().post(LotteryResetDiamond(true))
+                        }
                         dialog?.show()
-                    } else context?.let { it1 -> DialogGlobalTips(it1, "投注成功", "确定", "", "").show() }
-                    RxBus.get().post(LotteryResetDiamond(true))
+                    } else context?.let { it1 ->
+
+                       val dialog =  DialogGlobalTips(it1, "投注成功", "确定", "", "")
+                        dialog.setConfirmClickListener {
+                            RxBus.get().post(LotteryResetDiamond(true))
+                        }
+                        dialog.show()
+                    }
+
                     dismiss()
                 }
                 onFailed { err->
@@ -256,7 +265,7 @@ class LiveRoomBetAccessFragment : BottomDialogFragment() {
         json.put("play_bet_lottery_id", arguments?.getString("lotteryID") ?: "")
         json.put("lottery_cid", arguments?.getString("lotteryName") ?: "")
         json.put("order_detail", goon.toJson(bean))
-        json.put("isBalance", arguments?.getBoolean("isBalanceBet"))
+        json.put("is_bl_play",  if (arguments?.getBoolean("isBalanceBet") == true) "1" else "0")
         RxBus.get().post(LotteryShareBet(true, json))
     }
     private fun initLoading() {

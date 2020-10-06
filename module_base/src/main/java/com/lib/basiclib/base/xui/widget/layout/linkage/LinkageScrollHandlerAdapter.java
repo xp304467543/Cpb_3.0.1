@@ -22,7 +22,7 @@ import android.view.View;
 /**
  * 提供LinkageScrollHandler接口的缺省实现
  *
- * @author xuexiang
+
  * @since 2020/3/11 5:46 PM
  */
 public class LinkageScrollHandlerAdapter implements LinkageScrollHandler {

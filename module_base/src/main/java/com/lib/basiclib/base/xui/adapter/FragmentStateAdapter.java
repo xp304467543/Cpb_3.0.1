@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * Fragment的适配器,详情参考{@link FragmentStatePagerAdapter}
  *
- * @author xuexiang
+
  * @since 2020/12/26 下午2:11
  */
 public class FragmentStateAdapter<T extends Fragment> extends FragmentStatePagerAdapter {

@@ -23,7 +23,7 @@ import com.lib.basiclib.base.xui.widget.button.shinebutton.interpolator.Ease;
 import com.lib.basiclib.base.xui.widget.button.shinebutton.interpolator.EasingInterpolator;
 
 /**
- * @author xuexiang
+
  * @since 2020-01-06 11:55
  */
 public class ShineAnimator extends ValueAnimator {

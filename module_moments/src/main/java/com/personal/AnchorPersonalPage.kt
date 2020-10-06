@@ -1,6 +1,8 @@
 package com.personal
 
+import android.annotation.SuppressLint
 import androidx.viewpager.widget.ViewPager
+import com.customer.ApiRouter
 import com.customer.data.UserInfoSp
 import com.customer.data.home.HomeApi
 import com.customer.data.moments.AnchorPageInfoBean
@@ -18,6 +20,7 @@ import com.xiaojinzi.component.anno.RouterAnno
 import com.customer.component.dialog.GlobalDialog
 import com.customer.data.AnchorAttention
 import com.hwangjr.rxbus.RxBus
+import com.xiaojinzi.component.impl.Router
 import cuntomer.constant.UserConstant
 import kotlinx.android.synthetic.main.act_presonal_anchor.*
 
@@ -58,6 +61,7 @@ class AnchorPersonalPage : BaseNavActivity() {
                 onFailed { ToastUtils.showToast(it.getMsg().toString()) }
         }
     }
+    @SuppressLint("SetTextI18n")
     private fun initAnchor(data: AnchorPageInfoBean) {
         initViewPager(data)
         attentionNum = data.fans
@@ -66,6 +70,7 @@ class AnchorPersonalPage : BaseNavActivity() {
         tvAnchorFans.text = data.fans.toString()
         tvAnchorZan.text = data.zan.toString()
         tvUserDescription.text = data.sign
+        anchorId.text = "房间号: "+data.anchor_id
         if (data.sex == "1") {
             imgSex.background = ViewUtils.getDrawable(R.mipmap.ic_live_anchor_boy)
         } else imgSex.background = ViewUtils.getDrawable(R.mipmap.ic_live_anchor_girl)
@@ -82,6 +87,11 @@ class AnchorPersonalPage : BaseNavActivity() {
             btAttention.text = "已关注"
         }
         hidePageLoadingDialog()
+        linToLive.setOnClickListener {
+            if (!FastClickUtil.isFastClick()){
+                Router.withApi(ApiRouter::class.java).toLive(data.anchor_id,"1",data.nickname,data.liveStatus,"50","1",data.nickname,data.avatar)
+            }
+        }
     }
 
     private fun initViewPager(data: AnchorPageInfoBean) {

@@ -31,7 +31,7 @@ import androidx.annotation.Nullable;
 /**
  * 边缘返回的图标View
  *
- * @author xuexiang
+
  * @since 2019-08-30 9:29
  */
 public class SlideBackIconView extends View {

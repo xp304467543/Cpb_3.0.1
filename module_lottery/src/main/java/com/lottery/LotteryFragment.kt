@@ -13,6 +13,7 @@ import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.thread.EventThread
 import com.lib.basiclib.utils.FastClickUtil
+import com.lib.basiclib.utils.LogUtils
 import com.lib.basiclib.utils.ViewUtils
 import com.xiaojinzi.component.anno.RouterAnno
 import cuntomer.them.ITheme

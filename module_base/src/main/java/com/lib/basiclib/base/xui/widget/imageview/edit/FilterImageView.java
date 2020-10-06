@@ -34,7 +34,7 @@ import androidx.appcompat.widget.AppCompatImageView;
 /**
  * 图片过滤处理
  *
- * @author xuexiang
+
  * @since 2019-10-28 9:59
  */
 class FilterImageView extends AppCompatImageView {

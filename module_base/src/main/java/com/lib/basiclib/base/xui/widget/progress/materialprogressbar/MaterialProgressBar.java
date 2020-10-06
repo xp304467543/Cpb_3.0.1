@@ -38,7 +38,7 @@ import com.lib.basiclib.base.xui.widget.progress.materialprogressbar.internal.Dr
 /**
  * A {@link ProgressBar} subclass that handles tasks related to backported progress drawable.
  *
- * @author xuexiang
+
  * @since 2019/1/14 下午10:06
  */
 public class MaterialProgressBar extends ProgressBar {

@@ -8,7 +8,7 @@ import com.lib.basiclib.base.xui.widget.banner.anim.BaseAnimator;
 /**
  *
  *
- * @author xuexiang
+
  * @since 2018/11/25 下午6:51
  */
 public class RotateEnter extends BaseAnimator {

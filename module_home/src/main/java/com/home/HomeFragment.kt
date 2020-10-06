@@ -1,6 +1,8 @@
 package com.home
 
 import android.content.Intent
+import android.view.animation.TranslateAnimation
+import androidx.appcompat.widget.AppCompatImageView
 import com.customer.ApiRouter
 import com.customer.adapter.TabScaleAdapter
 import com.customer.component.dialog.GlobalDialog
@@ -18,10 +20,13 @@ import com.hwangjr.rxbus.thread.EventThread
 import com.lib.basiclib.base.adapter.BaseFragmentPageAdapter
 import com.lib.basiclib.base.fragment.BaseFragment
 import com.lib.basiclib.base.mvp.BaseMvpFragment
+import com.lib.basiclib.utils.FastClickUtil
 import com.lib.basiclib.utils.StatusBarUtils
 import com.lib.basiclib.utils.ViewUtils
 import com.lib.basiclib.widget.tab.ViewPagerHelper
 import com.lib.basiclib.widget.tab.buildins.commonnavigator.CommonNavigator
+import com.qw.curtain.lib.Curtain
+import com.qw.curtain.lib.IGuide
 import com.xiaojinzi.component.anno.RouterAnno
 import com.xiaojinzi.component.impl.Router
 import cuntomer.them.ITheme
@@ -70,6 +75,31 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme {
         setTheme(UserInfoSp.getThem())
     }
 
+    override fun initData() {
+        if (!UserInfoSp.getMainGuide()){
+            showCurtain()
+            UserInfoSp.putMainGuide(true)
+        }
+    }
+
+
+
+
+    private fun showCurtain() {
+        Curtain(requireActivity()).with(imgNewTask)
+            .setTopView(R.layout.guide_main)
+            .setCallBack(object : Curtain.CallBack {
+                override fun onDismiss(iGuide: IGuide?) {}
+                override fun onShow(iGuide: IGuide?) {
+                    iGuide?.findViewByIdInTopView<AppCompatImageView>(R.id.imgKnow)?.setOnClickListener {
+                        iGuide.dismissGuide()
+                    }
+                }
+            })
+            .show()
+
+    }
+
     override fun initEvent() {
         imgHomeUserIcon.setOnClickListener {
             if (UserInfoSp.getIsLogin()) RxBus.get().post(HomeJumpToMine(true)
@@ -102,6 +132,20 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme {
             }
             startActivity(Intent(activity,HomeNewHandTask::class.java))
         }
+
+        homeAppSwitchMode.setOnClickListener {
+            if (!FastClickUtil.isFastClick()){
+                //设置动画，从自身位置的最下端向上滑动了自身的高度，持续时间为500ms
+                val inAnimation = TranslateAnimation(
+                    TranslateAnimation.RELATIVE_TO_SELF, homeAppSwitchMode.x, TranslateAnimation.RELATIVE_TO_SELF, 0F,
+                    TranslateAnimation.RELATIVE_TO_SELF, 0F, TranslateAnimation.RELATIVE_TO_SELF, 0F)
+                inAnimation.duration = 1000
+                homeAppSwitchMode.post {
+                    setGone(homeAppSwitchMode)
+                    homeAppSwitchMode.startAnimation(inAnimation)
+                }
+            }
+        }
     }
 
     private fun initViewPager() {
@@ -111,7 +155,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme {
     }
 
     private fun initTopTab() {
-        val mDataList = arrayListOf("推荐", "影视区")
+        val mDataList = arrayListOf("热门", "影视区")
         val commonNavigator = CommonNavigator(context)
         commonNavigator.scrollPivotX = 0.65f
         commonNavigator.adapter = TabScaleAdapter(
@@ -132,22 +176,27 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme {
             Theme.Default -> {
                 imgHomeUserRecharge.setTextColor(ViewUtils.getColor(R.color.alivc_orange))
                 imgHomeBg.setImageResource(R.drawable.ic_them_default_top)
+                imgHomeUserRecharge.background = ViewUtils.getDrawable(R.mipmap.ic_home_top_recharge)
             }
             Theme.NewYear -> {
                 imgHomeUserRecharge.setTextColor(ViewUtils.getColor(R.color.color_FF513E))
                 imgHomeBg.setImageResource(R.drawable.ic_them_newyear_top)
+                imgHomeUserRecharge.background = ViewUtils.getDrawable(R.mipmap.ic_home_top_recharge)
             }
             Theme.MidAutumn -> {
                 imgHomeUserRecharge.setTextColor(ViewUtils.getColor(R.color.colorGreenPrimary))
                 imgHomeBg.setImageResource(R.drawable.ic_them_middle_top)
+                imgHomeUserRecharge.background = ViewUtils.getDrawable(R.drawable.home_white)
             }
             Theme.LoverDay -> {
                 imgHomeUserRecharge.setTextColor(ViewUtils.getColor(R.color.purple))
                 imgHomeBg.setImageResource(R.drawable.ic_them_love_top)
+                imgHomeUserRecharge.background = ViewUtils.getDrawable(R.drawable.home_white)
             }
             Theme.NationDay ->{
                 imgHomeUserRecharge.setTextColor(ViewUtils.getColor(R.color.color_EF7E12))
                 imgHomeBg.setImageResource(R.drawable.ic_them_gq_top)
+                imgHomeUserRecharge.background = ViewUtils.getDrawable(R.mipmap.ic_home_top_recharge)
             }
         }
     }
@@ -176,12 +225,15 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme {
     //更新用户头像
     @Subscribe(thread = EventThread.MAIN_THREAD)
     fun upDataUserAvatar(eventBean: UpDateUserPhoto) {
-        context?.let { GlideUtil.loadCircleImage(it,eventBean.img, imgHomeUserIcon,true) }
+        if (imgHomeUserIcon!=null){
+            context?.let { GlideUtil.loadCircleImage(it,eventBean.img, imgHomeUserIcon,true) }
+        }
+
     }
 
     //退出登录
     @Subscribe(thread = EventThread.MAIN_THREAD)
     fun loginOut(eventBean: LoginOut) {
-        if (isActive() && imgHomeUserIcon !=null) imgHomeUserIcon.setImageResource(R.mipmap.ic_base_user)
+        if (isActive() && imgHomeUserIcon !=null) imgHomeUserIcon?.setImageResource(R.mipmap.ic_base_user)
     }
 }

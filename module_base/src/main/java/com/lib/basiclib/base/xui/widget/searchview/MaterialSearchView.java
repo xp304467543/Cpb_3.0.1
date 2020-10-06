@@ -59,7 +59,7 @@ import java.util.List;
 /**
  * 搜索框
  *
- * @author xuexiang
+
  * @since 2019/1/2 下午4:01
  */
 public class MaterialSearchView extends FrameLayout implements Filter.FilterListener {

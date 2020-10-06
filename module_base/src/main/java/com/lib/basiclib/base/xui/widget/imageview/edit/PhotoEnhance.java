@@ -27,7 +27,7 @@ import com.lib.basiclib.base.xui.utils.DrawableUtils;
 /**
  * 图片增强处理
  *
- * @author xuexiang
+
  * @since 2019-10-21 11:32
  */
 public class PhotoEnhance {

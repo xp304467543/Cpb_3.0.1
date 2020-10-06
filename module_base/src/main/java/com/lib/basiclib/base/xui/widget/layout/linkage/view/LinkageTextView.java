@@ -30,7 +30,7 @@ import com.lib.basiclib.base.xui.widget.layout.linkage.LinkageScrollHandlerAdapt
 /**
  * 置于联动容器的TextView
  *
- * @author xuexiang
+
  * @since 2020/3/11 7:10 PM
  */
 public class LinkageTextView extends AppCompatTextView implements ILinkageScroll {

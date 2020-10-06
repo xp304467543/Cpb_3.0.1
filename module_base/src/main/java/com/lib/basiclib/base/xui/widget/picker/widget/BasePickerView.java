@@ -45,7 +45,7 @@ import com.lib.basiclib.base.xui.widget.picker.widget.utils.PickerViewAnimateUti
 /**
  * 精仿iOSPickerViewController控件
  *
- * @author xuexiang
+
  * @since 2019/1/1 下午6:58
  */
 public class BasePickerView {

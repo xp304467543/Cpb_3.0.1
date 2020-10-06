@@ -44,7 +44,7 @@ import com.lib.basiclib.base.xui.widget.imageview.ImageLoader;
 /**
  * 通用的ViewHolder
  *
- * @author xuexiang
+
  * @since 2019/4/6 下午3:45
  */
 public class RecyclerViewHolder extends RecyclerView.ViewHolder {

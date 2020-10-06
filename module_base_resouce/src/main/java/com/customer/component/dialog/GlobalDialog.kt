@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import com.customer.ApiRouter
 import com.customer.data.HomeJumpToMine
+import com.customer.data.UserInfoSp
 import com.hwangjr.rxbus.RxBus
 import com.lib.basiclib.utils.SpUtils
 import com.lib.basiclib.utils.ToastUtils
@@ -52,17 +53,17 @@ object GlobalDialog {
 
     //清除所有Sp保存的值，除去已经显示过的guide
     fun spClear() {
-//        val one = UserInfoSp.getMainGuide()
+        val one = UserInfoSp.getMainGuide()
 //        val second = UserInfoSp.getOpenCodeGuide()
-//        val third = UserInfoSp.getMineGuide()
+        val third = UserInfoSp.getMineGuide()
 //        val four = UserInfoSp.getRewardnGuide()
 //        val five = UserInfoSp.getAttentionGuide()
 //        val six = UserInfoSp.getLiveeGuide()
 //        val skin = UserInfoSp.getSkinSelect()
         SpUtils.clearAll()
-//        if (one) UserInfoSp.putMainGuide(true)
+        if (one) UserInfoSp.putMainGuide(true)
 //        if (second) UserInfoSp.putOpenCodeGuide(true)
-//        if (third) UserInfoSp.putMineGuide(true)
+        if (third) UserInfoSp.putMineGuide(true)
 //        if (four) UserInfoSp.putRewardnGuide(true)
 //        if (five) UserInfoSp.putAttentionGuide(true)
 //        if (six) UserInfoSp.putOpenWindow(true)

@@ -1,34 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="90dp"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/pagerGridContainer"
-    android:background="@drawable/selector_item_view_bg"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:layout_width="@dimen/dp_90"
+    android:layout_height="90dp"
+    android:background="@drawable/selector_item_view_bg">
 
-    <ImageView
-        android:id="@+id/im_item_icon"
-        android:layout_width="@dimen/dp_50"
-        android:layout_height="50dp"
-        android:src="@mipmap/ic_placeholder"
-        android:gravity="center" />
-
-    <TextView
-        android:id="@+id/tv_item_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:ellipsize="end"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:gravity="center"
-        android:singleLine="true"
-        android:textSize="12sp" />
-    <TextView
-        android:id="@+id/tvGiftPrise"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/im_item_icon"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:src="@mipmap/ic_placeholder" />
+
+        <TextView
+            android:id="@+id/tv_item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:singleLine="true"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tvGiftPrise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:textColor="@color/grey_e6"
+            android:textSize="11sp" />
+    </LinearLayout>
+
+    <com.lib.basiclib.base.round.RoundTextView
+        android:id="@+id/tvFreeNum"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/grey_e6"
-        android:layout_marginTop="3dp"
-        android:textSize="11sp"
-        />
-</LinearLayout>
+        android:layout_alignParentEnd="true"
+        android:gravity="center"
+        android:paddingStart="@dimen/dp_5"
+        android:paddingEnd="@dimen/dp_5"
+        android:layout_marginEnd="@dimen/sp_10"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_10"
+        app:rv_backgroundColor="@color/color_FF513E"
+        app:rv_cornerRadius="@dimen/dp_10" />
+
+</RelativeLayout>

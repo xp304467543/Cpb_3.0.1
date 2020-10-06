@@ -25,7 +25,7 @@ import androidx.fragment.app.Fragment;
 /**
  * 加载器接口
  *
- * @author xuexiang
+
  * @since 2020/12/5 上午11:07
  */
 public interface IMediaLoader {

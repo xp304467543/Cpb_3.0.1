@@ -7,8 +7,12 @@ import androidx.core.content.ContextCompat
 import com.customer.ApiRouter
 import com.customer.component.dialog.*
 import com.customer.component.rain.RainViewGroup
-import com.customer.data.*
+import com.customer.data.HomeJumpTo
+import com.customer.data.HomeJumpToMine
+import com.customer.data.ToBetView
+import com.customer.data.UserInfoSp
 import com.customer.data.home.HomeApi
+import com.customer.data.login.LoginSuccess
 import com.customer.data.login.RegisterSuccess
 import com.customer.data.mine.ChangeSkin
 import com.customer.utils.RxPermissionHelper
@@ -19,7 +23,6 @@ import com.lib.basiclib.base.fragment.BaseContentFragment
 import com.lib.basiclib.base.fragment.BaseFragment
 import com.lib.basiclib.base.fragment.PlaceholderFragment
 import com.lib.basiclib.utils.FastClickUtil
-import com.lib.basiclib.utils.ToastUtils
 import com.lib.basiclib.utils.ViewUtils
 import com.services.BetService
 import com.services.HomeService
@@ -144,7 +147,7 @@ class MainFragment : BaseContentFragment(), ITheme {
                 rainView?.setIsIntercept(false)
             }
             onFailed {
-                ToastUtils.showToast(it.getMsg())
+//                ToastUtils.showToast(it.getMsg())
                 rainView?.stop()
                 rainView?.setIsIntercept(false)
             }
@@ -269,15 +272,15 @@ class MainFragment : BaseContentFragment(), ITheme {
             Theme.NewYear -> {
                 val drawable1 = ViewUtils.getDrawable(R.drawable.ic_tab_new_year_1)
                 val drawable2 = ViewUtils.getDrawable(R.drawable.ic_tab_new_year_2)
-                val drawable3 = ViewUtils.getDrawable(R.drawable.ic_tab_new_year_3)
-                val drawable4 = ViewUtils.getDrawable(R.drawable.ic_tab_new_year_4)
+                val drawable3 = ViewUtils.getDrawable(R.drawable.ic_tab_new_year_4)
+                val drawable4 = ViewUtils.getDrawable(R.drawable.ic_tab_new_year_3)
                 drawable1?.setBounds(0, 0, ViewUtils.dp2px(30), ViewUtils.dp2px(30))
                 drawable2?.setBounds(0, 0, ViewUtils.dp2px(30), ViewUtils.dp2px(30))
                 drawable3?.setBounds(0, 0, ViewUtils.dp2px(30), ViewUtils.dp2px(30))
                 drawable4?.setBounds(0, 0, ViewUtils.dp2px(30), ViewUtils.dp2px(30))
                 tabHome.setCompoundDrawables(null, drawable1, null, null)
-                tabLotteryOpen.setCompoundDrawables(null, drawable2, null, null)
-                tabGame.setCompoundDrawables(null, drawable3, null, null)
+                tabGame.setCompoundDrawables(null, drawable2, null, null)
+                tabLotteryOpen.setCompoundDrawables(null, drawable3, null, null)
                 tabMine.setCompoundDrawables(null, drawable4, null, null)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     tabHome.setTextColor(
@@ -316,8 +319,8 @@ class MainFragment : BaseContentFragment(), ITheme {
                 drawable3?.setBounds(0, 0, ViewUtils.dp2px(30), ViewUtils.dp2px(30))
                 drawable4?.setBounds(0, 0, ViewUtils.dp2px(30), ViewUtils.dp2px(30))
                 tabHome.setCompoundDrawables(null, drawable1, null, null)
-                tabLotteryOpen.setCompoundDrawables(null, drawable2, null, null)
-                tabGame.setCompoundDrawables(null, drawable3, null, null)
+                tabGame.setCompoundDrawables(null, drawable2, null, null)
+                tabLotteryOpen.setCompoundDrawables(null, drawable3, null, null)
                 tabMine.setCompoundDrawables(null, drawable4, null, null)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     tabHome.setTextColor(
@@ -356,8 +359,8 @@ class MainFragment : BaseContentFragment(), ITheme {
                 drawable3?.setBounds(0, 0, ViewUtils.dp2px(30), ViewUtils.dp2px(25))
                 drawable4?.setBounds(0, 0, ViewUtils.dp2px(30), ViewUtils.dp2px(25))
                 tabHome.setCompoundDrawables(null, drawable1, null, null)
-                tabLotteryOpen.setCompoundDrawables(null, drawable2, null, null)
-                tabGame.setCompoundDrawables(null, drawable3, null, null)
+                tabGame.setCompoundDrawables(null, drawable2, null, null)
+                tabLotteryOpen.setCompoundDrawables(null, drawable3, null, null)
                 tabMine.setCompoundDrawables(null, drawable4, null, null)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     tabHome.setTextColor(
@@ -396,8 +399,8 @@ class MainFragment : BaseContentFragment(), ITheme {
                 drawable3?.setBounds(0, 0, ViewUtils.dp2px(30), ViewUtils.dp2px(25))
                 drawable4?.setBounds(0, 0, ViewUtils.dp2px(30), ViewUtils.dp2px(25))
                 tabHome.setCompoundDrawables(null, drawable1, null, null)
-                tabLotteryOpen.setCompoundDrawables(null, drawable2, null, null)
-                tabGame.setCompoundDrawables(null, drawable3, null, null)
+                tabGame.setCompoundDrawables(null, drawable2, null, null)
+                tabLotteryOpen.setCompoundDrawables(null, drawable3, null, null)
                 tabMine.setCompoundDrawables(null, drawable4, null, null)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     tabHome.setTextColor(
@@ -464,11 +467,21 @@ class MainFragment : BaseContentFragment(), ITheme {
     }
 
 
-    //登录成功后红包雨
+    //注册成功后红包雨
     @Subscribe(thread = EventThread.MAIN_THREAD)
     fun loginInfoResponse(eventBean: RegisterSuccess) {
         if (eventBean.isShowDialog) {
             redRain()
+        }
+    }
+
+    //登录成功
+    @Subscribe(thread = EventThread.MAIN_THREAD)
+    fun login(eventBean: LoginSuccess) {
+        if (isAdded){
+            HomeApi.getIsShowRed {
+                onSuccess {  redRain() }
+            }
         }
     }
 

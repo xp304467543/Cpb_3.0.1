@@ -36,7 +36,7 @@ import androidx.annotation.Dimension;
 /**
  * 裁剪窗口
  *
- * @author xuexiang
+
  * @since 2019-10-15 11:22
  */
 public class CropOverlayView extends View {

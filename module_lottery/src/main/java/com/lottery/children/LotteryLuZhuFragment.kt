@@ -13,6 +13,12 @@ import com.lib.basiclib.utils.ViewUtils
 import com.lottery.adapter.LotteryChildLuZhuAdapter
 import com.lottery.adapter.LotteryChildTypeAdapter
 import com.customer.data.lottery.LotteryCodeLuZhuResponse
+import com.customer.data.mine.ChangeSkin
+import com.hwangjr.rxbus.annotation.Subscribe
+import com.hwangjr.rxbus.thread.EventThread
+import com.lib.basiclib.utils.FastClickUtil
+import cuntomer.them.ITheme
+import cuntomer.them.Theme
 import kotlinx.android.synthetic.main.child_fragment_lu_zhu.*
 
 /**
@@ -23,7 +29,7 @@ import kotlinx.android.synthetic.main.child_fragment_lu_zhu.*
  *
  */
 
-class LotteryLuZhuFragment : BaseNormalFragment<LotteryLuZhuFragmentPresenter>() {
+class LotteryLuZhuFragment : BaseNormalFragment<LotteryLuZhuFragmentPresenter>(){
 
     var lotteryId = "-1"
 
@@ -46,6 +52,8 @@ class LotteryLuZhuFragment : BaseNormalFragment<LotteryLuZhuFragmentPresenter>()
 
     override fun getLayoutRes() = R.layout.child_fragment_lu_zhu
 
+    override fun isRegisterRxBus() = true
+
 
     override fun initContentView() {
         smartRefreshLayoutLotteryLuZhuType.setEnableRefresh(false)//是否启用下拉刷新功能
@@ -56,8 +64,7 @@ class LotteryLuZhuFragment : BaseNormalFragment<LotteryLuZhuFragmentPresenter>()
         lotteryTypeAdapter = LotteryChildTypeAdapter()
         rvLuZhuTypeSelect.layoutManager = value
         rvLuZhuTypeSelect.adapter = lotteryTypeAdapter
-        luZhuRecycleAdapter =
-            LotteryChildLuZhuAdapter(context!!, arguments?.getString("lotteryId")!!)
+        luZhuRecycleAdapter = LotteryChildLuZhuAdapter(context!!, arguments?.getString("lotteryId")!!)
         rvLotteryLuZhu.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         rvLotteryLuZhu.adapter = luZhuRecycleAdapter
@@ -158,7 +165,7 @@ class LotteryLuZhuFragment : BaseNormalFragment<LotteryLuZhuFragmentPresenter>()
         lotteryTypeAdapter?.clear()
         lotteryTypeAdapter?.refresh(data)
         lotteryTypeAdapter?.setOnItemClickListener { _,item,position ->
-            if (!ViewUtils.isFastClick()) {
+            if (!FastClickUtil.isFastClickSmall()) {
                 lotteryTypeAdapter?.changeBackground(position)
                 luZhuRecycleAdapter!!.clearList()
                 selectType = mPresenter.getType(item)
@@ -271,6 +278,21 @@ class LotteryLuZhuFragment : BaseNormalFragment<LotteryLuZhuFragmentPresenter>()
             }
             bottomDialog!!.show()
         } else bottomDialog!!.show()
+    }
+
+
+
+    //换肤
+    @Subscribe(thread = EventThread.MAIN_THREAD)
+    fun changeSkin(eventBean: ChangeSkin) {
+//        when (eventBean.id) {
+//            1 ->  setTheme(Theme.Default)
+//            2 ->  setTheme(Theme.NewYear)
+//            3 ->  setTheme(Theme.MidAutumn)
+//            4 ->  setTheme(Theme.LoverDay)
+//            5 ->setTheme(Theme.NationDay)
+//        }
+        luZhuRecycleAdapter?.notifyDataSetChanged()
     }
 
     companion object {

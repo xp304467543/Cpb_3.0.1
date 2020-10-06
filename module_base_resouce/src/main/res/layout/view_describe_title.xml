@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:orientation="horizontal"
     android:gravity="center_vertical"
-    android:layout_height="25dp"
+    android:layout_height="wrap_content"
     android:paddingStart="@dimen/dp_0"
     android:paddingEnd="10dp">
 
@@ -28,11 +28,10 @@
         app:rv_cornerRadius="@dimen/dp_5" />
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imgIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:visibility="gone"
-        android:layout_width="@dimen/dp_30"
-        android:layout_height="match_parent"
-        android:padding="@dimen/dp_5"
-        android:src="@drawable/ic_tab_d5_1"/>
+        android:src="@drawable/ic_tab_d5_2"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvDesName"

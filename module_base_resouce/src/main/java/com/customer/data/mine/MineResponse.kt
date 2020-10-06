@@ -304,3 +304,5 @@ data class AgMoney(val bl:String?)
 data class Third(val name:String?,val name_cn:String?)
 
 data class StartBanner(var type: String?, var image_url: String?, var url: String?)
+
+data class BankCard(var bank_id:String,var bank:String,var name:String,var no:String,var openbank:String,var rate:String,var low_money:String,var high_money:String)

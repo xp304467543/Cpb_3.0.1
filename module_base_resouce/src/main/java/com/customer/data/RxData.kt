@@ -94,5 +94,10 @@ data class ToBetView(val pos:Int)
 //重置
 data class LotteryResetDiamond(var reset: Boolean)
 
+data class UnDateTopGame(var isf: Boolean=false)
+
 //投注彩种变化
 data class ChangeLottery(val lotteryId:String)
+
+//App纯净版 普通版控制
+data class AppMode(val isOpen:Boolean = true)

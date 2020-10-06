@@ -8,7 +8,7 @@
     <ImageView
         android:id="@+id/imgGameBg"
         android:layout_width="match_parent"
-        android:layout_height="216dp"
+        android:layout_height="210dp"
         android:contentDescription="@string/app_name"
         android:scaleType="fitXY"
         android:src="@drawable/ic_them_default_top"

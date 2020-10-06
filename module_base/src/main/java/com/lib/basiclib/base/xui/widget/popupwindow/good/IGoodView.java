@@ -26,7 +26,7 @@ import androidx.annotation.DrawableRes;
 /**
  * 点赞
  *
- * @author xuexiang
+
  * @since 2020-01-05 20:04
  */
 public interface IGoodView {

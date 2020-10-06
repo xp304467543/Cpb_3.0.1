@@ -5,6 +5,9 @@ import android.text.TextUtils
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.customer.ApiRouter
 import com.customer.component.dialog.DialogInvest
+import com.customer.component.dialog.GlobalDialog
+import com.customer.data.mine.MineApi
+import com.customer.data.mine.MinePayTypeList
 import com.glide.GlideUtil
 import com.lib.basiclib.base.fragment.BaseContentFragment
 import com.lib.basiclib.base.recycle.BaseRecyclerAdapter
@@ -12,10 +15,7 @@ import com.lib.basiclib.base.recycle.RecyclerViewHolder
 import com.lib.basiclib.utils.FastClickUtil
 import com.lib.basiclib.utils.ToastUtils
 import com.mine.R
-import com.customer.data.mine.MineApi
-import com.customer.data.mine.MinePayTypeList
 import com.xiaojinzi.component.impl.Router
-import com.customer.component.dialog.GlobalDialog
 import kotlinx.android.synthetic.main.fragment_recharge.*
 
 /**
@@ -57,8 +57,15 @@ class MineRechargeActChild1 : BaseContentFragment() {
                     MineCardRechargeAct::class.java
                 )
             )
-
         }
+//        rl_bank.setOnClickListener {
+//            startActivity(
+//                Intent(
+//                    getPageActivity(),
+//                    MineBankCardRechargeAct::class.java
+//                )
+//            )
+//        }
     }
 
 
@@ -78,17 +85,17 @@ class MineRechargeActChild1 : BaseContentFragment() {
     /**
      * @ Describe 充值Adapter
      */
-    inner class MineRechargeItemAdapter() : BaseRecyclerAdapter<MinePayTypeList>() {
+    inner class MineRechargeItemAdapter : BaseRecyclerAdapter<MinePayTypeList>() {
         override fun getItemLayoutId(viewType: Int) = R.layout.adapter_mine_recharge_item
 
         override fun bindData(holder: RecyclerViewHolder, position: Int, data: MinePayTypeList?) {
-            holder.text(R.id.tvBankName, data?.channels_type)
-            holder.text(
-                R.id.tvMoneyBorder,
-                "(" + (if ((data?.low_money + "") == "null") "" else
-                    data?.low_money) + " ~ " + (if ((data?.low_money + "") == "null") "" else
-                    data?.high_money) + ")"
-            )
+            if (data?.pay_type != "yhkcz") {
+                holder.text(R.id.tvBankName, data?.channels_type)
+                holder.text(
+                    R.id.tvMoneyBorder,
+                    "(" + (if ((data?.low_money + "") == "null") "" else data?.low_money) + " ~ " + (if ((data?.low_money + "") == "null") "" else data?.high_money) + ")"
+                )
+            }else   holder.text(R.id.tvBankName, "银行卡充值")
             context?.let {
                 GlideUtil.loadCircleImage(
                     it,
@@ -98,22 +105,34 @@ class MineRechargeActChild1 : BaseContentFragment() {
             }
 
             holder.itemView.setOnClickListener {
-                if (data?.pay_type == "rgcz") {
-                    Router.withApi(ApiRouter::class.java)
-                        .toRechargeWeb(0F, data.id, data.apiroute, true)
-                } else {
-                    val dialog = context?.let {
-                        DialogInvest(
-                            it,
-                            data?.channels_type.toString(), "确定", "取消"
+                when (data?.pay_type) {
+                    "rgcz" -> {
+                        Router.withApi(ApiRouter::class.java)
+                            .toRechargeWeb(0F, data.id, data.apiroute, true)
+                    }
+                    "yhkcz" -> {
+
+                        startActivity(
+                            Intent(
+                                getPageActivity(),
+                                MineBankCardRechargeAct::class.java
+                            )
                         )
                     }
-                    dialog?.setConfirmClickListener {
-                        if (data != null) {
-                            judgeMoney(dialog, data)
+                    else -> {
+                        val dialog = context?.let {
+                            DialogInvest(
+                                it,
+                                data?.channels_type.toString(), "确定", "取消"
+                            )
                         }
+                        dialog?.setConfirmClickListener {
+                            if (data != null) {
+                                judgeMoney(dialog, data)
+                            }
+                        }
+                        dialog?.show()
                     }
-                    dialog?.show()
                 }
             }
         }

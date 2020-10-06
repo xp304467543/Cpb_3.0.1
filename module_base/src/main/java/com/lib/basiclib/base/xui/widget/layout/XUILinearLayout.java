@@ -28,7 +28,7 @@ import com.lib.basiclib.base.xui.widget.alpha.XUIAlphaLinearLayout;
 /**
  * 封装的LinearLayout，便于样式的修改
  *
- * @author xuexiang
+
  * @since 2019-06-02 02:26
  */
 public class XUILinearLayout extends XUIAlphaLinearLayout implements IXUILayout {

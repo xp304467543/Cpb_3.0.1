@@ -1,19 +1,18 @@
 package com.login
 
 import android.widget.TextView
+import com.customer.data.UserInfoSp
+import com.customer.data.login.LoginApi
+import com.customer.data.login.LoginResponse
+import com.customer.data.login.LoginSuccess
+import com.customer.data.login.RegisterSuccess
 import com.customer.utils.AESUtils
 import com.customer.utils.CountDownTimerUtils
 import com.customer.utils.JsonUtils
 import com.google.gson.Gson
 import com.hwangjr.rxbus.RxBus
 import com.lib.basiclib.base.mvp.BaseMvpPresenter
-import com.lib.basiclib.utils.LogUtils
 import com.lib.basiclib.utils.ToastUtils
-import com.customer.data.login.LoginApi
-import com.customer.data.login.LoginResponse
-import com.customer.data.login.LoginSuccess
-import com.customer.data.login.RegisterSuccess
-import com.customer.data.UserInfoSp
 import cuntomer.net.BaseApi
 import kotlinx.android.synthetic.main.act_login.*
 

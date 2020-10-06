@@ -96,6 +96,8 @@ class LiveRoomChild1 : BaseNormalFragment<LiveRoomChild1Presenter>() {
     private fun initIntent() {
         anchorId = arguments?.getString("LIVE_ROOM_ANCHOR_ID", "-1") ?: "0"
         lotteryId = arguments?.getString("LIVE_ROOM_LOTTERY_ID", "-1") ?: "0"
+//        if ( arguments?.getString("LIVE_ROOM_ANCHOR_STATUE", "-1") ?: "0" == "1")
+        setGone(tvNoInput)
         upDateSystemNotice()
     }
 
@@ -192,7 +194,7 @@ class LiveRoomChild1 : BaseNormalFragment<LiveRoomChild1Presenter>() {
                 return@setOnClickListener
             }
             if (!FastClickUtil.isFastClick()) {
-               if (liveRoomBetFragment == null) liveRoomBetFragment = LiveRoomBetFragment.newInstance(lotteryId)
+               liveRoomBetFragment = LiveRoomBetFragment.newInstance(lotteryId)
                 fragmentManager?.let { it1 ->
                     liveRoomBetFragment?.show(
                         it1,
@@ -354,37 +356,39 @@ class LiveRoomChild1 : BaseNormalFragment<LiveRoomChild1Presenter>() {
     private var homeLiveRedRoomBean: HomeLiveRedRoom? = null
     private var mOpenRedPopup: DialogRedPaper? = null
     fun initRedDialog(homeLiveRedRoom: HomeLiveRedRoom, isOpen: Boolean) {
-        homeLiveRedRoomBean = homeLiveRedRoom
-        if (mOpenRedPopup == null) {
-            mOpenRedPopup = context?.let { DialogRedPaper(it) }
-        }
-        //抢红包
-        mOpenRedPopup?.setOnOpenClickListener {
-            showIt = true
-            mPresenter.getRed(homeLiveRedRoom.id.toString(), mOpenRedPopup!!)
-        }
-        mOpenRedPopup?.setOnDismissListener {
-            if (showIt) {
-                mPresenter.homeLiveRedList(anchorId, true)
-                showIt = false
+        if (isActive()){
+            homeLiveRedRoomBean = homeLiveRedRoom
+            if (mOpenRedPopup == null) {
+                mOpenRedPopup = context?.let { DialogRedPaper(it) }
             }
+            //抢红包
+            mOpenRedPopup?.setOnOpenClickListener {
+                showIt = true
+                mPresenter.getRed(homeLiveRedRoom.id.toString(), mOpenRedPopup!!)
+            }
+            mOpenRedPopup?.setOnDismissListener {
+                if (showIt) {
+                    mPresenter.homeLiveRedList(anchorId, true)
+                    showIt = false
+                }
 //            if (isFullScreen()) {
 //                val decorView = ScreenUtils.getDecorView(getPageActivity())
 //                if (decorView != null) ScreenUtils.hideSysBar(getPageActivity(), decorView)
 //            }
-        }
-        //点击小红包
-        liveRedTips?.setOnClickListener {
-            if (!FastClickUtil.isFastClick()) {
-                if (!UserInfoSp.getIsLogin()) {
-                    GlobalDialog.notLogged(requireActivity())
-                    return@setOnClickListener
-                }
-                mOpenRedPopup?.show()
             }
-        }
-        if (isOpen) {
-            if (!mOpenRedPopup?.isShowing!!) mOpenRedPopup?.show()
+            //点击小红包
+            liveRedTips?.setOnClickListener {
+                if (!FastClickUtil.isFastClick()) {
+                    if (!UserInfoSp.getIsLogin()) {
+                        GlobalDialog.notLogged(requireActivity())
+                        return@setOnClickListener
+                    }
+                    mOpenRedPopup?.show()
+                }
+            }
+            if (isOpen) {
+                if (mOpenRedPopup?.isShowing == false) mOpenRedPopup?.show()
+            }
         }
     }
 
@@ -619,6 +623,7 @@ class LiveRoomChild1 : BaseNormalFragment<LiveRoomChild1Presenter>() {
     fun shareBet(eventBean: LotteryShareBet) {
         if (eventBean.reset) {
             mPresenter.shareOrder(eventBean.order)
+            RxBus.get().post(LotteryResetDiamond(true))
         }
     }
 

@@ -3,7 +3,7 @@ package com.lib.basiclib.base.xui.widget.guidview;
 /**
  * 聚焦的形状
  *
- * @author xuexiang
+
  * @since 2020/11/29 上午12:47
  */
 public enum FocusShape {

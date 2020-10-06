@@ -19,7 +19,7 @@ package com.lib.basiclib.base.xui.widget.picker.wheelview.interfaces;
 /**
  * 选项条目
  *
- * @author xuexiang
+
  * @since 2019/1/1 下午5:11
  */
 public interface IPickerViewItem {

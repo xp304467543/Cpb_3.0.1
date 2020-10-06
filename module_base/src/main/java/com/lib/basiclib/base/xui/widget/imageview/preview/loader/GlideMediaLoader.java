@@ -37,7 +37,7 @@ import com.fh.basemodle.R;
 /**
  * Glide多媒体加载
  *
- * @author xuexiang
+
  * @since 2018/12/8 下午5:50
  */
 public class GlideMediaLoader implements IMediaLoader {

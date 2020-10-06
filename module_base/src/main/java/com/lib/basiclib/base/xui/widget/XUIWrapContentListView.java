@@ -10,7 +10,7 @@ import com.fh.basemodle.R;
 /**
  * 支持高度值为 wrap_content 的 {@link ListView}，解决原生 {@link ListView} 在设置高度为 wrap_content 时高度计算错误的 bug。
  *
- * @author xuexiang
+
  * @since 2018/11/14 下午1:08
  */
 public class XUIWrapContentListView extends ListView {

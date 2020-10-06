@@ -41,7 +41,7 @@ import static com.lib.basiclib.base.xui.widget.popupwindow.bar.Cookie.DEFAULT_CO
  * </pre>
  * <p>
  *
- * @author xuexiang
+
  * @since 2020/12/19 上午9:30
  */
 public final class CookieBar {

@@ -28,7 +28,7 @@ import java.lang.annotation.RetentionPolicy;
 /**
  * 布局封装的接口
  *
- * @author xuexiang
+
  * @since 2019-06-01 19:29
  */
 public interface IXUILayout {

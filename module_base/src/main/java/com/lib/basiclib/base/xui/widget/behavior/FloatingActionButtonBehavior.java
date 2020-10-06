@@ -27,7 +27,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 /**
  * Behavior for Float Button
  *
- * @author xuexiang
+
  * @since 2019-05-10 01:12
  */
 public class FloatingActionButtonBehavior extends BaseBehavior {

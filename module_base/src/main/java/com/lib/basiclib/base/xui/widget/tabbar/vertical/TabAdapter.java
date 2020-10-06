@@ -20,7 +20,7 @@ package com.lib.basiclib.base.xui.widget.tabbar.vertical;
 /**
  * Tab适配器
  *
- * @author xuexiang
+
  * @since 2018/12/28 下午1:31
  */
 public interface TabAdapter {

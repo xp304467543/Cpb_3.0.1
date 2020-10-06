@@ -3,7 +3,7 @@ package com.lib.basiclib.base.xui.widget.banner.widget.banner;
 /**
  * 图片轮播条目
  *
- * @author xuexiang
+
  * @since 2020/11/25 下午7:01
  */
 public class BannerItem {

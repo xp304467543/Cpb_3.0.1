@@ -324,8 +324,7 @@ class LiveRoomActivity : BaseNormalMvpActivity<LiveActPresenter>() {
         }
 
         if (bottomHorGiftWindow == null) {
-            bottomHorGiftWindow =
-                BottomHorGiftWindow(this@LiveRoomActivity)
+            bottomHorGiftWindow = BottomHorGiftWindow(this@LiveRoomActivity)
             bottomHorGiftWindow?.show()
             mPresenter.getGiftList()
         } else bottomHorGiftWindow?.show()

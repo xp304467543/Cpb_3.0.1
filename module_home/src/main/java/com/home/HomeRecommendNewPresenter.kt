@@ -1,6 +1,8 @@
 package com.home
 
 import com.customer.data.home.HomeApi
+import com.customer.data.home.HomeTypeListResponse
+import com.customer.utils.JsonUtils
 import com.home.HomeRecommendNewFragment
 import com.lib.basiclib.base.mvp.BaseMvpPresenter
 import com.lib.basiclib.base.xui.widget.banner.widget.banner.BannerItem
@@ -37,6 +39,10 @@ class HomeRecommendNewPresenter : BaseMvpPresenter<HomeRecommendNewFragment>() {
 
                 val getHomeHotLive = async { HomeApi.getHomeHotLive(CacheMode.NONE) }
 
+
+                val getHomeLotteryTypeResult = async { HomeApi.getHomeLotteryTypeResult(CacheMode.NONE) }
+
+                val resultGetHomeLotteryTypeResult = getHomeLotteryTypeResult.await()
                 val resultGetHomeBannerResult = getHomeBannerResult.await()
                 val resultGetHomeSystemNoticeResult = getHomeSystemNoticeResult.await()
                 val resultGetHomeGameResult = getHomeGameResult.await()
@@ -64,6 +70,21 @@ class HomeRecommendNewPresenter : BaseMvpPresenter<HomeRecommendNewFragment>() {
                     mView.hotLiveAdapter?.clear()
                     mView.rvHotLiveNew.removeAllViews()
                     if (it.size > 10) mView.hotLiveAdapter?.refresh(it.subList(0, 10)) else mView.hotLiveAdapter?.refresh(it) }
+
+                resultGetHomeLotteryTypeResult.onSuccess {bean ->
+                    val typeObject = bean.typeList?.asJsonObject
+                    val dataObject = bean.data?.asJsonObject
+                    //取出所有type
+                    if (typeObject?.isJsonNull != true) {
+                        mView.gameRoomList = ArrayList()
+                        for (entryType in typeObject?.entrySet()!!) {
+                            if (dataObject?.isJsonNull != true) {
+                                val beanData = dataObject?.get(entryType.key)?.asJsonArray?.let { JsonUtils.fromJson(it, Array<HomeTypeListResponse>::class.java) }
+                               mView.gameRoomList?.add(beanData)
+                            }
+                        }
+                    }
+                }
             }
         }
     }

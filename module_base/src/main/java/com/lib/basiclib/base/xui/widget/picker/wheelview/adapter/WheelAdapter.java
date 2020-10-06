@@ -19,7 +19,7 @@ package com.lib.basiclib.base.xui.widget.picker.wheelview.adapter;
 /**
  * 滚轮适配器
  *
- * @author xuexiang
+
  * @since 2019/1/1 下午5:05
  */
 public interface WheelAdapter<T> {

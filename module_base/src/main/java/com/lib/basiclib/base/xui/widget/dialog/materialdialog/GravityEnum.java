@@ -26,7 +26,7 @@ import android.view.View;
 /**
  * 对齐方式
  *
- * @author xuexiang
+
  * @since 2018/11/14 下午4:44
  */
 public enum GravityEnum {

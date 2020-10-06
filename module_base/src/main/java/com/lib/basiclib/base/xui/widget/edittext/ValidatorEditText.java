@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * 可自动验证的EditText
  *
- * @author xuexiang
+
  * @since 2019/1/14 下午10:13
  */
 public class ValidatorEditText extends AppCompatEditText implements View.OnFocusChangeListener {

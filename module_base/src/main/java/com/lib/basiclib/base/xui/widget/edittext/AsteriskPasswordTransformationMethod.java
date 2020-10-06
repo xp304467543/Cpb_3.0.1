@@ -23,7 +23,7 @@ import android.view.View;
 /**
  * ‘****’号密码输入样式
  *
- * @author xuexiang
+
  * @since 2019-07-05 9:34
  */
 public class AsteriskPasswordTransformationMethod extends PasswordTransformationMethod {

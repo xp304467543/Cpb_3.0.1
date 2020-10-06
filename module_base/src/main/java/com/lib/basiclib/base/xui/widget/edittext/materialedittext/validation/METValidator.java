@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 /**
  * 自定义校验器
  *
- * @author xuexiang
+
  * @since 2020/11/26 下午5:06
  */
 public abstract class METValidator {

@@ -46,13 +46,13 @@ class SplashActivity : Activity(), CancelAdapt {
     }
 
     private fun initContent() {
-        btEnter.setOnClickListener {
+        btEnter?.setOnClickListener {
             if (!FastClickUtil.isFastClickActivity(this.localClassName)) {
                 startActivity(Intent(baseContext, MainActivity::class.java))
                 finish()
             }
         }
-        startImg.setOnClickListener {
+        startImg?.setOnClickListener {
             if (goToURL != "") {
                 Router.withApi(ApiRouter::class.java).toGlobalWeb(goToURL)
             }
@@ -86,8 +86,6 @@ class SplashActivity : Activity(), CancelAdapt {
     private fun initSysTemUrl() {
         HomeApi.getSystemUrl {
             onSuccess {
-                ViewUtils.setGone(btWaite)
-                ViewUtils.setVisible(btEnter)
                 ApiConstant.API_URL_DEV_LIVE_S = it.live_api
                 ApiConstant.API_URL_DEV_USER_S = it.user_api
                 ApiConstant.API_MOMENTS_FORM_S = it.forum_api
@@ -95,20 +93,18 @@ class SplashActivity : Activity(), CancelAdapt {
                 ApiConstant.API_VIDEO = it.movie_api
                 WebUrlProvider.ALL_URL_WEB_SOCKET_MAIN_S = it.notice_url
                 WebUrlProvider.API_URL_WEB_SOCKET_MAIN_S = it.chat_url
+                MineApi.getLotteryUrl {
+                    onSuccess {
+                        UserInfoSp.putCustomer(it.customer ?: urlCustomer)
+                        ViewUtils.setGone(btWaite)
+                        ViewUtils.setVisible(btEnter)
+                    }
+                    onFailed {
+                        UserInfoSp.putCustomer(urlCustomer)
+                    }
+                }
             }
-
         }
-
-        MineApi.getLotteryUrl {
-            onSuccess {
-                UserInfoSp.putCustomer(it.customer ?: urlCustomer)
-            }
-            onFailed {
-                UserInfoSp.putCustomer(urlCustomer)
-            }
-        }
-
-
     }
 
     private fun initSome() {

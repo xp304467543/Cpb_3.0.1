@@ -20,7 +20,7 @@ package com.lib.basiclib.base.xui.widget.layout.linkage;
 /**
  * LinkageScrollLayout {@link LinkageScrollLayout}的所有子布局必须要实现的接口
  *
- * @author xuexiang
+
  * @since 2020/3/11 4:57 PM
  */
 public interface ILinkageScroll {

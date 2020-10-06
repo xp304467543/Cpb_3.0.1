@@ -187,6 +187,12 @@ object MineApi : BaseApi {
     //AG下分
     private const val AG_DOWN ="ag/transfer-in"
 
+    //银行卡充值列表
+    private const val BANK_CARD = "api/v1_1/Recharge/bankList"
+
+    //银行卡充值
+    private const val BANK_CARD_RECHARGE = "api/v1_1/Recharge/bank_recharge"
+
     /**
      * 获取用户信息
      */
@@ -1085,6 +1091,34 @@ object MineApi : BaseApi {
                 .params("datas", it)
                 .subscribe(subscriber)
         }
+    }
+
+    /**
+     * 银行卡充值列表
+     */
+    fun getBankCard(function: ApiSubscriber<List<BankCard>>.() -> Unit){
+        val subscriber = object : ApiSubscriber<List<BankCard>>() {}
+        subscriber.function()
+        getApi().post<List<BankCard>>(BANK_CARD)
+            .headers("token", UserInfoSp.getToken())
+            .subscribe(subscriber)
+
+    }
+
+    /**
+     * 银行卡充值
+     */
+    fun getBankCardRecharge(bank_id:String,pay_user:String,pay_no:String,pay_amount:String,pay_time:String,function: AllEmptySubscriber.() -> Unit){
+            val subscriber = AllEmptySubscriber()
+            subscriber.function()
+            getApi().post<String>(BANK_CARD_RECHARGE)
+                .headers("token", UserInfoSp.getToken())
+                .params("bank_id",bank_id)
+                .params("pay_user",pay_user)
+                .params("pay_no",pay_no)
+                .params("pay_amount",pay_amount)
+                .params("pay_time",pay_time)
+                .subscribe(subscriber)
 
     }
 

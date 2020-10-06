@@ -31,7 +31,7 @@ import android.widget.LinearLayout.LayoutParams;
 /**
  * 显示引导图片
  *
- * @author xuexiang
+
  * @since 2020/11/14 下午5:55
  */
 public class GuideViewDialog extends AlertDialog {

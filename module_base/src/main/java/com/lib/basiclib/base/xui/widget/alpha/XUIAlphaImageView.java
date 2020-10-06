@@ -23,7 +23,7 @@ import android.util.AttributeSet;
 import androidx.appcompat.widget.AppCompatImageView;
 
 /**
- * @author xuexiang
+
  * @since 2019/5/14 18:20
  */
 public class XUIAlphaImageView extends AppCompatImageView {

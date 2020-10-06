@@ -268,10 +268,23 @@ class MineAttentionActChild : BaseContentFragment() {
                 when (arguments?.getInt("AttentionFragmentChildType")) {
                     1 -> {
                         anchorAdapter.delete(position)
+                        if (anchorAdapter.data.size ==0){
+                            if (anchorAdapter.data.size ==0){
+                                setVisible(tvHolder)
+                                tvHolder.text = "您还没有关注任何主播哦~"
+                            }
+                        }
                         isChange = true
                     }
 
-                    2 -> userAdapter.delete(position)
+                    2 -> {
+                        userAdapter.delete(position)
+                        if (userAdapter.data.size ==0){
+                            setVisible(tvHolder)
+                            tvHolder.text = "您还没有关注任何用户哦~"
+                        }
+                    }
+
 
                 }
                 RxBus.get().post(UpDatePreView(true))
@@ -288,6 +301,10 @@ class MineAttentionActChild : BaseContentFragment() {
         MineApi.attentionExpert(expert_id) {
             onSuccess {
                 expertAdapter.delete(position)
+                if (expertAdapter.data.size ==0){
+                    setVisible(tvHolder)
+                    tvHolder.text = "您还没有关注任何专家哦~"
+                }
             }
             onFailed { GlobalDialog.showError(requireActivity(), it) }
         }

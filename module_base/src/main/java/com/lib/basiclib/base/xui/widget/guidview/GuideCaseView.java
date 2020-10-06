@@ -32,7 +32,7 @@ import com.fh.basemodle.R;
 import com.lib.basiclib.base.xui.XUI;
 
 /**
- * @author xuexiang
+
  * @since 2018/11/29 上午12:47
  */
 public class GuideCaseView extends FrameLayout implements ViewTreeObserver.OnGlobalLayoutListener {

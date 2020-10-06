@@ -4,7 +4,7 @@ package com.lib.basiclib.base.xui.logs;
 /**
  * 简易的日志记录接口
  *
- * @author xuexiang
+
  * @since 2019/1/14 下午10:15
  */
 public interface ILogger {

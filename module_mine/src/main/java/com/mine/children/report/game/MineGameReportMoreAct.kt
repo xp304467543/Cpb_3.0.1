@@ -185,6 +185,7 @@ class MineGameReportMoreAct : BaseMvpActivity<MineGameReportMorePresenter>() {
                 intent.putExtra("is_bl_play", index)
                 intent.putExtra("startTime", start)
                 intent.putExtra("endTime", end)
+                intent.putExtra("gameType", indexGame)
                 startActivity(intent)
             }
         }
@@ -207,6 +208,12 @@ class MineGameReportMoreAct : BaseMvpActivity<MineGameReportMorePresenter>() {
                 holder.text(R.id.tv_t_3, "中奖金额")
             if (!data?.img_url.isNullOrEmpty()){
                 GlideUtil.loadImage(this@MineGameReportMoreAct, data?.img_url, holder.getImageView(R.id.imgLottery))
+            }else{
+                if (indexGame == 3){
+                    holder.getImageView(R.id.imgLottery).setBackgroundResource(R.mipmap.ic_ag_game)
+                }else if (indexGame == 4){
+                    holder.getImageView(R.id.imgLottery).setBackgroundResource(R.mipmap.ic_ag_game)
+                }
             }
             holder.click(R.id.tvLookMore) {
                 val intent =
@@ -215,6 +222,7 @@ class MineGameReportMoreAct : BaseMvpActivity<MineGameReportMorePresenter>() {
                 intent.putExtra("is_bl_play", index)
                 intent.putExtra("startTime", start)
                 intent.putExtra("endTime", end)
+                intent.putExtra("gameType", indexGame)
                 startActivity(intent)
             }
         }

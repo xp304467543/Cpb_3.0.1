@@ -27,7 +27,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 /**
  * Behavior for Navigation Bar
  *
- * @author xuexiang
+
  * @since 2019-05-10 01:12
  */
 public class BottomNavigationViewBehavior extends BaseBehavior {

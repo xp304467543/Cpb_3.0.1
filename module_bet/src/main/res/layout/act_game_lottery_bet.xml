@@ -105,6 +105,14 @@
             android:textStyle="bold"
             tools:text="09:38" />
 
+
+        <ImageView
+            android:id="@+id/imgPlaySound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_2"
+            android:src="@mipmap/old_lb_hong"/>
+
     </LinearLayout>
 
     <RelativeLayout

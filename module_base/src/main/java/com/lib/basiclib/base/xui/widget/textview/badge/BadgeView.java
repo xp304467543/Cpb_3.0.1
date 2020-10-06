@@ -49,7 +49,7 @@ import java.util.List;
 /**
  * 标记控件，可显示数量和文字的控件
  *
- * @author xuexiang
+
  * @since 2018/12/28 上午9:08
  */
 public class BadgeView extends View implements Badge {

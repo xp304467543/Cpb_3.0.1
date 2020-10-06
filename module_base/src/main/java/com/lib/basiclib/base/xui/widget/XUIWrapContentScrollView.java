@@ -11,7 +11,7 @@ import com.fh.basemodle.R;
 /**
  * 支持高度值为 wrap_content 的 {@link ScrollView}，解决原生 {@link ScrollView} 在设置高度为 wrap_content 时高度计算错误的 bug。
  *
- * @author xuexiang
+
  * @since 2018/11/14 下午1:34
  */
 public class XUIWrapContentScrollView extends XUIObservableScrollView {

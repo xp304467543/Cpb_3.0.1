@@ -21,19 +21,23 @@ object GameApi : BaseApi {
 
     private const val GAME_AG_DZ = "ag/play-slot"
 
+    private const val GAME_CHESS_HIS = "fhchess/game-record"
 
+    private const val GAME_AG_LIVE = "ag/game-record"
+
+    private const val GAME_AG_GAME = "ag/slot-record"
 
 
     /**
      * 游戏列表
      */
-    fun getAllGame( function: ApiSubscriber<ArrayList<GameAll>>.() -> Unit){
+    fun getAllGame( ):ApiSubscriber<ArrayList<GameAll>>{
         val subscriber = object : ApiSubscriber<ArrayList<GameAll>>() {}
-        subscriber.function()
         getApiOther()
             .get<ArrayList<GameAll>>(GAME_ALL)
             .headers("Authorization", UserInfoSp.getTokenWithBearer())
             .subscribe(subscriber)
+        return  subscriber
     }
 
 
@@ -71,6 +75,58 @@ object GameApi : BaseApi {
         getApiOther()
             .get<Game060>(GAME_AG_DZ)
             .headers("Authorization", UserInfoSp.getTokenWithBearer())
+            .subscribe(subscriber)
+    }
+
+    /**
+     * 棋牌历史 记录
+     */
+    fun getChessHis(game_id:String , st:String,et:String,page:Int,function: ApiSubscriber<List<GameChess>>.() -> Unit){
+        val subscriber = object : ApiSubscriber<List<GameChess>>() {}
+        subscriber.function()
+        getApiOther()
+            .get<List<GameChess>>(GAME_CHESS_HIS)
+            .headers("Authorization", UserInfoSp.getTokenWithBearer())
+            .params("game_id",game_id)
+            .params("st",st)
+            .params("et",et)
+            .params("page",page)
+            .params("limit",20)
+            .subscribe(subscriber)
+    }
+
+    /**
+     * AG视讯 记录
+     */
+    fun getAgLive(game_id:String , st:String,et:String,page:Int,function: ApiSubscriber<List<GameAgLive>>.() -> Unit){
+        val subscriber = object : ApiSubscriber<List<GameAgLive>>() {}
+        subscriber.function()
+        getApiOther()
+            .get<List<GameAgLive>>(GAME_AG_LIVE)
+            .headers("Authorization", UserInfoSp.getTokenWithBearer())
+            .params("game_id",game_id)
+            .params("st",st)
+            .params("et",et)
+            .params("page",page)
+            .params("limit",20)
+            .subscribe(subscriber)
+    }
+
+
+    /**
+     * AG游戏 记录
+     */
+    fun getAgGame(game_id:String , st:String,et:String,page:Int,function: ApiSubscriber<List<GameAg>>.() -> Unit){
+        val subscriber = object : ApiSubscriber<List<GameAg>>() {}
+        subscriber.function()
+        getApiOther()
+            .get<List<GameAg>>(GAME_AG_GAME)
+            .headers("Authorization", UserInfoSp.getTokenWithBearer())
+            .params("game_id",game_id)
+            .params("st",st)
+            .params("et",et)
+            .params("page",page)
+            .params("limit",20)
             .subscribe(subscriber)
     }
 }

@@ -20,7 +20,7 @@ package com.lib.basiclib.base.xui.widget.progress.loading;
 /**
  * 消息loading加载者
  *
- * @author xuexiang
+
  * @since 2019/1/11 下午3:58
  */
 public interface IMessageLoader {

@@ -31,24 +31,18 @@ class MineCardRechargeAct : BaseNavActivity() {
 
     override fun initEvent() {
         bt_go_recharge.setOnClickListener {
-            showPageLoadingDialog()
-            if (!FastClickUtil.isFastClick()) {
-                if (et_code.text.length < 16) {
+                    if (!FastClickUtil.isFastClick()) {
+                if (et_code.text.length < 18) {
                     ToastUtils.showToast("请输入正确16位数账号")
                     return@setOnClickListener
                 }
+                showPageLoadingDialog()
                 MineApi.cardRecharge(et_code.text.toString(), et_pass.text.toString()) {
                     onSuccess {
                         et_code.setText("")
                         et_pass.setText("")
                         DialogRechargeSuccess(this@MineCardRechargeAct, "充值成功", R.mipmap.ic_dialog_success).show()
-                        RxBus.get().post(
-                            MineUpDateMoney(
-                                "",
-                                false,
-                                isDiamond = true
-                            )
-                        )
+                        RxBus.get().post(MineUpDateMoney("", false, isDiamond = true))
                         hidePageLoadingDialog()
                     }
                     onFailed {
@@ -60,7 +54,7 @@ class MineCardRechargeAct : BaseNavActivity() {
                 }
             }
         }
-        linContact.setOnClickListener {
+        goBuyCard.setOnClickListener {
             if (!FastClickUtil.isFastClick()){
                 startActivity(Intent(this,MineRechargeCardContactAct::class.java))
             }

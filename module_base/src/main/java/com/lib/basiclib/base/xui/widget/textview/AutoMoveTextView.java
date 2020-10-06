@@ -9,7 +9,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 /**
  * 自定义跑马灯Textview类
  *
- * @author xuexiang
+
  * @since 2018/11/22 上午12:36
  */
 public class AutoMoveTextView extends AppCompatTextView {

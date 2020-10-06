@@ -25,7 +25,7 @@ import androidx.annotation.NonNull;
 /**
  * 支持设置图片左右间距的 ImageSpan
  *
- * @author xuexiang
+
  * @since 2019/4/2 下午9:34
  */
 public class MarginImageSpan extends AlignMiddleImageSpan {

@@ -22,7 +22,7 @@ import android.view.View;
 /**
  * LinkageScrollLayout {@link LinkageScrollLayout}的子布局内联事件的回调接口
  *
- * @author xuexiang
+
  * @since 2020/3/11 4:47 PM
  */
 public interface ChildLinkageEvent {

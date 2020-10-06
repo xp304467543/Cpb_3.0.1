@@ -32,7 +32,7 @@ import com.lib.basiclib.base.xui.utils.ResUtils;
 /**
  * 图标资源控件
  *
- * @author xuexiang
+
  * @since 2020-01-06 20:42
  */
 public class PorterShapeImageView extends PorterImageView {

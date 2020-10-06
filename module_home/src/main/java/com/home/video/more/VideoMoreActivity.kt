@@ -14,7 +14,6 @@ import com.hwangjr.rxbus.RxBus
 import com.lib.basiclib.base.activity.BaseNavActivity
 import com.lib.basiclib.base.adapter.BaseFragmentPageAdapter
 import com.lib.basiclib.utils.FastClickUtil
-import com.lib.basiclib.utils.LogUtils
 import com.lib.basiclib.utils.StatusBarUtils.setStatusBarHeight
 import com.lib.basiclib.utils.ToastUtils
 import com.lib.basiclib.utils.ViewUtils
@@ -212,7 +211,7 @@ class VideoMoreActivity : BaseNavActivity() {
             }
             val viewPagerAdapter = BaseFragmentPageAdapter(supportFragmentManager, fragments)
             vpMoreVideo.adapter = viewPagerAdapter
-            vpMoreVideo.offscreenPageLimit = 30
+            vpMoreVideo.offscreenPageLimit = 1
             ViewPagerHelper.bind(magic_indicator3, vpMoreVideo)
             if (childName != "0") {
                 if (childList.indexOf(childName) != -1) {

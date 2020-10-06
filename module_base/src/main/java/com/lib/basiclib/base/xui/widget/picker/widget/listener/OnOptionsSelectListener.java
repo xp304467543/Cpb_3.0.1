@@ -21,7 +21,7 @@ import android.view.View;
 /**
  * 条件选择的监听器
  *
- * @author xuexiang
+
  * @since 2019/1/1 下午7:05
  */
 public interface OnOptionsSelectListener {

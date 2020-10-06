@@ -10,7 +10,7 @@ import com.fh.basemodle.R;
 /**
  * 复合字幕
  *
- * @author xuexiang
+
  * @since 2019/1/14 下午10:13
  */
 public class ComplexViewMF extends MarqueeFactory<RelativeLayout, ComplexItemEntity> {

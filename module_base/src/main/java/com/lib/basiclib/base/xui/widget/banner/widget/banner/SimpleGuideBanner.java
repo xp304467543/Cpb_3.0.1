@@ -13,7 +13,7 @@ import com.lib.basiclib.base.xui.widget.imageview.ImageLoader;
 /**
  * 简单的引导页
  *
- * @author xuexiang
+
  * @since 2020/12/6 下午4:32
  */
 public class SimpleGuideBanner extends BaseIndicatorBanner<Object, SimpleGuideBanner> {

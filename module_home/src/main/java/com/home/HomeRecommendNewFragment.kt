@@ -13,7 +13,9 @@ import com.customer.data.game.GameApi
 import com.customer.data.home.Game
 import com.customer.data.home.HomeHotLiveResponse
 import com.customer.data.home.HomeSystemNoticeResponse
+import com.customer.data.home.HomeTypeListResponse
 import com.customer.data.mine.ChangeSkin
+import com.customer.data.mine.LotteryToLiveRoom
 import com.glide.GlideUtil
 import com.home.children.MoreAnchorAct
 import com.hwangjr.rxbus.RxBus
@@ -40,6 +42,7 @@ import kotlinx.android.synthetic.main.fragment_home_recommend_new.*
  */
 class HomeRecommendNewFragment : BaseMvpFragment<HomeRecommendNewPresenter>(), ITheme {
 
+    var gameRoomList: ArrayList<Array<HomeTypeListResponse>?>? = null
 
     override fun attachView() = mPresenter.attachView(this)
 
@@ -86,7 +89,6 @@ class HomeRecommendNewFragment : BaseMvpFragment<HomeRecommendNewPresenter>(), I
 
 
     }
-
 
 
     fun upDateBanner(data: List<BannerItem>?) {
@@ -186,13 +188,14 @@ class HomeRecommendNewFragment : BaseMvpFragment<HomeRecommendNewPresenter>(), I
             holder.text(R.id.tvLotteryTypeName, item?.name)
             holder.itemView.setOnClickListener {
                 if (!FastClickUtil.isFastClick()) {
-                    if (!UserInfoSp.getIsLogin()){
+                    if (!UserInfoSp.getIsLogin()) {
                         GlobalDialog.notLogged(requireActivity())
                         return@setOnClickListener
                     }
                     when (item?.type) {
                         "lott" -> {
-                            Router.withApi(ApiRouter::class.java).toLotteryGame(item.id ?: "-1", item.name ?: "未知")
+                            Router.withApi(ApiRouter::class.java)
+                                .toLotteryGame(item.id ?: "-1", item.name ?: "未知")
                         }
                         "fh_chess" -> {
                             showPageLoadingDialog()
@@ -242,29 +245,93 @@ class HomeRecommendNewFragment : BaseMvpFragment<HomeRecommendNewPresenter>(), I
         }
     }
 
+    //lottery页面打开直播间
+    @Subscribe(thread = EventThread.HANDLER)
+    fun lotteryToLiveRoom(eventBean: LotteryToLiveRoom) {
+        if (isAdded) {
+            if (gameRoomList != null && gameRoomList?.isNotEmpty()!!) {
+                for ((pos, bean) in gameRoomList!!.withIndex()) {
+                    if (!bean.isNullOrEmpty()) {
+                        for ((index, item) in bean.withIndex()) {
+                            if (eventBean.id == item.lottery_id && item.anchor_id != null) {
+                                Router.withApi(ApiRouter::class.java).toLive(
+                                    item.anchor_id ?: "1",
+                                    item.lottery_id ?: "1",
+                                    item.name ?: "未知",
+                                    item.live_status ?: "0",
+                                    item.online.toString(),
+                                    item.game_id ?: "1",
+                                    item.name ?: "未知",
+                                    item.image ?: ""
+                                )
+                                return
+                            }
+                        }
+                    }
+                    if ((pos + 1) == gameRoomList?.size) {
+                        ToastUtils.showToast("该彩种暂无直播")
+                    }
+                }
+
+            }
+        }
+    }
+
 
     //主题
     override fun setTheme(theme: Theme) {
         when (theme) {
             Theme.Default -> {
-                desGame.setDesNew(title = "热门游戏",isShowLine = true)
-                desHotLive.setDesNew(title = "热门直播",isShowLine = true)
+                desGame.setDesNew(title = "热门游戏", isShowLine = true)
+                desHotLive.setDesNew(title = "热门直播", isShowLine = true)
             }
             Theme.NewYear -> {
-                desGame.setDesNew(title = "热门游戏",image = R.drawable.ic_them_newyear_5,isShowLine = false)
-                desHotLive.setDesNew(title = "热门直播",image =  R.drawable.ic_them_newyear_1,isShowLine = false)
+                desGame.setDesNew(
+                    title = "热门游戏",
+                    image = R.drawable.ic_them_newyear_5,
+                    isShowLine = false
+                )
+                desHotLive.setDesNew(
+                    title = "热门直播",
+                    image = R.drawable.ic_them_newyear_1,
+                    isShowLine = false
+                )
             }
             Theme.MidAutumn -> {
-                desGame.setDesNew(title = "热门游戏",image = R.drawable.ic_them_middle_1,isShowLine = false)
-                desHotLive.setDesNew(title = "热门直播",image =  R.drawable.ic_them_middle_7,isShowLine = false)
+                desGame.setDesNew(
+                    title = "热门游戏",
+                    image = R.drawable.ic_them_middle_7,
+                    isShowLine = false
+                )
+                desHotLive.setDesNew(
+                    title = "热门直播",
+                    image = R.drawable.ic_them_middle_1,
+                    isShowLine = false
+                )
             }
             Theme.LoverDay -> {
-                desGame.setDesNew(title = "热门游戏",image = R.drawable.ic_them_love_1,isShowLine = false)
-                desHotLive.setDesNew(title = "热门直播",image =  R.drawable.ic_them_love_7,isShowLine = false)
+                desGame.setDesNew(
+                    title = "热门游戏",
+                    image = R.drawable.ic_them_love_7,
+                    isShowLine = false
+                )
+                desHotLive.setDesNew(
+                    title = "热门直播",
+                    image = R.drawable.ic_them_love_3,
+                    isShowLine = false
+                )
             }
-            Theme.NationDay ->{
-                desGame.setDesNew(title = "热门游戏",image = R.drawable.ic_them_gq_11,isShowLine = false)
-                desHotLive.setDesNew(title = "热门直播",image =  R.drawable.ic_them_gq_12,isShowLine = false)
+            Theme.NationDay -> {
+                desGame.setDesNew(
+                    title = "热门游戏",
+                    image = R.drawable.ic_them_gq_11,
+                    isShowLine = false
+                )
+                desHotLive.setDesNew(
+                    title = "热门直播",
+                    image = R.drawable.ic_them_gq_12,
+                    isShowLine = false
+                )
             }
         }
     }
@@ -277,7 +344,7 @@ class HomeRecommendNewFragment : BaseMvpFragment<HomeRecommendNewPresenter>(), I
             2 -> setTheme(Theme.NewYear)
             3 -> setTheme(Theme.MidAutumn)
             4 -> setTheme(Theme.LoverDay)
-            5 ->setTheme(Theme.NationDay)
+            5 -> setTheme(Theme.NationDay)
         }
 
     }

@@ -33,7 +33,7 @@ import static com.lib.basiclib.base.xui.widget.slideback.SlideBack.EDGE_RIGHT;
 /**
  * 默认的侧滑触摸事件处理
  *
- * @author xuexiang
+
  * @since 2019-08-30 11:05
  */
 public class DefaultSlideTouchDispatcher implements ISlideTouchEventDispatcher {

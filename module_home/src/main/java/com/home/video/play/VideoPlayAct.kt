@@ -72,7 +72,12 @@ class VideoPlayAct : BaseMvpActivity<VideoPlayActPresenter>() {
 
     private fun initOther() {
         GlideUtil.loadImage(this, UserInfoSp.getMovieBanner().split(",")[0], imgBanner)
-        imgBanner.setOnClickListener { Router.withApi(ApiRouter::class.java).toGlobalWeb(UserInfoSp.getMovieBanner().split(",")[1]) }
+        if (UserInfoSp.getMovieBanner().contains(",")){
+            imgBanner.setOnClickListener { Router.withApi(ApiRouter::class.java).toGlobalWeb(UserInfoSp.getMovieBanner().split(",")[1]) }
+        }else {
+            imgBanner.setOnClickListener { Router.withApi(ApiRouter::class.java).toGlobalWeb(UserInfoSp.getMovieBanner()) }
+        }
+
         smartRefreshLayoutPlay.setEnableRefresh(false)//是否启用下拉刷新功能
         smartRefreshLayoutPlay.setEnableLoadMore(false)//是否启用上拉加载功能
         smartRefreshLayoutPlay.setEnableOverScrollBounce(true)//是否启用越界回弹

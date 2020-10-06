@@ -23,7 +23,7 @@ import com.lib.basiclib.base.xui.widget.progress.materialprogressbar.MaterialPro
 /**
  * 状态布局，可根据模板自定义状态布局
  *
- * @author xuexiang
+
  * @since 2020/4/30 12:16 AM
  */
 public class StatefulLayout extends LinearLayout {

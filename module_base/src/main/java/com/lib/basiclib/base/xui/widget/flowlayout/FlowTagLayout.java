@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * 流式标签布局
  *
- * @author xuexiang
+
  * @since 2018/5/28 下午7:40
  */
 public class FlowTagLayout extends ViewGroup {

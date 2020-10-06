@@ -39,7 +39,7 @@ import static com.lib.basiclib.base.xui.widget.slideback.SlideBack.EDGE_RIGHT;
 /**
  * SlideBack管理器
  *
- * @author xuexiang
+
  * @since 2019-08-30 9:31
  */
 public class SlideBackManager implements OnSlideUpdateListener {

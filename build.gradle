@@ -26,9 +26,9 @@ allprojects {
         maven { url 'https://dl.bintray.com/fungo/maven' }
         maven { url "http://maven.aliyun.com/nexus/content/repositories/releases" }
         maven { url 'http://4thline.org/m2' }
-        flatDir {
-            dirs project(':module_base_player').file('libs')
-        }
+//        flatDir {
+//            dirs project(':module_base_player').file('libs')
+//        }
     }
 }
 

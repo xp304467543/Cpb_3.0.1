@@ -32,7 +32,7 @@ import com.fh.basemodle.R;
 /**
  * 视频播放界面
  *
- * @author xuexiang
+
  * @since 2020/12/5 上午11:49
  */
 public class VideoPlayerActivity extends FragmentActivity {

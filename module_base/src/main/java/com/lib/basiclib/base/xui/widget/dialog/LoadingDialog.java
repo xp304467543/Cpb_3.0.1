@@ -34,7 +34,7 @@ import com.lib.basiclib.base.xui.widget.progress.loading.LoadingCancelListener;
 /**
  * loading加载框
  *
- * @author xuexiang
+
  * @since 2019/1/14 下午10:08
  */
 public class LoadingDialog extends BaseDialog implements IMessageLoader {

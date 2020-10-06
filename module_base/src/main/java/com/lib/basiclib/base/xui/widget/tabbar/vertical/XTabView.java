@@ -37,7 +37,7 @@ import com.lib.basiclib.base.xui.widget.textview.badge.BadgeView;
 /**
  * 选项卡
  *
- * @author xuexiang
+
  * @since 2018/12/28 下午1:33
  */
 public class XTabView extends TabView {

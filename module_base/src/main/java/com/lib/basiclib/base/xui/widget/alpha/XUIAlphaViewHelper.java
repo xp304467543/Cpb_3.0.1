@@ -12,7 +12,7 @@ import java.lang.ref.WeakReference;
 /**
  * 透明度辅助工具
  *
- * @author xuexiang
+
  * @since 2020/11/30 下午1:21
  */
 public class XUIAlphaViewHelper implements IAlphaViewHelper {

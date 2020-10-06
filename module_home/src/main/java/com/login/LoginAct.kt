@@ -35,7 +35,7 @@ import kotlinx.android.synthetic.main.act_login.*
 @RouterAnno(host = "Home", path = "login")
 class LoginAct : BaseMvpActivity<LoginPresenter>() {
 
-    var isReport = true //是否必须填邀请码
+    var isReport = false //是否必须填邀请码
 
     var loadMode = 1 //  0-验证码登录  1-密码登录
 
@@ -79,13 +79,13 @@ class LoginAct : BaseMvpActivity<LoginPresenter>() {
                 loginOrRegister()
             }
         }
-        if (isReport) {
-            setVisible(etRegisterInviteNum)
-            setVisible(linLast2)
-        } else {
-            setVisibility(etRegisterInviteNum, false)
-            setVisibility(linLast2, false)
-        }
+//        if (isReport) {
+//            setVisible(etRegisterInviteNum)
+//            setVisible(linLast2)
+//        } else {
+//            setVisibility(etRegisterInviteNum, false)
+//            setVisibility(linLast2, false)
+//        }
     }
 
     override fun initEvent() {
@@ -220,12 +220,12 @@ class LoginAct : BaseMvpActivity<LoginPresenter>() {
                 ToastUtils.showToast("密码长度不得小于6位")
                 return@setOnClickListener
             }
-//            if (isReport) {
-//                if (etRegisterInviteNum.text.isEmpty()) {
-//                    ToastUtils.showToast("请输入邀请码")
-//                    return@setOnClickListener
-//                }
-//            }
+            if (isReport) {
+                if (etRegisterInviteNum.text.isEmpty()) {
+                    ToastUtils.showToast("请输入邀请码")
+                    return@setOnClickListener
+                }
+            }
 //            if (isReport) {
 //                mPresenter.checkMarkCode(etRegisterPhone.text.toString(), etRegisterIdentify.text.toString(), etRegisterInviteNum.text.toString())
 //            } else {

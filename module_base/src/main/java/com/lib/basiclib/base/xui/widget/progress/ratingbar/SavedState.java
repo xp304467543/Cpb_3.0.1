@@ -7,7 +7,7 @@ import android.view.View;
 /**
  * 状态保存
  *
- * @author xuexiang
+
  * @since 2019/3/26 下午10:51
  */
 class SavedState extends View.BaseSavedState {

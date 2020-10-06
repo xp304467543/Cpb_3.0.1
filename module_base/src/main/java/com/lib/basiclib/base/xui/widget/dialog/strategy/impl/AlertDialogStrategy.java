@@ -35,7 +35,7 @@ import com.lib.basiclib.base.xui.widget.dialog.strategy.InputInfo;
 /**
  * AlertDialog 策略
  *
- * @author xuexiang
+
  * @since 2020/11/15 上午12:24
  */
 public class AlertDialogStrategy implements IDialogStrategy {

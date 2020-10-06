@@ -50,7 +50,7 @@ import static com.lib.basiclib.base.xui.widget.imageview.preview.ui.BasePhotoFra
 /**
  * 图片预览页面
  *
- * @author xuexiang
+
  * @since 2018/12/5 上午11:42
  */
 public class PreviewActivity extends FragmentActivity {

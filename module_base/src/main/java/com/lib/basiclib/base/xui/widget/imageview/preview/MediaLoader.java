@@ -29,7 +29,7 @@ import com.lib.basiclib.base.xui.widget.imageview.preview.loader.ISimpleTarget;
 /**
  * 图片加载管理器
  *
- * @author xuexiang
+
  * @since 2018/12/5 上午11:27
  */
 public class MediaLoader implements IMediaLoader{

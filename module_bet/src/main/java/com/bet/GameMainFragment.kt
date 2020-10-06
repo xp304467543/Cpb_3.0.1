@@ -3,9 +3,11 @@ package com.bet
 import androidx.fragment.app.Fragment
 import com.customer.adapter.TabScaleAdapter
 import com.customer.adapter.TabThemAdapter
+import com.customer.data.UnDateTopGame
 import com.customer.data.UserInfoSp
 import com.customer.data.game.GameAll
 import com.customer.data.mine.ChangeSkin
+import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.thread.EventThread
 import com.lib.basiclib.base.adapter.BaseFragmentPageAdapter
@@ -37,6 +39,8 @@ class GameMainFragment : BaseMvpFragment<GameMainPresenter>(), ITheme {
 
     override fun isRegisterRxBus() = true
 
+    override fun isShowBackIconWhite() = false
+
     override fun initContentView() {
         StatusBarUtils.setStatusBarHeight(gameStateView)
         gameSmartRefreshLayout?.setEnableOverScrollBounce(true)//是否启用越界回弹
@@ -44,38 +48,45 @@ class GameMainFragment : BaseMvpFragment<GameMainPresenter>(), ITheme {
         gameSmartRefreshLayout?.setEnableRefresh(false)//是否启用下拉刷新功能
         gameSmartRefreshLayout?.setEnableLoadMore(false)//是否启用上拉加载功能
         setTheme(UserInfoSp.getThem())
+    }
+
+    override fun initData() {
         mPresenter.getAllGame()
     }
 
     fun initViewPager(data: ArrayList<GameAll>) {
-        val fragments = arrayListOf<Fragment>(
-            GameMainChildFragment.newInstance(0,data = data),
-            GameMainChildOtherFragment.newInstance(1,data = data),
-            GameMainChildOtherFragment.newInstance(2,data = data),
-            GameMainChildOtherFragment.newInstance(3,data = data),
-            GameMainChildOtherFragment.newInstance(4,data = data)
-        )
-        val adapter = BaseFragmentPageAdapter(childFragmentManager, fragments)
-        vpGame?.adapter = adapter
-        val list = arrayListOf<String>()
-        for ( item in data){ list.add(item.name?:"未知") }
-        initTopTab(list)
+        if (vpGame!=null){
+            val fragments = arrayListOf<Fragment>(
+                GameMainChildFragment.newInstance(0,data = data),
+                GameMainChildOtherFragment.newInstance(1,data = data),
+                GameMainChildOtherFragment.newInstance(2,data = data),
+                GameMainChildOtherFragment.newInstance(3,data = data),
+                GameMainChildOtherFragment.newInstance(4,data = data)
+            )
+            val adapter = BaseFragmentPageAdapter(childFragmentManager, fragments)
+            vpGame?.adapter = adapter
+            val list = arrayListOf<String>()
+            for ( item in data){ list.add(item.name?:"未知") }
+            initTopTab(list)
+        }
     }
     private var tabAdapter: TabScaleAdapter? = null
     private fun initTopTab(mDataList: ArrayList<String>) {
-        val commonNavigator = CommonNavigator(context)
-        commonNavigator.scrollPivotX = 0.65f
-       tabAdapter = TabScaleAdapter(
-            titleList = mDataList,
-            viewPage = vpGame,
-            normalColor = ViewUtils.getColor(R.color.color_333333),
-            selectedColor = ViewUtils.getColor(R.color.color_FF513E),
-            colorLine = ViewUtils.getColor(R.color.color_FF513E),
-            textSize = 14F
-        )
-        commonNavigator.adapter = tabAdapter
-        gameSwitchVideoTab.navigator = commonNavigator
-        ViewPagerHelper.bind(gameSwitchVideoTab, vpGame)
+        if (vpGame!=null){
+            val commonNavigator = CommonNavigator(context)
+            commonNavigator.scrollPivotX = 0.65f
+            tabAdapter = TabScaleAdapter(
+                titleList = mDataList,
+                viewPage = vpGame,
+                normalColor = ViewUtils.getColor(R.color.color_333333),
+                selectedColor = ViewUtils.getColor(R.color.color_FF513E),
+                colorLine = ViewUtils.getColor(R.color.color_FF513E),
+                textSize = 14F
+            )
+            commonNavigator.adapter = tabAdapter
+            gameSwitchVideoTab.navigator = commonNavigator
+            ViewPagerHelper.bind(gameSwitchVideoTab, vpGame)
+        }
     }
 
 
@@ -98,6 +109,12 @@ class GameMainFragment : BaseMvpFragment<GameMainPresenter>(), ITheme {
             }
         }
         tabAdapter?.notifyDataSetChanged()
+    }
+
+
+    override fun onSupportVisible() {
+        super.onSupportVisible()
+        RxBus.get().post(UnDateTopGame())
     }
 
 

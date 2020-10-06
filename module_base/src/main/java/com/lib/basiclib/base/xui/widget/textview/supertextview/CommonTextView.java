@@ -22,7 +22,7 @@ import io.github.inflationx.calligraphy3.HasTypeface;
 /**
  * 通用的textView可以实现大部分常用布局样式
  *
- * @author xuexiang
+
  * @since 2019/1/14 上午11:24
  */
 public class CommonTextView extends RelativeLayout implements HasTypeface {

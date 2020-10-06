@@ -27,7 +27,7 @@ import com.lib.basiclib.base.xui.XUI;
 /**
  * 获取res中的资源
  *
- * @author xuexiang
+
  * @since 2018/12/18 上午12:14
  */
 public final class ResUtils {

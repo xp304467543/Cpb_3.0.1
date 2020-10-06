@@ -25,9 +25,9 @@ public class SophixStubApplication extends SophixApplication {
     // 此处SophixEntry应指定真正的Application，并且保证RealApplicationStub类名不被混淆。
 
 
-    private static final String ALI_SOPHIX_APP_KEY = "31251497";
-    private static final String ALI_SOPHIX_APP_SECRET = "59bb015f9f71331a3d8d4580777bc639";
-    private static final String ALI_SOPHIX_APP_RSA = "MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDiBzR4XTKoL3zZSTlEUnpb6ca2K0xMvfTC/003bTKznd/i06ueBa1X6g52zXcEvRzyGqCjsKcO2UIqk8+1XSTNdMBu3+OLcYRMcVm5qq3pGE+nDyIEe0E0Q2FE3PboeX29JjNMPmpRimHEtDcNNTlzpD2DrnynWEWgtmlzYVuGUyW12vq6yFYFOOCgTQY6UoBq2M3qwzPM8cQNzGwer2mwR5RxR5TVG2rjqQBiHVmOOWqMdmspYkIZAxQ/l3gIrdJ0xoonOERW0FlWkz1O3jOqkSlI54bMTNRJIb2CamqZwbSxUzZ1U0YQFUygwQlEvJO8fXcVy2M5skkGXA+uiCOTAgMBAAECggEAH+tSjpjiuXuTTwAXNT3Mh8RYyosMyF2e/hadqfEi0ti9sEOiHbvBggPMrRxQ7XtjZhE6lEMzJFasEGU1VPBlbRpKvp2hfaS3QTBUsnKXAq7rOLVbYXSifaXyS45E1AmsJxUI84Bw9Tjsm6GzkIrupRURltICSoOduZdpBuE90pcRZcnvi0q6thGRv3eY7BUaeBDbJmYLdFqB6sG895x8N6/8lKYysUs7tYjtZyBGz4kbYaLss3ILZL/cKoJBYc/UpC1Zwas1TSBja4ROwvIhvMbDu2Ylk0vvX+rRGqVwPsoz3by4OWTXzGBGKqhe7qPXTftjTn9DEfxZtCLgpHysmQKBgQD5JgfoGVFvba7hGJp1I/FKBf3AEGPjHm0l2TKAq1x3bju7JhB+yOPubJetXm8gNKXVjUeatsuQhcqaUBE8/oZZYs7hauCgC6bJh2a4kNeHChJri8pgl1fjShfRKVZc9juSTd9dMv3024czwWSZNKXSsdv6QWSi26aFQUd7DIr4rQKBgQDoPmjm1mZGzTFvAHRm/yTegtvLg/uE8w/3GYfrlEFi8WjdSXqKioSFbwA0OfzIQBpuKxJsza61JiW5hHc2wBm9nP2NfUbhVOE901Sebp12MXN4HLZyGHrUETThNy3O9AgtSdmkJbrv+Mc6rQDyicZRdos2dsghD/nLOYsrEcHVPwKBgQD0YpWG2K7EefX73cJD/MmFLnNEnc8czI+LfIzJIU1F6N62KBQuCKdrCyGMcQDXukygOEBwRbVPQa0FyFvgVFk7/GupOMi0tDkZnLLpf0mpr/t5elk8fbc7v0W1aLLJ5M1yKOhb5tSsBVmNLrmafcXZ8ZQw2Uv5YzLnqqyOyjLW0QKBgQCN0a6VZ89E5QCO3CQ40Q1eo2I8wPfSk+rn5btObFYRaYGzv68I8tVB9iqVueNXFW4OYFb8Ag3xqL3Yr79su5n8Y+WhhSLHbuGss2Q06y9UgZYVftMakUBQR8GW1e8vNW3Y2gQBbNjeuXhPqF2vvdpQ3KbeN2K2bd8H7rfBMTLAWQKBgQCaPcri04KSpsLRqC+cXeddJUZ2GRiPq8A6sesnwBqZ+NjRzIt847HQqT1pfYjpX4RyRVikXCKj9OWskij/oqH5ceyHmPFYk+rUq9vnWXnYP3wya/wtRJpV4EstxZUa1jCWvUDBzSfSltHrGKL9gRij4S7kiz2j8Mdm8yzJtOeCCA==";
+    private static final String ALI_SOPHIX_APP_KEY = "31438044";
+    private static final String ALI_SOPHIX_APP_SECRET = "6db86041d72c84ddff7ee92efce4e171";
+    private static final String ALI_SOPHIX_APP_RSA = "MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDgPQr8GuRh+FplljiN/WkDyGqQzLjUhf9DVAR+vZNEn/nNQu0uktjx00BoleYdjsn5B9ogs6FCWOUesMIYL2HkwymhFCLteCDsbH2iYfhb8UxBLlG4+AP0CfsajOtQWxZzq5QSgDtLtYm2Ogk5YDIVyV78zxBmNZ+17C/75i+WeGLakaDqn+FyzhQkj/iKEdmAgzdPiaexblfLZkrZy+/bcF+ehfI3Zw6MLB+/1vFbV2tVbusVCpnNvYvF9tLIKvIxrrSBbjEJoTiV5mHnv9Ehxu09CTMIShPexHp1l+Hg2lMgwq+MJMWkWjHjaM12Wio4ll5kAR95Liof+eRbMh4tAgMBAAECggEBAJtESU3lRQw9TkKXMNPIiyWOaZOX3cdyfRzemTo1BDr5Vpv1YovkLInN0ARa/vqqe1mPQU9xchChwwxsMglTDcK8DCA39DNgAdQTDy8YDUOEoltjujyMpxgcrR1mRC3g1HwFa0MgPW6f5hoit25eGHATfk0pB17udIcgYt1WNs9FgqnEAhc+Qq1fBxS2mJDbhI/GZtauECdzrug/JDExOItjg9JdoW/EfvP4VU4Tz/w9gkTM3gm/pZFPHK1X6z7lN152CBw4OP6bDTl2TXfVLT51TbbTs83hwOR+ygA9uMaib1cGW1+oedRHURoY9G++eLlSWEwI0XSI7M8KgkiMgkECgYEA9hGle74hckCY/aTGEC6LwQQ4FObK5Gfmle3570rqgPn4jAycgh68kzQ5gbtH1tPuGknSOdNoc+u1okSKPAEe/CbU6TbVVnD4bk+FIk8w3gccg5k4LRmf2JhcLyS+uaGftNBPz1ifH/wmaO9nIpie+brV8Av8yaSinRz1L/vWYlECgYEA6UnYvs3RfidLAIh6biyNoVIyn/OueLMe8EEeDYk4T9JPMjGFUNuZMr32+fswIXY/Xr2qF3JJUSzTecI01PmI0IX+fO/ZGL+SwvMTi2SHrW35c/fxqR34bBr56vpVbOOlTAbL8Ihv2JgrLgKrCoXjzf/l2McLUQh4ypOJkBNXix0CgYEA1Yf0qZARaBsEaD8fnRU3M3Tc0c6BTHmZUIvlcrD5FJlXBPlAq23OyJLuQFTrf1IDcg6TfpilMMrfoIOHzZBPehKcehCaStvXyan55w7/Yfyb0tsYM5Lj8kos3MAvPdkyRO7sAwttco0WK8NsJUp50k4+roNIhxb2Ag8J+ey5WjECgYEAytxRYxIc0sOeX9dOB1Is0pRku1yuYfz4sVkepgyl8BtkjLQtRrO+0zYHdzerkd1+m4b4Sq0x/impt55eTLi09Qcf1krHENM97tJrM3J23SPdoK+B8FrEdFU8781BzY9jZOogG4i5IbKpEbh2PY9SGgclOs1TFOL2Dsoe/C8lmC0CgYB7+FAMx28+xgW0m+zMpVhtkRLHNNtSVJsqSx11LuVc8mz8fFBvmPRakaGvmlowFa9qy4ZUVH3AGk/xlR0bj/NZltCny/8cOiX+mQXXVIIlNOZqmdhW77S7JFBtUt2QTL1vel3cte2/1CF9CDJW6DHNRENAHSZiHbfaXbxp1P+LTw==";
     @Keep
     @SophixEntry(CpbApplication.class)
     static class RealApplicationStub {}
@@ -63,9 +63,9 @@ public class SophixStubApplication extends SophixApplication {
     public void onCreate() {
         super.onCreate();
         //code 必填（代理）  normal 选填（官方）
-//        List<String> tags = new ArrayList<>();
-//        tags.add("normal");
-//        SophixManager.getInstance().setTags(tags);
-//        SophixManager.getInstance().queryAndLoadNewPatch();
+        List<String> tags = new ArrayList<>();
+        tags.add("normal");
+        SophixManager.getInstance().setTags(tags);
+        SophixManager.getInstance().queryAndLoadNewPatch();
     }
 }

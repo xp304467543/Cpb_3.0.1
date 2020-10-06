@@ -19,7 +19,7 @@ object WebUrlProvider {
 
     //    生产环境： wss://www.cpbadmin.com/wss
     //    测试环境： ws://www.cpbh5.com/wss
-    private const val API_URL_WEB_SOCKET = "ws://www.cpbh5.com/wss"
+    private const val API_URL_WEB_SOCKET = "ws://47.244.212.147/wss"
 
     private const val API_URL_WEB_SOCKET_MAIN = "wss://www.cpbadmin.com/wss"
 
@@ -27,7 +27,7 @@ object WebUrlProvider {
     //    生产环境： wss://www.cpbadmin.com/wss_notice 暂定
     //    测试环境： ws://www.cpbh5.com/wss_notice
 
-    private const val ALL_URL_WEB_SOCKET = "ws://www.cpbh5.com/wss_notice"
+    private const val ALL_URL_WEB_SOCKET = "ws://47.244.212.147wss_notice"
 
     private const val ALL_URL_WEB_SOCKET_MAIN = "ws://wss://www.cpbadmin.com/wss_notice"
 

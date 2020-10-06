@@ -30,7 +30,7 @@ import androidx.annotation.Nullable;
 /**
  * 多点触摸监听
  *
- * @author xuexiang
+
  * @since 2019-10-28 10:03
  */
 class MultiTouchListener implements OnTouchListener {

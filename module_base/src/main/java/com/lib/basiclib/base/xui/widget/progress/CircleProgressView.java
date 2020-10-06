@@ -52,7 +52,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
- * @author xuexiang
+
  * @since 2019-05-12 12:34
  */
 public class CircleProgressView extends View {

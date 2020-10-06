@@ -16,8 +16,8 @@ import com.customer.data.UserInfoSp
 import com.customer.data.lottery.LotteryApi
 import com.customer.data.lottery.LotteryPlayListResponse
 import com.customer.data.lottery.LotteryTypeResponse
-import com.customer.data.lottery.PlayMoneyData
 import com.customer.data.mine.MineApi
+import com.customer.utils.SoundPoolHelper
 import com.customer.utils.countdowntimer.lotter.LotteryTypeSelectUtil
 import com.flyco.tablayout.SlidingTabLayout
 import com.glide.GlideUtil
@@ -63,7 +63,7 @@ class LiveRoomBetFragment : BottomDialogFragment() {
 
     private var isBalanceBet = true //是余额投注 默认是
 
-    private var selectMoneyList: List<PlayMoneyData>? = null
+    private var selectMoneyList: ArrayList<RadioButton>? = null
 
     private var resultList: ArrayList<LotteryTypeResponse>? = null
 
@@ -84,6 +84,8 @@ class LiveRoomBetFragment : BottomDialogFragment() {
     private var currentIndex = 0
 
     private var ivPlaySound: ImageView? = null
+
+    private var radioGroupLayout:RadioGroup ? =null
 
     override fun isShowTop(): Boolean = true
 
@@ -117,7 +119,7 @@ class LiveRoomBetFragment : BottomDialogFragment() {
             setTabLayout(if (id == "" || id == "-1") "1" else id)
             getUserDiamond()
             getUserBalance()
-            getPlayMoney()
+            clearRadio(true)
         }
     }
 
@@ -145,6 +147,7 @@ class LiveRoomBetFragment : BottomDialogFragment() {
                 )
             }
         }
+        radioGroupLayout = rootView?.findViewById(R.id.radioGroupLayout)
         rootView?.findViewById<TextView>(R.id.tvBetRecord)?.setOnClickListener {
             liveRoomBetRecordFragment = LiveRoomBetRecordFragment()
             fragmentManager?.let { it1 ->
@@ -221,6 +224,8 @@ class LiveRoomBetFragment : BottomDialogFragment() {
                 if (tvUserDiamond != null) tvUserDiamond.text = userBalance
                 isBalanceBet = true
                 minMonty = 1
+                etBetPlayMoney?.setText("1")
+                clearRadio(true)
             }
         }
         rootView?.findViewById<RadioButton>(R.id.rb_2)?.setOnCheckedChangeListener { _, isChecked ->
@@ -231,9 +236,28 @@ class LiveRoomBetFragment : BottomDialogFragment() {
                 if (tvUserDiamond != null) tvUserDiamond.text = userDiamond
                 isBalanceBet = false
                 minMonty = 10
+                etBetPlayMoney?.setText("10")
+                clearRadio(false)
             }
         }
     }
+
+
+
+    private fun clearRadio(boolean: Boolean) {
+        if (selectMoneyList.isNullOrEmpty()) return
+        radioGroupLayout?.removeAllViews()
+        for ((index, radio) in selectMoneyList!!.withIndex()) {
+            radio.isChecked = !boolean && index == 0
+            radioGroupLayout?.addView(radio)
+            val params = radio.layoutParams as RadioGroup.LayoutParams
+            params.width = ViewUtils.dp2px(35)
+            params.height = ViewUtils.dp2px(35)
+            params.setMargins(ViewUtils.dp2px(5), 0, ViewUtils.dp2px(5), 0)
+            radio.layoutParams = params
+        }
+    }
+
 
     //投注确认
     private fun startToBetConfirm() {
@@ -306,8 +330,8 @@ class LiveRoomBetFragment : BottomDialogFragment() {
                             })
                             rootView?.findViewById<TextView>(R.id.tvReset)?.setOnClickListener {
                                 ViewUtils.setGone(bottomBetLayout)
-                                if (radioGroupLayout.getChildAt(0) != null)
-                                    (radioGroupLayout.getChildAt(0) as RadioButton).isChecked = true
+                                if (radioGroupLayout?.getChildAt(0) != null)
+                                    (radioGroupLayout?.getChildAt(0) as RadioButton).isChecked = true
                                 reSetData()
                                 RxBus.get().post(LotteryReset(true))
 
@@ -345,8 +369,7 @@ class LiveRoomBetFragment : BottomDialogFragment() {
             lotterySelectDialog.tvLotteryWheelSure.setOnClickListener {
                 isPlay = false
                 if (runnable != null) handler?.removeCallbacks(runnable!!)
-                tvLotterySelectType?.text =
-                    lotterySelectDialog.lotteryPickerView.opt1SelectedData as String
+                tvLotterySelectType?.text = lotterySelectDialog.lotteryPickerView.opt1SelectedData as String
                 opt1SelectedPosition = lotterySelectDialog.lotteryPickerView.opt1SelectedPosition
                 currentLotteryId = list[opt1SelectedPosition].lottery_id ?: ""
                 getLotteryNewCode(list[opt1SelectedPosition].lottery_id ?: "")
@@ -548,49 +571,50 @@ class LiveRoomBetFragment : BottomDialogFragment() {
         }
     }
 
-    /**
-     * 快选金额
-     */
-    @SuppressLint("ResourceType", "SetTextI18n")
-    private fun getPlayMoney() {
-        if (selectMoneyList.isNullOrEmpty()) {
-            if (isAdded && activity != null) {
-                LotteryApi.lotteryBetMoney {
-                    onSuccess {
-                        selectMoneyList = it
-                        for ((index, res) in it.withIndex()) {
+    @SuppressLint("ResourceType")
+    fun getPlayMoney(){
+        LotteryApi.lotteryBetMoney {
+            if (isAdded) {
+                onSuccess {
+                    if (activity != null) {
+                        selectMoneyList = arrayListOf()
+                        for ( res in it) {
                             val radio = RadioButton(context)
-                            if (radio != null) {
-                                radio.buttonDrawable = null
-                                radio.background = ViewUtils.getDrawable(R.drawable.lottery_bet_radio)
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) radio.setTextColor(
-                                    context?.getColorStateList(R.drawable.color_radio_bet)
-                                )
-                                radio.textSize = ViewUtils.dp2px(2.5f)
-                                radio.gravity = Gravity.CENTER
-                                radio.text = res.play_sum_name
-                                radio.id = res.play_sum_num ?: 0
-                                if (index == 0) radio.isChecked = true
-                                radio.setOnCheckedChangeListener { buttonView, isChecked ->
-                                    if (isChecked) {
-                                        etBetPlayMoney.setText(buttonView.id.toString())
-                                        betMoney = buttonView.id
-                                        setTotal()
-                                    }
+                            radio.buttonDrawable = null
+                            radio.background =
+                                ViewUtils.getDrawable(R.drawable.lottery_bet_radio)
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) radio.setTextColor(
+                                context?.getColorStateList(R.drawable.color_radio_bet)
+                            )
+                            radio.textSize = ViewUtils.dp2px(2.5f)
+                            radio.gravity = Gravity.CENTER
+                            radio.text = res.play_sum_name
+                            radio.id = res.play_sum_num ?: 0
+                            radio.setOnCheckedChangeListener { buttonView, isChecked ->
+                                if (isChecked) {
+                                    etBetPlayMoney.setText(buttonView.id.toString())
+                                    etBetPlayMoney.setSelection(buttonView.id.toString().length)
+                                    betMoney = buttonView.id
+                                    setTotal()
                                 }
-                                radioGroupLayout.addView(radio)
-                                val params = radio.layoutParams as RadioGroup.LayoutParams
-                                params.width = ViewUtils.dp2px(35)
-                                params.height = ViewUtils.dp2px(35)
-                                params.setMargins(ViewUtils.dp2px(5), 0, ViewUtils.dp2px(5), 0)
-                                radio.layoutParams = params
                             }
+                            selectMoneyList?.add(radio)
+                            radioGroupLayout?.addView(radio)
+                            val params = radio.layoutParams as RadioGroup.LayoutParams
+                            params.width = ViewUtils.dp2px(35)
+                            params.height = ViewUtils.dp2px(35)
+                            params.setMargins(ViewUtils.dp2px(5), 0, ViewUtils.dp2px(5), 0)
+                            radio.layoutParams = params
                         }
                     }
+                }
+                onFailed {
+                    ToastUtils.showToast(it.getMsg())
                 }
             }
         }
     }
+
 
     //重置页面
     fun reSetData() {
@@ -599,9 +623,9 @@ class LiveRoomBetFragment : BottomDialogFragment() {
         betDiamond = 10 //钻石数
         betMoney = 10 //投注金额
         etBetPlayMoney.setText("10")
-        if (radioGroupLayout.getChildAt(0) != null) {
+        if (radioGroupLayout?.getChildAt(0) != null) {
             try {
-                (radioGroupLayout.getChildAt(0) as RadioButton).isChecked = true
+                (radioGroupLayout?.getChildAt(0) as RadioButton).isChecked = true
             } catch (e: Exception) {
             }
         }
@@ -628,7 +652,7 @@ class LiveRoomBetFragment : BottomDialogFragment() {
 
     private var betDiamond = 10 //钻石数
 
-    private var betMoney = 10 //投注金额
+    private var betMoney = 1 //投注金额
 
     @SuppressLint("SetTextI18n")
     private fun setTotal() {
@@ -672,6 +696,10 @@ class LiveRoomBetFragment : BottomDialogFragment() {
     fun lotteryBet(eventBean: LotteryResetDiamond) {
         getUserDiamond()
         getUserBalance()
+        if (radioGroupLayout?.getChildAt(0) != null) (radioGroupLayout?.getChildAt(0) as RadioButton).isChecked = true
+        reSetData()
+        betList.clear()
+        ViewUtils.setGone(bottomBetLayout)
     }
 
     //重置所有状态

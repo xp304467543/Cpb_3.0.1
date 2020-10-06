@@ -41,7 +41,7 @@ import com.fh.basemodle.R;
  * This ViewGroup will have the {@link BrushDrawingView} to draw paint on it with {@link ImageView}
  * which our source image
  *
- * @author xuexiang
+
  * @since 2019-10-28 10:29
  */
 public class PhotoEditorView extends RelativeLayout {

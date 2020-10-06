@@ -28,7 +28,7 @@ import com.lib.basiclib.base.xui.widget.alpha.XUIAlphaFrameLayout;
 /**
  * 封装的FrameLayout，便于样式的修改
  *
- * @author xuexiang
+
  * @since 2019-06-01 20:04
  */
 public class XUIFrameLayout extends XUIAlphaFrameLayout implements IXUILayout {

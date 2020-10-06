@@ -24,7 +24,10 @@ object MovieApi : BaseApi {
     private const val VIDEO_BANNER = "api/v1_1/user/get_movie_banner"
 
     //更多视频
-   private const val VIDEO_TYPE_MORE = "VideoAPI/domestic/"
+   private const val VIDEO_TYPE_MORE = "VideoAPI/domestic"
+
+    //更多视频
+    private const val VIDEO_TYPE_MORE_2 = "VideoAPI/MostSeries"
 
     //搜索视频
     private const val VIDEO_SEARCH =  "VideoAPI/findVideo"
@@ -91,17 +94,18 @@ object MovieApi : BaseApi {
      * column：updated=最新 reads=最多观看 praise=最多喜欢
      * tag typeId不为null时 此参数可选，指定标签类型。
      */
-    fun getVideoMore(typeId:Int, cid:Int, num:Int, isMore:Boolean,column:String,page:Int,prePage:Int ,function: ApiSubscriber<List<VideoMoreChild>>.() -> Unit){
-        val subscriber = object : ApiSubscriber<List<VideoMoreChild>>() {}
+    fun getVideoMore(typeId:Int, cid:Int, num:Int, isMore:Boolean,column:String,page:Int,prePage:Int,tag:String ,function: ApiSubscriber<VideoMore>.() -> Unit){
+        val subscriber = object : ApiSubscriber<VideoMore>() {}
         subscriber.function()
-        getApiMovie().post<List<VideoMoreChild>>(VIDEO_TYPE_MORE)
+        getApiMovie().post<VideoMore>(VIDEO_TYPE_MORE_2)
             .params("typeId",typeId)
             .params("cid",cid)
             .params("num",num)
             .params("column",column)
             .params("isMore",isMore)
             .params("page",page)
-            .params("prePage",prePage)
+            .params("perPage",prePage)
+            .params("tag",tag)
             .subscribe(subscriber)
     }
 

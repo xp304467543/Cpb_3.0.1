@@ -24,7 +24,7 @@ import com.lib.basiclib.base.xui.widget.picker.wheelview.WheelView;
 /**
  * Handler 消息类
  *
- * @author xuexiang
+
  * @since 2019/1/1 下午5:08
  */
 public final class MessageHandler extends Handler {

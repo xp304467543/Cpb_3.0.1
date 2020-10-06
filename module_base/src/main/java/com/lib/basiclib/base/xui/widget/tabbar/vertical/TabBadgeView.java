@@ -26,7 +26,7 @@ import com.lib.basiclib.base.xui.widget.textview.badge.BadgeView;
 /**
  * 选项卡上的圆点小标记
  *
- * @author xuexiang
+
  * @since 2018/12/28 下午1:34
  */
 public class TabBadgeView extends BadgeView {

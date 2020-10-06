@@ -44,7 +44,7 @@ import com.lib.basiclib.base.xui.widget.progress.materialprogressbar.MaterialPro
 /**
  * 图片预览单个图片的fragment
  *
- * @author xuexiang
+
  * @since 2020/12/5 上午11:24
  */
 public class BasePhotoFragment extends Fragment {

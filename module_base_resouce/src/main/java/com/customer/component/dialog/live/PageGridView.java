@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -27,6 +26,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.customer.data.home.HomeLiveGiftList;
 import com.fh.module_base_resouce.R;
 import com.glide.GlideUtil;
+import com.lib.basiclib.base.round.RoundTextView;
 import com.lib.basiclib.utils.ViewUtils;
 
 import java.util.ArrayList;
@@ -205,7 +205,6 @@ public class PageGridView extends FrameLayout {
             gridView.setOverScrollMode(OVER_SCROLL_NEVER);
             gridViewAdapter = new GridViewAdapter(mContext, mDatas, i, pageSize);
             gridView.setAdapter(gridViewAdapter);
-
             mPagerList.add(gridView);
             gridViewAdapter.setOnItemClickListener((position, name) -> {
                 int pos = position + curIndex * pageSize;
@@ -217,8 +216,6 @@ public class PageGridView extends FrameLayout {
         //设置适配器
         mViewPager.setAdapter(new ViewPagerAdapter(mPagerList));
         setCurrentItem(selectedPosition);
-
-
     }
 
     /**
@@ -339,7 +336,8 @@ public class PageGridView extends FrameLayout {
                 viewHolder.itemView = convertView;
                 viewHolder.iv = convertView.findViewById(R.id.im_item_icon);
                 viewHolder.tv = convertView.findViewById(R.id.tv_item_name);
-                viewHolder. tvGiftPrise= convertView.findViewById(R.id.tvGiftPrise);
+                viewHolder.tvGiftPrise = convertView.findViewById(R.id.tvGiftPrise);
+                viewHolder.tvFreeNum = convertView.findViewById(R.id.tvFreeNum);
                 viewHolder.pagerGridContainer = convertView.findViewById(R.id.pagerGridContainer);
                 convertView.setTag(viewHolder);
             } else {
@@ -354,12 +352,19 @@ public class PageGridView extends FrameLayout {
             }
             if (null != viewHolder.iv) {
                 if (isFirst) {
-                    GlideUtil.INSTANCE.loadImage(mContext,mDatas.get(pos).getIcon(),viewHolder.iv);
+                    GlideUtil.INSTANCE.loadImage(mContext, mDatas.get(pos).getIcon(), viewHolder.iv);
                 }
 
             }
-            if (null!=viewHolder. tvGiftPrise){
-                viewHolder. tvGiftPrise.setText(mDatas.get(pos).getAmount()+" 钻石");
+            if (null != viewHolder.tvFreeNum) {
+                if (mDatas.get(pos).getFree_num() != null && mDatas.get(pos).getFree_num() > 0) {
+                    ViewUtils.INSTANCE.setVisible(viewHolder.tvFreeNum);
+                    viewHolder.tvFreeNum.setText(mDatas.get(pos).getFree_num().toString());
+                } else ViewUtils.INSTANCE.setGone(viewHolder.tvFreeNum);
+
+            }
+            if (null != viewHolder.tvGiftPrise) {
+                viewHolder.tvGiftPrise.setText(mDatas.get(pos).getAmount() + " 钻石");
             }
 
             if (null != viewHolder.pagerGridContainer) {
@@ -382,9 +387,10 @@ public class PageGridView extends FrameLayout {
 
         class ViewHolder {
             public View itemView;
-            public TextView tv,tvGiftPrise;
+            public TextView tv, tvGiftPrise;
             public ImageView iv;
-            public LinearLayout pagerGridContainer;
+            public RelativeLayout pagerGridContainer;
+            public RoundTextView tvFreeNum;
         }
     }
 

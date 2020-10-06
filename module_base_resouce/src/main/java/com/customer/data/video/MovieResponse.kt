@@ -114,6 +114,8 @@ data class VideoMoreChild(
 
 )
 
+data class VideoMore(val count:Int=0,val list:List<VideoMoreChild>)
+
 data class VideoPlay(val id: Int?,
                      val cover: String?,
                      val play_url: String?,

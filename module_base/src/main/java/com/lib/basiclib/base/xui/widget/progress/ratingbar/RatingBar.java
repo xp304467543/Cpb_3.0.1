@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * 星级评分控件
  *
- * @author xuexiang
+
  * @since 2019/3/26 下午10:50
  */
 public class RatingBar extends LinearLayout implements IRatingBar {

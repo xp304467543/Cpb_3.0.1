@@ -27,7 +27,7 @@ import com.lib.basiclib.base.xui.widget.slideback.callback.SlideCallBack;
 /**
  * 侧滑触摸事件分发器
  *
- * @author xuexiang
+
  * @since 2019-08-30 15:42
  */
 public interface ISlideTouchEventDispatcher extends View.OnTouchListener {

@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 /**
  * 正则表达式验证
  *
- * @author xuexiang
+
  * @since 2020/11/26 下午5:06
  */
 public class RegexpValidator extends METValidator {

@@ -20,7 +20,7 @@ package com.lib.basiclib.base.xui.widget.picker.wheelview.listener;
 /**
  * 条目选择监听
  *
- * @author xuexiang
+
  * @since 2019/1/1 下午5:10
  */
 public interface OnItemSelectedListener {

@@ -23,7 +23,7 @@ import com.fh.basemodle.R;
 /**
  * 选择器动画
  *
- * @author xuexiang
+
  * @since 2019/1/1 下午7:00
  */
 public class PickerViewAnimateUtils {

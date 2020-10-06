@@ -7,6 +7,7 @@ import com.lib.basiclib.base.mvp.BaseMvpPresenter
 import com.customer.data.mine.MineApi
 import com.customer.component.dialog.GlobalDialog
 import com.customer.data.UserInfoSp
+import com.customer.data.mine.MineVipList
 import kotlinx.android.synthetic.main.fragment_mine.*
 
 /**
@@ -80,10 +81,13 @@ class MinePresenter : BaseMvpPresenter<MineFragment>() {
             if (mView.isActive()){
                 MineApi.getUserBalance {
                     onSuccess {
-                        mView.tvBalance?.text = it.balance.toString()
+                        mView.tvBalance?.text = if (it.balance.toString() == "0")  "0.00" else it.balance.toString()
                     }
-                    onFailed {
-                        GlobalDialog.showError(mView.requireActivity(), it)
+                    onFailed {error ->
+//                        GlobalDialog.showError(mView.requireActivity(), it)
+                        if (error.getCode() == 2001 || error.getCode() == 401 || error.getCode() == 2000 || error.getMsg().toString().contains("请登录")) {
+                            GlobalDialog.notLogged(mView.requireActivity(), false)
+                        }
                     }
                 }
             }

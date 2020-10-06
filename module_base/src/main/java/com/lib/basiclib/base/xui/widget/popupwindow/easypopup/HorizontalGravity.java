@@ -8,7 +8,7 @@ import java.lang.annotation.RetentionPolicy;
 /**
  * 水平布局方式
  *
- * @author xuexiang
+
  * @since 2019/1/14 下午10:07
  */
 @IntDef({

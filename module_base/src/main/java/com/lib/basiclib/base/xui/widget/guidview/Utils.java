@@ -12,7 +12,7 @@ import android.view.View;
 /**
  * Util class for {@link GuideCaseView}
  *
- * @author xuexiang
+
  * @since 2019/1/14 下午10:15
  */
 class Utils {

@@ -52,7 +52,7 @@ class LotteryBaseFragment : BaseContentFragment() {
         val fragments: ArrayList<*>
         val adapter: BaseFragmentPageAdapter
         if (lotteryId != "8") {
-            title = arrayListOf("历史开奖", "露珠", "走势", "专家计划")
+            title = arrayListOf("历史开奖", "路珠", "走势", "专家计划")
             fragments = arrayListOf(
                 LotteryHistoryFragment.newInstance(lotteryId, issue),
                 LotteryLuZhuFragment.newInstance(lotteryId, issue),

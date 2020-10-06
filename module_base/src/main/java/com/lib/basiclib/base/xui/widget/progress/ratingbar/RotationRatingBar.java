@@ -13,7 +13,7 @@ import com.fh.basemodle.R;
 /**
  *
  *
- * @author xuexiang
+
  * @since 2019-06-06 00:48
  */
 public class RotationRatingBar extends AnimationRatingBar {

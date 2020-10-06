@@ -47,7 +47,7 @@ import java.lang.ref.WeakReference;
 /**
  * Snackbar工具类
  *
- * @author xuexiang
+
  * @since 2020/12/18 下午5:58
  */
 public class SnackbarUtils {

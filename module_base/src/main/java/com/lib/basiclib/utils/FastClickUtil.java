@@ -16,6 +16,8 @@ public class FastClickUtil {
      */
     private static final int MIN_DELAY_TIME = 1000;
 
+    private static final int MIN_SMALL = 300;
+
     /**
      * activity两次点击间隔不能少于800ms
      */
@@ -26,6 +28,13 @@ public class FastClickUtil {
     public static boolean isFastClick() {
         long currentClickTime = System.currentTimeMillis();
         boolean isFastClick = (currentClickTime - sLastClickTime) <= MIN_DELAY_TIME;
+        sLastClickTime = currentClickTime;
+        return isFastClick;
+    }
+
+    public static boolean isFastClickSmall() {
+        long currentClickTime = System.currentTimeMillis();
+        boolean isFastClick = (currentClickTime - sLastClickTime) <= MIN_SMALL;
         sLastClickTime = currentClickTime;
         return isFastClick;
     }

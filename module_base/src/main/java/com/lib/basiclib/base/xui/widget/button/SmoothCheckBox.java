@@ -39,7 +39,7 @@ import com.lib.basiclib.base.xui.utils.ThemeUtils;
 /**
  * 自带动画的checkbox
  *
- * @author xuexiang
+
  * @since 2020-01-06 9:55
  */
 public class SmoothCheckBox extends View implements Checkable {

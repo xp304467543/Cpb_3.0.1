@@ -20,7 +20,7 @@ import io.github.inflationx.viewpump.ViewPump;
 /**
  * UI全局设置
  *
- * @author xuexiang
+
  * @since 2018/11/14 上午11:40
  */
 public class XUI {

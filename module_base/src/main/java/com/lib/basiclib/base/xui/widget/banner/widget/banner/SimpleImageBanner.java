@@ -9,7 +9,7 @@ import com.lib.basiclib.base.xui.widget.banner.widget.banner.base.BaseImageBanne
 /**
  * 简单的图片轮播
  *
- * @author xuexiang
+
  * @since 2019/1/14 下午10:07
  */
 public class SimpleImageBanner extends BaseImageBanner<SimpleImageBanner> {

@@ -20,7 +20,7 @@ import android.view.MotionEvent;
 /**
  * 手势探测器
  *
- * @author xuexiang
+
  * @since 2020/12/5 上午10:50
  */
 public interface IGestureDetector {

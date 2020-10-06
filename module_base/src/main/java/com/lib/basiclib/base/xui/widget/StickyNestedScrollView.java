@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * 粘顶嵌套滚动布局
  *
- * @author xuexiang
+
  * @since 2020/4/25 1:00 AM
  */
 public class StickyNestedScrollView extends NestedScrollView {

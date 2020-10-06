@@ -36,7 +36,7 @@ import com.lib.basiclib.base.xui.utils.Utils;
 /**
  * 可在ImageView上设置图标的ImageView
  *
- * @author xuexiang
+
  * @since 2020/12/10 上午11:58
  */
 public class IconImageView extends AppCompatImageView {

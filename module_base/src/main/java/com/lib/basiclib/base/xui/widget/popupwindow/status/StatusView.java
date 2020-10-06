@@ -35,7 +35,7 @@ import com.fh.basemodle.R;
 /**
  * 状态控件
  *
- * @author xuexiang
+
  * @since 2018/12/27 下午5:35
  */
 public class StatusView extends FrameLayout {

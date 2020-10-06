@@ -42,7 +42,7 @@ import com.lib.basiclib.base.xui.utils.Utils;
 /**
  * 圆弧旋转loading
  *
- * @author xuexiang
+
  * @since 2019/1/11 下午3:59
  */
 public class ARCLoadingView extends View {

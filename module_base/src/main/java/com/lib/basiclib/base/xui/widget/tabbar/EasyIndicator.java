@@ -48,7 +48,7 @@ import io.github.inflationx.calligraphy3.HasTypeface;
 /**
  * 简单的索引器
  *
- * @author xuexiang
+
  * @since 2020/12/20 上午12:32
  */
 public class EasyIndicator extends LinearLayout implements View.OnClickListener, ViewPager.OnPageChangeListener, HasTypeface {

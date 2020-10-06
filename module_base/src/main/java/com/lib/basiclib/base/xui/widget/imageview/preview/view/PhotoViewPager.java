@@ -25,7 +25,7 @@ import androidx.viewpager.widget.ViewPager;
 /**
  *
  *
- * @author xuexiang
+
  * @since 2018/12/5 上午11:11
  */
 public class PhotoViewPager extends ViewPager {

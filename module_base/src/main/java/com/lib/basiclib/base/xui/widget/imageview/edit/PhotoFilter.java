@@ -20,7 +20,7 @@ package com.lib.basiclib.base.xui.widget.imageview.edit;
 /**
  * 滤镜
  *
- * @author xuexiang
+
  * @since 2019-10-28 10:26
  */
 public enum PhotoFilter {

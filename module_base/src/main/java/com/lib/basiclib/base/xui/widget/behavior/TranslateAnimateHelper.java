@@ -25,7 +25,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 /**
  * 平移动画
  *
- * @author xuexiang
+
  * @since 2019-05-10 01:06
  */
 public class TranslateAnimateHelper implements AnimateHelper {

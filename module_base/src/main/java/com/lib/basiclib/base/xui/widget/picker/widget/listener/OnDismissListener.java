@@ -21,7 +21,7 @@ import com.lib.basiclib.base.xui.widget.picker.widget.BasePickerView;
 /**
  * 选择器消失的监听
  *
- * @author xuexiang
+
  * @since 2019/1/1 下午7:01
  */
 public interface OnDismissListener {

@@ -49,7 +49,7 @@ import com.lib.basiclib.base.xui.logs.UILog;
 /**
  * Drawable工具类
  *
- * @author xuexiang
+
  * @since 2019/1/3 下午3:47
  */
 public final class DrawableUtils {

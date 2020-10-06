@@ -8,7 +8,7 @@ import androidx.viewpager.widget.ViewPager;
 /**
  * 侧滑逐渐消失切换
  *
- * @author xuexiang
+
  * @since 2019/1/14 下午10:10
  */
 public class FadeSlideTransformer implements ViewPager.PageTransformer {

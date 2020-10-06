@@ -23,7 +23,7 @@ import java.util.List;
 /**
  *
  *
- * @author xuexiang
+
  * @since 2018/12/28 上午9:10
  */
 public class MathUtils {

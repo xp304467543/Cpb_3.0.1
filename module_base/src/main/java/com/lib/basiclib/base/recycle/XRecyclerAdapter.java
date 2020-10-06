@@ -33,7 +33,7 @@ import java.util.List;
 /**
  * 基础的RecyclerView适配器
  *
- * @author xuexiang
+
  * @since 2019-08-11 16:12
  */
 public abstract class XRecyclerAdapter<T, V extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<V> {

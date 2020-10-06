@@ -22,7 +22,7 @@ import android.graphics.Rect;
 /**
  * 裁剪窗口上可按可拖动的句柄的枚举
  *
- * @author xuexiang
+
  * @since 2020/5/13 7:58 PM
  */
 public enum Handle {

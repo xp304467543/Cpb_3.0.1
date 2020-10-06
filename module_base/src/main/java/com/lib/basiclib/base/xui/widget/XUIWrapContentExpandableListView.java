@@ -25,7 +25,7 @@ import android.widget.ExpandableListView;
 import com.fh.basemodle.R;
 
 /**
- * @author xuexiang
+
  * @since 2019-11-11 11:27
  */
 public class XUIWrapContentExpandableListView extends ExpandableListView {

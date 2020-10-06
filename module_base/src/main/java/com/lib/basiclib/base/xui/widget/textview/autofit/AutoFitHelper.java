@@ -41,7 +41,7 @@ import java.util.ArrayList;
 /**
  * 字体自适应辅助类
  *
- * @author xuexiang
+
  * @since 2019-05-14 22:10
  */
 public class AutoFitHelper {

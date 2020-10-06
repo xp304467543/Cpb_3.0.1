@@ -22,7 +22,7 @@ import android.graphics.Bitmap;
 /**
  * 图片保存监听
  *
- * @author xuexiang
+
  * @since 2019-10-28 10:07
  */
 public interface OnBitmapSaveListener {

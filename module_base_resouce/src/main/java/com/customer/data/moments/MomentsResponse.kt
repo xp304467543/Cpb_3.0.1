@@ -49,7 +49,7 @@ data class UserPageResponse(
     var is_follow: Boolean
 )
 
-data class UserPageGift(var gift_name: String = "", var num: String = "", var icon: String = "")
+data class UserPageGift(var gift_name: String = "", var num: String = "", var icon: String = ""): Serializable
 
 data class AnchorPageInfoBean(
     var anchor_id: String = "",

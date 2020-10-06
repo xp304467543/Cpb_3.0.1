@@ -5,6 +5,10 @@ import com.customer.data.game.GameApi
 import com.lib.basiclib.base.mvp.BaseMvpPresenter
 import com.lib.basiclib.utils.ToastUtils
 import com.xiaojinzi.component.impl.Router
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 /**
  *
@@ -15,13 +19,23 @@ import com.xiaojinzi.component.impl.Router
  */
 class GameMainChildFragmentPresenter : BaseMvpPresenter<GameMainChildFragment>() {
 
-    fun getAllGame(){
-        GameApi.getAllGame {
-            if (mView.isActive()){
-                onSuccess {
-                    mView.initHot(it)
+    fun getAllGame(isUpDateTop:Boolean=false){
+        if (mView.isActive()){
+            val uiScope = CoroutineScope(Dispatchers.Main)
+
+            uiScope.launch {
+
+                val getLotteryType = async { GameApi.getAllGame() }
+
+                val resultGetLotteryType = getLotteryType.await()
+
+                resultGetLotteryType.onSuccess {
+                    if (it.isNotEmpty()) {
+                        mView.initHot(it,isUpDateTop)
+                    }
                 }
             }
+
         }
     }
 

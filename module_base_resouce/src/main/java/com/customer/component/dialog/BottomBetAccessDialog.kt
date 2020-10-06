@@ -8,6 +8,8 @@ import android.view.View
 import android.widget.EditText
 import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.customer.data.HomeJumpToMine
+import com.customer.data.HomeJumpToMineCloseLive
 import com.customer.data.LotteryResetDiamond
 import com.customer.data.UserInfoSp
 import com.customer.data.lottery.BetBean
@@ -195,7 +197,13 @@ class BottomBetAccessDialog( context: Context,var lotteryId:String,var rightTop:
                 }
                 onFailed { err->
                     loadingDialog?.dismiss()
-                    ToastUtils.showToast(err.getMsg())
+                    if (err.getCode() == 1012){
+                        if (is_bal == 1){
+                            ToastUtils.showToast("您余额不足")
+                        }else{
+                            ToastUtils.showToast("您的钻石余额不足")
+                        }
+                    }else ToastUtils.showToast(err.getMsg())
                 }
             }
         }

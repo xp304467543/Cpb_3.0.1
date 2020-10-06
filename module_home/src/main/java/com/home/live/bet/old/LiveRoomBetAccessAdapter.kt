@@ -3,7 +3,6 @@ package com.home.live.bet.old
 import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.ViewGroup
 import android.widget.EditText
 import com.home.R
 import com.lib.basiclib.base.recycle.BaseRecyclerAdapter

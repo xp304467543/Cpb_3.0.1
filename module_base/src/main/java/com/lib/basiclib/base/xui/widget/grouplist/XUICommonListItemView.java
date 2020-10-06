@@ -57,7 +57,7 @@ import java.lang.annotation.RetentionPolicy;
  * 也可以在 xml 中使用 {@link R.styleable#XUICommonListItemView_xui_accessory_type} 设置。</li>
  * </ul>
  *
- * @author xuexiang
+
  * @since 2019/1/3 上午10:52
  */
 public class XUICommonListItemView extends RelativeLayout {

@@ -29,7 +29,7 @@ import androidx.appcompat.widget.AppCompatImageView;
 /**
  * 可放大缩小的图片控件
  *
- * @author xuexiang
+
  * @since 2020/5/3 9:49 AM
  */
 public class PhotoView extends AppCompatImageView implements IPhotoView {

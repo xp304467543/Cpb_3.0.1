@@ -8,7 +8,7 @@ import com.lib.basiclib.base.xui.widget.statelayout.StateLayoutConfig;
 /**
  * UI动态配置
  *
- * @author xuexiang
+
  * @since 2018/11/26 上午12:03
  */
 public class UIConfig {

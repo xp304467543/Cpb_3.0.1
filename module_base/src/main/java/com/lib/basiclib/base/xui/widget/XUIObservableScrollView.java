@@ -13,7 +13,7 @@ import java.util.List;
  * <p>
  *  由于 {@link ScrollView} 没有类似于 addOnScrollChangedListener 的方法可以监听滚动事件，所以需要通过重写 {@link android.view.View#onScrollChanged}，来触发滚动监听
  * </p>
- * @author xuexiang
+
  * @since 2020/11/14 下午1:21
  */
 public class XUIObservableScrollView extends ScrollView {

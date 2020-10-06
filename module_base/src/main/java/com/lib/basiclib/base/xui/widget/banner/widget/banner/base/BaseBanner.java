@@ -40,7 +40,7 @@ import io.github.inflationx.calligraphy3.HasTypeface;
 /**
  * 轮播条
  *
- * @author xuexiang
+
  * @since 2018/11/25 下午7:18
  */
 

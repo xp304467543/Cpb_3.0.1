@@ -21,12 +21,13 @@ class VideoMoreActivityChildPresenter : BaseMvpPresenter<VideoMoreActivityChildF
         isMore: Boolean,
         column: String,
         page: Int,
-        prePage: Int
+        prePage: Int,
+        tag:String
     ) {
-        MovieApi.getVideoMore(typeId, cid, num, isMore, column, page, prePage) {
+        MovieApi.getVideoMore(typeId, cid, num, isMore, column, page, prePage,tag) {
             if (mView.isAdded) {
                 onSuccess {
-                    if (it.isNullOrEmpty()) {
+                    if (it.list.isNullOrEmpty()) {
                         if (mView.mPage == 1) {
                             //显示无数据页面
                             ViewUtils.setVisible(mView.videoHolder)
@@ -36,9 +37,7 @@ class VideoMoreActivityChildPresenter : BaseMvpPresenter<VideoMoreActivityChildF
                         }
                     } else {
                         ViewUtils.setGone(mView.videoHolder)
-                        if (mView.mPage == 1) mView.videoAdapter?.refresh(it) else mView.videoAdapter?.loadMore(
-                            it
-                        )
+                        if (mView.mPage == 1) mView.videoAdapter?.refresh(it.list) else mView.videoAdapter?.loadMore(it.list)
                     }
                     if (mView.smartRefreshLayoutVideoMore != null) {
                         mView.smartRefreshLayoutVideoMore.finishRefresh()

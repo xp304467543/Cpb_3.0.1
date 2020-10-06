@@ -2,25 +2,34 @@ package com.mine
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import androidx.appcompat.widget.AppCompatImageView
 import com.customer.ApiRouter
 import com.customer.component.dialog.DialogDiamond
+import com.customer.component.dialog.GlobalDialog
+import com.customer.data.LoginOut
+import com.customer.data.MineUserDiamond
+import com.customer.data.UserInfoSp
+import com.customer.data.mine.ChangeSkin
 import com.customer.data.mine.UpDateUserPhoto
+import com.customer.data.urlCustomer
 import com.glide.GlideUtil
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.thread.EventThread
 import com.lib.basiclib.base.mvp.BaseMvpFragment
 import com.lib.basiclib.utils.FastClickUtil
-import com.xiaojinzi.component.anno.RouterAnno
-import com.xiaojinzi.component.impl.Router
-import com.customer.component.dialog.GlobalDialog
-import com.customer.data.*
-import com.customer.data.mine.ChangeSkin
+import com.lib.basiclib.utils.ToastUtils
 import com.lib.basiclib.utils.ViewUtils
 import com.mine.children.*
 import com.mine.children.skin.MineSkinAct
+import com.qw.curtain.lib.Curtain
+import com.qw.curtain.lib.IGuide
+import com.qw.curtain.lib.shape.RoundShape
+import com.xiaojinzi.component.anno.RouterAnno
+import com.xiaojinzi.component.impl.Router
 import cuntomer.them.ITheme
 import cuntomer.them.Theme
 import kotlinx.android.synthetic.main.fragment_mine.*
+
 
 @RouterAnno(host = "Mine", path = "main")
 class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme {
@@ -67,7 +76,7 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme {
             setGone(containerSetting)
             setVisible(containerNoLogin)
             tvBalance.text = "0.00"
-            tvDiamondBalance.text = "0"
+            tvDiamondBalance.text = "0.00"
         }
         isInit = true
     }
@@ -75,12 +84,33 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme {
     override fun initContentView() {
         setSwipeBackEnable(false)
         setTheme(UserInfoSp.getThem())
+
     }
 
     override fun initData() {
         mPresenter.getCustomerUrl()
+        if (!UserInfoSp.getMineGuide()){
+            showCurtain()
+            UserInfoSp.putMineGuide(true)
+        }
     }
 
+
+    private fun showCurtain() {
+        Curtain(requireActivity()).withShape(tvMoneyChange, RoundShape(35f))
+            .setTopView(R.layout.guide_mine)
+            .withShape(tvChangeDiamond, RoundShape(35f))
+            .setCallBack(object : Curtain.CallBack {
+                override fun onDismiss(iGuide: IGuide?) {}
+                override fun onShow(iGuide: IGuide?) {
+                    iGuide?.findViewByIdInTopView<AppCompatImageView>(R.id.imgKnow)?.setOnClickListener {
+                        iGuide.dismissGuide()
+                    }
+                }
+            })
+            .show()
+
+    }
 
     override fun initEvent() {
         imgPersonal.setOnClickListener {
@@ -115,8 +145,10 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme {
                 return@setOnClickListener
             }
             if (!FastClickUtil.isFastClick()) {
-                val dialog = DialogDiamond(requireContext(), tvBalance.text.toString())
-                dialog.show()
+                if (tvBalance.text.toString()!="加载中"){
+                    val dialog = DialogDiamond(requireContext(), tvBalance.text.toString())
+                    dialog.show()
+                }else ToastUtils.showToast("请等待加载完成")
             }
         }
 
@@ -138,6 +170,7 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme {
                 return@setOnClickListener
             }
             if (!FastClickUtil.isFastClick()) {
+                tvDiamondBalance.text = "加载中"
                 mPresenter.getUserBalance()
                 mPresenter.getUserDiamond()
             }
@@ -382,7 +415,7 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme {
     @Subscribe(thread = EventThread.MAIN_THREAD)
     fun upDataMineUserDiamond(eventBean: MineUserDiamond) {
         if (isSupportVisible){
-            tvDiamondBalance?.text = eventBean.diamond
+            tvDiamondBalance?.text =if (eventBean.diamond == "0") "0.00" else eventBean.diamond
             mPresenter.getUserBalance()
         }
 

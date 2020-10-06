@@ -14,7 +14,7 @@ import io.github.inflationx.calligraphy3.HasTypeface;
 /**
  * 基础TextView
  *
- * @author xuexiang
+
  * @since 2019/1/14 下午10:09
  */
 public class BaseTextView extends LinearLayout implements HasTypeface {

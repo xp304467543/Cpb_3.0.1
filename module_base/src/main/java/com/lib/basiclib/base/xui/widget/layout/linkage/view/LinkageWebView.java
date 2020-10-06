@@ -38,7 +38,7 @@ import com.lib.basiclib.base.xui.widget.layout.linkage.PosIndicator;
 /**
  * 置于联动容器的WebView
  *
- * @author xuexiang
+
  * @since 2020/3/11 7:13 PM
  */
 public class LinkageWebView extends WebView implements ILinkageScroll, NestedScrollingChild {

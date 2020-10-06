@@ -28,7 +28,7 @@ import com.lib.basiclib.base.xui.widget.alpha.XUIAlphaRelativeLayout;
 /**
  * 封装的RelativeLayout，便于样式的修改
  *
- * @author xuexiang
+
  * @since 2019-06-02 02:23
  */
 public class XUIRelativeLayout extends XUIAlphaRelativeLayout implements IXUILayout {

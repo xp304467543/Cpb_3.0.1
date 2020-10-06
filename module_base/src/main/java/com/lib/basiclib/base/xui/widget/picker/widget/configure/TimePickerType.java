@@ -20,8 +20,6 @@ package com.lib.basiclib.base.xui.widget.picker.widget.configure;
  * 时间选择器的类型<br>
  * <p>
  * 分别控制“年”“月”“日”“时”“分”“秒”的显示或隐藏。
- *
- * @author xuexiang
  * @since 2019/1/1 下午8:58
  */
 public enum TimePickerType {

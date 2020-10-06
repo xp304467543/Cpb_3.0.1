@@ -33,7 +33,7 @@ import com.lib.basiclib.base.xui.widget.dialog.strategy.InputInfo;
 /**
  * MaterialDialog 策略
  *
- * @author xuexiang
+
  * @since 2020/11/14 下午11:46
  */
 public class MaterialDialogStrategy implements IDialogStrategy {

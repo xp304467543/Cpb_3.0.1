@@ -36,7 +36,7 @@ import com.lib.basiclib.base.xui.utils.ResUtils;
 /**
  * 点赞效果
  *
- * @author xuexiang
+
  * @since 2020-01-05 19:49
  */
 public class GoodView extends PopupWindow implements IGoodView {

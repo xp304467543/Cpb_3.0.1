@@ -17,6 +17,32 @@ import cuntomer.them.Theme
  */
 object UserInfoSp {
 
+    enum class AppMode {
+        //正常
+        Normal,
+
+        //纯净版
+        Pure
+    }
+
+    /**
+     * 纯净版切换
+     */
+    fun getAppMode(): AppMode {
+        return when (SpUtils.getInt("AppMode", 1)) {
+            1 -> AppMode.Normal
+            2 -> AppMode.Pure
+            else -> AppMode.Normal
+        }
+    }
+
+    fun putAppMode(mode: AppMode) {
+        val modeNow = when (mode) {
+            AppMode.Normal -> 1
+            AppMode.Pure -> 2
+        }
+        SpUtils.putInt("AppMode", modeNow)
+    }
 
     /**
      * 小视频初始大小
@@ -404,7 +430,7 @@ object UserInfoSp {
             4 -> {
                 Theme.LoverDay
             }
-            5 ->{
+            5 -> {
                 Theme.NationDay
             }
             else -> Theme.Default

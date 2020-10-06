@@ -38,7 +38,7 @@
 
             <LinearLayout
                 android:id="@+id/layoutContainer"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_5"
                 android:gravity="center_vertical"
@@ -51,7 +51,6 @@
                     android:textColor="@color/color_999999"
                     android:textSize="9sp"
                     tools:ignore="SmallSp" />
-
 
             </LinearLayout>
 

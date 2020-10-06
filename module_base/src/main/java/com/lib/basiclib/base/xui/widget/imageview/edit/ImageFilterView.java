@@ -63,7 +63,7 @@ import static com.lib.basiclib.base.xui.widget.imageview.edit.PhotoFilter.NONE;
 /**
  * 滤镜处理
  *
- * @author xuexiang
+
  * @since 2019-10-28 10:01
  */
 class ImageFilterView extends GLSurfaceView implements GLSurfaceView.Renderer {

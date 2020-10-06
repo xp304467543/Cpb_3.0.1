@@ -11,7 +11,7 @@ import com.lib.basiclib.base.xui.utils.ResUtils;
 /**
  * 简易的适配项
  *
- * @author xuexiang
+
  * @since 2019/1/14 下午10:13
  */
 public class AdapterItem {

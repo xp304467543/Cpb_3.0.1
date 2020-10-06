@@ -13,7 +13,7 @@ import com.fh.basemodle.R;
 /**
  * 缩放动画的星级评分控件
  *
- * @author xuexiang
+
  * @since 2019/3/26 下午10:51
  */
 public class ScaleRatingBar extends AnimationRatingBar {

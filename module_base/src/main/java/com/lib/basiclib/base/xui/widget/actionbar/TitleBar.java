@@ -54,7 +54,7 @@ import io.github.inflationx.calligraphy3.HasTypeface;
 /**
  * 标题栏
  *
- * @author xuexiang
+
  * @since 2019/1/14 下午10:08
  */
 public class TitleBar extends ViewGroup implements View.OnClickListener, HasTypeface {

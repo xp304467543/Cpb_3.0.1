@@ -27,7 +27,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 /**
  * Behavior for ToolBar
  *
- * @author xuexiang
+
  * @since 2019-05-10 01:05
  */
 public class ToolBarBehavior extends BaseBehavior {

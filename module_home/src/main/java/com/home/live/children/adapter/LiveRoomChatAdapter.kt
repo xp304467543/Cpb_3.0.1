@@ -34,6 +34,7 @@ import com.lib.basiclib.utils.FastClickUtil
 import com.lib.basiclib.utils.ViewUtils
 import com.xiaojinzi.component.impl.Router
 import org.json.JSONObject
+import java.math.BigDecimal
 
 /**
  *
@@ -224,24 +225,22 @@ class LiveRoomChatAdapter(private val context: Context, private val fragmentMana
                 true
             )
             val result = JSONObject(data?.orders?.toString() ?: "未知")
+            val isBalance  = result.getString("is_bl_play")
             holder.text(R.id.tvOrderName, result.getString("lottery_cid"))
             holder.text(R.id.tvOrderIssIue, result.getString("play_bet_issue") + "期")
             if (!followList.contains(result.getString("play_bet_issue") + "," + position)) {
                 followList.add(result.getString("play_bet_issue") + "," + position)
             }
-            val arrayList = JsonUtils.fromJson(
-                result.getString("order_detail"),
-                Array<BetShareBean>::class.java
-            )
+            val arrayList = JsonUtils.fromJson(result.getString("order_detail"), Array<BetShareBean>::class.java)
             holder.text(R.id.tv_t1, arrayList[0].play_sec_cname)
             holder.text(R.id.tv_t2, arrayList[0].play_class_cname)
             holder.text(R.id.tv_t3, arrayList[0].play_odds.toString())
-            if (result.getString("isBalance") == "0") {
+            if (isBalance == "0") {
                 holder.text(R.id.tv_t4, arrayList[0].play_bet_sum + " 钻石")
             } else holder.text(R.id.tv_t4, arrayList[0].play_bet_sum + " 余额")
             if (arrayList.size > 1) {
                 ViewUtils.setVisible(holder.findView(R.id.tvShowMore))
-                addOrderText(holder.findViewById(R.id.layoutParen), arrayList,result.getBoolean("isBalance")) //添加展开的文字
+                addOrderText(holder.findViewById(R.id.layoutParen), arrayList,(isBalance == "0")) //添加展开的文字
             } else ViewUtils.setGone(holder.findView(R.id.tvShowMore))
             if (data?.canFollow == true) {
                 holder.findViewById<AppCompatButton>(R.id.btFollow).isEnabled = true
@@ -274,7 +273,7 @@ class LiveRoomChatAdapter(private val context: Context, private val fragmentMana
                 betFollow(data)
             }
         } catch (e: Exception) {
-//            e.printStackTrace()
+            e.printStackTrace()
 //            ToastUtils.showToast(e.toString())
         }
     }
@@ -316,19 +315,21 @@ class LiveRoomChatAdapter(private val context: Context, private val fragmentMana
                 GlobalDialog.notLogged(context as Activity)
                 return
             }
-            val result = JSONObject(data?.orders!!.toString())
+            val result = JSONObject(data?.orders.toString())
             val array = JsonUtils.fromJson(result.getString("order_detail"), Array<BetShareBean>::class.java)
             val arrayList = arrayListOf<LotteryBet>()
+            var totalMoney = BigDecimal(0)
             for (res in array) {
                 arrayList.add(LotteryBet(
                     PlaySecData(play_class_cname = res.play_class_cname, play_class_id = 0, play_sec_name = res.play_sec_name,
-                    play_class_name = res.play_class_name, play_odds = res.play_odds, money = "10"), res.play_sec_cname.toString()
+                    play_class_name = res.play_class_name, play_odds = res.play_odds, money = res.play_bet_sum), res.play_sec_cname.toString()
                 ))
+                totalMoney = BigDecimal(res.play_bet_sum?:"0").add(totalMoney)
             }
             val liveRoomBetAccessFragment = LiveRoomBetAccessFragment.newInstance(
-                LotteryBetAccess(arrayList, 1, 10 * arrayList.size, result.getString("play_bet_lottery_id"),
+                LotteryBetAccess(arrayList, 1, totalMoney.toInt(), result.getString("play_bet_lottery_id"),
                 result.getString("play_bet_issue"), "0x11123", result.getString("lottery_cid"), "", true,
-                    followUserId = data.user_id.toString(), isBalanceBet = result.getBoolean("isBalance"))
+                    followUserId = data?.user_id.toString(), isBalanceBet = (result.getString("is_bl_play") == "1"))
             )
             liveRoomBetAccessFragment.show(fragmentManager, "liveRoomBetAccessFragment")
         }

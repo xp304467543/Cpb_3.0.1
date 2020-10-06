@@ -31,7 +31,7 @@ object ApiConstant {
     /**
      * 测试
      */
-    const val API_URL_DEV = "http://www.cpbh5.com/"
+    const val API_URL_DEV = "http://47.244.212.147/"
 
     const val API_URL_DEV_OTHER_TEST = "http://121.127.228.235:18000/userinfo/"
 

@@ -45,7 +45,7 @@ import com.lib.basiclib.base.xui.utils.ThemeUtils;
 /**
  * 可切换图标的按钮
  *
- * @author xuexiang
+
  * @since 2020-01-05 23:03
  */
 public class SwitchIconView extends AppCompatImageView {

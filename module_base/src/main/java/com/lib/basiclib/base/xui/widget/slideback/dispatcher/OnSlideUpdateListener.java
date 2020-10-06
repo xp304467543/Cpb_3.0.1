@@ -20,7 +20,7 @@ package com.lib.basiclib.base.xui.widget.slideback.dispatcher;
 /**
  * 侧滑更新监听事件
  *
- * @author xuexiang
+
  * @since 2019-08-30 15:50
  */
 public interface OnSlideUpdateListener {

@@ -41,7 +41,7 @@ import com.fh.basemodle.R;
 /**
  * 自定义图片裁剪控件
  *
- * @author xuexiang
+
  * @since 2019-10-15 11:53
  */
 public class CropImageView extends FrameLayout {

@@ -3,7 +3,7 @@ package com.lib.basiclib.base.xui;
 /**
  * 常量
  *
- * @author xuexiang
+
  * @since 2018/11/22 下午5:24
  */
 public final class UIConsts {

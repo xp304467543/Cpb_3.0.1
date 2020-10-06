@@ -30,7 +30,7 @@ import java.util.List;
 /**
  * 简单的可伸缩弹窗
  *
- * @author xuexiang
+
  * @since 2019-11-11 16:31
  */
 public class XUISimpleExpandablePopup<T extends XUISimpleExpandablePopup> extends XUIExpandableListPopup {

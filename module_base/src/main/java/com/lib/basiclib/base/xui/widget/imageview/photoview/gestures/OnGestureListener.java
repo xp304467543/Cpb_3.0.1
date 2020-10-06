@@ -18,7 +18,7 @@ package com.lib.basiclib.base.xui.widget.imageview.photoview.gestures;
 /**
  * 手势监听器
  *
- * @author xuexiang
+
  * @since 2018/12/5 上午10:51
  */
 public interface OnGestureListener {

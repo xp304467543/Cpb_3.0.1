@@ -34,7 +34,7 @@ import java.util.List;
  * 复用已存在的 {@link View}。
  * XUI 用于 {@link TabSegment} 中 {@link TabSegment.Tab} 与数据的适配。
  *
- * @author xuexiang
+
  * @since 2018/12/26 下午4:18
  */
 public abstract class XUIItemViewsAdapter<T, V extends View> {

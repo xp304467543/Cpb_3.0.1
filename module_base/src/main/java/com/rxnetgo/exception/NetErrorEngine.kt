@@ -39,9 +39,9 @@ object NetErrorEngine {
     private const val PARSE_ERROR_MSG = "数据解析异常"
     private const val REQUEST_ERROR_MSG = "数据请求异常"
     private const val NETWORD_ERROR_MSG = "网络异常"
-    private const val SERVER_ERROR_MSG = "系统繁忙,请稍后再试"
+    private const val SERVER_ERROR_MSG = "连接超时,请稍后再试"
     private const val DATA_ERROR_MSG = "服务器异常"
-    const val UNKNOW_MSG = "系统繁忙,请稍后再试"
+    const val UNKNOW_MSG = "连接超时,请稍后再试"
     private const val NETWORK_UNCONNECTED_MSG = "网络连接异常，请检查网络"
 
 

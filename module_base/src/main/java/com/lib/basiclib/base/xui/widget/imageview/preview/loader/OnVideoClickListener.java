@@ -19,7 +19,7 @@ package com.lib.basiclib.base.xui.widget.imageview.preview.loader;
 /**
  * 视频点击监听
  *
- * @author xuexiang
+
  * @since 2018/12/5 上午11:09
  */
 public interface OnVideoClickListener {

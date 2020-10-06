@@ -33,7 +33,7 @@ import androidx.recyclerview.widget.OrientationHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
- * @author xuexiang
+
  * @since 2019/5/29 10:51
  */
 public class OverFlyingLayoutManager extends RecyclerView.LayoutManager implements RecyclerView.SmoothScroller.ScrollVectorProvider {

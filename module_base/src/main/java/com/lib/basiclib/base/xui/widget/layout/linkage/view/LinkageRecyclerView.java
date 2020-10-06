@@ -32,7 +32,7 @@ import com.lib.basiclib.base.xui.widget.layout.linkage.LinkageScrollHandler;
 /**
  * 置于联动容器的RecyclerView
  *
- * @author xuexiang
+
  * @since 2020/3/11 6:17 PM
  */
 public class LinkageRecyclerView extends RecyclerView implements ILinkageScroll {

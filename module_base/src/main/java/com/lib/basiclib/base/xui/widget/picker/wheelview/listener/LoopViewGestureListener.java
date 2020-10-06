@@ -24,7 +24,7 @@ import com.lib.basiclib.base.xui.widget.picker.wheelview.WheelView;
 /**
  * 手势监听
  *
- * @author xuexiang
+
  * @since 2019/1/1 下午5:10
  */
 public final class LoopViewGestureListener extends GestureDetector.SimpleOnGestureListener {

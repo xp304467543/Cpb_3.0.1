@@ -20,7 +20,7 @@ package com.lib.basiclib.base.xui.widget.imageview.strategy;
 /**
  * 对齐方式
  *
- * @author xuexiang
+
  * @since 2020/3/2 12:20 PM
  */
 public enum AlignEnum {

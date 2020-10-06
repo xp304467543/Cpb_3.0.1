@@ -17,7 +17,7 @@ import com.lib.basiclib.base.xui.utils.Utils;
 /**
  * 标签控件
  *
- * @author xuexiang
+
  * @since 2018/12/2 下午11:59
  */
 public final class LabelViewHelper {

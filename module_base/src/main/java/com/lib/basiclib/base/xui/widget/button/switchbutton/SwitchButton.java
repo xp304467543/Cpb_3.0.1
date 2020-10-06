@@ -36,7 +36,7 @@ import com.lib.basiclib.base.xui.utils.ResUtils;
 /**
  * switch切换按钮
  *
- * @author xuexiang
+
  * @since 2019/1/14 上午11:23
  */
 public class SwitchButton extends CompoundButton {

@@ -40,7 +40,7 @@ import com.lib.basiclib.base.xui.utils.ThemeUtils;
 /**
  * 顶部和底部信息消息显示条
  *
- * @author xuexiang
+
  * @since 2018/12/19 上午9:20
  */
 final class Cookie extends LinearLayout {

@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * 一个方便在多种状态切换的view
  *
- * @author xuexiang
+
  * @since 2019/1/14 下午10:04
  */
 public class MultipleStatusView extends FrameLayout {

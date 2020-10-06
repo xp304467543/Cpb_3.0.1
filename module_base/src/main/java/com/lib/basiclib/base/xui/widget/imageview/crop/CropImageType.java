@@ -21,7 +21,7 @@ package com.lib.basiclib.base.xui.widget.imageview.crop;
 /**
  * 图片裁剪类型
  *
- * @author xuexiang
+
  * @since 2019-10-15 11:32
  */
 public class CropImageType {

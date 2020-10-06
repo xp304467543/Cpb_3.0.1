@@ -20,7 +20,7 @@ package com.lib.basiclib.base.xui.widget.imageview.strategy;
 /**
  * 加载监听
  *
- * @author xuexiang
+
  * @since 2019-11-09 10:39
  */
 public interface ILoadListener {

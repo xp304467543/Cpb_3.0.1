@@ -15,7 +15,7 @@ import com.lib.basiclib.base.xui.logs.UILog;
 /**
  * 多状态布局加载者
  *
- * @author xuexiang
+
  * @since 2020/4/29 12:12 AM
  */
 public class StatusLoader {

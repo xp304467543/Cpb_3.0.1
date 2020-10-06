@@ -24,7 +24,7 @@ import androidx.annotation.Nullable;
 /**
  * 图片加载回调状态接口
  *
- * @author xuexiang
+
  * @since 2020/12/5 上午11:08
  */
 public interface ISimpleTarget {

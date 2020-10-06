@@ -30,7 +30,7 @@ import java.util.Random;
 /**
  * Animation borrowed from https://github.com/tyrantgit/ExplosionField
  *
- * @author xuexiang
+
  * @since 2018/12/28 上午9:20
  */
 public class BadgeAnimator extends ValueAnimator {

@@ -17,7 +17,7 @@ import com.lib.basiclib.base.xui.widget.alpha.XUIAlphaViewHelper;
 /**
  * 超级按钮  实现shape所有的属性
  *
- * @author xuexiang
+
  * @since 2019/1/14 下午10:10
  */
 public class SuperButton extends AppCompatButton {

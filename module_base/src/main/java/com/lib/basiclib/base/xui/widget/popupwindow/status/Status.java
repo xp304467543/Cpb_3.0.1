@@ -19,7 +19,7 @@ package com.lib.basiclib.base.xui.widget.popupwindow.status;
 /**
  * 状态枚举
  *
- * @author xuexiang
+
  * @since 2018/12/27 下午5:34
  */
 public enum Status {

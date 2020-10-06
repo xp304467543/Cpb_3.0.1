@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * 轮播下方的引导器
  *
- * @author xuexiang
+
  * @since 2020/11/25 下午7:01
  */
 

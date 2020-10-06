@@ -9,6 +9,7 @@ import com.customer.utils.countdowntimer.lotter.LotteryConstant
 import com.fh.module_lottery.R
 import com.lib.basiclib.base.xui.widget.picker.widget.OptionsPickerView
 import com.lib.basiclib.base.xui.widget.picker.widget.builder.OptionsPickerBuilder
+import com.lib.basiclib.utils.FastClickUtil
 import com.lib.basiclib.utils.TimeUtils
 import com.lib.basiclib.utils.ViewUtils
 import com.lottery.adapter.LotteryChildTypeAdapter
@@ -231,7 +232,7 @@ class LotteryTrendFragment : BaseNormalFragment<LotteryTrendPresenter>() {
             lotteryTypeAdapter?.clear()
             lotteryTypeAdapter?.refresh(data)
             lotteryTypeAdapter?.setOnItemClickListener { itemView, item, position ->
-                if (!ViewUtils.isFastClick()) {
+                if (!FastClickUtil.isFastClickSmall()) {
                     lotteryTypeAdapter?.changeBackground(position)
                     setVisible(linTrendLoading)
                     this.typeSelect = item

@@ -28,7 +28,7 @@ import androidx.core.view.ViewCompat;
 /**
  * 粘顶布局滑动所占的容器
  *
- * @author xuexiang
+
  * @since 2020/5/2 11:24 AM
  */
 public class StickyHeadContainer extends ViewGroup {

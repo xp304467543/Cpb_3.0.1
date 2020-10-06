@@ -7,10 +7,7 @@ import android.graphics.Color
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.bet.R
-import com.customer.data.ChangeLottery
-import com.customer.data.HomeJumpToMine
-import com.customer.data.HomeJumpToMineCloseLive
-import com.customer.data.ToBetView
+import com.customer.data.*
 import com.customer.data.lottery.LotteryTypeResponse
 import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
@@ -47,6 +44,8 @@ class GameLotteryBetActivity : BaseMvpActivity<GameLotteryBetActivityPresenter>(
 
     var index = 0
 
+    var isPlay = false
+
     private var gameOptions: OptionsPickerView<String>? = null
 
     override fun attachView() = mPresenter.attachView(this)
@@ -67,6 +66,18 @@ class GameLotteryBetActivity : BaseMvpActivity<GameLotteryBetActivityPresenter>(
         tvGameLotteryName.text = intent.getStringExtra("gameLotteryName")
         lotteryId = intent.getStringExtra("gameLotteryId") ?: "-1"
         initGameViewPager()
+        if (UserInfoSp.getIsPlaySound()) {
+            imgPlaySound?.setImageResource(R.mipmap.old_lb_hong)
+        } else imgPlaySound?.setImageResource(R.mipmap.old_lb_hui)
+        imgPlaySound?.setOnClickListener {
+            if (UserInfoSp.getIsPlaySound()) {
+                UserInfoSp.putIsPlaySound(false)
+                imgPlaySound?.setImageResource(R.mipmap.old_lb_hui)
+            } else {
+                UserInfoSp.putIsPlaySound(true)
+                imgPlaySound?.setImageResource(R.mipmap.old_lb_hong)
+            }
+        }
     }
 
     override fun initData() {
@@ -139,6 +150,7 @@ class GameLotteryBetActivity : BaseMvpActivity<GameLotteryBetActivityPresenter>(
         }
         index = final.indexOf(intent.getStringExtra("gameLotteryName") ?: "")
         gameOptions = OptionsPickerBuilder(this) { _, options1, _, _ ->
+            isPlay = false
             tvGameLotteryName.text = list[options1].cname
             lotteryId = list[options1].lottery_id ?: "-1"
             mPresenter.getLotteryOpenCode(lotteryId)

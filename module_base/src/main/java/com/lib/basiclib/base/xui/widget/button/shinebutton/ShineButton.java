@@ -42,7 +42,7 @@ import java.lang.ref.WeakReference;
 /**
  * 增强效果的按钮
  *
- * @author xuexiang
+
  * @since 2020-01-06 13:16
  */
 public class ShineButton extends PorterShapeImageView implements Checkable {
