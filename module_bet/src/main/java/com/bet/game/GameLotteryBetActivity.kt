@@ -30,6 +30,7 @@ import com.lib.basiclib.widget.tab.buildins.commonnavigator.titles.badge.BadgePa
 import com.services.HomeService
 import com.xiaojinzi.component.anno.RouterAnno
 import com.xiaojinzi.component.impl.service.ServiceManager
+import cuntomer.them.AppMode
 import kotlinx.android.synthetic.main.act_game_lottery_bet.*
 
 /**
@@ -78,6 +79,7 @@ class GameLotteryBetActivity : BaseMvpActivity<GameLotteryBetActivityPresenter>(
                 imgPlaySound?.setImageResource(R.mipmap.old_lb_hong)
             }
         }
+
     }
 
     override fun initData() {
@@ -103,12 +105,20 @@ class GameLotteryBetActivity : BaseMvpActivity<GameLotteryBetActivityPresenter>(
     var orderFragment:Fragment ? = null
     var hotFragment: GameLotteryBetFragment3 ? = null
     private fun initGameViewPager(){
-        val dataList = arrayListOf("投注区","我的注单","热门直播")
+        val dataList = when(UserInfoSp.getAppMode()){
+               AppMode.Normal -> arrayListOf("投注区","我的注单","热门直播")
+
+            else ->  arrayListOf("投注区","我的注单")
+        }
+
         if (betFragment == null )betFragment = GameLotteryBetFragment1.newInstance(lotteryId)
         if (orderFragment == null )orderFragment = ServiceManager.get(HomeService::class.java)?.getRecordFragment()
         if (hotFragment == null )hotFragment = GameLotteryBetFragment3.newInstance(lotteryId)
-        val fragments = listOf(betFragment, orderFragment, hotFragment)
-        gameBetViewPager.offscreenPageLimit = 3
+        val fragments = when(UserInfoSp.getAppMode()){
+            AppMode.Normal ->listOf(betFragment, orderFragment, hotFragment)
+            else -> listOf(betFragment, orderFragment)
+        }
+        gameBetViewPager.offscreenPageLimit = fragments.size
         gameBetViewPager.adapter = FragmentAdapter(supportFragmentManager, FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT,fragments)
         val commonNavigator = CommonNavigator(this)
         commonNavigator.isAdjustMode = true
@@ -188,4 +198,6 @@ class GameLotteryBetActivity : BaseMvpActivity<GameLotteryBetActivityPresenter>(
     fun toBetView(eventBean: ToBetView) {
         finish()
     }
+
+
 }

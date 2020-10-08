@@ -76,6 +76,18 @@
                     android:overlapAnchor="false"
                     android:spinnerMode="dropdown" />
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPure"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:text="金额"
+                    android:visibility="gone"
+                    android:layout_marginEnd="@dimen/dp_5"
+                    android:textSize="@dimen/sp_12"
+                    android:gravity="center"
+                    android:spinnerMode="dropdown" />
+
             </com.lib.basiclib.base.round.RoundLinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView

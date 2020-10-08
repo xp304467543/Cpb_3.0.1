@@ -2,20 +2,21 @@ package com.mine.children
 
 import com.customer.ApiRouter
 import com.customer.component.dialog.DialogGlobalTips
+import com.customer.component.dialog.GlobalDialog
+import com.customer.data.AppChangeMode
 import com.customer.data.LoginOut
+import com.customer.data.UserInfoSp
+import com.customer.data.mine.MineApi
 import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.thread.EventThread
 import com.lib.basiclib.base.activity.BaseNavActivity
-import com.mine.R
-import com.customer.data.mine.MineApi
-import com.xiaojinzi.component.anno.RouterAnno
-import com.xiaojinzi.component.impl.Router
-import com.customer.component.dialog.GlobalDialog
-import com.customer.data.AppMode
-import com.customer.data.UserInfoSp
 import com.lib.basiclib.utils.ToastUtils
 import com.lib.basiclib.utils.ViewUtils
+import com.mine.R
+import com.xiaojinzi.component.anno.RouterAnno
+import com.xiaojinzi.component.impl.Router
+import cuntomer.them.AppMode
 import kotlinx.android.synthetic.main.act_setting.*
 
 /**
@@ -45,10 +46,15 @@ class MineSettingAct : BaseNavActivity() {
 
     override fun initContentView() {
         videoSwitch.isChecked = UserInfoSp.getOpenWindow()
+        appModeSwitch.isChecked = UserInfoSp.getIsShowAppModeChange()
+        if (UserInfoSp.getAppMode() == AppMode.Pure){
+            setGone(linLiveIcon)
+        }
     }
 
     override fun initData() {
-        if (!UserInfoSp.getIsSetPayPassWord()) getIsSetPayPassWord() else tvPayPassWordSet.text = "支付密码修改"
+        if (!UserInfoSp.getIsSetPayPassWord()) getIsSetPayPassWord() else tvPayPassWordSet.text =
+            "支付密码修改"
     }
 
     override fun initEvent() {
@@ -65,11 +71,11 @@ class MineSettingAct : BaseNavActivity() {
 
         //支付密码
         linSetPayPassWord.setOnClickListener {
-                if (code != 10) {
-                    if (tvPayPassWordSet.text.toString().contains("设置")){
-                        Router.withApi(ApiRouter::class.java).toSetPassWord(1)
-                    }else  Router.withApi(ApiRouter::class.java).toSetPassWord(0)
-                } else ToastUtils.showToast("钱包已被冻结")
+            if (code != 10) {
+                if (tvPayPassWordSet.text.toString().contains("设置")) {
+                    Router.withApi(ApiRouter::class.java).toSetPassWord(1)
+                } else Router.withApi(ApiRouter::class.java).toSetPassWord(0)
+            } else ToastUtils.showToast("钱包已被冻结")
         }
 
         //密码修改
@@ -82,17 +88,16 @@ class MineSettingAct : BaseNavActivity() {
         }
 
         appModeSwitch.setOnCheckedChangeListener { _, isChecked ->
-            RxBus.get().post(AppMode(isChecked))
-//            if (isChecked){
-//                UserInfoSp.putAppMode(UserInfoSp.AppMode.Pure)
-//            }else UserInfoSp.putAppMode(UserInfoSp.AppMode.Normal)
-
+            UserInfoSp.putIsShowAppModeChange(isChecked)
+            if (isChecked){
+                setGone(linLiveIcon)
+            }else setVisible(linLiveIcon)
         }
     }
 
     override fun onResume() {
         super.onResume()
-        if (UserInfoSp.getIsSetPayPassWord()){
+        if (UserInfoSp.getIsSetPayPassWord()) {
             tvPayPassWordSet.text = "支付密码修改"
             setGone(tvPayPassWordNotSet)
         }

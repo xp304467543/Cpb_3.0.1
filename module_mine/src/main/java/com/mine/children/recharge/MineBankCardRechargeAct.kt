@@ -190,7 +190,7 @@ class MineBankCardRechargeAct : BaseNavActivity() {
                         "提示",
                         "确定",
                         "",
-                        "您的订单以提交，我们会尽快为您 充值，请您稍等片刻"
+                        "您的订单已提交，我们会尽快为您 充值，请您稍等片刻"
                     )
                     dialog.setOnDismissListener { finish() }
                         dialog.show()

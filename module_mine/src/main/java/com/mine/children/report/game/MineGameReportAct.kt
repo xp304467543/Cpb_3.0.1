@@ -1,12 +1,14 @@
 package com.mine.children.report.game
 
 import android.content.Intent
+import com.customer.data.UserInfoSp
 import com.lib.basiclib.base.mvp.BaseMvpActivity
 import com.lib.basiclib.utils.FastClickUtil
 import com.lib.basiclib.utils.TimeUtils
 import com.lib.basiclib.utils.ViewUtils
 import com.mine.R
 import com.xiaojinzi.component.anno.RouterAnno
+import cuntomer.them.AppMode
 import kotlinx.android.synthetic.main.act_mine_game_report.*
 
 /**
@@ -30,6 +32,20 @@ class MineGameReportAct : BaseMvpActivity<MineGameReportPresenter>() {
     override fun isSwipeBackEnable() = true
 
     override fun getContentResID() = R.layout.act_mine_game_report
+
+    override fun initContentView() {
+        if (UserInfoSp.getAppMode() == AppMode.Pure){
+            setGone(tv_01)
+            setGone(tvTotal1)
+            setGone(tv_02)
+            setGone(tvTotal_1)
+            setGone(lin_2)
+            setGone(lin_1)
+            setGone(zLin1)
+            setGone(zLin2)
+            setGone(line_3)
+        }
+    }
 
 
     override fun initData() {

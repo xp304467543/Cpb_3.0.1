@@ -5,6 +5,7 @@ import com.customer.data.mine.MineUserBankList
 import com.customer.utils.JsonUtils
 import com.lib.basiclib.utils.SpUtils
 import cuntomer.constant.UserConstant
+import cuntomer.them.AppMode
 import cuntomer.them.Theme
 
 
@@ -16,14 +17,6 @@ import cuntomer.them.Theme
  *
  */
 object UserInfoSp {
-
-    enum class AppMode {
-        //正常
-        Normal,
-
-        //纯净版
-        Pure
-    }
 
     /**
      * 纯净版切换
@@ -42,6 +35,17 @@ object UserInfoSp {
             AppMode.Pure -> 2
         }
         SpUtils.putInt("AppMode", modeNow)
+    }
+
+    /**
+     * 是否显示纯净版切换
+     */
+    fun getIsShowAppModeChange():Boolean{
+       return SpUtils.getBoolean("isShowAppModeView",true)
+    }
+
+    fun putIsShowAppModeChange(isShow:Boolean){
+        SpUtils.putBoolean("isShowAppModeView",isShow)
     }
 
     /**

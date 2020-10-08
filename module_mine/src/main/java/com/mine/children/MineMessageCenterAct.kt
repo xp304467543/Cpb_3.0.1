@@ -10,6 +10,8 @@ import com.customer.data.mine.MineMessageCenter
 import com.xiaojinzi.component.anno.RouterAnno
 import com.xiaojinzi.component.impl.Router
 import com.customer.component.dialog.GlobalDialog
+import com.customer.data.UserInfoSp
+import cuntomer.them.AppMode
 import kotlinx.android.synthetic.main.act_message_center.*
 
 /**
@@ -51,6 +53,13 @@ class MineMessageCenterAct : BaseNavActivity() {
             setVisible(tvMessageNum3)
             tvMessageNum3.text = msg1
         }
+        when (UserInfoSp.getAppMode()) {
+            AppMode.Pure -> {
+                setGone(lin1)
+                setGone(viewLin)
+            }
+        }
+
     }
 
 
@@ -60,7 +69,7 @@ class MineMessageCenterAct : BaseNavActivity() {
     }
 
     private fun getSystemMsg() {
-        MineApi.getMessageTips("0") {
+        MineApi.getMessageTips("4") {
             onSuccess {
                 if (!it.isNullOrEmpty()) {
                     tv3_time.text = it[0].createtime_txt

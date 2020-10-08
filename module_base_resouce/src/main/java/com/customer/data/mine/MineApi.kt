@@ -1,6 +1,7 @@
 package com.customer.data.mine
 
 import android.text.TextUtils
+import com.customer.AppConstant
 import com.customer.data.MineUserDiamond
 import com.customer.data.UserInfoSp
 import com.customer.utils.AESUtils
@@ -91,6 +92,8 @@ object MineApi : BaseApi {
 
     //消息中心
     private const val USER_MESSAGE_CENTER = "api/v1_1/live/get_notice/"
+    //消息中心代理
+    private const val USER_MESSAGE_CENTER_DL = " api/v1_1/live/get_notice_dl/"
 
     //获取新消息通知
     private const val USER_MESSAGE_NEW = "api/v1_1/live/get_notice_new/"
@@ -594,10 +597,11 @@ object MineApi : BaseApi {
     ) {
         val subscriber = object : ApiSubscriber<List<MineMessageCenter>>() {}
         subscriber.function()
-        getApi().get<List<MineMessageCenter>>(USER_MESSAGE_CENTER)
+        getApi().get<List<MineMessageCenter>>(if (AppConstant.isMain)USER_MESSAGE_CENTER else USER_MESSAGE_CENTER_DL)
             .headers("token", UserInfoSp.getToken())
             .params("user_id", UserInfoSp.getUserId())
             .params("msg_type", msg_type)
+
             .subscribe(subscriber)
     }
 

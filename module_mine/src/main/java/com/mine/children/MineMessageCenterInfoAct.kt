@@ -66,7 +66,7 @@ class MineMessageCenterInfoAct : BaseNavActivity() {
                         if (!it.isNullOrEmpty()) {
                             adapter1.refresh(it)
                         } else {
-                            tvHolder.text = "当前暂无任何系统消息哦~"
+                            tvHolder.text = "当前暂无任何互动消息哦~"
                             setVisible(tvHolder)
                         }
 
@@ -86,7 +86,7 @@ class MineMessageCenterInfoAct : BaseNavActivity() {
                         if (!it.isNullOrEmpty()) {
                             adapter2.refresh(it)
                         } else {
-                            tvHolder.text = "当前暂无任何系统消息哦~"
+                            tvHolder.text = "当前暂无任何官方消息哦~"
                             setVisible(tvHolder)
                         }
 
@@ -101,7 +101,7 @@ class MineMessageCenterInfoAct : BaseNavActivity() {
                 adapter2 = Adapter2()
                 rvMsg.adapter = adapter2
                 rvMsg.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-                MineApi.getMessageTips("0") {
+                MineApi.getMessageTips("4") {
                     onSuccess {
                         if (!it.isNullOrEmpty()) {
                             adapter2.refresh(it)

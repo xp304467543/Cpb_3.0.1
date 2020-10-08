@@ -268,7 +268,7 @@ class MineMoneyCenterAct : BaseMvpActivity<MineMoneyCenterActPresenter>() {
                 .show()
         }
         tvRecycle.setOnClickListener {
-            if (!FastClickUtil.isFastClick()) {
+            if (!FastClickUtil.isTenFastClick()) {
                 val t1 = BigDecimal(tv_3_money.text.toString())
                 if (tv_4_money.text.toString() != "维护中" && tv_4_money.text.toString() != "加载中") {
                     val t2 = BigDecimal(tv_4_money.text.toString())
@@ -295,17 +295,17 @@ class MineMoneyCenterAct : BaseMvpActivity<MineMoneyCenterActPresenter>() {
                         mPresenter.upAndDownMoney(1, false, tv_3_money.text.toString(), true)
                     }
                 }
-            }
+            }else ToastUtils.showToast("点击过于频繁,请10秒后重试")
         }
         titleTop.setOnClickListener {
-            if (!FastClickUtil.isFastClick()) {
+            if (!FastClickUtil.isTenFastClick2()) {
 //                tvCenterMoney.text = "加载中"
 //                tvOtherMoney.text = "加载中"
 //                tv_3_money.text = "加载中"
 //                tv_4_money.text = "加载中"
                 showPageLoadingDialog("加载中")
                 mPresenter.getUserBalance()
-            }
+            }else ToastUtils.showToast("点击过于频繁,请10秒后重试")
         }
     }
 

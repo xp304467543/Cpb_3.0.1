@@ -2,6 +2,7 @@ package com.mine.children.report.game
 
 import android.content.Intent
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.customer.data.UserInfoSp
 import com.customer.data.mine.MineGameAgReportInfo
 import com.glide.GlideUtil
 import com.lib.basiclib.base.mvp.BaseMvpActivity
@@ -13,6 +14,7 @@ import com.lib.basiclib.utils.ViewUtils
 import com.mine.R
 import com.customer.data.mine.MineGameReportInfo
 import com.mine.dialog.DialogDataPickDouble
+import cuntomer.them.AppMode
 import kotlinx.android.synthetic.main.act_mine_game_report_more.*
 
 /**
@@ -26,7 +28,7 @@ class MineGameReportMoreAct : BaseMvpActivity<MineGameReportMorePresenter>() {
 
     var indexGame = 1
 
-    var index = "0"
+    var index = "1"
 
     var start = TimeUtils.getToday()
 
@@ -77,7 +79,9 @@ class MineGameReportMoreAct : BaseMvpActivity<MineGameReportMorePresenter>() {
     override fun initData() {
         when(indexGame){
             1 ->{
-                setVisible(topSelected)
+                if (UserInfoSp.getAppMode() == AppMode.Normal){
+                    setVisible(topSelected)
+                }
                 mPresenter.getInfo(index, start, end)
             }
             2 -> {
@@ -99,7 +103,7 @@ class MineGameReportMoreAct : BaseMvpActivity<MineGameReportMorePresenter>() {
 
     override fun initEvent() {
         tv_start.setOnClickListener {
-            index = "0"
+            index = "1"
             tv_start.delegate.backgroundColor = ViewUtils.getColor(R.color.color_FF513E)
             tv_start.setTextColor(ViewUtils.getColor(R.color.white))
             tv_end.delegate.backgroundColor = ViewUtils.getColor(R.color.white)
@@ -107,7 +111,7 @@ class MineGameReportMoreAct : BaseMvpActivity<MineGameReportMorePresenter>() {
             mPresenter.getInfo(index, start, end)
         }
         tv_end.setOnClickListener {
-            index = "1"
+            index = "0"
             tv_end.delegate.backgroundColor = ViewUtils.getColor(R.color.color_FF513E)
             tv_end.setTextColor(ViewUtils.getColor(R.color.white))
             tv_start.delegate.backgroundColor = ViewUtils.getColor(R.color.white)

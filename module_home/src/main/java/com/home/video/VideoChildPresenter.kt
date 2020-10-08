@@ -15,18 +15,18 @@ import kotlinx.android.synthetic.main.fragment_home_video_child.*
 class VideoChildPresenter : BaseMvpPresenter<VideoChildFragment>() {
 
 
-    fun getChildData(typeId:Int, limit:Int, page:Int,perPage:Int) {
+    fun getChildData(typeId: Int, limit: Int, page: Int, perPage: Int) {
 
-        MovieApi.getMovieTypeData(typeId, limit, page , perPage ) {
+        MovieApi.getMovieTypeData(typeId, limit, page, perPage) {
             if (mView.isAdded) {
                 onSuccess {
-                    if (!it.isNullOrEmpty()){
+                    if (!it.isNullOrEmpty()) {
                         mView.initVideoData(it)
-                    }else ToastUtils.showToast("无数据")
+                    } else ToastUtils.showToast("无数据")
                     mView.videoSmartRefreshLayout.finishRefresh()
                 }
                 onFailed {
-                    ToastUtils.showToast("暂无数据")
+                    ToastUtils.showToast(it.getMsg())
                     mView.videoSmartRefreshLayout.finishRefresh()
                 }
             }
@@ -35,9 +35,9 @@ class VideoChildPresenter : BaseMvpPresenter<VideoChildFragment>() {
         }
     }
 
-    fun getMoreVideo(typeId:Int,cid:Int,num:Int,isMore:Boolean,pos:Int){
-        MovieApi.getVideoChange(typeId,cid,num,isMore){
-            if (mView.isAdded){
+    fun getMoreVideo(typeId: Int, cid: Int, num: Int, isMore: Boolean, pos: Int) {
+        MovieApi.getVideoChange(typeId, cid, num, isMore) {
+            if (mView.isAdded) {
                 onSuccess {
 
                 }
@@ -45,7 +45,7 @@ class VideoChildPresenter : BaseMvpPresenter<VideoChildFragment>() {
                     ToastUtils.showToast("暂无数据")
                 }
             }
-            }
+        }
     }
 
 

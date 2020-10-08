@@ -1,6 +1,7 @@
 package com.lottery
 
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.customer.data.AppChangeMode
 import com.customer.data.UserInfoSp
 import com.fh.module_lottery.R
 import com.lib.basiclib.base.mvp.BaseMvpFragment
@@ -16,6 +17,7 @@ import com.lib.basiclib.utils.FastClickUtil
 import com.lib.basiclib.utils.LogUtils
 import com.lib.basiclib.utils.ViewUtils
 import com.xiaojinzi.component.anno.RouterAnno
+import cuntomer.them.AppMode
 import cuntomer.them.ITheme
 import cuntomer.them.Theme
 import kotlinx.android.synthetic.main.fragment_lottery.*
@@ -121,6 +123,17 @@ class LotteryFragment : BaseMvpFragment<LotteryPresenter>(),ITheme {
             4 ->  setTheme(Theme.LoverDay)
             5 ->setTheme(Theme.NationDay)
         }
+    }
+
+    //纯净版切换
+    @Subscribe(thread = EventThread.MAIN_THREAD)
+    fun changeMode(eventBean: AppChangeMode) {
+        if (isActive()){
+            if (eventBean.mode == AppMode.Normal){
+                setVisible(imgVideo)
+            }else setGone(imgVideo)
+        }
+
     }
 
 }

@@ -4,12 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import com.customer.component.ActivityDialogSuccess
 import com.customer.data.LoginOut
+import com.customer.data.OnLine
 import com.customer.data.UserInfoSp
 import com.customer.data.home.AllSocket
 import com.customer.data.login.LoginSuccess
 import com.customer.wsmanager.WsManager
 import com.customer.wsmanager.listener.WsStatusListener
 import com.fh.R
+import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.thread.EventThread
 import com.lib.basiclib.base.activity.BasePageActivity
@@ -144,15 +146,21 @@ class MainActivity : BasePageActivity() {
                     }, 0, 1000 * 54)
                 }
                 "ServerPush" -> {
-                    if (res.dataType == "open_lottery_push") {
-                        mWsManager?.sendMessage(makeSure(res.data?.msg_id))
-                        systemDialog(res.data?.msg ?: "获取消息失败")
-                    } else if (res.dataType == "pop_result_push") {
-                        mWsManager?.sendMessage(makeSurePop(res.data?.msg_id))
-                        val intent = Intent(this, ActivityDialogSuccess::class.java)
-                        intent.putExtra("msgSuccess",res.data?.msg)
-                        intent.putExtra("is_success",res.data?.is_success)
-                        startActivity(intent)
+                    when (res.dataType) {
+                        "open_lottery_push" -> {
+                            mWsManager?.sendMessage(makeSure(res.data?.msg_id))
+                            systemDialog(res.data?.msg ?: "获取消息失败")
+                        }
+                        "pop_result_push" -> {
+                            mWsManager?.sendMessage(makeSurePop(res.data?.msg_id))
+                            val intent = Intent(this, ActivityDialogSuccess::class.java)
+                            intent.putExtra("msgSuccess",res.data?.msg)
+                            intent.putExtra("is_success",res.data?.is_success)
+                            startActivity(intent)
+                        }
+                        "app_online_push" -> {
+                            RxBus.get().post(OnLine(res.data?.online))
+                        }
                     }
                 }
             }
@@ -208,6 +216,7 @@ class MainActivity : BasePageActivity() {
 
     @Subscribe(thread = EventThread.MAIN_THREAD)
     fun login(eventBean: LoginSuccess) {
+        mWsManager?.stopConnect()
         allSocket()
         mWsManager?.sendMessage(getLogin(clientId))
     }

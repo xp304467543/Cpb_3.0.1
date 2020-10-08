@@ -1,6 +1,7 @@
 package com.customer.data
 
 import com.customer.data.mine.MineUserBankList
+import cuntomer.them.AppMode
 
 
 /**
@@ -82,7 +83,7 @@ data class LiveCallPersonal(var name:String)
 data class UpDateAttention(var boolean: Boolean,var anchorId:String)
 
 
-data class VideoColumnChange(val typeId:Int,var column:String)
+data class VideoColumnChange(val typeId:Int,var column:String,val name: String)
 
 //关注
 data class AnchorAttention(val androidId:String, val isFlow:Boolean)
@@ -100,4 +101,6 @@ data class UnDateTopGame(var isf: Boolean=false)
 data class ChangeLottery(val lotteryId:String)
 
 //App纯净版 普通版控制
-data class AppMode(val isOpen:Boolean = true)
+data class AppChangeMode(val mode: AppMode = AppMode.Normal)
+
+data class OnLine(var onLine:Long?=0)

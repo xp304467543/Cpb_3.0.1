@@ -7,10 +7,7 @@ import androidx.core.content.ContextCompat
 import com.customer.ApiRouter
 import com.customer.component.dialog.*
 import com.customer.component.rain.RainViewGroup
-import com.customer.data.HomeJumpTo
-import com.customer.data.HomeJumpToMine
-import com.customer.data.ToBetView
-import com.customer.data.UserInfoSp
+import com.customer.data.*
 import com.customer.data.home.HomeApi
 import com.customer.data.login.LoginSuccess
 import com.customer.data.login.RegisterSuccess
@@ -31,16 +28,19 @@ import com.services.MineService
 import com.tbruyelle.rxpermissions2.RxPermissions
 import com.xiaojinzi.component.impl.Router
 import com.xiaojinzi.component.impl.service.ServiceManager
+import cuntomer.them.AppMode
+import cuntomer.them.IMode
 import cuntomer.them.ITheme
 import cuntomer.them.Theme
 import kotlinx.android.synthetic.main.fragment_main.*
+import kotlinx.coroutines.NonCancellable.isActive
 
 /**
  * @ Author  QinTian
  * @ Date  2020/9/4
  * @ Describe
  */
-class MainFragment : BaseContentFragment(), ITheme {
+class MainFragment : BaseContentFragment(), ITheme, IMode {
 
 
     private var bottomWebSelect: BottomWebSelect? = null
@@ -69,6 +69,7 @@ class MainFragment : BaseContentFragment(), ITheme {
                 }
             }
         initFragments()
+        setMode(UserInfoSp.getAppMode())
     }
 
 
@@ -102,7 +103,7 @@ class MainFragment : BaseContentFragment(), ITheme {
     }
 
 
-    private fun redRain(){
+    private fun redRain() {
         rainView.setIsIntercept(true)
         //屏幕中最多显示item的数量
         rainView?.setAmount(50);
@@ -127,7 +128,7 @@ class MainFragment : BaseContentFragment(), ITheme {
             showHideFragment(mFragments[3])
         }
         rainView.setOnClickListener {
-            if (!FastClickUtil.isFastClick()){
+            if (!FastClickUtil.isFastClick()) {
                 getRedRainAmount()
 
             }
@@ -135,10 +136,10 @@ class MainFragment : BaseContentFragment(), ITheme {
     }
 
 
-    private fun getRedRainAmount(){
+    private fun getRedRainAmount() {
         HomeApi.getRedRain {
             onSuccess {
-              val dialog = context?.let { it1 -> DialogRedRain(it1,it.amount.toString()) }
+                val dialog = context?.let { it1 -> DialogRedRain(it1, it.amount.toString()) }
                 dialog?.setOnDismissListener {
                     DialogRegisterSuccess(requireActivity()).show()
                 }
@@ -159,21 +160,35 @@ class MainFragment : BaseContentFragment(), ITheme {
      */
     private fun checkDialog() {
         // 权限弹窗
-        RxPermissionHelper.request(this,
+        RxPermissionHelper.request(
+            this,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_PHONE_STATE,
             Manifest.permission.SYSTEM_ALERT_WINDOW,
-            Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
+            Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA
+        )
     }
 
     //系统公告
     private fun getNotice() {
-        HomeApi.getSystemNotice {
-            onSuccess {
-                if (it.content != null) {
-                    val dialog = DialogSystemNotice(requireActivity())
-                    dialog.setContent(it.content.toString())
-                    dialog.show()
+        if (UserInfoSp.getAppMode() == AppMode.Normal) {
+            HomeApi.getSystemNotice {
+                onSuccess {
+                    if (it.content != null) {
+                        val dialog = DialogSystemNotice(requireActivity())
+                        dialog.setContent(it.content.toString())
+                        dialog.show()
+                    }
+                }
+            }
+        } else {
+            HomeApi.getSystemNoticeDl {
+                onSuccess {
+                    if (!it.isNullOrEmpty()) {
+                        val dialog = DialogSystemNotice(requireActivity())
+                        dialog.setContent(it[0].content.toString())
+                        dialog.show()
+                    }
                 }
             }
         }
@@ -440,7 +455,7 @@ class MainFragment : BaseContentFragment(), ITheme {
             2 -> setTheme(Theme.NewYear)
             3 -> setTheme(Theme.MidAutumn)
             4 -> setTheme(Theme.LoverDay)
-            5 ->setTheme(Theme.NationDay)
+            5 -> setTheme(Theme.NationDay)
         }
 
     }
@@ -451,7 +466,7 @@ class MainFragment : BaseContentFragment(), ITheme {
     @Subscribe(thread = EventThread.MAIN_THREAD)
     fun onClickMine(clickMine: HomeJumpToMine) {
         if (clickMine.jump) {
-           if (tabMine!=null) tabMine?.isChecked = true
+            if (tabMine != null) tabMine?.isChecked = true
             showHideFragment(mFragments[3])
         }
     }
@@ -461,9 +476,9 @@ class MainFragment : BaseContentFragment(), ITheme {
      */
     @Subscribe(thread = EventThread.MAIN_THREAD)
     fun homeJumpToMineCloseLive(clickMine: HomeJumpTo) {
-            if (tabMine!=null) tabMine?.isChecked = true
-            showHideFragment(mFragments[3])
-      if (clickMine.isOpenAct)  Router.withApi(ApiRouter::class.java).toMineRecharge(0)
+        if (tabMine != null) tabMine?.isChecked = true
+        showHideFragment(mFragments[3])
+        if (clickMine.isOpenAct) Router.withApi(ApiRouter::class.java).toMineRecharge(0)
     }
 
 
@@ -478,9 +493,9 @@ class MainFragment : BaseContentFragment(), ITheme {
     //登录成功
     @Subscribe(thread = EventThread.MAIN_THREAD)
     fun login(eventBean: LoginSuccess) {
-        if (isAdded){
+        if (isAdded) {
             HomeApi.getIsShowRed {
-                onSuccess {  redRain() }
+                onSuccess { redRain() }
             }
         }
     }
@@ -491,8 +506,33 @@ class MainFragment : BaseContentFragment(), ITheme {
      */
     @Subscribe(thread = EventThread.MAIN_THREAD)
     fun toBetView(eventBean: ToBetView) {
-        if (tabGame!=null) tabGame?.isChecked = true
+        if (tabGame != null) tabGame?.isChecked = true
         showHideFragment(mFragments[1])
     }
+
+
+    //纯净版切换
+    @Subscribe(thread = EventThread.MAIN_THREAD)
+    fun changeSkin(eventBean: AppChangeMode) {
+        if (isAdded) {
+            setMode(eventBean.mode)
+        }
+    }
+
+    override fun setMode(mode: AppMode) {
+        when (mode) {
+            AppMode.Normal -> {
+                showHideFragment(mFragments[0])
+                setVisible(tabHome)
+                if (tabHome != null) tabHome?.isChecked = true
+            }
+            AppMode.Pure -> {
+                showHideFragment(mFragments[1])
+                setGone(tabHome)
+                if (tabGame != null) tabGame?.isChecked = true
+            }
+        }
+    }
+
 
 }

@@ -32,7 +32,7 @@
             android:layout_marginStart="@dimen/dp_5"
             android:layout_marginEnd="@dimen/dp_5"
             android:gravity="center"
-            android:textColor="@color/color_999999"
+            android:textColor="@color/color_333333"
             android:textSize="@dimen/sp_14"
             android:visibility="gone"
             toos:text="若要进行兑换等消费操作,请联系客服" />

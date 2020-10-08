@@ -6,12 +6,14 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.customer.data.UserInfoSp
 import com.customer.data.lottery.LotteryApi
 import com.home.R
 import com.lib.basiclib.base.round.RoundLinearLayout
 import com.lib.basiclib.utils.ToastUtils
 import com.lib.basiclib.utils.ViewUtils
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
+import cuntomer.them.AppMode
 import kotlinx.android.synthetic.main.old_fragment_live_bet_record_child.*
 
 /**
@@ -50,6 +52,13 @@ class LiveRoomBetRecordFragment2 : BaseNormalFragment() {
         adapter = context?.let { LiveRoomRecordAdapter(it, 2) }
         rvBetRecord?.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         rvBetRecord?.adapter = adapter
+        if (UserInfoSp.getAppMode() == AppMode.Normal){
+            ViewUtils.setGone(rootView?.findViewById(R.id.tvPure))
+            ViewUtils.setVisible(rootView?.findViewById(R.id.sp_down))
+        }else{
+            ViewUtils.setVisible(rootView?.findViewById(R.id.tvPure))
+            ViewUtils.setGone(rootView?.findViewById(R.id.sp_down))
+        }
     }
 
     override fun initData() {

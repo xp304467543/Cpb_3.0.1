@@ -1,6 +1,11 @@
 package com.mine.children
 
+import android.graphics.Color
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
+import com.customer.data.UserInfoSp
 import com.customer.data.mine.MineApi
 import com.customer.data.mine.MineBillBean
 import com.customer.utils.JsonUtils
@@ -13,6 +18,7 @@ import com.lib.basiclib.utils.ToastUtils
 import com.lib.basiclib.utils.ViewUtils
 import com.mine.R
 import cuntomer.bean.BaseApiBean
+import cuntomer.them.AppMode
 import kotlinx.android.synthetic.main.fragment_bill_child.*
 
 /**
@@ -28,7 +34,7 @@ class MineBillActChild : BaseContentFragment() {
 
     var page = 1
 
-    private var isBal = "0"  //是否是余额
+    private var isBal = "1"  //是否是余额
 
     var adapter0: Adapter0? = null
 
@@ -49,7 +55,7 @@ class MineBillActChild : BaseContentFragment() {
         smartRefreshLayoutChildBill?.setEnableOverScrollDrag(true)//是否启用越界拖动（仿苹果效果）
         rvBill.layoutManager = XLinearLayoutManager(context)
         selectType = arguments?.getInt("typeSelect") ?: 0
-        if (selectType == 1) setVisible(topLin)
+        if (selectType == 1 && UserInfoSp.getAppMode() == AppMode.Normal) setVisible(topLin)
         when (selectType) {
             0 -> {
                 adapter0 = Adapter0()
@@ -77,7 +83,7 @@ class MineBillActChild : BaseContentFragment() {
     override fun initEvent() {
         tv_start.setOnClickListener {
             page = 1
-            isBal = "0"
+            isBal = "1"
             tv_start.delegate.backgroundColor = ViewUtils.getColor(R.color.color_FF513E)
             tv_start.setTextColor(ViewUtils.getColor(R.color.white))
             tv_end.delegate.backgroundColor = ViewUtils.getColor(R.color.white)
@@ -86,7 +92,7 @@ class MineBillActChild : BaseContentFragment() {
         }
         tv_end.setOnClickListener {
             page = 1
-            isBal = "1"
+            isBal = "0"
             tv_end.delegate.backgroundColor = ViewUtils.getColor(R.color.color_FF513E)
             tv_end.setTextColor(ViewUtils.getColor(R.color.white))
             tv_start.delegate.backgroundColor = ViewUtils.getColor(R.color.white)
@@ -346,8 +352,24 @@ class MineBillActChild : BaseContentFragment() {
                     data?.method_name + "  " + data?.code + "  " + data?.type
                 )
                 if (isBal == "0") {
-                    holder.text(R.id.tvGiftPrise, data?.amount + " 钻石")
-                } else holder.text(R.id.tvGiftPrise, data?.amount + " 余额")
+                    val spannableString = SpannableString(data?.amount+" 钻石")
+                    spannableString.setSpan(
+                        ForegroundColorSpan(ViewUtils.getColor(R.color.color_FF513E)),
+                        0,
+                        data?.amount?.length?:0,
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                    holder.text(R.id.tvGiftPrise, spannableString)
+                } else {
+                    val spannableString = SpannableString(data?.amount+" 余额")
+                    spannableString.setSpan(
+                        ForegroundColorSpan(ViewUtils.getColor(R.color.color_333333)),
+                        0,
+                        data?.amount?.length?:0,
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                    holder.text(R.id.tvGiftPrise, spannableString)
+                }
                 if (data?.type == "中奖") {
                     holder.getImageView(R.id.imgPhoto).setImageResource(R.mipmap.icc_re_bet_get)
                 } else holder.getImageView(R.id.imgPhoto).setImageResource(R.mipmap.ic_re_bet)

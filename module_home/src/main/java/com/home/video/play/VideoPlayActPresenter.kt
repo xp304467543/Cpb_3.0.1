@@ -22,7 +22,7 @@ class VideoPlayActPresenter : BaseMvpPresenter<VideoPlayAct>() {
                     mView.setGone(mView.tvHolder)
                     mView.initVideoInfo(it)
                 }
-                onFailed {ToastUtils.showToast("暂无数据")  }
+                onFailed {ToastUtils.showToast(it.getMsg()) }
             }
 
         }
@@ -32,7 +32,7 @@ class VideoPlayActPresenter : BaseMvpPresenter<VideoPlayAct>() {
         MovieApi.getYouLike(id) {
             if (mView.isActive()) {
                 onSuccess { if (!it.isNullOrEmpty()) mView.adapter?.refresh(it) else ToastUtils.showToast("暂无数据") }
-                onFailed { ToastUtils.showToast("暂无数据")  }
+                onFailed { ToastUtils.showToast(it.getMsg())  }
             }
         }
     }
@@ -43,7 +43,7 @@ class VideoPlayActPresenter : BaseMvpPresenter<VideoPlayAct>() {
                 onSuccess {
                     mView.initZan(it)
                 }
-                onFailed { ToastUtils.showToast("点赞失败") }
+                onFailed {ToastUtils.showToast(it.getMsg()) }
             }
         }
     }

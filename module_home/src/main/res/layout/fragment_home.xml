@@ -32,7 +32,7 @@
         <RelativeLayout
             android:id="@+id/toolbarHome"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/dp_40"
             android:layout_marginTop="@dimen/dp_5"
             android:orientation="horizontal"
             android:paddingStart="@dimen/dp_20"
@@ -53,6 +53,14 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_18" />
 
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/homeCustomer"
+                android:layout_width="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dp_6"
+                android:layout_toStartOf="@+id/imgHomeUserRecharge"
+                android:src="@mipmap/ic_customer"/>
 
             <TextView
                 android:id="@+id/imgHomeUserRecharge"
@@ -60,8 +68,8 @@
                 android:layout_height="@dimen/dp_30"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:background="@mipmap/ic_home_top_recharge"
                 android:gravity="center"
+                android:background="@mipmap/ic_home_top_recharge"
                 android:text="充值"
                 android:textColor="@color/color_FF513E"
                 android:textSize="@dimen/sp_12" />
@@ -152,7 +160,7 @@
         android:id="@+id/homeAppSwitchMode"
         android:layout_width="70dp"
         android:layout_height="@dimen/dp_26"
-        android:layout_marginTop="@dimen/dp_40"
+        android:layout_marginTop="@dimen/dp_30"
         android:background="@drawable/button_red_mode_background"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -166,6 +174,7 @@
             android:src="@drawable/ic_arrow_back" />
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvAppMode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_4"

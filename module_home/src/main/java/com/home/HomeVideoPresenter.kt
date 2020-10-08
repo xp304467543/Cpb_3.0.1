@@ -25,7 +25,7 @@ class HomeVideoPresenter : BaseMvpPresenter<HomeVideoFragment>() {
                     mView.setGone(mView.layoutHolder)
                 }
                 onFailed {
-                    ToastUtils.showToast("获取数据失败")
+                    ToastUtils.showToast(it.getMsg())
                     mView.setVisible(mView.layoutHolder)
                 }
             }
@@ -40,7 +40,7 @@ class HomeVideoPresenter : BaseMvpPresenter<HomeVideoFragment>() {
                     mView.initTabViewData(list,it)
                 }
                 onFailed {
-                    ToastUtils.showToast("获取数据失败")
+                    ToastUtils.showToast(it.getMsg())
                     mView.initTabViewData(list,null)
                 }
             }

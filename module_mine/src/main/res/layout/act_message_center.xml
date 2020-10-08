@@ -79,6 +79,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View
+        android:id="@+id/viewLin"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_10" />
 

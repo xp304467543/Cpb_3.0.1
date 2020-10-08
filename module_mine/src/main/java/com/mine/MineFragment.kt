@@ -2,16 +2,15 @@ package com.mine
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.view.View
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.customer.ApiRouter
 import com.customer.component.dialog.DialogDiamond
 import com.customer.component.dialog.GlobalDialog
-import com.customer.data.LoginOut
-import com.customer.data.MineUserDiamond
-import com.customer.data.UserInfoSp
+import com.customer.data.*
 import com.customer.data.mine.ChangeSkin
 import com.customer.data.mine.UpDateUserPhoto
-import com.customer.data.urlCustomer
 import com.glide.GlideUtil
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.thread.EventThread
@@ -26,16 +25,17 @@ import com.qw.curtain.lib.IGuide
 import com.qw.curtain.lib.shape.RoundShape
 import com.xiaojinzi.component.anno.RouterAnno
 import com.xiaojinzi.component.impl.Router
+import cuntomer.them.AppMode
+import cuntomer.them.IMode
 import cuntomer.them.ITheme
 import cuntomer.them.Theme
 import kotlinx.android.synthetic.main.fragment_mine.*
 
 
 @RouterAnno(host = "Mine", path = "main")
-class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme {
+class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme, IMode {
 
-   var  isInit = false
-
+    var isInit = false
     //新消息
     var msg1 = ""
     var msg2 = ""
@@ -79,17 +79,18 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme {
             tvDiamondBalance.text = "0.00"
         }
         isInit = true
+
     }
 
     override fun initContentView() {
         setSwipeBackEnable(false)
         setTheme(UserInfoSp.getThem())
-
+        setMode(UserInfoSp.getAppMode())
     }
 
     override fun initData() {
         mPresenter.getCustomerUrl()
-        if (!UserInfoSp.getMineGuide()){
+        if (!UserInfoSp.getMineGuide() && UserInfoSp.getAppMode()==AppMode.Normal) {
             showCurtain()
             UserInfoSp.putMineGuide(true)
         }
@@ -103,9 +104,10 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme {
             .setCallBack(object : Curtain.CallBack {
                 override fun onDismiss(iGuide: IGuide?) {}
                 override fun onShow(iGuide: IGuide?) {
-                    iGuide?.findViewByIdInTopView<AppCompatImageView>(R.id.imgKnow)?.setOnClickListener {
-                        iGuide.dismissGuide()
-                    }
+                    iGuide?.findViewByIdInTopView<AppCompatImageView>(R.id.imgKnow)
+                        ?.setOnClickListener {
+                            iGuide.dismissGuide()
+                        }
                 }
             })
             .show()
@@ -114,14 +116,20 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme {
 
     override fun initEvent() {
         imgPersonal.setOnClickListener {
-            if (!FastClickUtil.isFastClick())Router.withApi(ApiRouter::class.java).toUserPage(UserInfoSp.getUserId().toString())
+            if (!FastClickUtil.isFastClick()) Router.withApi(ApiRouter::class.java)
+                .toUserPage(UserInfoSp.getUserId().toString())
         }
 
         tvLogin.setOnClickListener {
             if (!FastClickUtil.isFastClick()) Router.withApi(ApiRouter::class.java).toLogin()
         }
         imgMineUserAvatar.setOnClickListener {
-            if (!FastClickUtil.isFastClick()) startActivity(Intent(getPageActivity(), MinePersonalAct::class.java))
+            if (!FastClickUtil.isFastClick()) startActivity(
+                Intent(
+                    getPageActivity(),
+                    MinePersonalAct::class.java
+                )
+            )
 
         }
 
@@ -131,7 +139,7 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme {
                 return@setOnClickListener
             }
             if (!FastClickUtil.isFastClick()) {
-                startActivity(Intent(activity,MineMoneyCenterAct::class.java))
+                startActivity(Intent(activity, MineMoneyCenterAct::class.java))
             }
         }
 
@@ -145,10 +153,10 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme {
                 return@setOnClickListener
             }
             if (!FastClickUtil.isFastClick()) {
-                if (tvBalance.text.toString()!="加载中"){
+                if (tvBalance.text.toString() != "加载中") {
                     val dialog = DialogDiamond(requireContext(), tvBalance.text.toString())
                     dialog.show()
-                }else ToastUtils.showToast("请等待加载完成")
+                } else ToastUtils.showToast("请等待加载完成")
             }
         }
 
@@ -199,12 +207,14 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme {
                 GlobalDialog.notLogged(requireActivity())
                 return@setOnClickListener
             }
-            if (!FastClickUtil.isFastClick()) startActivity(
-                Intent(
-                    getPageActivity(),
-                    MineAttentionAct::class.java
-                )
-            )
+            if (!FastClickUtil.isFastClick())
+                if (UserInfoSp.getAppMode() == AppMode.Normal) {
+                    startActivity(Intent(getPageActivity(), MineAttentionAct::class.java))
+                } else if (UserInfoSp.getAppMode() == AppMode.Pure) {
+                    Router.withApi(ApiRouter::class.java).toReport()
+                }
+
+
         }
         containerMessageCenter.setOnClickListener {
             if (!UserInfoSp.getIsLogin()) {
@@ -291,9 +301,24 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme {
             Theme.Default -> {
                 tvLogin.setTextColor(ViewUtils.getColor(R.color.color_FF513E))
                 imgMineBg.setImageResource(R.drawable.ic_them_default_top)
-                tvDepositMoney.setCompoundDrawablesWithIntrinsicBounds(null, getDrawable(R.mipmap.ic_mine_deposit), null, null)
-                tvDrawMoney.setCompoundDrawablesWithIntrinsicBounds(null, getDrawable(R.mipmap.ic_mine_wallet), null, null)
-                tvAttention.setCompoundDrawablesWithIntrinsicBounds(null, getDrawable(R.mipmap.ic_mine_attention), null, null)
+                tvDepositMoney.setCompoundDrawablesWithIntrinsicBounds(
+                    null,
+                    getDrawable(R.mipmap.ic_mine_deposit),
+                    null,
+                    null
+                )
+                tvDrawMoney.setCompoundDrawablesWithIntrinsicBounds(
+                    null,
+                    getDrawable(R.mipmap.ic_mine_wallet),
+                    null,
+                    null
+                )
+                tvAttention.setCompoundDrawablesWithIntrinsicBounds(
+                    null,
+                    getDrawable(R.mipmap.ic_mine_attention),
+                    null,
+                    null
+                )
                 containerMessageCenter.setBackRes(R.drawable.ic_mine_default_1)
                 containerMineCheck.setBackRes(R.drawable.ic_mine_default_2)
                 containerMainSkin.setBackRes(R.drawable.ic_mine_default_3)
@@ -308,9 +333,24 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme {
             Theme.NewYear -> {
                 tvLogin.setTextColor(ViewUtils.getColor(R.color.color_FF513E))
                 imgMineBg.setImageResource(R.drawable.ic_them_newyear_top)
-                tvDepositMoney.setCompoundDrawablesWithIntrinsicBounds(null, getDrawable(R.mipmap.ic_mine_deposit), null, null)
-                tvDrawMoney.setCompoundDrawablesWithIntrinsicBounds(null, getDrawable(R.mipmap.ic_mine_wallet), null, null)
-                tvAttention.setCompoundDrawablesWithIntrinsicBounds(null, getDrawable(R.mipmap.ic_mine_attention), null, null)
+                tvDepositMoney.setCompoundDrawablesWithIntrinsicBounds(
+                    null,
+                    getDrawable(R.mipmap.ic_mine_deposit),
+                    null,
+                    null
+                )
+                tvDrawMoney.setCompoundDrawablesWithIntrinsicBounds(
+                    null,
+                    getDrawable(R.mipmap.ic_mine_wallet),
+                    null,
+                    null
+                )
+                tvAttention.setCompoundDrawablesWithIntrinsicBounds(
+                    null,
+                    getDrawable(R.mipmap.ic_mine_attention),
+                    null,
+                    null
+                )
                 containerMessageCenter.setBackRes(R.drawable.ic_mine_newyear_1)
                 containerMineCheck.setBackRes(R.drawable.ic_mine_newyear_2)
                 containerMainSkin.setBackRes(R.drawable.ic_mine_newyear_3)
@@ -325,9 +365,24 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme {
             Theme.MidAutumn -> {
                 tvLogin.setTextColor(ViewUtils.getColor(R.color.colorGreenPrimary))
                 imgMineBg.setImageResource(R.drawable.ic_them_middle_top)
-                tvDepositMoney.setCompoundDrawablesWithIntrinsicBounds(null, getDrawable(R.drawable.ic_middle_c_1), null, null)
-                tvDrawMoney.setCompoundDrawablesWithIntrinsicBounds(null, getDrawable(R.drawable.ic_middle_c_2), null, null)
-                tvAttention.setCompoundDrawablesWithIntrinsicBounds(null, getDrawable(R.drawable.ic_middle_c_3), null, null)
+                tvDepositMoney.setCompoundDrawablesWithIntrinsicBounds(
+                    null,
+                    getDrawable(R.drawable.ic_middle_c_1),
+                    null,
+                    null
+                )
+                tvDrawMoney.setCompoundDrawablesWithIntrinsicBounds(
+                    null,
+                    getDrawable(R.drawable.ic_middle_c_2),
+                    null,
+                    null
+                )
+                tvAttention.setCompoundDrawablesWithIntrinsicBounds(
+                    null,
+                    getDrawable(R.drawable.ic_middle_c_3),
+                    null,
+                    null
+                )
                 containerMessageCenter.setBackRes(R.drawable.ic_mine_d5_1)
                 containerMineCheck.setBackRes(R.drawable.ic_mine_d5_2)
                 containerMainSkin.setBackRes(R.drawable.ic_mine_d5_3)
@@ -343,9 +398,24 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme {
             Theme.LoverDay -> {
                 tvLogin.setTextColor(ViewUtils.getColor(R.color.purple))
                 imgMineBg.setImageResource(R.drawable.ic_them_love_top)
-                tvDepositMoney.setCompoundDrawablesWithIntrinsicBounds(null, getDrawable(R.drawable.ic_love_c_1), null, null)
-                tvDrawMoney.setCompoundDrawablesWithIntrinsicBounds(null, getDrawable(R.drawable.ic_love_c_2), null, null)
-                tvAttention.setCompoundDrawablesWithIntrinsicBounds(null, getDrawable(R.drawable.ic_love_c_3), null, null)
+                tvDepositMoney.setCompoundDrawablesWithIntrinsicBounds(
+                    null,
+                    getDrawable(R.drawable.ic_love_c_1),
+                    null,
+                    null
+                )
+                tvDrawMoney.setCompoundDrawablesWithIntrinsicBounds(
+                    null,
+                    getDrawable(R.drawable.ic_love_c_2),
+                    null,
+                    null
+                )
+                tvAttention.setCompoundDrawablesWithIntrinsicBounds(
+                    null,
+                    getDrawable(R.drawable.ic_love_c_3),
+                    null,
+                    null
+                )
                 containerMessageCenter.setBackRes(R.drawable.ic_mine_love_1)
                 containerMineCheck.setBackRes(R.drawable.ic_mine_love_2)
                 containerMainSkin.setBackRes(R.drawable.ic_mine_love_3)
@@ -360,9 +430,24 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme {
             Theme.NationDay -> {
                 tvLogin.setTextColor(ViewUtils.getColor(R.color.color_EF7E12))
                 imgMineBg.setImageResource(R.drawable.ic_them_gq_top)
-                tvDepositMoney.setCompoundDrawablesWithIntrinsicBounds(null, getDrawable(R.mipmap.ic_mine_deposit), null, null)
-                tvDrawMoney.setCompoundDrawablesWithIntrinsicBounds(null, getDrawable(R.mipmap.ic_mine_wallet), null, null)
-                tvAttention.setCompoundDrawablesWithIntrinsicBounds(null, getDrawable(R.mipmap.ic_mine_attention), null, null)
+                tvDepositMoney.setCompoundDrawablesWithIntrinsicBounds(
+                    null,
+                    getDrawable(R.mipmap.ic_mine_deposit),
+                    null,
+                    null
+                )
+                tvDrawMoney.setCompoundDrawablesWithIntrinsicBounds(
+                    null,
+                    getDrawable(R.mipmap.ic_mine_wallet),
+                    null,
+                    null
+                )
+                tvAttention.setCompoundDrawablesWithIntrinsicBounds(
+                    null,
+                    getDrawable(R.mipmap.ic_mine_attention),
+                    null,
+                    null
+                )
                 containerMessageCenter.setBackRes(R.drawable.ic_them_gq_1)
                 containerMineCheck.setBackRes(R.drawable.ic_them_gq_2)
                 containerMainSkin.setBackRes(R.drawable.ic_them_gq_3)
@@ -381,11 +466,11 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme {
     @Subscribe(thread = EventThread.MAIN_THREAD)
     fun changeSkin(eventBean: ChangeSkin) {
         when (eventBean.id) {
-            1 ->  setTheme(Theme.Default)
-            2 ->  setTheme(Theme.NewYear)
-            3 ->  setTheme(Theme.MidAutumn)
-            4 ->  setTheme(Theme.LoverDay)
-            5 ->setTheme(Theme.NationDay)
+            1 -> setTheme(Theme.Default)
+            2 -> setTheme(Theme.NewYear)
+            3 -> setTheme(Theme.MidAutumn)
+            4 -> setTheme(Theme.LoverDay)
+            5 -> setTheme(Theme.NationDay)
         }
 
     }
@@ -407,18 +492,66 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme {
     //更新用户头像
     @Subscribe(thread = EventThread.MAIN_THREAD)
     fun upDataUserAvatar(eventBean: UpDateUserPhoto) {
-        context?.let { GlideUtil.loadCircleImage(it,eventBean.img, imgMineUserAvatar,true) }
+        context?.let { GlideUtil.loadCircleImage(it, eventBean.img, imgMineUserAvatar, true) }
         UserInfoSp.putUserPhoto(eventBean.img)
     }
 
     //更新钻石 顺便更新余额
     @Subscribe(thread = EventThread.MAIN_THREAD)
     fun upDataMineUserDiamond(eventBean: MineUserDiamond) {
-        if (isSupportVisible){
-            tvDiamondBalance?.text =if (eventBean.diamond == "0") "0.00" else eventBean.diamond
+        if (isSupportVisible) {
+            tvDiamondBalance?.text = if (eventBean.diamond == "0") "0.00" else eventBean.diamond
             mPresenter.getUserBalance()
         }
+    }
 
+    //纯净版切换
+    @Subscribe(thread = EventThread.MAIN_THREAD)
+    fun changeSkin(eventBean: AppChangeMode) {
+        if (isAdded) {
+            setMode(eventBean.mode)
+        }
+    }
+
+    override fun setMode(mode: AppMode) {
+        when (mode) {
+            AppMode.Normal -> {
+                tvAttention?.text = "关注"
+                tvAttention?.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                    null, ViewUtils.getDrawable(R.mipmap.ic_mine_attention), null, null
+                )
+                containerMainSkin?.visibility = View.VISIBLE
+                containerAnchorGet?.visibility = View.VISIBLE
+                containerTuiReport?.visibility = View.VISIBLE
+                mineViewLine?.visibility = View.VISIBLE
+                tvChangeDiamond?.visibility = View.VISIBLE
+                tvSecond?.visibility = View.VISIBLE
+                tvDiamondBalance?.visibility = View.VISIBLE
+                imgPersonal?.visibility = View.VISIBLE
+                tvMineUserOther?.visibility = View.VISIBLE
+                val params = tvMoneyChange.layoutParams as ConstraintLayout.LayoutParams
+                params.endToEnd = R.id.mineViewLine
+                tvMoneyChange.layoutParams = params
+            }
+            AppMode.Pure -> {
+                tvAttention?.text = "代理"
+                tvAttention?.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                    null, ViewUtils.getDrawable(R.mipmap.ic_mode_pure_mine), null, null
+                )
+                containerMainSkin?.visibility = View.GONE
+                containerAnchorGet?.visibility = View.GONE
+                containerTuiReport?.visibility = View.GONE
+                mineViewLine?.visibility = View.GONE
+                tvChangeDiamond?.visibility = View.GONE
+                tvSecond?.visibility = View.GONE
+                tvDiamondBalance?.visibility = View.GONE
+                imgPersonal?.visibility = View.GONE
+                tvMineUserOther?.visibility = View.GONE
+                val params = tvMoneyChange.layoutParams as ConstraintLayout.LayoutParams
+                params.endToEnd = R.id.linCard
+                tvMoneyChange.layoutParams = params
+            }
+        }
     }
 
 }

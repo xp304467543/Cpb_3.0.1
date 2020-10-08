@@ -19,7 +19,7 @@ class MineGameReportMorePresenter : BaseMvpPresenter<MineGameReportMoreAct>() {
             onSuccess {
                 if (mView.isActive()){
                     if (it.isNullOrEmpty()){
-                        mView.lotteryAdapter?.notifyDataSetChanged()
+                        mView.lotteryAdapter?.clear()
                         mView.setVisible(R.id.place_holder)
                     }else{
                         mView.setGone(R.id.place_holder)

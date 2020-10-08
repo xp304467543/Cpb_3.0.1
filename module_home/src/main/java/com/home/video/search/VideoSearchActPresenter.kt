@@ -2,6 +2,7 @@ package com.home.video.search
 
 import com.customer.data.video.MovieApi
 import com.lib.basiclib.base.mvp.BaseMvpPresenter
+import com.lib.basiclib.utils.ToastUtils
 import com.lib.basiclib.utils.ViewUtils
 import kotlinx.android.synthetic.main.act_video_search.*
 
@@ -21,6 +22,9 @@ class VideoSearchActPresenter : BaseMvpPresenter<VideoSearchAct>() {
                 onSuccess {
                     ViewUtils.setVisible(mView.recommendContainer)
                     mView.adapterHot?.refresh(it.list)
+                }
+                onFailed {
+                    ToastUtils.showToast(it.getMsg())
                 }
             }
         }
@@ -42,6 +46,7 @@ class VideoSearchActPresenter : BaseMvpPresenter<VideoSearchAct>() {
                 }
                 onFailed {
                     ViewUtils.setVisible(mView.searchHolder)
+                    ToastUtils.showToast(it.getMsg())
                 }
             }
         }

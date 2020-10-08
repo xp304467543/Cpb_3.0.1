@@ -1,14 +1,14 @@
 package com.home
 
 import android.content.Intent
-import android.view.animation.TranslateAnimation
+import android.view.animation.Animation
+import android.view.animation.AnimationSet
+import android.view.animation.AnimationUtils
 import androidx.appcompat.widget.AppCompatImageView
 import com.customer.ApiRouter
 import com.customer.adapter.TabScaleAdapter
 import com.customer.component.dialog.GlobalDialog
-import com.customer.data.HomeJumpToMine
-import com.customer.data.LoginOut
-import com.customer.data.UserInfoSp
+import com.customer.data.*
 import com.customer.data.mine.ChangeSkin
 import com.customer.data.mine.UpDateUserPhoto
 import com.glide.GlideUtil
@@ -29,13 +29,15 @@ import com.qw.curtain.lib.Curtain
 import com.qw.curtain.lib.IGuide
 import com.xiaojinzi.component.anno.RouterAnno
 import com.xiaojinzi.component.impl.Router
+import cuntomer.them.AppMode
+import cuntomer.them.IMode
 import cuntomer.them.ITheme
 import cuntomer.them.Theme
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
 @RouterAnno(host = "Home", path = "main")
-class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme {
+class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme, IMode {
 
     //新消息
     var msg1 = ""
@@ -51,7 +53,6 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme {
     override fun isRegisterRxBus() = true
 
 
-
     override fun onSupportVisible() {
         super.onSupportVisible()
         if (UserInfoSp.getIsLogin()) {
@@ -64,25 +65,32 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme {
             mPresenter.getNewMsg()
             mPresenter.getRedTask()
         } else imgHomeUserIcon.setImageResource(R.mipmap.ic_base_user)
+        if (UserInfoSp.getIsShowAppModeChange()){
+            setVisible(homeAppSwitchMode)
+        }else setGone(homeAppSwitchMode)
     }
 
 
     override fun initContentView() {
         setSwipeBackEnable(false)
+        if (UserInfoSp.getAppMode() == AppMode.Pure) {
+            tvAppMode.text = "直播版"
+        } else {
+            tvAppMode.text = "纯净版"
+        }
         StatusBarUtils.setStatusBarHeight(statusViewHome)
         initViewPager()
         initTopTab()
         setTheme(UserInfoSp.getThem())
+        setMode(UserInfoSp.getAppMode())
     }
 
     override fun initData() {
-        if (!UserInfoSp.getMainGuide()){
+        if (!UserInfoSp.getMainGuide()) {
             showCurtain()
             UserInfoSp.putMainGuide(true)
         }
     }
-
-
 
 
     private fun showCurtain() {
@@ -91,9 +99,10 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme {
             .setCallBack(object : Curtain.CallBack {
                 override fun onDismiss(iGuide: IGuide?) {}
                 override fun onShow(iGuide: IGuide?) {
-                    iGuide?.findViewByIdInTopView<AppCompatImageView>(R.id.imgKnow)?.setOnClickListener {
-                        iGuide.dismissGuide()
-                    }
+                    iGuide?.findViewByIdInTopView<AppCompatImageView>(R.id.imgKnow)
+                        ?.setOnClickListener {
+                            iGuide.dismissGuide()
+                        }
                 }
             })
             .show()
@@ -101,8 +110,13 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme {
     }
 
     override fun initEvent() {
+        homeCustomer.setOnClickListener {
+            if (!FastClickUtil.isFastClick()) Router.withApi(ApiRouter::class.java)
+                .toGlobalWeb(UserInfoSp.getCustomer() ?: urlCustomer)
+        }
         imgHomeUserIcon.setOnClickListener {
-            if (UserInfoSp.getIsLogin()) RxBus.get().post(HomeJumpToMine(true)
+            if (UserInfoSp.getIsLogin()) RxBus.get().post(
+                HomeJumpToMine(true)
             )
             else Router.withApi(ApiRouter::class.java).toLogin()
         }
@@ -121,29 +135,41 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme {
             Router.withApi(ApiRouter::class.java).toMineMessage(msg1, msg2, msg3)
         }
         imgHomeTopSearch.setOnClickListener {
-            if (homeSwitchViewPager.currentItem == 0){
-               startActivity(Intent(getPageActivity(),LiveSearchActivity::class.java))
-            }else Router.withApi(ApiRouter::class.java).toVideoSearch()
+            if (homeSwitchViewPager.currentItem == 0) {
+                startActivity(Intent(getPageActivity(), LiveSearchActivity::class.java))
+            } else Router.withApi(ApiRouter::class.java).toVideoSearch()
         }
         imgNewTask.setOnClickListener {
             if (!UserInfoSp.getIsLogin()) {
                 GlobalDialog.notLogged(requireActivity())
                 return@setOnClickListener
             }
-            startActivity(Intent(activity,HomeNewHandTask::class.java))
+            startActivity(Intent(activity, HomeNewHandTask::class.java))
         }
 
-        homeAppSwitchMode.setOnClickListener {
-            if (!FastClickUtil.isFastClick()){
-                //设置动画，从自身位置的最下端向上滑动了自身的高度，持续时间为500ms
-                val inAnimation = TranslateAnimation(
-                    TranslateAnimation.RELATIVE_TO_SELF, homeAppSwitchMode.x, TranslateAnimation.RELATIVE_TO_SELF, 0F,
-                    TranslateAnimation.RELATIVE_TO_SELF, 0F, TranslateAnimation.RELATIVE_TO_SELF, 0F)
-                inAnimation.duration = 1000
-                homeAppSwitchMode.post {
-                    setGone(homeAppSwitchMode)
-                    homeAppSwitchMode.startAnimation(inAnimation)
-                }
+        homeAppSwitchMode?.setOnClickListener {
+            if (!FastClickUtil.isFastClick()) {
+                val anim = AnimationUtils.loadAnimation(context, R.anim.left_out) as AnimationSet
+                anim.setAnimationListener(object : Animation.AnimationListener {
+                    override fun onAnimationRepeat(animation: Animation?) {
+                    }
+
+                    override fun onAnimationStart(animation: Animation?) {
+                    }
+
+                    override fun onAnimationEnd(animation: Animation?) {
+                        if (UserInfoSp.getAppMode() == AppMode.Pure) {
+                            tvAppMode.text = "直播版"
+                            UserInfoSp.putAppMode(AppMode.Normal)
+                            RxBus.get().post(AppChangeMode(AppMode.Normal))
+                        } else {
+                            tvAppMode.text = "纯净版"
+                            UserInfoSp.putAppMode(AppMode.Pure)
+                            RxBus.get().post(AppChangeMode(AppMode.Pure))
+                        }
+                    }
+                })
+                homeAppSwitchMode?.startAnimation(anim)
             }
         }
     }
@@ -162,7 +188,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme {
             titleList = mDataList,
             viewPage = homeSwitchViewPager,
             normalColor = ViewUtils.getColor(R.color.white),
-            selectedColor =  ViewUtils.getColor(R.color.white),
+            selectedColor = ViewUtils.getColor(R.color.white),
             colorLine = ViewUtils.getColor(R.color.white),
             isChange = false
         )
@@ -176,12 +202,14 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme {
             Theme.Default -> {
                 imgHomeUserRecharge.setTextColor(ViewUtils.getColor(R.color.alivc_orange))
                 imgHomeBg.setImageResource(R.drawable.ic_them_default_top)
-                imgHomeUserRecharge.background = ViewUtils.getDrawable(R.mipmap.ic_home_top_recharge)
+                imgHomeUserRecharge.background =
+                    ViewUtils.getDrawable(R.mipmap.ic_home_top_recharge)
             }
             Theme.NewYear -> {
                 imgHomeUserRecharge.setTextColor(ViewUtils.getColor(R.color.color_FF513E))
                 imgHomeBg.setImageResource(R.drawable.ic_them_newyear_top)
-                imgHomeUserRecharge.background = ViewUtils.getDrawable(R.mipmap.ic_home_top_recharge)
+                imgHomeUserRecharge.background =
+                    ViewUtils.getDrawable(R.mipmap.ic_home_top_recharge)
             }
             Theme.MidAutumn -> {
                 imgHomeUserRecharge.setTextColor(ViewUtils.getColor(R.color.colorGreenPrimary))
@@ -193,10 +221,11 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme {
                 imgHomeBg.setImageResource(R.drawable.ic_them_love_top)
                 imgHomeUserRecharge.background = ViewUtils.getDrawable(R.drawable.home_white)
             }
-            Theme.NationDay ->{
+            Theme.NationDay -> {
                 imgHomeUserRecharge.setTextColor(ViewUtils.getColor(R.color.color_EF7E12))
                 imgHomeBg.setImageResource(R.drawable.ic_them_gq_top)
-                imgHomeUserRecharge.background = ViewUtils.getDrawable(R.mipmap.ic_home_top_recharge)
+                imgHomeUserRecharge.background =
+                    ViewUtils.getDrawable(R.mipmap.ic_home_top_recharge)
             }
         }
     }
@@ -205,11 +234,11 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme {
     @Subscribe(thread = EventThread.MAIN_THREAD)
     fun changeSkin(eventBean: ChangeSkin) {
         when (eventBean.id) {
-            1 ->  setTheme(Theme.Default)
-            2 ->  setTheme(Theme.NewYear)
-            3 ->  setTheme(Theme.MidAutumn)
-            4 ->  setTheme(Theme.LoverDay)
-            5 ->setTheme(Theme.NationDay)
+            1 -> setTheme(Theme.Default)
+            2 -> setTheme(Theme.NewYear)
+            3 -> setTheme(Theme.MidAutumn)
+            4 -> setTheme(Theme.LoverDay)
+            5 -> setTheme(Theme.NationDay)
         }
 
     }
@@ -225,8 +254,8 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme {
     //更新用户头像
     @Subscribe(thread = EventThread.MAIN_THREAD)
     fun upDataUserAvatar(eventBean: UpDateUserPhoto) {
-        if (imgHomeUserIcon!=null){
-            context?.let { GlideUtil.loadCircleImage(it,eventBean.img, imgHomeUserIcon,true) }
+        if (imgHomeUserIcon != null) {
+            context?.let { GlideUtil.loadCircleImage(it, eventBean.img, imgHomeUserIcon, true) }
         }
 
     }
@@ -234,6 +263,24 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme {
     //退出登录
     @Subscribe(thread = EventThread.MAIN_THREAD)
     fun loginOut(eventBean: LoginOut) {
-        if (isActive() && imgHomeUserIcon !=null) imgHomeUserIcon?.setImageResource(R.mipmap.ic_base_user)
+        if (isActive() && imgHomeUserIcon != null) imgHomeUserIcon?.setImageResource(R.mipmap.ic_base_user)
+    }
+
+    //纯净版切换
+    @Subscribe(thread = EventThread.MAIN_THREAD)
+    fun changeMode(eventBean: AppChangeMode) {
+        if (isActive()){
+            setMode(eventBean.mode)
+        }
+    }
+
+    override fun setMode(mode: AppMode) {
+        if (mode == AppMode.Pure) {
+            tvAppMode?.text = "直播版"
+        } else {
+            tvAppMode?.text = "纯净版"
+
+        }
+
     }
 }

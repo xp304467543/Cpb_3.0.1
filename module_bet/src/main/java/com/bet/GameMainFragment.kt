@@ -1,24 +1,32 @@
 package com.bet
 
+import android.view.animation.Animation
+import android.view.animation.AnimationSet
+import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
+import com.customer.ApiRouter
 import com.customer.adapter.TabScaleAdapter
-import com.customer.adapter.TabThemAdapter
-import com.customer.data.UnDateTopGame
-import com.customer.data.UserInfoSp
+import com.customer.component.dialog.GlobalDialog
+import com.customer.data.*
 import com.customer.data.game.GameAll
+import com.customer.data.home.HomeSystemNoticeResponse
 import com.customer.data.mine.ChangeSkin
+import com.glide.GlideUtil
 import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.thread.EventThread
 import com.lib.basiclib.base.adapter.BaseFragmentPageAdapter
 import com.lib.basiclib.base.mvp.BaseMvpFragment
+import com.lib.basiclib.utils.FastClickUtil
 import com.lib.basiclib.utils.StatusBarUtils
 import com.lib.basiclib.utils.ViewUtils
 import com.lib.basiclib.widget.tab.ViewPagerHelper
 import com.lib.basiclib.widget.tab.buildins.commonnavigator.CommonNavigator
+import com.xiaojinzi.component.impl.Router
+import cuntomer.them.AppMode
+import cuntomer.them.IMode
 import cuntomer.them.ITheme
 import cuntomer.them.Theme
-import kotlinx.android.synthetic.main.adapter_game_child_other.*
 import kotlinx.android.synthetic.main.fragment_game.*
 
 /**
@@ -29,7 +37,7 @@ import kotlinx.android.synthetic.main.fragment_game.*
  *
  */
 
-class GameMainFragment : BaseMvpFragment<GameMainPresenter>(), ITheme {
+class GameMainFragment : BaseMvpFragment<GameMainPresenter>(), ITheme,IMode {
 
     override fun attachView() = mPresenter.attachView(this)
 
@@ -43,15 +51,74 @@ class GameMainFragment : BaseMvpFragment<GameMainPresenter>(), ITheme {
 
     override fun initContentView() {
         StatusBarUtils.setStatusBarHeight(gameStateView)
+        if (UserInfoSp.getAppMode() == AppMode.Pure) {
+            tvAppMode.text = "直播版"
+        } else {
+            tvAppMode.text = "纯净版"
+        }
         gameSmartRefreshLayout?.setEnableOverScrollBounce(true)//是否启用越界回弹
         gameSmartRefreshLayout?.setEnableOverScrollDrag(true)//是否启用越界拖动（仿苹果效果）
         gameSmartRefreshLayout?.setEnableRefresh(false)//是否启用下拉刷新功能
         gameSmartRefreshLayout?.setEnableLoadMore(false)//是否启用上拉加载功能
         setTheme(UserInfoSp.getThem())
+        setMode(UserInfoSp.getAppMode())
     }
 
     override fun initData() {
         mPresenter.getAllGame()
+    }
+
+
+
+    override fun initEvent() {
+        betAppSwitchMode?.setOnClickListener {
+            if (!FastClickUtil.isFastClick()){
+                val anim = AnimationUtils.loadAnimation(context, R.anim.left_out) as AnimationSet
+                anim.setAnimationListener(object : Animation.AnimationListener{
+                    override fun onAnimationRepeat(animation: Animation?) {
+                    }
+                    override fun onAnimationStart(animation: Animation?) {
+                    }
+                    override fun onAnimationEnd(animation: Animation?) {
+                        if (UserInfoSp.getAppMode() == AppMode.Normal){
+                            tvAppMode.text = "纯净版"
+                            UserInfoSp.putAppMode(AppMode.Pure)
+                            RxBus.get().post(AppChangeMode(AppMode.Pure))
+                            setVisible(betMarquee)
+                        }else{
+                            tvAppMode.text = "直播版"
+                            UserInfoSp.putAppMode(AppMode.Normal)
+                            RxBus.get().post(AppChangeMode(AppMode.Normal))
+                            setGone(betMarquee)
+                        }
+                    }
+                })
+                betAppSwitchMode?.startAnimation(anim)
+            }
+        }
+
+        imgBetUserRecharge?.setOnClickListener {
+            if (!FastClickUtil.isFastClick()){
+                if (!UserInfoSp.getIsLogin()) {
+                    GlobalDialog.notLogged(requireActivity())
+                    return@setOnClickListener
+                }
+                Router.withApi(ApiRouter::class.java).toMineRecharge(0)
+            }
+        }
+        imgBetUserIcon?.setOnClickListener {
+            if (!FastClickUtil.isFastClick()){
+                if (UserInfoSp.getIsLogin()) RxBus.get().post(
+                    HomeJumpToMine(true)
+                )
+                else Router.withApi(ApiRouter::class.java).toLogin()
+            }
+        }
+
+        gameCustomer.setOnClickListener {
+            if (!FastClickUtil.isFastClick()) Router.withApi(ApiRouter::class.java)
+                .toGlobalWeb(UserInfoSp.getCustomer() ?: urlCustomer)
+        }
     }
 
     fun initViewPager(data: ArrayList<GameAll>) {
@@ -115,8 +182,33 @@ class GameMainFragment : BaseMvpFragment<GameMainPresenter>(), ITheme {
     override fun onSupportVisible() {
         super.onSupportVisible()
         RxBus.get().post(UnDateTopGame())
+        if (UserInfoSp.getIsShowAppModeChange()){
+            setVisible(betAppSwitchMode)
+        }else setGone(betAppSwitchMode)
+        if (UserInfoSp.getIsLogin()) {
+            GlideUtil.loadCircleImage(
+                requireContext(),
+                UserInfoSp.getUserPhoto(),
+                imgBetUserIcon,
+                true
+            )
+        } else imgBetUserIcon.setImageResource(R.mipmap.ic_base_user)
     }
 
+
+    //========= 公告 =========
+    fun upDateSystemNotice(data: List<HomeSystemNoticeResponse>?) {
+        val result = ArrayList<String>()
+        val sb = StringBuffer()
+        if (data != null && data.isNotEmpty()) {
+            data.forEachIndexed { index, value ->
+                val s = (index + 1).toString() + "." + value.content + "        "
+                sb.append(s)
+                result.add((index + 1).toString() + "." + value.content)
+            }
+        } else sb.append("暂无公告。")
+        tvNoticeMassages.setText(sb.toString())
+    }
 
     //换肤
     @Subscribe(thread = EventThread.MAIN_THREAD)
@@ -128,6 +220,37 @@ class GameMainFragment : BaseMvpFragment<GameMainPresenter>(), ITheme {
             4 -> setTheme(Theme.LoverDay)
             5 ->setTheme(Theme.NationDay)
         }
+    }
+
+        //纯净版切换
+    @Subscribe(thread = EventThread.MAIN_THREAD)
+    fun changeMode(eventBean: AppChangeMode) {
+        if (isActive()){
+            setMode(eventBean.mode)
+        }
 
     }
+
+    override fun setMode(mode: AppMode) {
+        when(mode){
+            AppMode.Normal ->{
+                tvAppMode.text = "纯净版"
+                setGone(betMarquee)
+                setGone(imgBetUserRecharge)
+                setGone(imgBetUserIcon)
+                setGone(gameCustomer)
+                tvTopName.text = "游戏中心"
+
+            }
+            AppMode.Pure ->{
+                tvAppMode.text = "直播版"
+                setVisible(betMarquee)
+                setVisible(imgBetUserRecharge)
+                setVisible(imgBetUserIcon)
+                setVisible(gameCustomer)
+                tvTopName.text = "乐购直播"
+            }
+        }
+    }
+
 }

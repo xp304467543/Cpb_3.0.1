@@ -1,19 +1,20 @@
 package com.home
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.text.TextUtils
+import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import com.customer.ApiRouter
 import com.customer.adapter.HomeHotLiveAdapter
 import com.customer.component.dialog.GlobalDialog
+import com.customer.data.OnLine
 import com.customer.data.ToBetView
 import com.customer.data.UserInfoSp
 import com.customer.data.game.GameApi
-import com.customer.data.home.Game
-import com.customer.data.home.HomeHotLiveResponse
-import com.customer.data.home.HomeSystemNoticeResponse
-import com.customer.data.home.HomeTypeListResponse
+import com.customer.data.home.*
+import com.customer.data.login.LoginSuccess
 import com.customer.data.mine.ChangeSkin
 import com.customer.data.mine.LotteryToLiveRoom
 import com.glide.GlideUtil
@@ -31,6 +32,7 @@ import com.xiaojinzi.component.impl.Router
 import cuntomer.them.ITheme
 import cuntomer.them.Theme
 import kotlinx.android.synthetic.main.fragment_home_recommend_new.*
+import java.math.BigDecimal
 
 
 /**
@@ -41,6 +43,8 @@ import kotlinx.android.synthetic.main.fragment_home_recommend_new.*
  *
  */
 class HomeRecommendNewFragment : BaseMvpFragment<HomeRecommendNewPresenter>(), ITheme {
+
+    var onLine = BigDecimal(-1)
 
     var gameRoomList: ArrayList<Array<HomeTypeListResponse>?>? = null
 
@@ -133,7 +137,7 @@ class HomeRecommendNewFragment : BaseMvpFragment<HomeRecommendNewPresenter>(), I
             it.add(Game(name = "加载中...", img_url = "", id = "-1", type = ""))
         }
         gameAdapter = HomeGameRvAdapter(context)
-        val gridLayoutManager = object : GridLayoutManager(context, 3) {
+        val gridLayoutManager = object : GridLayoutManager(context, 4) {
             override fun canScrollVertically(): Boolean {
                 return false
             }
@@ -346,7 +350,24 @@ class HomeRecommendNewFragment : BaseMvpFragment<HomeRecommendNewPresenter>(), I
             4 -> setTheme(Theme.LoverDay)
             5 -> setTheme(Theme.NationDay)
         }
-
     }
 
+    @SuppressLint("SetTextI18n")
+    @Subscribe(thread = EventThread.MAIN_THREAD)
+    fun onLine(eventBean: OnLine) {
+       val real = this.onLine.add(BigDecimal(eventBean.onLine?:0))
+        tvOnline?.text = "在线人数: $real"
+    }
+
+
+    @SuppressLint("SetTextI18n")
+    @Subscribe(thread = EventThread.MAIN_THREAD)
+    fun login(eventBean: LoginSuccess) {
+        val res = HomeApi.getOnLine()
+        res.onSuccess {
+            this.onLine = BigDecimal(it.base_online)
+           tvOnline?.visibility = View.VISIBLE
+            tvOnline?.text = "在线人数: $onLine"
+        }
+    }
 }

@@ -16,6 +16,8 @@ import com.customer.data.mine.MineApi
 import com.customer.data.mine.MineUpDateMoney
 import com.xiaojinzi.component.anno.RouterAnno
 import com.customer.component.dialog.GlobalDialog
+import com.customer.data.UserInfoSp
+import cuntomer.them.AppMode
 import kotlinx.android.synthetic.main.act_recharge.*
 
 /**
@@ -51,6 +53,9 @@ class MineRechargeAct : BaseNavActivity() {
             textSize = 16F
         )
         rechargeTab.navigator = commonNavigator
+        if (UserInfoSp.getAppMode() == AppMode.Pure){
+            setGone(linDiamond)
+        }
     }
 
 

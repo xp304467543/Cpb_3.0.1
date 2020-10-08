@@ -175,6 +175,8 @@ data class UpdateData(var version_data: Update?)
 
 data class RedRain(var amount: String?)
 
+data class Online(var base_online:Long=100,var online:Long=100)
+
 data class RedTask(var prompt: Int?)
 
 data class TaskGift(val gift_type:Int?,val amount:String?)

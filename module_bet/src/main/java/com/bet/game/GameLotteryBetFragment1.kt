@@ -31,6 +31,7 @@ import com.lib.basiclib.base.recycle.RecyclerViewHolder
 import com.lib.basiclib.base.xui.adapter.recyclerview.XLinearLayoutManager
 import com.lib.basiclib.utils.ToastUtils
 import com.lib.basiclib.utils.ViewUtils
+import cuntomer.them.AppMode
 import kotlinx.android.synthetic.main.game_bet_fragment1.*
 import java.math.BigDecimal
 
@@ -104,6 +105,11 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
 
     override fun initContentView() {
         initRecycle()
+        if (UserInfoSp.getAppMode() == AppMode.Normal){
+            setVisible(selectRadio)
+        }else{
+            setGone(selectRadio)
+        }
     }
 
     @SuppressLint("SetTextI18n")

@@ -100,12 +100,10 @@ object MovieApi : BaseApi {
         getApiMovie().post<VideoMore>(VIDEO_TYPE_MORE_2)
             .params("typeId",typeId)
             .params("cid",cid)
-            .params("num",num)
             .params("column",column)
-            .params("isMore",isMore)
             .params("page",page)
             .params("perPage",prePage)
-            .params("tag",tag)
+            .params("tag","")
             .subscribe(subscriber)
     }
 

@@ -1,6 +1,7 @@
 package com.customer.data.home
 
 import android.text.TextUtils
+import com.customer.AppConstant
 import com.customer.data.UserInfoSp
 import com.customer.data.moments.MomentsAnchorListResponse
 import com.rxnetgo.rxcache.CacheMode
@@ -10,6 +11,7 @@ import cuntomer.api.ApiSubscriber
 import cuntomer.api.EmptySubscriber
 import cuntomer.bean.BaseApiBean
 import cuntomer.net.BaseApi
+import cuntomer.them.AppMode
 
 /**
  *
@@ -26,6 +28,9 @@ object HomeApi : BaseApi {
 
     //系统公告
     private const val HOME_SYSTEM_NOTICE = "api/v1_1/user/system_notice/"
+
+    //系统公告代理
+    private const val HOME_SYSTEM_NOTICE_DL = "api/v1_1/user/system_notice_dl/"
 
     //游戏直播列表
     private const val HOME_GAME_LIST = "api/v1_1/live/get_game_list/"
@@ -123,9 +128,12 @@ object HomeApi : BaseApi {
     //系统公告
     private const val SYSTEM_NOTICE = "api/v1_1/live/get_notice/"
 
+    //系统公告 代理
+    private const val SYSTEM_NOTICE_DL = "api/v1_1/live/get_notice_dl/"
+
+
     //获取新消息通知
     private const val USER_MESSAGE_NEW = "api/v1_1/live/get_notice_new/"
-
 
 
     //热门游戏
@@ -136,12 +144,18 @@ object HomeApi : BaseApi {
 
     //新手任务
     private const val NEW_HAND_RED = "user/task-list"
+
     //新手任务领取
     private const val GET_NEW_TASK = "api/v1_1/live/task_reward/"
+
     //红包雨领取
     private const val GET_RED_RAIN = "api/v1_1/user/user_red_rain/"
+
     //是否展示红包雨
     private const val GET_IS_SHOW_RED = "api/v1_1/user/is_red_rain/"
+
+    //在线人数
+    private const val GET_ONLINE = "api/v1_1/user/user_online/"
 
 
     /**
@@ -176,9 +190,7 @@ object HomeApi : BaseApi {
     fun getHomeSystemNoticeResult(cacheMode: CacheMode): ApiSubscriber<List<HomeSystemNoticeResponse>> {
         val subscriber = object : ApiSubscriber<List<HomeSystemNoticeResponse>>() {}
         getApi()
-            .get<List<HomeSystemNoticeResponse>>(
-                HOME_SYSTEM_NOTICE
-            )
+            .get<List<HomeSystemNoticeResponse>>(if (AppConstant.isMain) HOME_SYSTEM_NOTICE else HOME_SYSTEM_NOTICE_DL)
             .cacheMode(cacheMode)
             .subscribe(subscriber)
         return subscriber
@@ -676,7 +688,21 @@ object HomeApi : BaseApi {
         val subscriber = object : ApiSubscriber<SystemNotice>() {}
         subscriber.function()
         getApi()
-            .get<SystemNotice>(SYSTEM_NOTICE)
+            .get<SystemNotice>(if (UserInfoSp.getAppMode() == AppMode.Normal) SYSTEM_NOTICE else SYSTEM_NOTICE_DL)
+            .headers("token", UserInfoSp.getToken())
+            .params("page", 1)
+            .params("limit", 1)
+            .subscribe(subscriber)
+    }
+
+    /**
+     * 系统公告
+     */
+    fun getSystemNoticeDl(function: ApiSubscriber<List<SystemNotice>>.() -> Unit) {
+        val subscriber = object : ApiSubscriber<List<SystemNotice>>() {}
+        subscriber.function()
+        getApi()
+            .get<List<SystemNotice>>(SYSTEM_NOTICE_DL)
             .headers("token", UserInfoSp.getToken())
             .params("page", 1)
             .params("limit", 1)
@@ -697,7 +723,7 @@ object HomeApi : BaseApi {
     /**
      * 新手任务红点
      */
-    fun getRedTask(function: ApiSubscriber<RedTask>.() -> Unit){
+    fun getRedTask(function: ApiSubscriber<RedTask>.() -> Unit) {
         val subscriber = object : ApiSubscriber<RedTask>() {}
         subscriber.function()
         getApiOther()
@@ -709,7 +735,7 @@ object HomeApi : BaseApi {
     /**
      * 新手任务
      */
-    fun userTask(function: ApiSubscriber<ArrayList<UserTask>>.() -> Unit){
+    fun userTask(function: ApiSubscriber<ArrayList<UserTask>>.() -> Unit) {
         val subscriber = object : ApiSubscriber<ArrayList<UserTask>>() {}
         subscriber.function()
         getApiOther()
@@ -717,16 +743,17 @@ object HomeApi : BaseApi {
             .headers("Authorization", UserInfoSp.getTokenWithBearer())
             .subscribe(subscriber)
     }
+
     /**
      * 新手任务领取
      */
-    fun getNewTask(task_id:String,function: ApiSubscriber<TaskGift>.() -> Unit){
+    fun getNewTask(task_id: String, function: ApiSubscriber<TaskGift>.() -> Unit) {
         val subscriber = object : ApiSubscriber<TaskGift>() {}
         subscriber.function()
         getApi()
             .post<TaskGift>(GET_NEW_TASK)
             .headers("token", UserInfoSp.getToken())
-            .params("task_id",task_id)
+            .params("task_id", task_id)
             .subscribe(subscriber)
     }
 
@@ -734,7 +761,7 @@ object HomeApi : BaseApi {
     /**
      * 新手任务领取
      */
-    fun getRedRain(function: ApiSubscriber<RedRain>.() -> Unit){
+    fun getRedRain(function: ApiSubscriber<RedRain>.() -> Unit) {
         val subscriber = object : ApiSubscriber<RedRain>() {}
         subscriber.function()
         getApi()
@@ -747,13 +774,24 @@ object HomeApi : BaseApi {
     /**
      * 是否展示红包雨
      */
-    fun getIsShowRed(function: ApiSubscriber<RedRain>.() -> Unit){
+    fun getIsShowRed(function: ApiSubscriber<RedRain>.() -> Unit) {
         val subscriber = object : ApiSubscriber<RedRain>() {}
         subscriber.function()
         getApi()
             .get<RedRain>(GET_IS_SHOW_RED)
             .headers("token", UserInfoSp.getToken())
             .subscribe(subscriber)
+    }
+
+    /**
+     * 在线人数
+     */
+    fun getOnLine(): ApiSubscriber<Online> {
+        val subscriber = object : ApiSubscriber<Online>() {}
+        getApi().get<Online>(GET_ONLINE)
+            .subscribe(subscriber)
+        return subscriber
+
     }
 
 }

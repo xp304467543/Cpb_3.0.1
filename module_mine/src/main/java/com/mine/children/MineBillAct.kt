@@ -1,6 +1,7 @@
 package com.mine.children
 
 import com.customer.adapter.TabNormalAdapter
+import com.customer.data.UserInfoSp
 import com.lib.basiclib.base.activity.BaseNavActivity
 import com.lib.basiclib.base.adapter.BaseFragmentPageAdapter
 import com.lib.basiclib.base.fragment.BaseFragment
@@ -9,6 +10,7 @@ import com.lib.basiclib.utils.ViewUtils
 import com.lib.basiclib.widget.tab.ViewPagerHelper
 import com.lib.basiclib.widget.tab.buildins.commonnavigator.CommonNavigator
 import com.mine.R
+import cuntomer.them.AppMode
 import kotlinx.android.synthetic.main.act_bill.*
 
 /**
@@ -36,11 +38,24 @@ class MineBillAct : BaseNavActivity() {
     }
 
     private fun initTab() {
-        val title = arrayListOf("余额记录", "投注记录", "打赏记录", "兑换记录")
-        val fragments = arrayListOf(
-            MineBillActChild.newInstance(0),  MineBillActChild.newInstance(1),
-            MineBillActChild.newInstance(2),  MineBillActChild.newInstance(3)
-        )
+
+        val title = when(UserInfoSp.getAppMode()){
+            AppMode.Normal ->  arrayListOf("余额记录", "投注记录", "打赏记录", "兑换记录")
+
+            AppMode.Pure ->  arrayListOf("余额记录", "投注记录")
+        }
+
+        val fragments = when(UserInfoSp.getAppMode()){
+            AppMode.Normal -> arrayListOf(
+                MineBillActChild.newInstance(0),  MineBillActChild.newInstance(1),
+                MineBillActChild.newInstance(2),  MineBillActChild.newInstance(3))
+
+            AppMode.Pure -> arrayListOf(MineBillActChild.newInstance(0),  MineBillActChild.newInstance(1))
+        }
+
+
+
+
 
         val commonNavigator = CommonNavigator(this)
         commonNavigator.scrollPivotX = 0.65f

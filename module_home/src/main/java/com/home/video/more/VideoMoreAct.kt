@@ -3,20 +3,21 @@ package com.home.video.more
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Typeface
+import androidx.viewpager.widget.ViewPager
 import com.customer.ApiRouter
 import com.customer.component.PopWindowVideo
 import com.customer.data.VideoColumnChange
-import com.customer.data.video.MovieApi
 import com.customer.data.video.MovieType
 import com.customer.data.video.MovieTypeChild
 import com.home.R
 import com.hwangjr.rxbus.RxBus
-import com.lib.basiclib.base.activity.BaseNavActivity
 import com.lib.basiclib.base.adapter.BaseFragmentPageAdapter
+import com.lib.basiclib.base.mvp.BaseMvpActivity
 import com.lib.basiclib.utils.FastClickUtil
-import com.lib.basiclib.utils.StatusBarUtils.setStatusBarHeight
+import com.lib.basiclib.utils.StatusBarUtils
 import com.lib.basiclib.utils.ToastUtils
 import com.lib.basiclib.utils.ViewUtils
+import com.lib.basiclib.widget.tab.MagicIndicator
 import com.lib.basiclib.widget.tab.ViewPagerHelper
 import com.lib.basiclib.widget.tab.buildins.commonnavigator.CommonNavigator
 import com.lib.basiclib.widget.tab.buildins.commonnavigator.abs.CommonNavigatorAdapter
@@ -33,29 +34,34 @@ import kotlinx.android.synthetic.main.act_video_more.*
 /**
  *
  * @ Author  QinTian
- * @ Date  2020/8/30
+ * @ Date  2020/10/7
  * @ Describe
  *
  */
 @RouterAnno(host = "Home", path = "videoMore")
-class VideoMoreActivity : BaseNavActivity() {
+class VideoMoreAct : BaseMvpActivity<ViewMoreActPresenter>() {
 
-    private var topList: List<MovieType>? = null
+    var topList: List<MovieType>? = null
 
-    private var childTabList: HashMap<Int, List<String>> = HashMap()
-    var childTabCid: HashMap<Int, List<Int>> = HashMap()
+    var tab3List: HashMap<Int, List<String>> = HashMap()
 
-    var mColumn = "updated"//固定值：updated=最新 reads=最多观看 praise=最多喜欢
+    var tab3Cid: HashMap<Int, List<Int>> = HashMap()
 
-    private var mTypeId = -1
+    var mTypeId = -1
 
-    private var topName = "0"
+    var topName = "0"
 
     private var childName = "0"
 
+    var mColumn = "updated"//固定值：updated=最新 reads=最多观看 praise=最多喜欢
+
     private var videoPop: PopWindowVideo? = null
 
-    private var selectItems: MovieTypeChild?=null
+    private var selectItems: MovieTypeChild? = null
+
+    override fun attachView() = mPresenter.attachView(this)
+
+    override fun attachPresenter() = ViewMoreActPresenter()
 
     override fun getContentResID() = R.layout.act_video_more
 
@@ -63,18 +69,19 @@ class VideoMoreActivity : BaseNavActivity() {
 
     override fun isShowToolBar() = false
 
+
     override fun initContentView() {
-        setStatusBarHeight(stateVideoMore)
-        if (intent.getStringExtra("topStr") != "0" ) {
+        StatusBarUtils.setStatusBarHeight(stateVideoMore)
+        if (intent.getStringExtra("topStr") != "0") {
             topName = intent.getStringExtra("topStr") ?: "0"
         }
-        if (intent.getStringExtra("childStr") != "0"){
+        if (intent.getStringExtra("childStr") != "0") {
             childName = intent.getStringExtra("childStr") ?: "0"
         }
     }
 
     override fun initData() {
-        getTabTitle()
+        mPresenter.getTabTitle()
     }
 
 
@@ -84,18 +91,20 @@ class VideoMoreActivity : BaseNavActivity() {
             if (!FastClickUtil.isFastClick()) Router.withApi(ApiRouter::class.java).toVideoSearch()
         }
         imgVideoPop.setOnClickListener {
-            if (videoPop == null){
-                videoPop = topList?.let { it1 -> PopWindowVideo(this, it1,selectItems) }
-                videoPop?.seItemListener{
-                        _, MovieTypeChild, topPos, _ ->
-                    selectItems = MovieTypeChild
-                    magic_indicator1.onPageSelected(topPos)
-                    magic_indicator1.onPageScrolled(topPos, 0.0F, 0)
-                    childName =MovieTypeChild?.name?:"0"
-                    getChildTab(topPos)
+            if (videoPop == null) {
+                videoPop = topList?.let { it1 -> PopWindowVideo(this, it1, selectItems) }
+                videoPop?.seItemListener { _, MovieTypeChild, topPos, _ ->
+                    if (!FastClickUtil.isFastClick()){
+                        selectItems = MovieTypeChild
+                        magic_indicator1.onPageSelected(topPos)
+                        magic_indicator1.onPageScrolled(topPos, 0.0F, 0)
+                        childName = MovieTypeChild?.name ?: "0"
+                        mPresenter.getChildTab(topPos)
+                    }else ToastUtils.showToast("请勿频繁操作")
+
                 }
                 videoPop?.showAsDropDown(magic_indicator1)
-            }else{
+            } else {
                 videoPop?.dismiss()
                 videoPop = null
             }
@@ -103,7 +112,7 @@ class VideoMoreActivity : BaseNavActivity() {
     }
 
 
-    private fun initMagicIndicator1(title: ArrayList<String>) {
+    fun initMagicIndicator1(title: ArrayList<String>) {
         val commonNavigator = CommonNavigator(this)
         commonNavigator.scrollPivotX = 0.8f
         commonNavigator.adapter = object : CommonNavigatorAdapter() {
@@ -118,7 +127,7 @@ class VideoMoreActivity : BaseNavActivity() {
                 simplePagerTitleView.setOnClickListener {
                     magic_indicator1.onPageSelected(index)
                     magic_indicator1.onPageScrolled(index, 0.0F, 0)
-                    getChildTab(index)
+                    mPresenter.getChildTab(index)
                 }
                 return simplePagerTitleView
             }
@@ -132,12 +141,12 @@ class VideoMoreActivity : BaseNavActivity() {
             if (title.indexOf(topName) != -1) {
                 magic_indicator1.onPageSelected(title.indexOf(topName))
                 magic_indicator1.onPageScrolled(title.indexOf(topName), 0.0F, 0)
-                getChildTab(title.indexOf(topName))
+                mPresenter.getChildTab(title.indexOf(topName))
             }
-        } else getChildTab(0)
+        } else mPresenter.getChildTab(0)
     }
 
-    private fun initMagicIndicator2() {
+    fun initMagicIndicator2() {
         val title = arrayListOf("最新片源", "最多观影", "最多喜欢")
         val commonNavigator = CommonNavigator(this)
         commonNavigator.scrollPivotX = 0.35f
@@ -158,14 +167,17 @@ class VideoMoreActivity : BaseNavActivity() {
                 clipPagerTitleView.textColor = ViewUtils.getColor(R.color.text_black)
                 clipPagerTitleView.clipColor = Color.WHITE
                 clipPagerTitleView.setOnClickListener {
-                    magic_indicator2.onPageSelected(index)
-                    magic_indicator2.onPageScrolled(index, 0.0F, 0)
-                    mColumn = when (index) {
-                        0 -> "updated"
-                        1 -> "reads"
-                        else -> "praise"
-                    }
-                    RxBus.get().post(VideoColumnChange(mTypeId,mColumn))
+                    if (!FastClickUtil.isFastClick()){
+                        magic_indicator2.onPageSelected(index)
+                        magic_indicator2.onPageScrolled(index, 0.0F, 0)
+                        mColumn = when (index) {
+                            0 -> "updated"
+                            1 -> "reads"
+                            else -> "praise"
+                        }
+                        fragments[vpMoreVideo.currentItem].upDateView(mColumn,true)
+                    } else ToastUtils.showToast("请勿频繁操作")
+
                 }
                 return clipPagerTitleView
             }
@@ -173,7 +185,8 @@ class VideoMoreActivity : BaseNavActivity() {
         magic_indicator2.navigator = commonNavigator
     }
 
-    private fun initMagicIndicator3(title: List<String>, index: Int) {
+
+    fun initMagicIndicator3(title: List<String>, index: Int,isTopClick:Boolean=false) {
         val commonNavigator = CommonNavigator(this)
         commonNavigator.scrollPivotX = 0.35f
         commonNavigator.adapter = object : CommonNavigatorAdapter() {
@@ -186,78 +199,72 @@ class VideoMoreActivity : BaseNavActivity() {
                 return indicator
             }
 
-            override fun getTitleView(context: Context?, index: Int): IPagerTitleView {
+            override fun getTitleView(context: Context?, pos: Int): IPagerTitleView {
                 val clipPagerTitleView = ClipPagerTitleView(context)
-                clipPagerTitleView.text = title[index]
+                clipPagerTitleView.text = title[pos]
                 clipPagerTitleView.textSize = 35F
                 clipPagerTitleView.textColor = ViewUtils.getColor(R.color.text_black)
                 clipPagerTitleView.clipColor = Color.WHITE
                 clipPagerTitleView.setOnClickListener {
-                    vpMoreVideo.currentItem = index
+                    vpMoreVideo.currentItem = pos
+                    childName = title[pos]
                 }
                 return clipPagerTitleView
             }
         }
         magic_indicator3.navigator = commonNavigator
-        initViewPager(index,title)
-
+        initViewPager(index, title)
     }
-
-    private fun initViewPager(index: Int,childList: List<String>) {
-        val fragments = arrayListOf<VideoMoreActivityChildFragment>()
-        if (index != -1 && !childTabCid[index].isNullOrEmpty()) {
-            for ((index,dataCid) in childTabCid[index]!!.withIndex()) {
-                fragments.add(VideoMoreActivityChildFragment.newInstance(mTypeId, dataCid, mColumn,childList[index]))
-            }
-            val viewPagerAdapter = BaseFragmentPageAdapter(supportFragmentManager, fragments)
+    var fragments= arrayListOf<VideoMoreActivityChildFragment>()
+    private var viewPagerAdapter:BaseFragmentPageAdapter?=null
+    private fun initViewPager(index: Int, childList: List<String>) {
+        fragments.clear()
+        vpMoreVideo.removeAllViews()
+        viewPagerAdapter?.notifyDataSetChanged()
+        for ((pos, dataCid) in tab3Cid[index]!!.withIndex()) {
+            fragments.add(
+                VideoMoreActivityChildFragment.newInstance(
+                    mTypeId,
+                    dataCid,
+                    mColumn,
+                    childList[pos]
+                )
+            )
+        }
+        if (!fragments.isNullOrEmpty()){
+             viewPagerAdapter = BaseFragmentPageAdapter(supportFragmentManager, fragments)
             vpMoreVideo.adapter = viewPagerAdapter
-            vpMoreVideo.offscreenPageLimit = 1
-            ViewPagerHelper.bind(magic_indicator3, vpMoreVideo)
+            vpMoreVideo.offscreenPageLimit = 8
             if (childName != "0") {
                 if (childList.indexOf(childName) != -1) {
                     vpMoreVideo.currentItem = childList.indexOf(childName)
-                }
+                    bind(magic_indicator3, vpMoreVideo,childList.indexOf(childName))
+                }else  bind(magic_indicator3, vpMoreVideo,0)
             }
-        } else ToastUtils.showToast("未获取到CID")
 
-    }
-
-
-    private fun getTabTitle() {
-        MovieApi.getMovieType {
-            onSuccess {
-                topList = it
-                if (!topList.isNullOrEmpty()) mTypeId = topList!![0].id ?: -1
-                val tab1 = arrayListOf<String>()
-                for (res in it) {
-                    tab1.add(res.name ?: "未知")
-                    val tab2 = arrayListOf<String>()
-                    val tab2Cid = arrayListOf<Int>()
-                    if (!res.children.isNullOrEmpty()) {
-                        for (child in res.children!!) {
-                            tab2.add(child.name ?: "未知")
-                            tab2Cid.add(child.id ?: -1)
-
-                        }
-                        childTabList[res.id ?: 1] = tab2
-                        childTabCid[res.id ?: 1] = tab2Cid
-                    }
-                }
-                initMagicIndicator1(tab1)
-                initMagicIndicator2()
-            }
-            onFailed {
-                ToastUtils.showToast("获取数据失败")
-            }
         }
     }
 
-    private fun getChildTab(index: Int) {
-        if (!topList.isNullOrEmpty() || topList!![index].id ?: -1 == -1) {
-            val pos = topList!![index].id ?: -1
-            mTypeId = pos
-            childTabList[mTypeId]?.let { initMagicIndicator3(it, pos) }
-        } else ToastUtils.showToast("无详细标签")
-    }
 
+    private fun bind(magicIndicator: MagicIndicator, viewPager: ViewPager,pos:Int) {
+        viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int)
+            {
+                magicIndicator.onPageScrolled(position, positionOffset, positionOffsetPixels)
+            }
+
+            override fun onPageSelected(position: Int) {
+                magicIndicator.onPageSelected(position)
+                fragments[vpMoreVideo.currentItem].upDateView(mColumn)
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {
+                magicIndicator.onPageScrollStateChanged(state)
+            }
+        })
+        fragments[pos].upDateView(mColumn,true)
+    }
 }
