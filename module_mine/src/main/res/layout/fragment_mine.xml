@@ -222,7 +222,7 @@
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/tvMoneyChange"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dp_22"
+                    android:layout_height="@dimen/dp_20"
                     android:layout_marginTop="@dimen/dp_12"
                     android:layout_marginEnd="@dimen/dp_8"
                     android:background="@mipmap/ic_money_change"
@@ -272,7 +272,7 @@
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/tvChangeDiamond"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dp_22"
+                    android:layout_height="@dimen/dp_20"
                     android:layout_marginTop="@dimen/dp_12"
                     android:background="@mipmap/ic_diamon_change"
                     app:layout_constraintEnd_toEndOf="parent"

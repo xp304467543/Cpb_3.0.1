@@ -99,6 +99,10 @@ class MineMoneyCenterAct : BaseMvpActivity<MineMoneyCenterActPresenter>() {
                     ViewUtils.setGone(tvMoneyTips)
                     return
                 }
+                if (s.length==1&& s.toString() == "."){
+                    etMoney.setText("")
+                    return
+                }
                 if (s.toString().contains(".")) {
                     if (s.length - 1 - s.toString().indexOf(".") > 2) {
                         val str = s.toString().subSequence(0, s.toString().indexOf(".") + 3)
@@ -125,27 +129,24 @@ class MineMoneyCenterAct : BaseMvpActivity<MineMoneyCenterActPresenter>() {
                         return
                     }
                 }
-
-                val all = s.toString()
-                val t1 = tvCenterMoney.text.toString()
-                val t2 = tv_3_money.text.toString()
-                val t3 = tv_4_money.text.toString()
-                if (current_1 == 0) {
-                    if (BigDecimal(t1).compareTo(BigDecimal(all)) == -1) {
-                        ViewUtils.setVisible(tvMoneyTips)
-                    } else ViewUtils.setGone(tvMoneyTips)
-                } else if (current_1 == 1) {
-                    if (BigDecimal(t2).compareTo(BigDecimal(all)) == -1) {
-                        ViewUtils.setVisible(tvMoneyTips)
-                    } else ViewUtils.setGone(tvMoneyTips)
-                } else if (current_1 == 2) {
-                    if (t3 == "维护中" || t3 == "加载中") return
-                    if (BigDecimal(t3).compareTo(BigDecimal(all)) == -1) {
-                        ViewUtils.setVisible(tvMoneyTips)
-                    } else ViewUtils.setGone(tvMoneyTips)
-                }
-
-
+                val all = s.toString().trim()
+                    val t1 = tvCenterMoney.text.toString()
+                    val t2 = tv_3_money.text.toString()
+                    val t3 = tv_4_money.text.toString()
+                    if (current_1 == 0) {
+                        if (BigDecimal(t1).compareTo(BigDecimal(all)) == -1) {
+                            ViewUtils.setVisible(tvMoneyTips)
+                        } else ViewUtils.setGone(tvMoneyTips)
+                    } else if (current_1 == 1) {
+                        if (BigDecimal(t2).compareTo(BigDecimal(all)) == -1) {
+                            ViewUtils.setVisible(tvMoneyTips)
+                        } else ViewUtils.setGone(tvMoneyTips)
+                    } else if (current_1 == 2) {
+                        if (t3 == "维护中" || t3 == "加载中") return
+                        if (BigDecimal(t3).compareTo(BigDecimal(all)) == -1) {
+                            ViewUtils.setVisible(tvMoneyTips)
+                        } else ViewUtils.setGone(tvMoneyTips)
+                    }
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -166,33 +167,12 @@ class MineMoneyCenterAct : BaseMvpActivity<MineMoneyCenterActPresenter>() {
                 val t1 = tvCenterMoney.text.toString()
                 val t2 = tv_3_money.text.toString()
                 val t3 = tv_4_money.text.toString()
-                if (current_1 == 0) {
+                if (tvMoneyCenter.text == "中心钱包") {
                     if (BigDecimal(t1).compareTo(BigDecimal(all)) == -1) {
                         ViewUtils.setVisible(tvMoneyTips)
                         ToastUtils.showToast("余额不足")
                         return@setOnClickListener
                     }
-                } else if (current_1 == 1) {
-                    if (BigDecimal(t2).compareTo(BigDecimal(all)) == -1) {
-                        ViewUtils.setVisible(tvMoneyTips)
-                        ToastUtils.showToast("余额不足")
-                        return@setOnClickListener
-                    }
-                } else if (current_1 == 2) {
-                    if (t3 == "维护中" || t3 == "加载中") {
-                        ToastUtils.showToast("AG平台维护中")
-                        return@setOnClickListener
-                    }
-                    if (BigDecimal(t3).compareTo(BigDecimal(all)) == -1) {
-                        ViewUtils.setVisible(tvMoneyTips)
-                        ToastUtils.showToast("余额不足")
-                        return@setOnClickListener
-                    }
-                }
-                if (BigDecimal(tvCenterMoney.text.toString()).compareTo(BigDecimal(etMoney.text.toString())) == -1) ViewUtils.setVisible(
-                    tvMoneyTips
-                )
-                if (current_1 == 0) {
                     if (thirdList?.get(current)?.name == "fh_chess") mPresenter.upAndDownMoney(
                         1,
                         true,
@@ -205,19 +185,24 @@ class MineMoneyCenterAct : BaseMvpActivity<MineMoneyCenterActPresenter>() {
                         }
                         mPresenter.upAndDownMoney(2, true, etMoney.text.toString())
                     }
-                } else {
-                    if (thirdList?.get(current)?.name == "fh_chess") mPresenter.upAndDownMoney(
-                        1,
-                        false,
-                        etMoney.text.toString()
-                    )
-                    if (thirdList?.get(current)?.name == "ag") {
-                        if (t3 == "维护中") {
-                            ToastUtils.showToast("AG平台维护中")
-                            return@setOnClickListener
-                        }
-                        mPresenter.upAndDownMoney(2, false, etMoney.text.toString())
+                } else if (tvMoneyCenter.text == "乐购棋牌") {
+                    if (BigDecimal(t2).compareTo(BigDecimal(all)) == -1) {
+                        ViewUtils.setVisible(tvMoneyTips)
+                        ToastUtils.showToast("余额不足")
+                        return@setOnClickListener
                     }
+                    mPresenter.upAndDownMoney(1, false, etMoney.text.toString())
+                } else if (tvMoneyCenter.text == "AG游戏") {
+                    if (t3 == "维护中" || t3 == "加载中") {
+                        ToastUtils.showToast("AG平台维护中")
+                        return@setOnClickListener
+                    }
+                    if (BigDecimal(t3).compareTo(BigDecimal(all)) == -1) {
+                        ViewUtils.setVisible(tvMoneyTips)
+                        ToastUtils.showToast("余额不足")
+                        return@setOnClickListener
+                    }
+                    mPresenter.upAndDownMoney(2, false, etMoney.text.toString())
                 }
                 showPageLoadingDialog("转账中")
             }
@@ -285,11 +270,11 @@ class MineMoneyCenterAct : BaseMvpActivity<MineMoneyCenterActPresenter>() {
                         showPageLoadingDialog("转账中")
                         mPresenter.upAndDownMoney(2, false, tv_4_money.text.toString(), true)
                     } else {
-                        ToastUtils.showToast("没有可回收账户")
+//                        ToastUtils.showToast("没有可回收账户")
                     }
                 } else {
                     if (t1.compareTo(BigDecimal.ZERO) == 0) {
-                        ToastUtils.showToast("没有可回收账户")
+//                        ToastUtils.showToast("没有可回收账户")
                     } else {
                         showPageLoadingDialog("转账中")
                         mPresenter.upAndDownMoney(1, false, tv_3_money.text.toString(), true)
@@ -314,11 +299,14 @@ class MineMoneyCenterAct : BaseMvpActivity<MineMoneyCenterActPresenter>() {
         val arrayList = arrayListOf("中心钱包", "乐购棋牌", "AG游戏")
         pvOptions = OptionsPickerBuilder(this) { _, options1, _, _ ->
             current_1 = options1
-            if (current_1 != 0) {
-                tvMoneyGame.text = "中心钱包"
-            } else {
-                current = 0
-                tvMoneyGame.text = "乐购棋牌"
+            when {
+                current_1 != 0 -> {
+                    tvMoneyGame.text = "中心钱包"
+                }
+                else -> {
+                    tvMoneyGame.text = thirdList?.get(0)?.name_cn ?: "乐购棋牌"
+                    current = 0
+                }
             }
             tvMoneyCenter.text = arrayList[options1]
             false
@@ -344,8 +332,7 @@ class MineMoneyCenterAct : BaseMvpActivity<MineMoneyCenterActPresenter>() {
         }
         pvOptions = OptionsPickerBuilder(this) { _, options1, _, _ ->
             current = options1
-            tvMoneyGame.text =
-                if (current_1 == 0) thirdList?.get(options1)?.name_cn else rightList[options1]
+            tvMoneyGame.text = if (current_1 == 0) thirdList?.get(options1)?.name_cn else rightList[options1]
             false
         }
             .setTitleText("")

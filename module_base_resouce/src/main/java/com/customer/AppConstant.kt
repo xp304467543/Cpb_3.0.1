@@ -12,7 +12,7 @@ object AppConstant {
 
     //是否代理  true为代理  false 为官方
 
-    var isMain = false
+    var isMain = true
 
 
 }

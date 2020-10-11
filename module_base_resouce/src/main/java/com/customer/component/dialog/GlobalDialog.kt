@@ -24,8 +24,11 @@ object GlobalDialog {
     //未登录
     fun notLogged(context: Activity, horizontal: Boolean = false) {
       loginTipsDialog = DialogLoginTips(context, horizontal)
-        spClear()
+
         if (!loginTipsDialog?.isShowing!!) { if (context.isFinishing) { return }
+            loginTipsDialog?.setOnDismissListener {
+                spClear()
+            }
            loginTipsDialog?.show()
         }
     }

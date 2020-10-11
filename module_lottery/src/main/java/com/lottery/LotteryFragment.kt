@@ -49,6 +49,9 @@ class LotteryFragment : BaseMvpFragment<LotteryPresenter>(),ITheme {
         setTheme(UserInfoSp.getThem())
         //加载底部
         loadRootFragment(R.id.childContainer, LotteryBaseFragment())
+        if (UserInfoSp.getAppMode() == AppMode.Pure){
+            setGone(imgVideo)
+        }
     }
 
     override fun initData() {

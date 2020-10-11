@@ -69,7 +69,7 @@ class MineMessageCenterAct : BaseNavActivity() {
     }
 
     private fun getSystemMsg() {
-        MineApi.getMessageTips("4") {
+        MineApi.getMessageTips("0") {
             onSuccess {
                 if (!it.isNullOrEmpty()) {
                     tv3_time.text = it[0].createtime_txt

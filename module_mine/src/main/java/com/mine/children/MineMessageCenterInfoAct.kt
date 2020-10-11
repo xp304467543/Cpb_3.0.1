@@ -101,7 +101,7 @@ class MineMessageCenterInfoAct : BaseNavActivity() {
                 adapter2 = Adapter2()
                 rvMsg.adapter = adapter2
                 rvMsg.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-                MineApi.getMessageTips("4") {
+                MineApi.getMessageTips("0") {
                     onSuccess {
                         if (!it.isNullOrEmpty()) {
                             adapter2.refresh(it)

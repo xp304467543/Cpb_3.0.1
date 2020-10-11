@@ -43,10 +43,11 @@ public class FastClickUtil {
      * 两次点击间隔不能少于10s
      */
     private static final int MIN_DELAY_TIME_TEN = 10000;
+    private static long sLastClickTime1;
     public static boolean isTenFastClick() {
         long currentClickTime = System.currentTimeMillis();
-        boolean isFastClick = (currentClickTime - sLastClickTime) <= MIN_DELAY_TIME_TEN;
-        sLastClickTime = currentClickTime;
+        boolean isFastClick = (currentClickTime - sLastClickTime1) <= MIN_DELAY_TIME_TEN;
+        sLastClickTime1 = currentClickTime;
         return isFastClick;
     }
 
@@ -54,10 +55,11 @@ public class FastClickUtil {
      * 两次点击间隔不能少于10s
      */
     private static final int MIN_DELAY_TIME_TEN2 = 10000;
+    private static long sLastClickTime2;
     public static boolean isTenFastClick2() {
         long currentClickTime = System.currentTimeMillis();
-        boolean isFastClick = (currentClickTime - sLastClickTime) <= MIN_DELAY_TIME_TEN2;
-        sLastClickTime = currentClickTime;
+        boolean isFastClick = (currentClickTime - sLastClickTime2) <= MIN_DELAY_TIME_TEN2;
+        sLastClickTime2 = currentClickTime;
         return isFastClick;
     }
 
