@@ -12,7 +12,6 @@ import com.customer.ApiRouter
 import com.customer.base.BaseNormalFragment
 import com.customer.component.dialog.GlobalDialog
 import com.customer.data.LoginOut
-import com.customer.data.LotteryResetDiamond
 import com.customer.data.UnDateTopGame
 import com.customer.data.UserInfoSp
 import com.customer.data.game.GameAll
@@ -80,9 +79,7 @@ class GameMainChildFragment : BaseNormalFragment<GameMainChildFragmentPresenter>
                 adapter1.refresh(finalList)
             }
             vpGameUse?.adapter = PageGameAdapter(recyclerViewList)
-            setVisible(tvRecently)
-            setVisible(lineView)
-            setVisible(vpGameUse)
+            setVisible(linRecently)
         }
     }
 
@@ -144,6 +141,7 @@ class GameMainChildFragment : BaseNormalFragment<GameMainChildFragmentPresenter>
             val lin = holder.findViewById<LinearLayout>(R.id.linAll)
             val layoutParams = lin.layoutParams
             layoutParams.width = ViewUtils.getScreenWidth()/3
+            layoutParams.height = 60
             lin.layoutParams = layoutParams
             holder.itemView.setOnClickListener {
                 if (!UserInfoSp.getIsLogin()){
@@ -271,9 +269,7 @@ class GameMainChildFragment : BaseNormalFragment<GameMainChildFragmentPresenter>
         if (isActive()){
           if (vpGameUse!=null){
               vpGameUse?.removeAllViews()
-              setGone(vpGameUse)
-              setGone(tvRecently)
-              setGone(lineView)
+              setGone(linRecently)
           }
         }
     }

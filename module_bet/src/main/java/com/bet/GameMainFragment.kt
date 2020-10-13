@@ -56,10 +56,6 @@ class GameMainFragment : BaseMvpFragment<GameMainPresenter>(), ITheme,IMode {
         } else {
             tvAppMode.text = "纯净版"
         }
-        gameSmartRefreshLayout?.setEnableOverScrollBounce(true)//是否启用越界回弹
-        gameSmartRefreshLayout?.setEnableOverScrollDrag(true)//是否启用越界拖动（仿苹果效果）
-        gameSmartRefreshLayout?.setEnableRefresh(false)//是否启用下拉刷新功能
-        gameSmartRefreshLayout?.setEnableLoadMore(false)//是否启用上拉加载功能
         setTheme(UserInfoSp.getThem())
         setMode(UserInfoSp.getAppMode())
     }
