@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:ignore="MissingDefaultResource">
+    <View
+        android:id="@+id/centerBankView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:elevation="10dp"
+        tools:targetApi="lollipop">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgBankCardBack"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="match_parent"
+            android:padding="@dimen/dp_18"
+            android:src="@mipmap/ic_arrow_back_black" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:drawablePadding="@dimen/dp_8"
+            android:gravity="center"
+            android:text="常用账号"
+            android:textSize="@dimen/sp_16"
+            android:textStyle="bold" />
+
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvAddBankCard"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="@dimen/sp_10"
+            android:gravity="center"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/dp_15"
+            android:drawablePadding="@dimen/dp_8"
+            android:text="添加"
+            android:textColor="@color/color_8899AA"
+            android:textSize="@dimen/sp_13" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:elevation="@dimen/dp_2"
+        android:background="@color/color_F5F7FA"
+        tools:targetApi="lollipop" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvUserBankCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/userCardPlaceHolder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:gravity="center"
+        android:text="您还未添加常用账号"/>
+</LinearLayout>

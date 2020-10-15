@@ -31,13 +31,13 @@
                     android:id="@+id/vpGameUse"
                     android:layout_marginTop="@dimen/dp_10"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_100" />
+                    android:layout_height="@dimen/dp_80" />
 
                 <View
                     android:id="@+id/lineView"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_5"
-                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_2"
                     android:background="@color/color_F5F7FA"/>
             </LinearLayout>
 

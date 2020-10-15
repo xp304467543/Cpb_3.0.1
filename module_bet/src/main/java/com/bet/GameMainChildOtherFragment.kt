@@ -84,6 +84,10 @@ class GameMainChildOtherFragment : BaseNormalFragment<GameMainChildOtherFragment
                         3 -> mPresenter.getAg()
 
                         4 ->  mPresenter.getAgDz()
+
+                        5 -> mPresenter.getAgBgSx()
+
+                        6 -> mPresenter.getBgFish(data?.id?:"")
                     }
                 }
             }

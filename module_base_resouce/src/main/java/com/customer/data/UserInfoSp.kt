@@ -38,6 +38,18 @@ object UserInfoSp {
     }
 
     /**
+     * 自动转账功能
+     */
+    fun getAutoMoney():Boolean{
+        return   SpUtils.getBoolean("AutoMoney", true)
+    }
+
+    fun putAutoMoney(auto:Boolean){
+        return   SpUtils.putBoolean("AutoMoney", auto)
+    }
+
+
+    /**
      * 是否显示纯净版切换
      */
     fun getIsShowAppModeChange():Boolean{

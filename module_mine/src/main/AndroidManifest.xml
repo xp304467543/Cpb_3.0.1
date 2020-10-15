@@ -115,6 +115,13 @@
         <activity
             android:name=".children.recharge.MineBankCardRechargeAct"
             android:theme="@style/SwipeBackStyle" />
+
+        <activity
+            android:name=".children.recharge.MineUserBankCardAct"
+            android:theme="@style/SwipeBackStyle" />
+        <activity
+            android:name=".children.recharge.MineUserAddBankCard"
+            android:theme="@style/SwipeBackStyle" />
     </application>
 
 

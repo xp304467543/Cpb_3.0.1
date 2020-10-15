@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">乐购直播</string>
+    <string name="app_name">乐购</string>
     <string name="alivc_player_settings_title">播放设置</string>
 
     <string name="alivc_speed_one_times">正常</string>

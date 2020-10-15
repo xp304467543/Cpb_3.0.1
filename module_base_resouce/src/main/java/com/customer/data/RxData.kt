@@ -104,3 +104,7 @@ data class ChangeLottery(val lotteryId:String)
 data class AppChangeMode(val mode: AppMode = AppMode.Normal)
 
 data class OnLine(var onLine:Long?=0)
+
+data class BankAddSuccess(var boolean: Boolean)
+
+data class BankCardChoose(var no: String,var userName:String)

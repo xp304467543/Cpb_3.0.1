@@ -117,6 +117,7 @@ class LiveRoomBetFragment : BottomDialogFragment() {
             }
             getLotteryNewCode(if (id == "" || id == "-1") "1" else id)//默认加载重庆时时彩  1
             setTabLayout(if (id == "" || id == "-1") "1" else id)
+            getPlayMoney()
             getUserDiamond()
             getUserBalance()
             clearRadio(true)
@@ -245,7 +246,9 @@ class LiveRoomBetFragment : BottomDialogFragment() {
 
 
     private fun clearRadio(boolean: Boolean) {
-        if (selectMoneyList.isNullOrEmpty()) return
+        if (selectMoneyList.isNullOrEmpty()){
+            return
+        }
         radioGroupLayout?.removeAllViews()
         for ((index, radio) in selectMoneyList!!.withIndex()) {
             radio.isChecked = !boolean && index == 0

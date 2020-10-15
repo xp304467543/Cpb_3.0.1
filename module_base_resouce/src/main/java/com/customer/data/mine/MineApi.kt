@@ -178,6 +178,9 @@ object MineApi : BaseApi {
     //AG余额
     private const val AG_MONEY ="ag/balance"
 
+    //BG余额
+    private const val BG_MONEY ="bg/balance"
+
     //棋牌上分
     private const val CHESS_UP ="fhchess/transfer-out"
 
@@ -190,11 +193,23 @@ object MineApi : BaseApi {
     //AG下分
     private const val AG_DOWN ="ag/transfer-in"
 
+    //BG上分
+    private const val BG_UP ="bg/transfer-out"
+
+    //BG下分
+    private const val BG_DOWN ="bg/transfer-in"
+
     //银行卡充值列表
     private const val BANK_CARD = "api/v1_1/Recharge/bankList"
 
     //银行卡充值
     private const val BANK_CARD_RECHARGE = "api/v1_1/Recharge/bank_recharge"
+
+    //获取常用卡号列表
+    private const val USER_BANK_CARD = "api/v1_1/Recharge/get_commonno"
+
+    //添加常用卡号
+    private const val USER_ADD_BANK_CARD = "api/v1_1/Recharge/add_commonno"
 
     /**
      * 获取用户信息
@@ -1065,6 +1080,17 @@ object MineApi : BaseApi {
     }
 
     /**
+     * BG余额
+     */
+    fun getBgMoney(function: ApiSubscriber<AgMoney>.() -> Unit){
+        val subscriber = object : ApiSubscriber<AgMoney>() {}
+        subscriber.function()
+        getApiOther().get<AgMoney>(BG_MONEY)
+            .headers("Authorization", UserInfoSp.getTokenWithBearer())
+            .subscribe(subscriber)
+    }
+
+    /**
      * AG 上分 下分
      */
     fun getAgMoneyUpOrDown(upOrDown: Boolean,amount:String,function: AllEmptySubscriber.() -> Unit){
@@ -1074,6 +1100,22 @@ object MineApi : BaseApi {
         map["amount"] = amount
         AESUtils.encrypt(UserInfoSp.getRandomStr(), Gson().toJson(map))?.let {
             getApiOther().post<String>(if (upOrDown) AG_UP else AG_DOWN).isMultipart(true)
+                .headers("Authorization", UserInfoSp.getTokenWithBearer())
+                .params("datas", it)
+                .subscribe(subscriber)
+        }
+    }
+
+    /**
+     * BG 上分 下分
+     */
+    fun getBgMoneyUpOrDown(upOrDown: Boolean,amount:String,function: AllEmptySubscriber.() -> Unit){
+        val subscriber = AllEmptySubscriber()
+        subscriber.function()
+        val map = hashMapOf<String, Any>()
+        map["amount"] = amount
+        AESUtils.encrypt(UserInfoSp.getRandomStr(), Gson().toJson(map))?.let {
+            getApiOther().post<String>(if (upOrDown) BG_UP else BG_DOWN).isMultipart(true)
                 .headers("Authorization", UserInfoSp.getTokenWithBearer())
                 .params("datas", it)
                 .subscribe(subscriber)
@@ -1123,6 +1165,32 @@ object MineApi : BaseApi {
                 .params("pay_amount",pay_amount)
                 .params("pay_time",pay_time)
                 .subscribe(subscriber)
+
+    }
+
+    /**
+     * 常用卡号
+     */
+    fun getUserBank(function: ApiSubscriber<List<UserBankCard>>.() -> Unit){
+        val subscriber = object : ApiSubscriber<List<UserBankCard>>() {}
+        subscriber.function()
+        getApi().get<List<UserBankCard>>(USER_BANK_CARD)
+            .headers("token", UserInfoSp.getToken())
+            .subscribe(subscriber)
+    }
+
+    /**
+     * 添加常用卡号
+     */
+    fun addUserBankCard(name:String,no:String,remark:String,function: ApiSubscriber<BaseApiBean>.() -> Unit){
+        val subscriber = object : ApiSubscriber<BaseApiBean>() {}
+        subscriber.function()
+        getApi().post<BaseApiBean>(USER_ADD_BANK_CARD)
+            .headers("token", UserInfoSp.getToken())
+            .params("name",name)
+            .params("no",no)
+            .params("remark",remark)
+            .subscribe(subscriber)
 
     }
 

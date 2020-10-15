@@ -16,7 +16,7 @@
         </provider>
         <activity
             android:name="com.customer.component.activity.GlobalWebAct"
-
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/SwipeBackStyle" />
         <activity
             android:name="com.customer.component.activity.RechargeWebAct"

@@ -49,6 +49,7 @@ object MovieApi : BaseApi {
 
 
 
+
     fun getMovieType(function: ApiSubscriber<List<MovieType>>.() -> Unit){
         val subscriber = object : ApiSubscriber<List<MovieType>>() {}
         subscriber.function()

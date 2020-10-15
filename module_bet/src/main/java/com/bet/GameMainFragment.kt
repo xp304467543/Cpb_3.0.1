@@ -37,7 +37,7 @@ import kotlinx.android.synthetic.main.fragment_game.*
  *
  */
 
-class GameMainFragment : BaseMvpFragment<GameMainPresenter>(), ITheme,IMode {
+class GameMainFragment : BaseMvpFragment<GameMainPresenter>(), ITheme, IMode {
 
     override fun attachView() = mPresenter.attachView(this)
 
@@ -65,23 +65,24 @@ class GameMainFragment : BaseMvpFragment<GameMainPresenter>(), ITheme,IMode {
     }
 
 
-
     override fun initEvent() {
         betAppSwitchMode?.setOnClickListener {
-            if (!FastClickUtil.isFastClick()){
+            if (!FastClickUtil.isFastClick()) {
                 val anim = AnimationUtils.loadAnimation(context, R.anim.left_out) as AnimationSet
-                anim.setAnimationListener(object : Animation.AnimationListener{
+                anim.setAnimationListener(object : Animation.AnimationListener {
                     override fun onAnimationRepeat(animation: Animation?) {
                     }
+
                     override fun onAnimationStart(animation: Animation?) {
                     }
+
                     override fun onAnimationEnd(animation: Animation?) {
-                        if (UserInfoSp.getAppMode() == AppMode.Normal){
+                        if (UserInfoSp.getAppMode() == AppMode.Normal) {
                             tvAppMode.text = "纯净版"
                             UserInfoSp.putAppMode(AppMode.Pure)
                             RxBus.get().post(AppChangeMode(AppMode.Pure))
                             setVisible(betMarquee)
-                        }else{
+                        } else {
                             tvAppMode.text = "直播版"
                             UserInfoSp.putAppMode(AppMode.Normal)
                             RxBus.get().post(AppChangeMode(AppMode.Normal))
@@ -94,7 +95,7 @@ class GameMainFragment : BaseMvpFragment<GameMainPresenter>(), ITheme,IMode {
         }
 
         imgBetUserRecharge?.setOnClickListener {
-            if (!FastClickUtil.isFastClick()){
+            if (!FastClickUtil.isFastClick()) {
                 if (!UserInfoSp.getIsLogin()) {
                     GlobalDialog.notLogged(requireActivity())
                     return@setOnClickListener
@@ -103,7 +104,7 @@ class GameMainFragment : BaseMvpFragment<GameMainPresenter>(), ITheme,IMode {
             }
         }
         imgBetUserIcon?.setOnClickListener {
-            if (!FastClickUtil.isFastClick()){
+            if (!FastClickUtil.isFastClick()) {
                 if (UserInfoSp.getIsLogin()) RxBus.get().post(
                     HomeJumpToMine(true)
                 )
@@ -118,24 +119,29 @@ class GameMainFragment : BaseMvpFragment<GameMainPresenter>(), ITheme,IMode {
     }
 
     fun initViewPager(data: ArrayList<GameAll>) {
-        if (vpGame!=null){
+        if (vpGame != null) {
             val fragments = arrayListOf<Fragment>(
-                GameMainChildFragment.newInstance(0,data = data),
-                GameMainChildOtherFragment.newInstance(1,data = data),
-                GameMainChildOtherFragment.newInstance(2,data = data),
-                GameMainChildOtherFragment.newInstance(3,data = data),
-                GameMainChildOtherFragment.newInstance(4,data = data)
+                GameMainChildFragment.newInstance(0, data = data),
+                GameMainChildOtherFragment.newInstance(1, data = data),
+                GameMainChildOtherFragment.newInstance(2, data = data),
+                GameMainChildOtherFragment.newInstance(3, data = data),
+                GameMainChildOtherFragment.newInstance(4, data = data),
+                GameMainChildOtherFragment.newInstance(5, data = data),
+                GameMainChildOtherFragment.newInstance(6, data = data)
             )
             val adapter = BaseFragmentPageAdapter(childFragmentManager, fragments)
             vpGame?.adapter = adapter
             val list = arrayListOf<String>()
-            for ( item in data){ list.add(item.name?:"未知") }
+            for (item in data) {
+                list.add(item.name ?: "未知")
+            }
             initTopTab(list)
         }
     }
+
     private var tabAdapter: TabScaleAdapter? = null
     private fun initTopTab(mDataList: ArrayList<String>) {
-        if (vpGame!=null){
+        if (vpGame != null) {
             val commonNavigator = CommonNavigator(context)
             commonNavigator.scrollPivotX = 0.65f
             tabAdapter = TabScaleAdapter(
@@ -147,6 +153,7 @@ class GameMainFragment : BaseMvpFragment<GameMainPresenter>(), ITheme,IMode {
                 textSize = 14F
             )
             commonNavigator.adapter = tabAdapter
+            vpGame.offscreenPageLimit = 7
             gameSwitchVideoTab.navigator = commonNavigator
             ViewPagerHelper.bind(gameSwitchVideoTab, vpGame)
         }
@@ -167,7 +174,7 @@ class GameMainFragment : BaseMvpFragment<GameMainPresenter>(), ITheme,IMode {
             Theme.LoverDay -> {
                 imgGameBg.setImageResource(R.drawable.ic_them_love_top)
             }
-            Theme.NationDay ->{
+            Theme.NationDay -> {
                 imgGameBg.setImageResource(R.drawable.ic_them_gq_top)
             }
         }
@@ -178,9 +185,9 @@ class GameMainFragment : BaseMvpFragment<GameMainPresenter>(), ITheme,IMode {
     override fun onSupportVisible() {
         super.onSupportVisible()
         RxBus.get().post(UnDateTopGame())
-        if (UserInfoSp.getIsShowAppModeChange()){
+        if (UserInfoSp.getIsShowAppModeChange()) {
             setVisible(betAppSwitchMode)
-        }else setGone(betAppSwitchMode)
+        } else setGone(betAppSwitchMode)
         if (UserInfoSp.getIsLogin()) {
             GlideUtil.loadCircleImage(
                 requireContext(),
@@ -214,22 +221,22 @@ class GameMainFragment : BaseMvpFragment<GameMainPresenter>(), ITheme,IMode {
             2 -> setTheme(Theme.NewYear)
             3 -> setTheme(Theme.MidAutumn)
             4 -> setTheme(Theme.LoverDay)
-            5 ->setTheme(Theme.NationDay)
+            5 -> setTheme(Theme.NationDay)
         }
     }
 
-        //纯净版切换
+    //纯净版切换
     @Subscribe(thread = EventThread.MAIN_THREAD)
     fun changeMode(eventBean: AppChangeMode) {
-        if (isActive()){
+        if (isActive()) {
             setMode(eventBean.mode)
         }
 
     }
 
     override fun setMode(mode: AppMode) {
-        when(mode){
-            AppMode.Normal ->{
+        when (mode) {
+            AppMode.Normal -> {
                 tvAppMode.text = "纯净版"
                 setGone(betMarquee)
                 setGone(imgBetUserRecharge)
@@ -238,7 +245,7 @@ class GameMainFragment : BaseMvpFragment<GameMainPresenter>(), ITheme,IMode {
                 tvTopName.text = "游戏中心"
 
             }
-            AppMode.Pure ->{
+            AppMode.Pure -> {
                 tvAppMode.text = "直播版"
                 setVisible(betMarquee)
                 setVisible(imgBetUserRecharge)

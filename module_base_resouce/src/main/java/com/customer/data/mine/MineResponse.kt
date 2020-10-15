@@ -156,7 +156,7 @@ data class MineNewBean(
 )
 
 //更新关注
-data class UpDatePre(val update:Boolean)
+data class UpDatePre(val update: Boolean)
 
 //Lottery视频跳直播间
 data class LotteryToLiveRoom(var id: String)
@@ -228,7 +228,7 @@ data class MineReportCode(
     val user_id: String?,
     val nickname: String?,
     val market_code: String?,
-    val homepage_url:String?,
+    val homepage_url: String?,
     val market_url: String?,
     val status: String?,
     val status_cn: String?,
@@ -299,10 +299,21 @@ data class BetLotteryBean(
 )
 
 
-data class AgMoney(val bl:String?)
+data class AgMoney(val bl: String?)
 
-data class Third(val name:String?,val name_cn:String?)
+data class Third(val name: String?, val name_cn: String?)
 
 data class StartBanner(var type: String?, var image_url: String?, var url: String?)
 
-data class BankCard(var bank_id:String,var bank:String,var name:String,var no:String,var openbank:String,var rate:String,var low_money:String,var high_money:String)
+data class BankCard(
+    var bank_id: String,
+    var bank: String,
+    var name: String,
+    var no: String,
+    var openbank: String,
+    var rate: String,
+    var low_money: String,
+    var high_money: String
+)
+
+data class UserBankCard(var id: String?,var name: String?,var no: String?,var mark: String?,var remark: String?)

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_F5F7FA"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <View
@@ -14,7 +14,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_50">
+        android:layout_height="@dimen/dp_50"
+        android:elevation="@dimen/dp_13">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imgBack"
@@ -45,9 +46,10 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvRecycle"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginEnd="@dimen/dp_5"
                 android:drawablePadding="@dimen/dp_8"
+                android:gravity="center"
                 android:text="一键回收"
                 android:textColor="@color/color_8899AA"
                 android:textSize="@dimen/sp_13" />
@@ -151,57 +153,137 @@
             app:layout_constraintTop_toBottomOf="@id/tv_1" />
 
 
-        <TextView
-            android:id="@+id/tv_3"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/linGame"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_20"
-            android:text="乐购棋牌"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_12"
-            app:layout_constraintEnd_toStartOf="@id/line_1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/line_2" />
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/line_2">
+
+            <TextView
+                android:id="@+id/tv_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="乐购棋牌"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_12" />
 
 
-        <TextView
-            android:id="@+id/tv_3_money"
-            android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="BG游戏"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_12" />
+
+            <TextView
+                android:id="@+id/tv_4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="AG游戏"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_12" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_2"
-            android:text="0"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_12"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@id/line_1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_3" />
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/linGame">
 
-        <TextView
-            android:id="@+id/tv_4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_20"
-            android:text="AG游戏"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_12"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/line_1"
-            app:layout_constraintTop_toBottomOf="@id/line_2" />
+            <TextView
+                android:id="@+id/tv_qp_money"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_12"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/tv_4_money"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_2"
-            android:text="0"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_12"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/line_1"
-            app:layout_constraintTop_toBottomOf="@id/tv_3" />
+
+            <TextView
+                android:id="@+id/tv_bg_money"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_12"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/tv_ag_money"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_12"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/sp_10"
+        android:paddingEnd="@dimen/sp_10"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#343434"
+            android:text="自动转账"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textColor="#9A9A9A"
+            android:textSize="@dimen/sp_10"
+            android:text="（开启后，进入游戏时将自动额度转换）"/>
+
+        <com.lib.basiclib.base.xui.widget.button.switchbutton.SwitchButton
+            android:id="@+id/moneySwitch"
+            android:layout_width="@dimen/dp_55"
+            android:layout_height="@dimen/dp_35"
+            android:paddingTop="@dimen/dp_2"
+            app:swb_animationDuration="300"
+            app:swb_backDrawable="@drawable/ios_back_drawable"
+            app:swb_thumbDrawable="@drawable/ios_thumb_selector"
+            app:swb_thumbMarginBottom="-8dp"
+            app:swb_thumbMarginLeft="-5dp"
+            app:swb_thumbMarginRight="-6dp"
+            app:swb_thumbMarginTop="-2.5dp"
+            android:checked="true"
+            app:swb_thumbRangeRatio="1.5"
+            tools:ignore="RelativeOverlap" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_5"
+        android:background="@color/grey_f5f7fa"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

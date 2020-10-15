@@ -21,6 +21,10 @@ object GameApi : BaseApi {
 
     private const val GAME_AG_DZ = "ag/play-slot"
 
+    private const val GAME_BG_SX ="bg/play-live"
+
+    private const val GAME_BG_FISH ="bg/play-fishing"
+
     private const val GAME_CHESS_HIS = "fhchess/game-record"
 
     private const val GAME_AG_LIVE = "ag/game-record"
@@ -77,6 +81,33 @@ object GameApi : BaseApi {
             .headers("Authorization", UserInfoSp.getTokenWithBearer())
             .subscribe(subscriber)
     }
+
+    /**
+     * BG视讯
+     */
+    fun getBgSx(function: ApiSubscriber<Game060>.() -> Unit){
+        val subscriber = object : ApiSubscriber<Game060>() {}
+        subscriber.function()
+        getApiOther()
+            .get<Game060>(GAME_BG_SX)
+            .headers("Authorization", UserInfoSp.getTokenWithBearer())
+            .subscribe(subscriber)
+    }
+
+
+    /**
+     * BG捕鱼
+     */
+    fun getBgFish(game_id:String,function: ApiSubscriber<Game060>.() -> Unit){
+        val subscriber = object : ApiSubscriber<Game060>() {}
+        subscriber.function()
+        getApiOther()
+            .get<Game060>(GAME_BG_FISH)
+            .headers("Authorization", UserInfoSp.getTokenWithBearer())
+            .params("game_id",game_id)
+            .subscribe(subscriber)
+    }
+
 
     /**
      * 棋牌历史 记录

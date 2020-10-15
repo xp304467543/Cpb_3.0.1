@@ -279,7 +279,7 @@
     <string name="alivc_net_state_mobile_yes">Resume</string>
     <string name="alivc_net_state_mobile_no">Exit</string>
 
-    <string name="app_name">AliyunListPlayer</string>
+    <string name="app_name">乐购</string>
     <string name="alivc_player_tip_last_video">已经是最后一个视频了</string>
     <string name="alivc_player_net_unconnect">无网络</string>
 

@@ -16,9 +16,9 @@ import com.xiaojinzi.component.impl.Router
 class GameMainChildOtherFragmentPresenter : BaseMvpPresenter<GameMainChildOtherFragment>() {
 
 
-    fun getChessGame(game_id:String){
+    fun getChessGame(game_id: String) {
         GameApi.get060(game_id) {
-            if (mView.isAdded){
+            if (mView.isAdded) {
                 onSuccess {
                     Router.withApi(ApiRouter::class.java).toGlobalWeb(it.url.toString())
                     mView.hidePageLoadingDialog()
@@ -32,9 +32,9 @@ class GameMainChildOtherFragmentPresenter : BaseMvpPresenter<GameMainChildOtherF
         }
     }
 
-    fun getAg(){
-        GameApi.getAg  {
-            if (mView.isAdded){
+    fun getAg() {
+        GameApi.getAg {
+            if (mView.isAdded) {
                 onSuccess {
                     Router.withApi(ApiRouter::class.java).toGlobalWeb(it.url.toString())
                     mView.hidePageLoadingDialog()
@@ -49,9 +49,9 @@ class GameMainChildOtherFragmentPresenter : BaseMvpPresenter<GameMainChildOtherF
     }
 
 
-    fun getAgDz(){
+    fun getAgDz() {
         GameApi.getAgDZ {
-            if (mView.isAdded){
+            if (mView.isAdded) {
                 onSuccess {
                     Router.withApi(ApiRouter::class.java).toGlobalWeb(it.url.toString())
                     mView.hidePageLoadingDialog()
@@ -61,7 +61,36 @@ class GameMainChildOtherFragmentPresenter : BaseMvpPresenter<GameMainChildOtherF
                     mView.hidePageLoadingDialog()
                 }
             }
+        }
+    }
 
+    fun getAgBgSx() {
+        GameApi.getBgSx {
+            if (mView.isAdded) {
+                onSuccess {
+                    Router.withApi(ApiRouter::class.java).toGlobalWeb(it.url.toString())
+                    mView.hidePageLoadingDialog()
+                }
+                onFailed {
+                    ToastUtils.showToast(it.getMsg())
+                    mView.hidePageLoadingDialog()
+                }
+            }
+        }
+    }
+
+    fun getBgFish(game_id: String) {
+        GameApi.getBgFish(game_id) {
+            if (mView.isAdded) {
+                onSuccess {
+                    Router.withApi(ApiRouter::class.java).toGlobalWeb(it.url.toString())
+                    mView.hidePageLoadingDialog()
+                }
+                onFailed {
+                    ToastUtils.showToast(it.getMsg())
+                    mView.hidePageLoadingDialog()
+                }
+            }
         }
     }
 }

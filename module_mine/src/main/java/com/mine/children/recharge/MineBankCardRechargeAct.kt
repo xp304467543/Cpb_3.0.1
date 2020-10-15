@@ -1,15 +1,20 @@
 package com.mine.children.recharge
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.text.InputFilter
 import android.text.InputFilter.LengthFilter
 import com.customer.component.dialog.DialogGlobalTips
+import com.customer.data.BankCardChoose
 import com.customer.data.mine.MineApi
+import com.hwangjr.rxbus.annotation.Subscribe
+import com.hwangjr.rxbus.thread.EventThread
 import com.lib.basiclib.base.activity.BaseNavActivity
 import com.lib.basiclib.base.xui.widget.picker.widget.builder.TimePickerBuilder
 import com.lib.basiclib.base.xui.widget.picker.widget.configure.TimePickerType
 import com.lib.basiclib.base.xui.widget.picker.widget.listener.OnTimeSelectListener
 import com.lib.basiclib.utils.FastClickUtil
+import com.lib.basiclib.utils.StatusBarUtils
 import com.lib.basiclib.utils.ToastUtils
 import com.lib.basiclib.utils.ViewUtils
 import com.mine.R
@@ -18,6 +23,7 @@ import java.math.BigDecimal
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.regex.Pattern
 
 
 /**
@@ -49,7 +55,12 @@ class MineBankCardRechargeAct : BaseNavActivity() {
 
     override fun isSwipeBackEnable() = true
 
+    override fun isShowToolBar() = false
+
+    override fun isRegisterRxBus() = true
+
     override fun initContentView() {
+        StatusBarUtils.setStatusBarHeight(centerView)
         etUser.filters = arrayOf(filter, LengthFilter(20))
     }
 
@@ -60,6 +71,7 @@ class MineBankCardRechargeAct : BaseNavActivity() {
 
 
     override fun initEvent() {
+        imgBack.setOnClickListener { finish() }
         tvTimePicker.setOnClickListener { timePicker() }
         btConfirm.setOnClickListener {
             if (!FastClickUtil.isFastClick()) {
@@ -124,6 +136,11 @@ class MineBankCardRechargeAct : BaseNavActivity() {
                 ViewUtils.copyText(cardAddress)
                 ToastUtils.showToast("已复制到剪贴板")
             }else  ToastUtils.showToast("暂无可使用银行卡")
+        }
+        tvUserBankCard.setOnClickListener {
+            if (!FastClickUtil.isTenFastClick()){
+                startActivity(Intent(this,MineUserBankCardAct::class.java))
+            }
         }
     }
 
@@ -190,7 +207,7 @@ class MineBankCardRechargeAct : BaseNavActivity() {
                         "提示",
                         "确定",
                         "",
-                        "您的订单已提交，我们会尽快为您 充值，请您稍等片刻"
+                        "您的订单已提交，我们会尽快为您充值，请您稍等片刻"
                     )
                     dialog.setOnDismissListener { finish() }
                         dialog.show()
@@ -226,6 +243,13 @@ class MineBankCardRechargeAct : BaseNavActivity() {
      * EditText只能输入中文
      */
     var filter = InputFilter { source, start, end, dest, dstart, dend ->
+        val speChat = "[`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
+
+        val pattern = Pattern.compile(speChat)
+
+        val matcher = pattern.matcher(source.toString())
+
+        if (matcher.find()) return@InputFilter ""
         for (i in start until end) {
             if (!isChinese(source[i])) {
                 return@InputFilter ""
@@ -244,4 +268,12 @@ class MineBankCardRechargeAct : BaseNavActivity() {
         val ub = Character.UnicodeBlock.of(c)
         return ub === Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS || ub === Character.UnicodeBlock.CJK_COMPATIBILITY_IDEOGRAPHS || ub === Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A || ub === Character.UnicodeBlock.GENERAL_PUNCTUATION || ub === Character.UnicodeBlock.CJK_SYMBOLS_AND_PUNCTUATION || ub === Character.UnicodeBlock.HALFWIDTH_AND_FULLWIDTH_FORMS
     }
+
+
+    @Subscribe(thread = EventThread.MAIN_THREAD)
+    fun upDateUserBankSelect(event: BankCardChoose) {
+        etUser?.setText(event.userName)
+        rtCardNum?.setText(event.no)
+    }
+
 }

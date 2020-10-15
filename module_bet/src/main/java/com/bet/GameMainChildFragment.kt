@@ -86,7 +86,6 @@ class GameMainChildFragment : BaseNormalFragment<GameMainChildFragmentPresenter>
     fun initHot(data: ArrayList<GameAll>,isUpDateTop:Boolean){
         initRecently(data)
         if (!isUpDateTop) initRecommend(data)
-
     }
 
 
@@ -141,7 +140,6 @@ class GameMainChildFragment : BaseNormalFragment<GameMainChildFragmentPresenter>
             val lin = holder.findViewById<LinearLayout>(R.id.linAll)
             val layoutParams = lin.layoutParams
             layoutParams.width = ViewUtils.getScreenWidth()/3
-            layoutParams.height = 60
             lin.layoutParams = layoutParams
             holder.itemView.setOnClickListener {
                 if (!UserInfoSp.getIsLogin()){
