@@ -81,6 +81,26 @@ class MineGameReportPresenter : BaseMvpPresenter<MineGameReportAct>() {
                 ToastUtils.showToast(it.getMsg())
             }
         }
+        MineApi.getGameBgSx(start, end){
+            onSuccess {
+                mView.tv_bgsx_1?.text = it.count
+                mView.tv_bgsx_2?.text = it.amount
+                mView.tv_bgsx_3?.text = "￥ "+ it.prize
+            }
+            onFailed {
+                ToastUtils.showToast(it.getMsg())
+            }
+        }
+        MineApi.getGameBgFish(start, end){
+            onSuccess {
+                mView.tv_bgby_1?.text = it.count
+                mView.tv_bgby_2?.text = it.amount
+                mView.tv_bgby_3?.text = "￥ "+ it.prize
+            }
+            onFailed {
+                ToastUtils.showToast(it.getMsg())
+            }
+        }
     }
 
 }

@@ -70,7 +70,7 @@
     <string name="moments">友圈</string>
     <string name="moments_download">下载</string>
     <!-- ================================================================== Mine ================================================================== -->
-    <string name="mine_welcome">Hi~欢迎来到乐购直播</string>
+    <string name="mine_welcome">Hi~欢迎来到乐购</string>
     <string name="mine_login_text">登录开启你的娱乐世界</string>
     <string name="mine_balance">余额</string>
     <string name="mine_base_balance">0.00</string>

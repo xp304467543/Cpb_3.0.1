@@ -2,7 +2,11 @@ package com.lib.basiclib.utils
 
 import android.annotation.SuppressLint
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import com.fh.basemodle.R
@@ -112,6 +116,26 @@ object ToastUtils {
             toast!!.setText(msg)
         }
         toast!!.show()
+    }
+
+
+    fun showToastView( text: String) {
+        val inflater = LayoutInflater.from(BaseApplication.getApplication())
+        val params = LinearLayout.LayoutParams(ViewUtils.getScreenWidth(), ViewGroup.LayoutParams.MATCH_PARENT)
+        val view: View = inflater.inflate(R.layout.toast_view, null)
+        val imageView: ImageView = view.findViewById<View>(R.id.toast_image) as ImageView
+        val t = view.findViewById<View>(R.id.toast_text) as TextView
+        val toastLayout = view.findViewById<LinearLayout>(R.id.toastLayout)
+        toastLayout.layoutParams = params
+        t.text = text
+        if (toast != null) {
+            toast?.cancel()
+        }
+        toast = Toast(BaseApplication.getApplication())
+        toast?.setGravity(Gravity.TOP, 0, 0)
+        toast?.duration = Toast.LENGTH_LONG
+        toast?.view = view
+        toast?.show()
     }
 
 }

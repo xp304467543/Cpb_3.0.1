@@ -138,7 +138,7 @@ class MineBankCardRechargeAct : BaseNavActivity() {
             }else  ToastUtils.showToast("暂无可使用银行卡")
         }
         tvUserBankCard.setOnClickListener {
-            if (!FastClickUtil.isTenFastClick()){
+            if (!FastClickUtil.isFastClick()){
                 startActivity(Intent(this,MineUserBankCardAct::class.java))
             }
         }

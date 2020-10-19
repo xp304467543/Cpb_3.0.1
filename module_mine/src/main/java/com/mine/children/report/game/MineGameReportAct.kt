@@ -90,6 +90,20 @@ class MineGameReportAct : BaseMvpActivity<MineGameReportPresenter>() {
                 startActivity(intent)
             }
         }
+        tv_show_more_bgsx.setOnClickListener {
+            if (!FastClickUtil.isFastClick()){
+                val intent = Intent(this, MineGameReportMoreAct::class.java)
+                intent.putExtra("indexGame",5)
+                startActivity(intent)
+            }
+        }
+        tv_show_more_bg_fish.setOnClickListener {
+            if (!FastClickUtil.isFastClick()){
+                val intent = Intent(this, MineGameReportMoreAct::class.java)
+                intent.putExtra("indexGame",6)
+                startActivity(intent)
+            }
+        }
     }
 
     private fun change(index:Int){

@@ -62,6 +62,8 @@ class MineGameReportMoreAct : BaseMvpActivity<MineGameReportMorePresenter>() {
             2 -> "乐购棋牌"
             3 -> "AG视讯游戏报表"
             4 -> "AG电子游戏报表"
+            5 -> "BG视讯游戏报表"
+            6 -> "BG捕鱼游戏报表"
             else ->""
         }
         if (indexGame == 1){
@@ -93,6 +95,14 @@ class MineGameReportMoreAct : BaseMvpActivity<MineGameReportMorePresenter>() {
                 mPresenter.getGameInfo(indexGame, start, end)
             }
             4 -> {
+                setGone(topSelected)
+                mPresenter.getGameInfo(indexGame, start, end)
+            }
+            5 -> {
+                setGone(topSelected)
+                mPresenter.getGameInfo(indexGame, start, end)
+            }
+            6 -> {
                 setGone(topSelected)
                 mPresenter.getGameInfo(indexGame, start, end)
             }
@@ -213,10 +223,13 @@ class MineGameReportMoreAct : BaseMvpActivity<MineGameReportMorePresenter>() {
             if (!data?.img_url.isNullOrEmpty()){
                 GlideUtil.loadImage(this@MineGameReportMoreAct, data?.img_url, holder.getImageView(R.id.imgLottery))
             }else{
-                if (indexGame == 3){
-                    holder.getImageView(R.id.imgLottery).setBackgroundResource(R.mipmap.ic_ag_game)
-                }else if (indexGame == 4){
-                    holder.getImageView(R.id.imgLottery).setBackgroundResource(R.mipmap.ic_ag_game)
+                when (indexGame) {
+                    4 -> {
+                        holder.getImageView(R.id.imgLottery).setBackgroundResource(R.mipmap.ic_ag_game_live)
+                    }
+                    else -> {
+                        holder.getImageView(R.id.imgLottery).setBackgroundResource(R.mipmap.ic_ag_game)
+                    }
                 }
             }
             holder.click(R.id.tvLookMore) {

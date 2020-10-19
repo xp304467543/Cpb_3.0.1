@@ -17,6 +17,7 @@ import com.customer.data.mine.MineUpDateMoney
 import com.xiaojinzi.component.anno.RouterAnno
 import com.customer.component.dialog.GlobalDialog
 import com.customer.data.UserInfoSp
+import com.lib.basiclib.utils.FastClickUtil
 import cuntomer.them.AppMode
 import kotlinx.android.synthetic.main.act_recharge.*
 
@@ -77,6 +78,27 @@ class MineRechargeAct : BaseNavActivity() {
     override fun initEvent() {
         imgGoBack.setOnClickListener {
             finish()
+        }
+        tvRecycle.setOnClickListener {
+            if (!FastClickUtil.isTenFastClick()){
+                recycleAll()
+            }else ToastUtils.showToast("点击过于频繁,请10秒后重试")
+        }
+    }
+
+
+    private fun recycleAll() {
+        showPageLoadingDialog("转账中")
+        MineApi.recycleAll {
+            onSuccess {
+                hidePageLoadingDialog()
+                ToastUtils.showToast("转账成功")
+                upDateBalance(false)
+            }
+            onFailed {
+                hidePageLoadingDialog()
+                ToastUtils.showToast(it.getMsg())
+            }
         }
     }
 

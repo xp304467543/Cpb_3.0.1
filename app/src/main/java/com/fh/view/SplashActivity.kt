@@ -14,6 +14,7 @@ import com.fh.R
 import com.glide.GlideUtil
 import com.lib.basiclib.utils.FastClickUtil
 import com.lib.basiclib.utils.StatusBarUtils
+import com.lib.basiclib.utils.ToastUtils
 import com.lib.basiclib.utils.ViewUtils
 import com.xiaojinzi.component.impl.Router
 import cuntomer.api.WebUrlProvider
@@ -85,14 +86,14 @@ class SplashActivity : Activity(), CancelAdapt {
 
     private fun initSysTemUrl() {
         HomeApi.getSystemUrl {
-            onSuccess {
-                ApiConstant.API_URL_DEV_LIVE_S = it.live_api
-                ApiConstant.API_URL_DEV_USER_S = it.user_api
-                ApiConstant.API_MOMENTS_FORM_S = it.forum_api
-                ApiConstant.API_LOTTERY_S = it.lottery_api
-                ApiConstant.API_VIDEO = it.movie_api
-                WebUrlProvider.ALL_URL_WEB_SOCKET_MAIN_S = it.notice_url
-                WebUrlProvider.API_URL_WEB_SOCKET_MAIN_S = it.chat_url
+            onSuccess { systemUrl ->
+                ApiConstant.API_URL_DEV_LIVE_S = systemUrl.live_api
+                ApiConstant.API_URL_DEV_USER_S = systemUrl.user_api
+                ApiConstant.API_MOMENTS_FORM_S = systemUrl.forum_api
+                ApiConstant.API_LOTTERY_S = systemUrl.lottery_api
+                ApiConstant.API_VIDEO = systemUrl.movie_api
+                WebUrlProvider.ALL_URL_WEB_SOCKET_MAIN_S = systemUrl.notice_url
+                WebUrlProvider.API_URL_WEB_SOCKET_MAIN_S = systemUrl.chat_url
                 MineApi.getLotteryUrl {
                     onSuccess {
                         UserInfoSp.putCustomer(it.customer ?: urlCustomer)

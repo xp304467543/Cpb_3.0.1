@@ -157,4 +157,74 @@ class MineGameReportMoreInfoPresenter : BaseMvpPresenter<MineGameReportMoreInfoA
             }
         }
     }
+
+    fun getGameBgGame(ame_id:String , st:String,et:String,page:Int){
+        GameApi.getBgGameHistory(ame_id,st,et,page){
+            onSuccess {
+                if (mView.isActive()){
+                    mView.smBetRecord_1.finishLoadMore()
+                    mView.smBetRecord_1?.finishRefresh()
+                    if (!it.isNullOrEmpty()) {
+                        ViewUtils.setGone(mView.tvBetRecordHolder_1)
+                        if (mView.index == 1)  mView.gameAgGameAdapter?.refresh(it) else  mView.gameAgGameAdapter?.loadMore(it)
+                    }else{
+                        if (mView.index == 1) {
+                            mView.gameAgGameAdapter?.clear()
+                            mView.rvGameReportInfo?.removeAllViews()
+                            ViewUtils.setVisible(mView.tvBetRecordHolder_1)
+                            mView.smBetRecord_1?.setEnableAutoLoadMore(false)
+                            mView.smBetRecord_1?.setEnableRefresh(false)
+                        } else {
+                            mView.index--
+                            mView.smBetRecord_1?.setEnableAutoLoadMore(false)
+                        }
+                    }
+                }
+            }
+
+            onFailed {
+                if (mView.isActive()) {
+                    mView.smBetRecord_1?.finishLoadMore()
+                    mView.smBetRecord_1?.finishRefresh()
+                    ToastUtils.showToast(it.getMsg())
+
+                }
+            }
+        }
+    }
+
+    fun getGameBgLive(ame_id:String , st:String,et:String,page:Int){
+        GameApi.getBgLiveHistory(ame_id,st,et,page){
+            onSuccess {
+                if (mView.isActive()){
+                    mView.smBetRecord_1.finishLoadMore()
+                    mView.smBetRecord_1?.finishRefresh()
+                    if (!it.isNullOrEmpty()) {
+                        ViewUtils.setGone(mView.tvBetRecordHolder_1)
+                        if (mView.index == 1)  mView.gameAgGameAdapter?.refresh(it) else  mView.gameAgGameAdapter?.loadMore(it)
+                    }else{
+                        if (mView.index == 1) {
+                            mView.gameAgGameAdapter?.clear()
+                            mView.rvGameReportInfo?.removeAllViews()
+                            ViewUtils.setVisible(mView.tvBetRecordHolder_1)
+                            mView.smBetRecord_1?.setEnableAutoLoadMore(false)
+                            mView.smBetRecord_1?.setEnableRefresh(false)
+                        } else {
+                            mView.index--
+                            mView.smBetRecord_1?.setEnableAutoLoadMore(false)
+                        }
+                    }
+                }
+            }
+
+            onFailed {
+                if (mView.isActive()) {
+                    mView.smBetRecord_1?.finishLoadMore()
+                    mView.smBetRecord_1?.finishRefresh()
+                    ToastUtils.showToast(it.getMsg())
+
+                }
+            }
+        }
+    }
 }

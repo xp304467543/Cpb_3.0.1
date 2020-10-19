@@ -99,6 +99,18 @@ class MineGameReportMoreInfoAct : BaseMvpActivity<MineGameReportMoreInfoPresente
                 rvGameReportInfo.adapter = gameAgGameAdapter
                 gameInfoPageTitle.text = "AG游戏注单详情"
             }
+            5->{
+                setGone(topSelect)
+                gameAgGameAdapter = GameAgAdapter()
+                rvGameReportInfo.adapter = gameAgGameAdapter
+                gameInfoPageTitle.text = "BG视讯注单详情"
+            }
+            6->{
+                setGone(topSelect)
+                gameAgGameAdapter = GameAgAdapter()
+                rvGameReportInfo.adapter = gameAgGameAdapter
+                gameInfoPageTitle.text = "BG游戏注单详情"
+            }
         }
         lotteryId = intent.getStringExtra("rLotteryId") ?: "0"
         currentSel = intent.getStringExtra("is_bl_play") ?: "0"
@@ -155,6 +167,28 @@ class MineGameReportMoreInfoAct : BaseMvpActivity<MineGameReportMoreInfoPresente
                     mPresenter.getGameAgGame(lotteryId,st,et,index)
                 }
             }
+            5 ->{
+                mPresenter.getGameBgLive(lotteryId,st,et,index)
+                smBetRecord_1?.setOnRefreshListener {
+                    index = 1
+                    mPresenter.getGameBgLive(lotteryId,st,et,index)
+                }
+                smBetRecord_1?.setOnLoadMoreListener {
+                    index++
+                    mPresenter.getGameBgLive(lotteryId,st,et,index)
+                }
+            }
+            6 ->{
+                mPresenter.getGameBgGame(lotteryId,st,et,index)
+                smBetRecord_1?.setOnRefreshListener {
+                    index = 1
+                    mPresenter.getGameBgGame(lotteryId,st,et,index)
+                }
+                smBetRecord_1?.setOnLoadMoreListener {
+                    index++
+                    mPresenter.getGameBgGame(lotteryId,st,et,index)
+                }
+            }
         }
 
 
@@ -178,6 +212,8 @@ class MineGameReportMoreInfoAct : BaseMvpActivity<MineGameReportMoreInfoPresente
                 2 ->mPresenter.getGameResponse(lotteryId,st,et,index)
                 3 ->mPresenter.getGameAgLive(lotteryId,st,et,index)
                 4 ->mPresenter.getGameAgGame(lotteryId,st,et,index)
+                5 ->mPresenter.getGameBgLive(lotteryId,st,et,index)
+                6 ->mPresenter.getGameBgGame(lotteryId,st,et,index)
             }
         }
         tv_01.setOnClickListener {
@@ -196,6 +232,8 @@ class MineGameReportMoreInfoAct : BaseMvpActivity<MineGameReportMoreInfoPresente
                 2 ->mPresenter.getGameResponse(lotteryId,st,et,index)
                 3 ->mPresenter.getGameAgLive(lotteryId,st,et,index)
                 4 ->mPresenter.getGameAgGame(lotteryId,st,et,index)
+                5 ->mPresenter.getGameBgLive(lotteryId,st,et,index)
+                6 ->mPresenter.getGameBgGame(lotteryId,st,et,index)
             }
         }
         tv_02.setOnClickListener {
@@ -229,6 +267,8 @@ class MineGameReportMoreInfoAct : BaseMvpActivity<MineGameReportMoreInfoPresente
                         2 ->mPresenter.getGameResponse(lotteryId,st,et,index)
                         3 ->mPresenter.getGameAgLive(lotteryId,st,et,index)
                         4 ->mPresenter.getGameAgGame(lotteryId,st,et,index)
+                        5 ->mPresenter.getGameBgLive(lotteryId,st,et,index)
+                        6 ->mPresenter.getGameBgGame(lotteryId,st,et,index)
                     }
                     dataDialog?.dismiss()
                 }

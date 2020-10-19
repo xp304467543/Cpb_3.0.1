@@ -17,15 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/img_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_10"
-        android:src="@drawable/ic_bg_poster_1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgBack" />
+
 
 
     <com.lib.basiclib.base.round.RoundLinearLayout
@@ -33,13 +25,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_20"
-        android:layout_marginTop="@dimen/dp_40"
+        android:layout_marginTop="@dimen/dp_120"
         android:layout_marginEnd="@dimen/dp_20"
         android:orientation="vertical"
         android:paddingTop="@dimen/dp_35"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img_1"
+        app:layout_constraintTop_toBottomOf="@+id/imgBack"
         app:rv_backgroundColor="@color/white"
         app:rv_cornerRadius="@dimen/dp_5">
 
@@ -84,7 +76,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_105"
+        android:layout_marginTop="@dimen/dp_85"
         android:src="@drawable/ic_bg_poster_2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

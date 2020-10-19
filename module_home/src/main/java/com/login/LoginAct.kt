@@ -63,7 +63,7 @@ class LoginAct : BaseMvpActivity<LoginPresenter>() {
 
     override fun initContentView() {
         StatusBarUtils.setStatusBarForegroundColor(this, true)
-        val spannableString = SpannableString("登录或注册即表示您同意《乐购直播协议》")
+        val spannableString = SpannableString("登录或注册即表示您同意《乐购协议》")
         spannableString.setSpan(
             ForegroundColorSpan(Color.parseColor("#5393f8")),
             11,

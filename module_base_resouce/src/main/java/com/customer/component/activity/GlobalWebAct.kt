@@ -11,6 +11,7 @@ import com.lib.basiclib.base.activity.BaseNavActivity
 import com.lib.basiclib.utils.TimeUtils
 import com.lib.basiclib.utils.ToastUtils
 import com.lib.basiclib.widget.web.ByWebView
+import com.lib.basiclib.widget.web.OnTitleProgressCallback
 import com.tencent.smtt.sdk.WebSettings
 import com.xiaojinzi.component.anno.RouterAnno
 import kotlinx.android.synthetic.main.act_web.*
@@ -41,9 +42,13 @@ class GlobalWebAct : BaseNavActivity() {
                 .with(this)
                 .setWebParent(rootWeb, LinearLayout.LayoutParams(-1, -1))
                 .useWebProgress(ContextCompat.getColor(this, R.color.text_red))
+                .setOnTitleProgressCallback(object : OnTitleProgressCallback(){
+                    override fun onReceivedTitle(title: String?) {
+                        setPageTitle(title?:"")
+                    }
+                })
                 .loadUrl(getUrl())
         }else initNewView()
-
 
     }
 

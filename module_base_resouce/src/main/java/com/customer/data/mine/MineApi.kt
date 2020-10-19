@@ -6,6 +6,7 @@ import com.customer.data.MineUserDiamond
 import com.customer.data.UserInfoSp
 import com.customer.utils.AESUtils
 import com.google.gson.Gson
+import com.lib.basiclib.utils.LogUtils
 import com.rxnetgo.rxcache.CacheMode
 import cuntomer.api.AllEmptySubscriber
 import cuntomer.api.AllSubscriber
@@ -131,23 +132,43 @@ object MineApi : BaseApi {
 
     //游戏报表
     private const val GAME_REPORT_LAST = "guess/report"
+
     //彩票游戏详情
     private const val GAME_LOTTERY_INFO = "guess/lottery-detail-count"
+
     //彩票游戏
     private const val GAME_LOTTERY = "guess/lottery-count"
 
     //棋牌游戏
     private const val GAME_CHESS = "fhchess/count"
+
     //棋牌详情
     private const val GAME_CHESS_INFO = "fhchess/detail-count"
+
     //AG视讯
     private const val GAME_AGSX = "ag/live-count"
+
     //AG视讯详情
     private const val GAME_AGSX_INFO = "ag/live-detail-count"
+
+    //BG视讯
+    private const val GAME_BG_SX = "bg/live-count"
+
+    //BG视讯详情
+    private const val GAME_BG_SX_INFO = "bg/live-detail-count"
+
+    //BG捕鱼
+    private const val GAME_BG_FISH = "bg/fishing-count"
+
+    //BG捕鱼详情
+    private const val GAME_BG_FISH_INFO = "bg/fishing-detail-count"
+
     //AG电子
     private const val GAME_AGDZ = "ag/slot-count"
+
     //AG电子详情
     private const val GAME_AGDZ_INFO = "ag/slot-detail-count"
+
     //推广码
     private const val GET_CODE = "market/index"
 
@@ -171,6 +192,9 @@ object MineApi : BaseApi {
 
     //第三方平台
     private const val THIRD = "user/third-platform"
+
+    //是否自动转账
+    private const val AUTO_CHANGE = "platform/auto-transfer"
 
     //棋牌余额
     private const val CHESS_MONEY ="fhchess/balance"
@@ -199,6 +223,9 @@ object MineApi : BaseApi {
     //BG下分
     private const val BG_DOWN ="bg/transfer-in"
 
+    //一键回收
+    private const val RECYCLE_ALL = "platform/transfer-in-all"
+
     //银行卡充值列表
     private const val BANK_CARD = "api/v1_1/Recharge/bankList"
 
@@ -210,6 +237,9 @@ object MineApi : BaseApi {
 
     //添加常用卡号
     private const val USER_ADD_BANK_CARD = "api/v1_1/Recharge/add_commonno"
+
+    //平台间转账
+    private const val PLAT_TRANSFER = "platform/transfer"
 
     /**
      * 获取用户信息
@@ -900,6 +930,38 @@ object MineApi : BaseApi {
             .params("et", end)
             .subscribe(subscriber)
     }
+    /**
+     * Bg视讯
+     */
+    fun getGameBgSx(
+        start: String,
+        end: String,
+        function: ApiSubscriber<MineGameReport>.() -> Unit
+    ) {
+        val subscriber = object : ApiSubscriber<MineGameReport>() {}
+        subscriber.function()
+        getApiOther().get<MineGameReport>(GAME_BG_SX)
+            .headers("Authorization", UserInfoSp.getTokenWithBearer())
+            .params("st", start)
+            .params("et", end)
+            .subscribe(subscriber)
+    }
+    /**
+     * Bg捕鱼
+     */
+    fun getGameBgFish(
+        start: String,
+        end: String,
+        function: ApiSubscriber<MineGameReport>.() -> Unit
+    ) {
+        val subscriber = object : ApiSubscriber<MineGameReport>() {}
+        subscriber.function()
+        getApiOther().get<MineGameReport>(GAME_BG_FISH)
+            .headers("Authorization", UserInfoSp.getTokenWithBearer())
+            .params("st", start)
+            .params("et", end)
+            .subscribe(subscriber)
+    }
 
     /**
      * 彩票游戏详情
@@ -921,13 +983,15 @@ object MineApi : BaseApi {
     }
 
     /**
-     * 游戏详情 2 棋牌 3 AG视讯 4 AG电子
+     * 游戏详情 2 棋牌 3 AG视讯 4 AG电子 5 BG视讯 6 BG捕鱼
      */
     fun getGameInfo(index:Int,start: String, end: String, function: ApiSubscriber<List<MineGameAgReportInfo>>.() -> Unit){
         val url = when(index){
             2 -> GAME_CHESS_INFO
             3 -> GAME_AGSX_INFO
             4 -> GAME_AGDZ_INFO
+            5 -> GAME_BG_SX_INFO
+            6 -> GAME_BG_FISH_INFO
             else -> GAME_CHESS_INFO }
         val subscriber = object : ApiSubscriber<List<MineGameAgReportInfo>>() {}
         subscriber.function()
@@ -1138,6 +1202,36 @@ object MineApi : BaseApi {
                 .subscribe(subscriber)
         }
     }
+    /**
+     * 一键回收
+     */
+    fun recycleAll(function: AllEmptySubscriber.() -> Unit){
+        val subscriber = AllEmptySubscriber()
+        subscriber.function()
+        getApiOther().post<String>(RECYCLE_ALL)
+            .headers("Authorization", UserInfoSp.getTokenWithBearer())
+            .subscribe(subscriber)
+    }
+
+    /**
+     * 平台间转账
+     */
+    fun platFormTrans(amount:String,plateOut:String,plateIn:String,function: AllEmptySubscriber.() -> Unit){
+        val subscriber = AllEmptySubscriber()
+        subscriber.function()
+        val map = hashMapOf<String, Any>()
+        map["amount"] = amount
+        map["out"] = plateOut
+        map["in"] = plateIn
+        AESUtils.encrypt(UserInfoSp.getRandomStr(), Gson().toJson(map))?.let {
+            getApiOther().post<String>(PLAT_TRANSFER).isMultipart(true)
+                .headers("Authorization", UserInfoSp.getTokenWithBearer())
+                .params("datas", it)
+                .subscribe(subscriber)
+        }
+
+
+    }
 
     /**
      * 银行卡充值列表
@@ -1193,5 +1287,28 @@ object MineApi : BaseApi {
             .subscribe(subscriber)
 
     }
+
+    /**
+     * 获取是否自动转账
+     */
+    fun getAutoChange(function: EmptySubscriber.() -> Unit){
+        val subscriber = EmptySubscriber()
+        subscriber.function()
+        getApiOther().get<String>(AUTO_CHANGE)
+            .headers("Authorization", UserInfoSp.getTokenWithBearer())
+            .subscribe(subscriber)
+    }
+
+    /**
+     * 获取是否自动转账
+     */
+    fun setAutoChange(function: EmptySubscriber.() -> Unit){
+        val subscriber = EmptySubscriber()
+        subscriber.function()
+        getApiOther().post<String>(AUTO_CHANGE)
+            .headers("Authorization", UserInfoSp.getTokenWithBearer())
+            .subscribe(subscriber)
+    }
+
 
 }

@@ -3,6 +3,7 @@ package com.mine.children
 import android.annotation.SuppressLint
 import com.customer.component.dialog.GlobalDialog
 import com.customer.data.mine.MineApi
+import com.google.gson.JsonParser
 import com.lib.basiclib.base.mvp.BaseMvpPresenter
 import com.lib.basiclib.utils.ToastUtils
 import kotlinx.android.synthetic.main.act_mine_money_center.*
@@ -21,6 +22,7 @@ class MineMoneyCenterActPresenter : BaseMvpPresenter<MineMoneyCenterAct>() {
     @SuppressLint("SetTextI18n")
     fun getUserBalance() {
         if (mView.isActive()) {
+            mView.showPageLoadingDialog("加载中")
             MineApi.getUserBalance {
                 onSuccess {
                     mView.tvCenterMoney?.text = it.balance.toString()
@@ -32,11 +34,6 @@ class MineMoneyCenterActPresenter : BaseMvpPresenter<MineMoneyCenterAct>() {
             MineApi.getChessMoney {
                 onSuccess {
                     mView.tv_qp_money?.text = it.bl.toString()
-                    if (mView.tv_ag_money.text.toString() == "维护中" || mView.tv_ag_money.text.toString() == "加载中") {
-                        mView.tvOtherMoney?.text = mView.tv_qp_money.text.toString()
-                    } else mView.tvOtherMoney?.text =
-                        BigDecimal(mView.tv_ag_money.text.toString()).add(BigDecimal(mView.tv_qp_money.text.toString()))
-                            .toString()
                 }
                 onFailed {
                     GlobalDialog.showError(mView, it)
@@ -45,87 +42,96 @@ class MineMoneyCenterActPresenter : BaseMvpPresenter<MineMoneyCenterAct>() {
             MineApi.getAgMoney {
                 onSuccess {
                     mView.tv_ag_money?.text = it.bl.toString()
-                    try {
-                        if (mView.tv_ag_money.text.toString() == "维护中") {
-                            mView.tvOtherMoney?.text = mView.tv_qp_money.text.toString()
-                        } else mView.tvOtherMoney?.text =
-                            BigDecimal(mView.tv_ag_money.text.toString()).add(BigDecimal(mView.tv_qp_money.text.toString()))
-                                .toString()
-                        MineApi.getBgMoney {
-                            onSuccess {
-                                mView.tv_bg_money?.text = it.bl.toString()
-                                mView.hidePageLoadingDialog()
-                                try {
-                                    if (mView.tv_bg_money.text.toString() == "维护中" && mView.tv_ag_money.text.toString() == "维护中") {
-                                        mView.tvOtherMoney?.text = mView.tv_qp_money.text.toString()
-                                    } else if (mView.tv_bg_money.text.toString() == "维护中") {
-                                        mView.tvOtherMoney?.text =
-                                            BigDecimal(mView.tv_ag_money.text.toString()).add(
-                                                BigDecimal(mView.tv_qp_money.text.toString())
-                                            ).toString()
-                                    } else if (mView.tv_ag_money.text.toString() == "维护中") {
-                                        mView.tvOtherMoney?.text =
-                                            BigDecimal(mView.tv_bg_money.text.toString()).add(
-                                                BigDecimal(mView.tv_qp_money.text.toString())
-                                            ).toString()
-                                    } else {
-                                        mView.tvOtherMoney?.text =
-                                            (BigDecimal(mView.tv_bg_money.text.toString()).add(
-                                                BigDecimal(mView.tv_qp_money.text.toString())
-                                            )).add(BigDecimal(mView.tv_ag_money.text.toString())).toString()
-                                    }
-                                } catch (e: Exception) {
-                                    e.printStackTrace()
-                                }
-                            }
-                            onFailed {
-                                if (it.getCode() == 16) mView.tv_ag_money.text = "维护中"
-                                mView.tvOtherMoney?.text = mView.tv_qp_money.text.toString()
-                                mView.hidePageLoadingDialog()
-                            }
-                        }
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
+                    getTotalGameCenterMoney()
                 }
                 onFailed {
-                    if (it.getCode() == 16) mView.tv_ag_money.text = "维护中"
-                    mView.tvOtherMoney?.text = mView.tv_qp_money.text.toString()
+                    if (it.getCode() == 16) mView.tv_ag_money.text = "维护中" else ToastUtils.showToast(it.getMsg())
                     mView.hidePageLoadingDialog()
+                    getTotalGameCenterMoney()
                 }
             }
 
+            MineApi.getBgMoney {
+                onSuccess {
+                    mView.tv_bg_money?.text = it.bl.toString()
+                    mView.hidePageLoadingDialog()
+                    getTotalGameCenterMoney()
+                }
+                onFailed {
+                    if (it.getCode() == 16) mView.tv_bg_money.text = "维护中" else ToastUtils.showToast(it.getMsg())
+                    mView.hidePageLoadingDialog()
+                    getTotalGameCenterMoney()
+                }
+            }
         }
     }
 
-    fun getThird(boolean: Boolean) {
+    @SuppressLint("SetTextI18n")
+    fun getTotalGameCenterMoney() {
+        try {
+            if (mView.tv_bg_money.text.toString() == "维护中" && mView.tv_ag_money.text.toString() == "维护中") {
+                mView.tvOtherMoney?.text = mView.tv_qp_money.text.toString()
+            } else if (mView.tv_bg_money.text.toString() == "维护中") {
+                mView.tvOtherMoney?.text =
+                    BigDecimal(mView.tv_ag_money.text.toString()).add(
+                        BigDecimal(mView.tv_qp_money.text.toString())
+                    ).toString()
+            } else if (mView.tv_ag_money.text.toString() == "维护中") {
+                mView.tvOtherMoney?.text =
+                    BigDecimal(mView.tv_bg_money.text.toString()).add(
+                        BigDecimal(mView.tv_qp_money.text.toString())
+                    ).toString()
+            } else {
+                mView.tvOtherMoney?.text =
+                    (BigDecimal(mView.tv_bg_money.text.toString()).add(
+                        BigDecimal(mView.tv_qp_money.text.toString())
+                    )).add(BigDecimal(mView.tv_ag_money.text.toString()))
+                        .toString()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    fun getThird() {
         if (mView.isActive()) {
             MineApi.getThird {
                 onSuccess {
                     mView.thirdList = it
-                    mView.tvMoneyGame?.text = it[0].name_cn
-                    if (boolean) {
-                        mView.showPickerView()
-                        mView.hidePageLoadingDialog()
+                    mView.tvMoneyGame?.text = it[1].name_cn
+                    mView.thirdChineseList = arrayListOf()
+                    for (item in it) {
+                        mView.thirdChineseList?.add(item.name_cn ?: "null")
                     }
-
                 }
                 onFailed {
                     ToastUtils.showToast(it.getMsg())
-                    if (boolean) {
-                        mView.hidePageLoadingDialog()
-                    }
+                }
+            }
+        }
+    }
+
+    fun getIsAutoChange(){
+        MineApi.getAutoChange {
+            if (mView.isActive()){
+                onSuccess {
+                    val jsonObject = JsonParser.parseString(it).asInt
+                    mView.initCheck(jsonObject == 1)
+                }
+                onFailed {
+                    ToastUtils.showToast(it.getMsg())
                 }
             }
         }
     }
 
     //上分下分  1 棋牌  2 Ag 3 Bg true 上分 false 下分
-    fun upAndDownMoney(index: Int, boolean: Boolean, amount: String, isRecycle: Boolean = false) {
+    fun upAndDownMoney(index: Int, upOrDown: Boolean, amount: String) {
         if (mView.isActive()) {
+            mView.showPageLoadingDialog("转账中")
             when (index) {
                 1 -> {
-                    MineApi.getChessMoneyUpOrDown(boolean, amount) {
+                    MineApi.getChessMoneyUpOrDown(upOrDown, amount) {
                         onSuccess {
                             mView.etMoney?.setText("")
                             getUserBalance()
@@ -139,7 +145,7 @@ class MineMoneyCenterActPresenter : BaseMvpPresenter<MineMoneyCenterAct>() {
                     }
                 }
                 2 -> {
-                    MineApi.getAgMoneyUpOrDown(boolean, amount) {
+                    MineApi.getAgMoneyUpOrDown(upOrDown, amount) {
                         onSuccess {
                             mView.etMoney?.setText("")
                             getUserBalance()
@@ -153,7 +159,7 @@ class MineMoneyCenterActPresenter : BaseMvpPresenter<MineMoneyCenterAct>() {
                     }
                 }
                 3 -> {
-                    MineApi.getBgMoneyUpOrDown(boolean, amount) {
+                    MineApi.getBgMoneyUpOrDown(upOrDown, amount) {
                         onSuccess {
                             mView.etMoney?.setText("")
                             getUserBalance()
@@ -170,34 +176,40 @@ class MineMoneyCenterActPresenter : BaseMvpPresenter<MineMoneyCenterAct>() {
         }
     }
 
-    fun recycleAll(amount: String, amount1: String, amount2: String) {
-        MineApi.getChessMoneyUpOrDown(false, amount) {
+    fun recycleAll() {
+        mView.showPageLoadingDialog("转账中")
+        MineApi.recycleAll {
             onSuccess {
-
-            }
-            onFailed {
-                ToastUtils.showToast(it.getMsg())
-                mView.hidePageLoadingDialog()
-            }
-        }
-        MineApi.getAgMoneyUpOrDown(false, amount1) {
-            onSuccess {
-
-            }
-            onFailed {
-                mView.hidePageLoadingDialog()
-                ToastUtils.showToast(it.getMsg())
-            }
-        }
-        MineApi.getBgMoneyUpOrDown(false,amount2){
-            onSuccess {
-                mView.etMoney?.setText("")
                 getUserBalance()
                 mView.hidePageLoadingDialog()
                 ToastUtils.showToast("转账成功")
             }
             onFailed {
                 mView.hidePageLoadingDialog()
+                ToastUtils.showToast(it.getMsg())
+            }
+        }
+    }
+
+    fun platformChange(amount:String,plateOut:String,plateIn:String){
+        mView.showPageLoadingDialog("转账中")
+        MineApi.platFormTrans(amount,plateOut,plateIn){
+            onSuccess {
+                mView.hidePageLoadingDialog()
+                ToastUtils.showToast("转账成功")
+                getUserBalance()
+            }
+            onFailed {
+                mView.hidePageLoadingDialog()
+                ToastUtils.showToast(it.getMsg())
+            }
+        }
+    }
+
+    fun setPlatformChange(){
+        MineApi.setAutoChange {
+            onSuccess {  }
+            onFailed {
                 ToastUtils.showToast(it.getMsg())
             }
         }

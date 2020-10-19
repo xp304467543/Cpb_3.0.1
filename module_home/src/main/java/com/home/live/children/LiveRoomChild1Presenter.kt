@@ -161,11 +161,7 @@ class LiveRoomChild1Presenter(private val anchorId: String) : BaseMvpPresenter<L
                                 ?: "恭喜发财", bean.send_user_avatar ?: ""
                         )
                         mView.hidePageLoadingDialog()
-                    } else GlobalDialog.showError(
-                        mView.requireActivity(),
-                        it,
-                        !mView.getScreenFull()
-                    )
+                    } else GlobalDialog.showError(mView.requireActivity(), it, !mView.getScreenFull())
                 }
             }
         }

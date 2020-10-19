@@ -37,16 +37,6 @@ object UserInfoSp {
         SpUtils.putInt("AppMode", modeNow)
     }
 
-    /**
-     * 自动转账功能
-     */
-    fun getAutoMoney():Boolean{
-        return   SpUtils.getBoolean("AutoMoney", true)
-    }
-
-    fun putAutoMoney(auto:Boolean){
-        return   SpUtils.putBoolean("AutoMoney", auto)
-    }
 
 
     /**

@@ -58,7 +58,7 @@ class DialogDiamond (context: Context, var balance: String) : Dialog(context) {
                         BigDecimal(1)
                     ) > -1) {
                     if (BigDecimal(s.toString()).compareTo(BigDecimal(balance)) < 1) {
-                        tvConfirmChange.getDelegate().setBackgroundColor(ViewUtils.getColor(R.color.color_FF3F30))
+                        tvConfirmChange.delegate.backgroundColor = ViewUtils.getColor(R.color.color_FF3F30)
                         tvConfirmChange.setTextColor(ViewUtils.getColor(R.color.white))
                         tvConfirmChange.text = "兑换"
                         if (tvConfirmChange !== null) {
@@ -68,14 +68,14 @@ class DialogDiamond (context: Context, var balance: String) : Dialog(context) {
                             }
                         }
                     } else {
-                        tvConfirmChange.getDelegate().setBackgroundColor(ViewUtils.getColor(R.color.color_DDDDDD))
+                        tvConfirmChange.delegate.backgroundColor = ViewUtils.getColor(R.color.color_DDDDDD)
                         tvConfirmChange.setTextColor(ViewUtils.getColor(R.color.white))
                         tvConfirmChange.text = "余额不足"
                         tvConfirmChange.setOnClickListener(null)
                         tvConfirmChange.isClickable = false
                     }
                 } else {
-                    tvConfirmChange.getDelegate().setBackgroundColor(ViewUtils.getColor(R.color.color_f5f5f5))
+                    tvConfirmChange.delegate.backgroundColor = ViewUtils.getColor(R.color.color_f5f5f5)
                     tvConfirmChange.setTextColor(ViewUtils.getColor(R.color.color_DDDDDD))
                     tvConfirmChange.setOnClickListener(null)
                     tvConfirmChange.isClickable = false

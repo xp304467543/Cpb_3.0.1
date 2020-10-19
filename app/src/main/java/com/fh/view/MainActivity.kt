@@ -19,6 +19,7 @@ import com.lib.basiclib.base.xui.widget.popupwindow.bar.CookieBar
 import com.lib.basiclib.utils.LogUtils
 import com.lib.basiclib.utils.SoftInputUtils
 import com.lib.basiclib.utils.StatusBarUtils
+import com.lib.basiclib.utils.ToastUtils
 import com.rxnetgo.RxNetGo
 import com.xiaojinzi.component.anno.RouterAnno
 import cuntomer.api.WebUrlProvider
@@ -168,12 +169,13 @@ class MainActivity : BasePageActivity() {
     }
 
     private fun systemDialog(msg: String) {
-        CookieBar.builder(this)
-            .setBackgroundColor(R.color.white)
-            .setMessage(msg)
-            .setMessageColor(R.color.color_333333)
-            .setIcon(R.mipmap.ic_live_star)
-            .show()
+//        CookieBar.builder(this)
+//            .setBackgroundColor(R.color.white)
+//            .setMessage(msg)
+//            .setMessageColor(R.color.color_333333)
+//            .setIcon(R.mipmap.ic_live_star)
+//            .show()
+        ToastUtils.showToastView(msg)
     }
 
     private fun getLogin(client_id: String, user_id: Int = UserInfoSp.getUserId()): String {

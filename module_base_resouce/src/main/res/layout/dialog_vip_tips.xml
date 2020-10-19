@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.lib.basiclib.base.round.RoundRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/dp_10"
+    app:rv_backgroundColor="@color/white"
+    app:rv_cornerRadius="@dimen/dp_10">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:padding="@dimen/dp_14"
+        android:src="@mipmap/ic_close"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/topIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_20"
+        android:src="@mipmap/ic_dialog_vip"/>
+
+    <TextView
+        android:id="@+id/tvTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/topIcon"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_20"
+        android:textColor="@color/color_333333"
+        android:textStyle="bold"
+        android:text="VIP1以上用户才能领取红包哦！"/>
+
+    <TextView
+        android:id="@+id/tvTop2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvTop"
+        android:lineSpacingExtra="@dimen/dp_3"
+        android:layout_marginTop="@dimen/dp_10"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:text=" 首充且兑换任意金额钻石\n即可免费升级VIP哦！ "/>
+
+    <LinearLayout
+        android:layout_below="@+id/tvTop2"
+        android:layout_marginTop="@dimen/dp_15"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/reCharge"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:text="去充值"
+            android:layout_marginEnd="@dimen/dp_40"
+            android:background="@drawable/button_red_background"
+            android:layout_height="@dimen/dp_40"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/reChange"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:text="去兑换"
+            android:background="@drawable/button_red_background"
+            android:layout_height="@dimen/dp_40"/>
+    </LinearLayout>
+
+</com.lib.basiclib.base.round.RoundRelativeLayout>

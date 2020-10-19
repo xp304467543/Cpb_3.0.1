@@ -74,7 +74,8 @@ class LiveRoomChild1 : BaseNormalFragment<LiveRoomChild1Presenter>() {
 
     override fun isRegisterRxBus() = true
 
-    override fun attachPresenter() = LiveRoomChild1Presenter(arguments?.getString("LIVE_ROOM_ANCHOR_ID", "-1") ?: "0")
+    override fun attachPresenter() =
+        LiveRoomChild1Presenter(arguments?.getString("LIVE_ROOM_ANCHOR_ID", "-1") ?: "0")
 
     override fun getLayoutRes() = R.layout.fragmeent_live_child_1
 
@@ -194,7 +195,7 @@ class LiveRoomChild1 : BaseNormalFragment<LiveRoomChild1Presenter>() {
                 return@setOnClickListener
             }
             if (!FastClickUtil.isFastClick()) {
-               liveRoomBetFragment = LiveRoomBetFragment.newInstance(lotteryId)
+                liveRoomBetFragment = LiveRoomBetFragment.newInstance(lotteryId)
                 fragmentManager?.let { it1 ->
                     liveRoomBetFragment?.show(
                         it1,
@@ -206,13 +207,13 @@ class LiveRoomChild1 : BaseNormalFragment<LiveRoomChild1Presenter>() {
         }
 
         imgMouse.setOnClickListener {
-            if (!FastClickUtil.isFastClick()){
-                startActivity(Intent(activity,LiveRoomPostCardAct::class.java))
+            if (!FastClickUtil.isFastClick()) {
+                startActivity(Intent(activity, LiveRoomPostCardAct::class.java))
             }
         }
 
         imgGame.setOnClickListener {
-            if (!FastClickUtil.isFastClick()){
+            if (!FastClickUtil.isFastClick()) {
                 if (!UserInfoSp.getIsLogin()) {
                     GlobalDialog.notLogged(requireActivity())
                     return@setOnClickListener
@@ -330,7 +331,7 @@ class LiveRoomChild1 : BaseNormalFragment<LiveRoomChild1Presenter>() {
 
     //红包动画
     fun startRedAnimation() {
-        if (liveRedTips!=null){
+        if (liveRedTips != null) {
             setVisible(liveRedTips)
             val animator = ObjectAnimatorViw.nope(liveRedTips, 3f)
             animator.repeatCount = ValueAnimator.INFINITE
@@ -356,7 +357,7 @@ class LiveRoomChild1 : BaseNormalFragment<LiveRoomChild1Presenter>() {
     private var homeLiveRedRoomBean: HomeLiveRedRoom? = null
     private var mOpenRedPopup: DialogRedPaper? = null
     fun initRedDialog(homeLiveRedRoom: HomeLiveRedRoom, isOpen: Boolean) {
-        if (isActive()){
+        if (isActive()) {
             homeLiveRedRoomBean = homeLiveRedRoom
             if (mOpenRedPopup == null) {
                 mOpenRedPopup = context?.let { DialogRedPaper(it) }
@@ -383,7 +384,27 @@ class LiveRoomChild1 : BaseNormalFragment<LiveRoomChild1Presenter>() {
                         GlobalDialog.notLogged(requireActivity())
                         return@setOnClickListener
                     }
-                    mOpenRedPopup?.show()
+                    try {
+                        if (UserInfoSp.getVipLevel()?.toInt() ?: 0 > 0) {
+                            mOpenRedPopup?.show()
+                        } else {
+                            val dialog = context?.let { it1 -> DialogVipTips(it1) }
+                            dialog?.setCanCalClickListener {
+                                if (!FastClickUtil.isFastClick()) {
+                                    Router.withApi(ApiRouter::class.java).toMineRecharge(0)
+                                }
+                            }
+                            dialog?.setConfirmClickListener {
+                                if (!FastClickUtil.isFastClick()) {
+                                    RxBus.get().post(HomeJumpToMineCloseLive(true))
+                                }
+                            }
+                            dialog?.show()
+                        }
+                    } catch (e: Exception) {
+
+                    }
+
                 }
             }
             if (isOpen) {
@@ -689,7 +710,7 @@ class LiveRoomChild1 : BaseNormalFragment<LiveRoomChild1Presenter>() {
             AnimUtils.getInAnimation(context!!, tvVipEnter)
             Timer().schedule(object : TimerTask() {
                 override fun run() {
-                    if (view != null  && tvVipEnter !=null) {
+                    if (view != null && tvVipEnter != null) {
                         tvVipEnter?.post { AnimUtils.getOutAnimation(context!!, tvVipEnter) }
                         this.cancel()
                     }

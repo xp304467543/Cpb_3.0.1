@@ -25,11 +25,15 @@ object GameApi : BaseApi {
 
     private const val GAME_BG_FISH ="bg/play-fishing"
 
-    private const val GAME_CHESS_HIS = "fhchess/game-record"
+    private const val GAME_CHESS_HISTORY = "fhchess/game-record"
 
-    private const val GAME_AG_LIVE = "ag/game-record"
+    private const val GAME_AG_LIVE_HISTORY = "ag/game-record"
 
-    private const val GAME_AG_GAME = "ag/slot-record"
+    private const val GAME_AG_HISTORY = "ag/slot-record"
+
+    private const val GAME_BG_LIVE_HISTORY = "bg/live-record"
+
+    private const val GAME_BG_FISH_HISTORY = "bg/fishing-record"
 
 
     /**
@@ -116,7 +120,7 @@ object GameApi : BaseApi {
         val subscriber = object : ApiSubscriber<List<GameChess>>() {}
         subscriber.function()
         getApiOther()
-            .get<List<GameChess>>(GAME_CHESS_HIS)
+            .get<List<GameChess>>(GAME_CHESS_HISTORY)
             .headers("Authorization", UserInfoSp.getTokenWithBearer())
             .params("game_id",game_id)
             .params("st",st)
@@ -133,7 +137,7 @@ object GameApi : BaseApi {
         val subscriber = object : ApiSubscriber<List<GameAgLive>>() {}
         subscriber.function()
         getApiOther()
-            .get<List<GameAgLive>>(GAME_AG_LIVE)
+            .get<List<GameAgLive>>(GAME_AG_LIVE_HISTORY)
             .headers("Authorization", UserInfoSp.getTokenWithBearer())
             .params("game_id",game_id)
             .params("st",st)
@@ -151,7 +155,43 @@ object GameApi : BaseApi {
         val subscriber = object : ApiSubscriber<List<GameAg>>() {}
         subscriber.function()
         getApiOther()
-            .get<List<GameAg>>(GAME_AG_GAME)
+            .get<List<GameAg>>(GAME_AG_HISTORY)
+            .headers("Authorization", UserInfoSp.getTokenWithBearer())
+            .params("game_id",game_id)
+            .params("st",st)
+            .params("et",et)
+            .params("page",page)
+            .params("limit",20)
+            .subscribe(subscriber)
+    }
+
+
+    /**
+     * BG视讯 记录
+     */
+    fun getBgLiveHistory(game_id:String , st:String,et:String,page:Int,function: ApiSubscriber<List<GameAg>>.() -> Unit){
+        val subscriber = object : ApiSubscriber<List<GameAg>>() {}
+        subscriber.function()
+        getApiOther()
+            .get<List<GameAg>>(GAME_BG_LIVE_HISTORY)
+            .headers("Authorization", UserInfoSp.getTokenWithBearer())
+            .params("game_id",game_id)
+            .params("st",st)
+            .params("et",et)
+            .params("page",page)
+            .params("limit",20)
+            .subscribe(subscriber)
+    }
+
+
+    /**
+     * BG游戏 记录
+     */
+    fun getBgGameHistory(game_id:String , st:String,et:String,page:Int,function: ApiSubscriber<List<GameAg>>.() -> Unit){
+        val subscriber = object : ApiSubscriber<List<GameAg>>() {}
+        subscriber.function()
+        getApiOther()
+            .get<List<GameAg>>(GAME_BG_FISH_HISTORY)
             .headers("Authorization", UserInfoSp.getTokenWithBearer())
             .params("game_id",game_id)
             .params("st",st)
