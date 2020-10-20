@@ -68,7 +68,7 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme, IMode {
             mPresenter.getUserDiamond()
             mPresenter.getNewMsg()
             mPresenter.getUserInfo()
-            if (!UserInfoSp.getIsSetPayPassWord()) mPresenter.getIsSetPayPassWord()
+//            if (!UserInfoSp.getIsSetPayPassWord()) mPresenter.getIsSetPayPassWord()
             setVisible(containerSetting)
         } else {
             imgMineUserAvatar.setBackgroundResource(R.mipmap.ic_base_user)
@@ -148,8 +148,8 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme, IMode {
                 GlobalDialog.notLogged(requireActivity())
                 return@setOnClickListener
             }
-            if (!UserInfoSp.getIsSetPayPassWord()) {
-                GlobalDialog.noSetPassWord(requireActivity())
+            if (!UserInfoSp.getIsSetPayPassWord()){
+                mPresenter.getIsSetPayPassWord(true)
                 return@setOnClickListener
             }
             if (!FastClickUtil.isFastClick()) {

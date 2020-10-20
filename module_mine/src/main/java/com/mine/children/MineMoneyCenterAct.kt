@@ -270,7 +270,7 @@ class MineMoneyCenterAct : BaseMvpActivity<MineMoneyCenterActPresenter>() {
                     ViewUtils.setVisible(tvMoneyTips)
                     ToastUtils.showToast("余额不足")
                 } else {
-                    when (thirdList?.get(currentRight )?.name) {
+                    when (thirdList?.get(currentRight)?.name) {
                         "fh_chess" -> mPresenter.upAndDownMoney(1, true, etMoney.text.toString())
                         "ag" -> {
                             if (t3 != "维护中") {
@@ -286,7 +286,7 @@ class MineMoneyCenterAct : BaseMvpActivity<MineMoneyCenterActPresenter>() {
                 }
             }
             currentRight == 0 -> {
-                when (thirdList?.get(currentLeft )?.name) {
+                when (thirdList?.get(currentLeft)?.name) {
                     "fh_chess" -> {
                         if (BigDecimal(t2).compareTo(BigDecimal(all)) == -1) {
                             ViewUtils.setVisible(tvMoneyTips)
@@ -321,7 +321,7 @@ class MineMoneyCenterAct : BaseMvpActivity<MineMoneyCenterActPresenter>() {
             else -> {
                 val left = thirdList?.get(currentLeft - 1)?.name
                 val right = thirdList?.get(currentRight - 1)?.name
-                when (thirdList?.get(currentLeft )?.name) {
+                when (thirdList?.get(currentLeft)?.name) {
                     "fh_chess" -> {
                         if (BigDecimal(t2).compareTo(BigDecimal(all)) == -1) {
                             ViewUtils.setVisible(tvMoneyTips)
@@ -385,25 +385,22 @@ class MineMoneyCenterAct : BaseMvpActivity<MineMoneyCenterActPresenter>() {
     }
 
 
-    var isRequest = true
     fun initCheck(boolean: Boolean) {
         moneySwitch.isChecked = boolean
         moneySwitch.setOnCheckedChangeListener { _, isChecked ->
             if (!isChecked) {
                 val dialog = DialogGlobalTips(this, "温馨提醒", "确定", "取消", "是否关闭自动转账功能！")
                 dialog.setConfirmClickListener {
-                    isRequest = true
-                    mPresenter.setPlatformChange()
+                    mPresenter.setPlatformChange(true)
                 }
                 dialog.setCanCalClickListener {
-                    isRequest = false
-                    moneySwitch.isChecked = true
+                    moneySwitch.setCheckedImmediatelyNoEvent(true)
                 }
                 dialog.setCanceledOnTouchOutside(false)
                 dialog.setCancelable(false)
                 dialog.show()
-            }else{
-                if (isRequest)mPresenter.setPlatformChange()
+            } else {
+                mPresenter.setPlatformChange(false)
             }
         }
     }

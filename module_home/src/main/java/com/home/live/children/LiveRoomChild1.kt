@@ -390,12 +390,12 @@ class LiveRoomChild1 : BaseNormalFragment<LiveRoomChild1Presenter>() {
                         } else {
                             val dialog = context?.let { it1 -> DialogVipTips(it1) }
                             dialog?.setCanCalClickListener {
-                                if (!FastClickUtil.isFastClick()) {
+                                if (!FastClickUtil.isFastClickSmall()) {
                                     Router.withApi(ApiRouter::class.java).toMineRecharge(0)
                                 }
                             }
                             dialog?.setConfirmClickListener {
-                                if (!FastClickUtil.isFastClick()) {
+                                if (!FastClickUtil.isFastClickSmall()) {
                                     RxBus.get().post(HomeJumpToMineCloseLive(true))
                                 }
                             }

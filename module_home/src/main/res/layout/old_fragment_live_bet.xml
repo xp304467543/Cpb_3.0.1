@@ -2,9 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootViews"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/rootViews"
     android:orientation="vertical">
 
     <ImageView
@@ -208,23 +208,28 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imgIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/dp_10"
-            />
+            android:layout_marginStart="@dimen/dp_10" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvUserDiamond"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="@dimen/dp_10"
-            android:layout_weight="1"
+            android:drawableEnd="@mipmap/ic_mine_refresh"
+            android:drawablePadding="@dimen/dp_8"
             android:gravity="center_vertical"
             android:textColor="@color/color_333333"
             tools:text="666" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
 
         <TextView
             android:id="@+id/tvReset"
@@ -241,7 +246,6 @@
             android:id="@+id/tvBetSubmit"
             android:layout_width="@dimen/dp_70"
             android:layout_height="@dimen/dp_30"
-            android:layout_gravity="center_vertical"
             android:layout_marginEnd="@dimen/dp_10"
             android:background="@drawable/button_red_background"
             android:gravity="center"
@@ -255,17 +259,17 @@
         android:id="@+id/bottomBetLayout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_130"
-        android:visibility="gone"
         android:background="@color/white"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/linBottom">
 
         <RadioGroup
             android:id="@+id/selectRadio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_5"
             android:layout_marginEnd="@dimen/dp_10"
             android:orientation="horizontal"
-            android:layout_marginTop="@dimen/dp_5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 

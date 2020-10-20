@@ -10,6 +10,7 @@ import android.text.TextWatcher
 import android.view.Gravity
 import android.view.View
 import android.widget.*
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.viewpager.widget.ViewPager
 import com.customer.data.LotteryResetDiamond
 import com.customer.data.UserInfoSp
@@ -26,6 +27,7 @@ import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.thread.EventThread
 import com.lib.basiclib.utils.FastClickUtil
+import com.lib.basiclib.utils.LogUtils
 import com.lib.basiclib.utils.ToastUtils
 import com.lib.basiclib.utils.ViewUtils
 import kotlinx.android.synthetic.main.old_dialog_lottery_select.*
@@ -92,12 +94,12 @@ class LiveRoomBetFragment : BottomDialogFragment() {
     override fun canceledOnTouchOutside(): Boolean = true
 
     override fun initView() {
-        RxBus.get().register(this)
 
     }
 
     override fun initData() {
         if (isAdded) {
+            RxBus.get().register(this)
             val id = arguments?.getString("LIVE_ROOM_LOTTERY_ID") ?: "1"
             currentLotteryId = if (id == "" || id == "-1") "1" else id
             val type = LotteryApi.getLotteryBetType()
@@ -240,6 +242,14 @@ class LiveRoomBetFragment : BottomDialogFragment() {
                 etBetPlayMoney?.setText("10")
                 clearRadio(false)
             }
+        }
+        rootView?.findViewById<AppCompatTextView>(R.id.tvUserDiamond)?.setOnClickListener {
+            if (!FastClickUtil.isFastClick()){
+                tvUserDiamond.text = "加载中"
+                if (isBalanceBet){
+                    getUserBalance()
+                }else getUserDiamond()
+            }else ToastUtils.showToast("请勿频繁操作")
         }
     }
 
@@ -549,6 +559,10 @@ class LiveRoomBetFragment : BottomDialogFragment() {
                             if (tvUserDiamond != null) tvUserDiamond.text = userDiamond
                         }
                     }
+                    onFailed {
+                        userDiamond = "0"
+                        tvUserDiamond.text = userDiamond
+                    }
                 }
             }
         } catch (e: Exception) {
@@ -569,6 +583,8 @@ class LiveRoomBetFragment : BottomDialogFragment() {
                 }
             }
             onFailed {
+                userBalance = "0"
+                tvUserDiamond.text = userBalance
                 ToastUtils.showToast(it.getMsg() ?: "")
             }
         }
@@ -645,8 +661,8 @@ class LiveRoomBetFragment : BottomDialogFragment() {
 
 
     override fun onDestroy() {
-        super.onDestroy()
         RxBus.get().unregister(this)
+        super.onDestroy()
     }
 
     private val betList = arrayListOf<LotteryBet>()
@@ -696,7 +712,8 @@ class LiveRoomBetFragment : BottomDialogFragment() {
 
 
     @Subscribe(thread = EventThread.MAIN_THREAD)
-    fun lotteryBet(eventBean: LotteryResetDiamond) {
+    fun lotteryResetDiamond(eventBean: LotteryResetDiamond) {
+        LogUtils.e("====>11111")
         getUserDiamond()
         getUserBalance()
         if (radioGroupLayout?.getChildAt(0) != null) (radioGroupLayout?.getChildAt(0) as RadioButton).isChecked = true

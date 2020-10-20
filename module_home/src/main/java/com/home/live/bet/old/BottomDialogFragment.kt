@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.DialogFragment
 import com.home.R
+import com.hwangjr.rxbus.RxBus
 import com.lib.basiclib.utils.ViewUtils
 
 /**

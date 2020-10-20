@@ -205,15 +205,21 @@
             android:layout_marginStart="@dimen/dp_10"
             />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvUserDiamond"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="@dimen/dp_10"
-            android:layout_weight="1"
             android:gravity="center_vertical"
+            android:drawablePadding="@dimen/dp_8"
             android:textColor="@color/color_333333"
+            android:drawableEnd="@mipmap/ic_mine_refresh"
             tools:text="666" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
 
         <TextView
             android:id="@+id/tvReset"

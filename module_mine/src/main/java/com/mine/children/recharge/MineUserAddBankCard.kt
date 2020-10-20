@@ -41,14 +41,14 @@ class MineUserAddBankCard : BaseNavActivity() {
     override fun isShowToolBar() = true
 
     override fun initContentView() {
-        etCardUserName.filters = arrayOf(filter, InputFilter.LengthFilter(20))
-        setEditTextInputSpeChat(etCardUserDes)
+//        etCardUserName.filters = arrayOf(filter, InputFilter.LengthFilter(20))
+//        setEditTextInputSpeChat(etCardUserDes)
     }
 
     override fun initEvent() {
         etCardUserNum.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                isEditNum = etCardUserNum.length() > 12
+                isEditNum = etCardUserNum.length() > 0
                 judgeInfo()
             }
 
@@ -122,11 +122,11 @@ class MineUserAddBankCard : BaseNavActivity() {
 
         if (matcher.find()) return@InputFilter ""
 
-        for (i in start until end) {
-            if (!isChinese(source[i])) {
-                return@InputFilter ""
-            }
-        }
+//        for (i in start until end) {
+//            if (!isChinese(source[i])) {
+//                return@InputFilter ""
+//            }
+//        }
         null
     }
 

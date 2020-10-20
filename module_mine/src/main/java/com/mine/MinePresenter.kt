@@ -8,6 +8,7 @@ import com.customer.data.mine.MineApi
 import com.customer.component.dialog.GlobalDialog
 import com.customer.data.UserInfoSp
 import com.customer.data.mine.MineVipList
+import com.lib.basiclib.utils.ToastUtils
 import kotlinx.android.synthetic.main.fragment_mine.*
 
 /**
@@ -41,10 +42,19 @@ class MinePresenter : BaseMvpPresenter<MineFragment>() {
     }
 
     //查询是否设置支付密码
-    fun getIsSetPayPassWord() {
+    fun getIsSetPayPassWord(boolean: Boolean = false) {
         MineApi.getIsSetPayPass {
             onSuccess {
                 UserInfoSp.putIsSetPayPassWord(true)
+            }
+            onFailed {
+                if (boolean){
+                    if (it.getCode()==10){
+                        ToastUtils.showToast(it.getMsg())
+                    }else{
+                        GlobalDialog.noSetPassWord(mView.requireActivity())
+                    }
+                }
             }
         }
     }

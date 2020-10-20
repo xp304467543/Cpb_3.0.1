@@ -206,11 +206,12 @@ class MineMoneyCenterActPresenter : BaseMvpPresenter<MineMoneyCenterAct>() {
         }
     }
 
-    fun setPlatformChange(){
+    fun setPlatformChange(isClose:Boolean){
         MineApi.setAutoChange {
             onSuccess {  }
             onFailed {
                 ToastUtils.showToast(it.getMsg())
+               if (isClose) mView.moneySwitch.setCheckedImmediatelyNoEvent(true) else mView.moneySwitch.setCheckedImmediatelyNoEvent(false)
             }
         }
     }

@@ -61,7 +61,7 @@ class MineBankCardRechargeAct : BaseNavActivity() {
 
     override fun initContentView() {
         StatusBarUtils.setStatusBarHeight(centerView)
-        etUser.filters = arrayOf(filter, LengthFilter(20))
+//        etUser.filters = arrayOf(filter, LengthFilter(20))
     }
 
     override fun initData() {
@@ -91,10 +91,10 @@ class MineBankCardRechargeAct : BaseNavActivity() {
                     ToastUtils.showToast("请选择转账时间")
                     return@setOnClickListener
                 }
-                if (rtCardNum.text.length < 12) {
-                    ToastUtils.showToast("卡号长度错误")
-                    return@setOnClickListener
-                }
+//                if (rtCardNum.text.length < 12) {
+//                    ToastUtils.showToast("卡号长度错误")
+//                    return@setOnClickListener
+//                }
                 if (etSaveMoney.text.isEmpty()) {
                     ToastUtils.showToast("请填写充值金额")
                     return@setOnClickListener
@@ -250,11 +250,11 @@ class MineBankCardRechargeAct : BaseNavActivity() {
         val matcher = pattern.matcher(source.toString())
 
         if (matcher.find()) return@InputFilter ""
-        for (i in start until end) {
-            if (!isChinese(source[i])) {
-                return@InputFilter ""
-            }
-        }
+//        for (i in start until end) {
+//            if (!isChinese(source[i])) {
+//                return@InputFilter ""
+//            }
+//        }
         null
     }
 

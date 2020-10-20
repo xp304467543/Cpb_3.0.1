@@ -223,14 +223,13 @@ class LiveRoomBetAccessFragment : BottomDialogFragment() {
                         dialog?.setConfirmClickListener {
                             getShareOrder()
                         }
-                        dialog?.setOnCancelListener {
+                        dialog?.setOnDismissListener {
                             RxBus.get().post(LotteryResetDiamond(true))
                         }
                         dialog?.show()
                     } else context?.let { it1 ->
-
                        val dialog =  DialogGlobalTips(it1, "投注成功", "确定", "", "")
-                        dialog.setConfirmClickListener {
+                        dialog.setOnDismissListener {
                             RxBus.get().post(LotteryResetDiamond(true))
                         }
                         dialog.show()
@@ -243,9 +242,7 @@ class LiveRoomBetAccessFragment : BottomDialogFragment() {
                     ToastUtils.showToast(err.getMsg())
                 }
             }
-
         }
-
     }
 
     //拼接分享注单
