@@ -29,7 +29,6 @@ object ToastUtils {
         if (toast == null) {
             toast = Toast.makeText(BaseApplication.getApplication(), msg, Toast.LENGTH_SHORT)
             toast?.setGravity(Gravity.CENTER, 0, 0)
-
         } else {
             toast!!.setText(msg)
         }
@@ -118,7 +117,7 @@ object ToastUtils {
         toast!!.show()
     }
 
-
+    var toastView: Toast? = null //实现不管我们触发多少次Toast调用，都只会持续一次Toast显示的时长
     fun showToastView( text: String) {
         val inflater = LayoutInflater.from(BaseApplication.getApplication())
         val params = LinearLayout.LayoutParams(ViewUtils.getScreenWidth(), ViewGroup.LayoutParams.MATCH_PARENT)
@@ -128,14 +127,14 @@ object ToastUtils {
         val toastLayout = view.findViewById<LinearLayout>(R.id.toastLayout)
         toastLayout.layoutParams = params
         t.text = text
-        if (toast != null) {
-            toast?.cancel()
+        if (toastView != null) {
+            toastView?.cancel()
         }
-        toast = Toast(BaseApplication.getApplication())
-        toast?.setGravity(Gravity.TOP, 0, 0)
-        toast?.duration = Toast.LENGTH_LONG
-        toast?.view = view
-        toast?.show()
+        toastView = Toast(BaseApplication.getApplication())
+        toastView?.setGravity(Gravity.TOP, 0, 0)
+        toastView?.duration = Toast.LENGTH_LONG
+        toastView?.view = view
+        toastView?.show()
     }
 
 }

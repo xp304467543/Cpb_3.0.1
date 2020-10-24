@@ -178,19 +178,7 @@ class LiveRoomChild1Presenter(private val anchorId: String) : BaseMvpPresenter<L
             if (mView.isActive()) {
                 onSuccess {
                     //通知scoket
-                    notifySocket(
-                        LiveRoomChatPresenterHelper.getGifParams(
-                            anchorId,
-                            "1",
-                            "",
-                            bean.git_name,
-                            "",
-                            bean.giftCount,
-                            "",
-                            bean.gift_id,
-                            bean.gift_icon
-                        )
-                    )
+//                    notifySocket(LiveRoomChatPresenterHelper.getGifParams(anchorId, "1", "", bean.git_name, "", bean.giftCount, "", bean.gift_id, bean.gift_icon))
                     mView.showToast()
                     if (!mView.getScreenFull()) RxBus.get().post(UpDataHorDiamon(true))
                     RxBus.get().post(GiftSendSuccess(gift_id))
@@ -246,19 +234,7 @@ class LiveRoomChild1Presenter(private val anchorId: String) : BaseMvpPresenter<L
         HomeApi.homeLiveSendRedEnvelope(anchorId, amount, num, text, password) {
             onSuccess {
                 //通知socket
-                mWsManager?.sendMessage(
-                    LiveRoomChatPresenterHelper.getGifParams(
-                        anchorId,
-                        "4",
-                        it.rid,
-                        "",
-                        amount,
-                        num,
-                        text,
-                        "",
-                        ""
-                    )
-                )
+//                mWsManager?.sendMessage(LiveRoomChatPresenterHelper.getGifParams(anchorId, "4", it.rid, "", amount, num, text, "", ""))
                 passWordDialog.showOrHideLoading()
                 passWordDialog.dismiss()
                 ToastUtils.showToast("红包发送成功")

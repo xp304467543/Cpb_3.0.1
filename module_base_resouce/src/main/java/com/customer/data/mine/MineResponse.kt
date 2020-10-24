@@ -82,7 +82,7 @@ data class MineUpDateMoney(var money: String, var isUpdate: Boolean, var isDiamo
 
 
 //支付Url
-data class MinePayUrl(var url: String)
+data class MinePayUrl(var url: String,var type:String,var form:String)
 
 
 //关注 用户、主播 bean

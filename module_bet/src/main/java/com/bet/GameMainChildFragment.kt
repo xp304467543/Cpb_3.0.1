@@ -155,6 +155,8 @@ class GameMainChildFragment : BaseNormalFragment<GameMainChildFragmentPresenter>
                     "fh_chess" -> mPresenter.getChessGame(data.id.toString())
                     "ag_live" -> mPresenter.getAg()
                     "ag_slot" -> mPresenter.getAgDz()
+                    "bg_live" -> mPresenter.getBgSx()
+                    "bg_fish" -> mPresenter.getBgFish(data?.id.toString())
                 }
             }
         }
@@ -224,6 +226,8 @@ class GameMainChildFragment : BaseNormalFragment<GameMainChildFragmentPresenter>
                             "fh_chess" -> mPresenter.getChessGame(data.id.toString())
                             "ag_live" -> mPresenter.getAg()
                             "ag_slot" -> mPresenter.getAgDz()
+                            "bg_live" -> mPresenter.getBgSx()
+                            "bg_fish" -> mPresenter.getBgFish(data?.id.toString())
                         }
                     }
                 }

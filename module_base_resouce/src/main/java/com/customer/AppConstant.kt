@@ -10,7 +10,7 @@ package com.customer
 object AppConstant {
 
 
-    //是否代理  true为代理  false 为官方
+    //是否代理  true为官方  false 为代理
 
     var isMain = true
 

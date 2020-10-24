@@ -137,7 +137,7 @@ class MomentAnchorInfoActivity : BaseMvpActivity<MomentAnchorInfoActivityPresent
 
     private fun initComment() {
         rvHotDiscussInfo.layoutManager = XLinearLayoutManager(this)
-        anchorInfoAdapter = MomentsAnchorInfoAdapter(this, intent.getStringExtra("userId") ?: "")
+        anchorInfoAdapter = MomentsAnchorInfoAdapter(this, intent.getStringExtra("id") ?: "")
         rvHotDiscussInfo.adapter = anchorInfoAdapter
         smartRefreshLayoutHotDiscussInfo.setOnRefreshListener {
             mPage = 1

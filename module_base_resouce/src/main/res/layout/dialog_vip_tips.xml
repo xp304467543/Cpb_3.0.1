@@ -8,6 +8,7 @@
     app:rv_cornerRadius="@dimen/dp_10">
 
     <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/vipClose"
         android:layout_width="@dimen/dp_40"
         android:layout_height="40dp"
         android:layout_alignParentEnd="true"

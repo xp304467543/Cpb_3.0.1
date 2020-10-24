@@ -201,7 +201,7 @@ class MineMoneyCenterAct : BaseMvpActivity<MineMoneyCenterActPresenter>() {
                 }
                 etMoney.setText(t1)
             } else {
-                when (thirdList?.get(currentLeft - 1)?.name) {
+                when (thirdList?.get(currentLeft)?.name) {
                     "fh_chess" -> {
                         if (BigDecimal(t2) == BigDecimal.ZERO) {
                             ToastUtils.showToast("转账金额不能小于1")
@@ -319,8 +319,8 @@ class MineMoneyCenterAct : BaseMvpActivity<MineMoneyCenterActPresenter>() {
                 }
             }
             else -> {
-                val left = thirdList?.get(currentLeft - 1)?.name
-                val right = thirdList?.get(currentRight - 1)?.name
+                val left = thirdList?.get(currentLeft )?.name
+                val right = thirdList?.get(currentRight )?.name
                 when (thirdList?.get(currentLeft)?.name) {
                     "fh_chess" -> {
                         if (BigDecimal(t2).compareTo(BigDecimal(all)) == -1) {

@@ -17,6 +17,7 @@ import com.customer.bean.image.NineGridInfoAnchor
 import com.customer.component.WaveView
 import com.customer.component.dialog.GlobalDialog
 import com.customer.data.UserInfoSp
+import com.customer.data.moments.MomentsApi
 import com.glide.GlideUtil
 import com.home.R
 import com.lib.basiclib.base.recycle.XRecyclerAdapter
@@ -152,6 +153,9 @@ class HomeAnchorAdapter(val mContext: Context) :
             } else if (gridInfo.getGender() == 0) {
                 imgAnchorSex?.setBackgroundResource(R.mipmap.ic_live_anchor_girl)
             }
+            if (gridInfo.getIsLike() == true) {
+                imgHotDiscussHolderDianZan?.setImageResource(R.mipmap.ic_yidianzan)
+            } else imgHotDiscussHolderDianZan?.setImageResource(R.mipmap.ic_dianzan)
             //点赞
             linDianZan?.setOnClickListener {
                 //未登录
@@ -159,29 +163,51 @@ class HomeAnchorAdapter(val mContext: Context) :
                     GlobalDialog.notLogged(mContext as Activity)
                     return@setOnClickListener
                 }
-                if (!FastClickUtil.isFastClick()) {
-                    if (gridInfo.getIsLike() == true) {
-                        gridInfo.setIsLike(false)
-                        imgHotDiscussHolderDianZan?.setImageResource(R.mipmap.ic_dianzan)
-                        val zan = (gridInfo.getLikeNum()?.toInt()?.minus(1)).toString()
-                        gridInfo.setLikeNum(zan)
-                        tvHotDiscussHolderDianZan?.text = zan
-                        mGoodView.setText("-1")
-                            .setTextColor(Color.parseColor("#AFAFAF"))
-                            .setTextSize(14)
-                            .show(imgHotDiscussHolderDianZan)
-                    } else {
-                        gridInfo.setIsLike(true)
-                        imgHotDiscussHolderDianZan?.setImageResource(R.mipmap.ic_yidianzan)
-                        val zan = (gridInfo.getLikeNum()?.toInt()?.plus(1)).toString()
-                        gridInfo.setLikeNum(zan)
-                        tvHotDiscussHolderDianZan?.text = zan
-                        mGoodView.setText("+1")
-                            .setTextColor(Color.parseColor("#f66467"))
-                            .setTextSize(14)
-                            .show(imgHotDiscussHolderDianZan)
+                MomentsApi.clickZansDavis("1", gridInfo.getId().toString()) {
+                    onSuccess {
+                        if (!FastClickUtil.isFastClick()) {
+                            gridInfo.setLikeNum(it.like_num)
+                            gridInfo.setIsLike(it.is_like)
+                            if (it.is_like) {
+                                mGoodView.setText("+1")
+                                    .setTextColor(Color.parseColor("#f66467"))
+                                    .setTextSize(14)
+                                    .show(imgHotDiscussHolderDianZan)
+                            } else {
+                                gridInfo.setLikeNum(it.like_num)
+                                mGoodView.setText("-1")
+                                    .setTextColor(Color.parseColor("#AFAFAF"))
+                                    .setTextSize(14)
+                                    .show(imgHotDiscussHolderDianZan)
+                            }
+                        } else ToastUtils.showToast("请勿重复点击")
+                        notifyItemChanged(adapterPosition)
                     }
-                } else ToastUtils.showToast("请勿重复点击")
+                    onFailed { ToastUtils.showToast("点赞失败") }
+                }
+//                if (!FastClickUtil.isFastClick()) {
+//                    if (gridInfo.getIsLike() == true) {
+//                        gridInfo.setIsLike(false)
+//                        imgHotDiscussHolderDianZan?.setImageResource(R.mipmap.ic_dianzan)
+//                        val zan = (gridInfo.getLikeNum()?.toInt()?.minus(1)).toString()
+//                        gridInfo.setLikeNum(zan)
+//                        tvHotDiscussHolderDianZan?.text = zan
+//                        mGoodView.setText("-1")
+//                            .setTextColor(Color.parseColor("#AFAFAF"))
+//                            .setTextSize(14)
+//                            .show(imgHotDiscussHolderDianZan)
+//                    } else {
+//                        gridInfo.setIsLike(true)
+//                        imgHotDiscussHolderDianZan?.setImageResource(R.mipmap.ic_yidianzan)
+//                        val zan = (gridInfo.getLikeNum()?.toInt()?.plus(1)).toString()
+//                        gridInfo.setLikeNum(zan)
+//                        tvHotDiscussHolderDianZan?.text = zan
+//                        mGoodView.setText("+1")
+//                            .setTextColor(Color.parseColor("#f66467"))
+//                            .setTextSize(14)
+//                            .show(imgHotDiscussHolderDianZan)
+//                    }
+//                } else ToastUtils.showToast("请勿重复点击")
             }
             if (gridInfo.getIsLive() == "1") {
                 circleWave?.setInitialRadius(50f)

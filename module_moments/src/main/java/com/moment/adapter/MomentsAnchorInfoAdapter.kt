@@ -99,22 +99,14 @@ class MomentsAnchorInfoAdapter(private val context: Activity, private val mainId
                 }
                 MomentsApi.clickZansDavis("2",data?.comment_id.toString()){
                     onSuccess {
+                        data?.is_like = it.is_like
+                        data?.like = it.like_num
                         if (data?.is_like == true) {
-                            data.is_like = false
-                            holder.getImageView(R.id.imgDianZan)?.setImageResource(R.mipmap.ic_dianzan)
-                            val zan = (data.like?.toInt()?.minus(1)).toString()
-                            data.like = data.like?.toInt()?.minus(1).toString()
-                            holder.text(R.id.tvDianZan, zan)
                             mGoodView.setText("-1")
                                 .setTextColor(Color.parseColor("#AFAFAF"))
                                 .setTextSize(12)
                                 .show(holder.getImageView(R.id.imgDianZan))
                         } else {
-                            data?.is_like = true
-                            holder.getImageView(R.id.imgDianZan)?.setImageResource(R.mipmap.ic_yidianzan)
-                            val zan = (data?.like?.toInt()?.plus(1)).toString()
-                            data?.like = data?.like?.plus(1)
-                            holder.text(R.id.tvDianZan, zan)
                             mGoodView.setText("+1")
                                 .setTextColor(Color.parseColor("#f66467"))
                                 .setTextSize(12)

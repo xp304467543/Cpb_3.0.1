@@ -1,8 +1,10 @@
 package com.mine.children.recharge
 
 import android.content.Intent
+import android.view.View
 import com.customer.data.BankAddSuccess
 import com.customer.data.BankCardChoose
+import com.customer.data.mine.MineApi
 import com.customer.data.mine.UserBankCard
 import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
@@ -13,6 +15,7 @@ import com.lib.basiclib.base.recycle.RecyclerViewHolder
 import com.lib.basiclib.base.xui.adapter.recyclerview.XLinearLayoutManager
 import com.lib.basiclib.utils.FastClickUtil
 import com.lib.basiclib.utils.StatusBarUtils
+import com.lib.basiclib.utils.ToastUtils
 import com.mine.R
 import kotlinx.android.synthetic.main.act_user_bank_card.*
 
@@ -75,13 +78,28 @@ class MineUserBankCardAct : BaseMvpActivity<MineUserBankCardActPresenter>() {
         override fun getItemLayoutId(viewType: Int) = R.layout.adapter_user_bank_card
 
         override fun bindData(holder: RecyclerViewHolder, position: Int, data: UserBankCard?) {
-            holder.text(R.id.tvCardName,"存款人: "+ data?.name)
+            holder.text(R.id.tvCardName, "存款人: " + data?.name)
             holder.text(R.id.tvCardBank, data?.remark)
-            holder.text(R.id.tvCardNo, "存款账号: "+data?.no)
+            holder.text(R.id.tvCardNo, "存款账号: " + data?.no)
             holder.findView(R.id.btUse).setOnClickListener {
-                if (!FastClickUtil.isFastClick()){
-                    RxBus.get().post(BankCardChoose(data?.no?:"null",data?.name?:"null"))
+                if (!FastClickUtil.isFastClick()) {
+                    RxBus.get().post(BankCardChoose(data?.no ?: "null", data?.name ?: "null"))
                     finish()
+                }
+            }
+            holder.findView(R.id.btnDelete).setOnClickListener {
+                if (!FastClickUtil.isFastClick()) {
+                    MineApi.delUserBankCard(data?.id ?: "0") {
+                        onSuccess {
+                            userCardAdapter?.delete(position)
+                            if (getData().isNullOrEmpty()) {
+                                userCardPlaceHolder?.visibility = View.VISIBLE
+                            }
+                        }
+                        onFailed {
+                            ToastUtils.showToast(it.getMsg())
+                        }
+                    }
                 }
             }
         }

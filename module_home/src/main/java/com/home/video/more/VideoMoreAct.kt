@@ -206,6 +206,8 @@ class VideoMoreAct : BaseMvpActivity<ViewMoreActPresenter>() {
                 clipPagerTitleView.textColor = ViewUtils.getColor(R.color.text_black)
                 clipPagerTitleView.clipColor = Color.WHITE
                 clipPagerTitleView.setOnClickListener {
+                    magic_indicator3.onPageSelected(pos)
+                    magic_indicator3.onPageScrolled(pos, 0.0F, 0)
                     vpMoreVideo.currentItem = pos
                     childName = title[pos]
                 }
@@ -238,6 +240,8 @@ class VideoMoreAct : BaseMvpActivity<ViewMoreActPresenter>() {
             if (childName != "0") {
                 if (childList.indexOf(childName) != -1) {
                     vpMoreVideo.currentItem = childList.indexOf(childName)
+                    magic_indicator3.onPageSelected(childList.indexOf(childName))
+                    magic_indicator3.onPageScrolled(childList.indexOf(childName), 0.0F, 0)
                     bind(magic_indicator3, vpMoreVideo,childList.indexOf(childName))
                 }else  bind(magic_indicator3, vpMoreVideo,0)
             }

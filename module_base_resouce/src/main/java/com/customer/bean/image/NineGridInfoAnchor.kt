@@ -26,6 +26,7 @@ class NineGridInfoAnchor : Serializable{
     private var mId: String? = null
     private var mUserId: String? = null
     private var mGender = 0
+    private var mDynamic_id:String?=null
 
     constructor(
         content: String?,
@@ -40,6 +41,7 @@ class NineGridInfoAnchor : Serializable{
         is_like: Boolean?,
         live_status: String?,
         gender: Int,
+        dynamic_id:String,
         showType: Int = NineGridImageView.STYLE_FILL,
         spanType: Int = NineGridImageView.NOSPAN
     ) {
@@ -56,6 +58,7 @@ class NineGridInfoAnchor : Serializable{
         mShowType = showType
         mImgUrlList = imgUrlList
         mId = id
+        mDynamic_id = dynamic_id
         mUserId = userId
     }
 
@@ -65,6 +68,14 @@ class NineGridInfoAnchor : Serializable{
 
     fun setUserId(User: String?) {
         mUserId = User
+    }
+
+    fun getDynamicId(): String? {
+        return mDynamic_id
+    }
+
+    fun setDynamicId(dynamic_id: String?) {
+        mDynamic_id = dynamic_id
     }
 
     fun getId(): String? {

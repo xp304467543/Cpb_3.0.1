@@ -31,6 +31,9 @@ class DialogVipTips (context: Context) : Dialog(context) {
 //      lp.alpha = 0.7f // 透明度
         window?.attributes = lp
         initText()
+        vipClose.setOnClickListener {
+            dismiss()
+        }
     }
 
     private fun initText() {

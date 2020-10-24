@@ -77,7 +77,7 @@ class HomeRecommendNewPresenter : BaseMvpPresenter<HomeRecommendNewFragment>() {
                 resultGetHomeHotLive.onSuccess {
                     mView.hotLiveAdapter?.clear()
                     mView.rvHotLiveNew.removeAllViews()
-                    if (it.size > 10) mView.hotLiveAdapter?.refresh(it.subList(0, 10)) else mView.hotLiveAdapter?.refresh(it) }
+                    mView.hotLiveAdapter?.refresh(it) }
 
                 resultGetHomeLotteryTypeResult.onSuccess {bean ->
                     val typeObject = bean.typeList?.asJsonObject

@@ -75,10 +75,10 @@ class MineUserAddBankCard : BaseNavActivity() {
                     ToastUtils.showToast("请填写卡号")
                     return@setOnClickListener
                 }
-                if (etCardUserNum?.text?.length?:0 < 12) {
-                    ToastUtils.showToast("卡号长度错误")
-                    return@setOnClickListener
-                }
+//                if (etCardUserNum?.text?.length?:0 < 12) {
+//                    ToastUtils.showToast("卡号长度错误")
+//                    return@setOnClickListener
+//                }
                 addBankCard(etCardUserName.text.toString().trim(),etCardUserNum.text.toString().trim(),etCardUserDes.text.toString().trim())
             }
         }

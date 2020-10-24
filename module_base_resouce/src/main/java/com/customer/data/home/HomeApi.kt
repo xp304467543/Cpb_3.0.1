@@ -534,6 +534,7 @@ object HomeApi : BaseApi {
             .params("user_id", UserInfoSp.getUserId())
             .params("amount", amount)
             .params("num", num)
+            .params("version","v2")
             .params("text", text)
             .params("password", password)
             .subscribe(subscriber)
@@ -635,6 +636,7 @@ object HomeApi : BaseApi {
             .headers("token", UserInfoSp.getToken())
             .params("anchor_id", anchorId)
             .params("user_id", userId)
+            .params("version", "v2")
             .params("gift_id", gift_id)
             .params("gift_num", gift_num)
             .subscribe(subscriber)
@@ -677,7 +679,7 @@ object HomeApi : BaseApi {
         getApi()
             .get<UpdateData>(VERSION_UPDATE)
             .params("client_type", "android")
-            .params("version", "3.1.2")
+            .params("version", "3.1.3")
             .subscribe(subscriber)
     }
 

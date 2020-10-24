@@ -238,6 +238,10 @@ object MineApi : BaseApi {
     //添加常用卡号
     private const val USER_ADD_BANK_CARD = "api/v1_1/Recharge/add_commonno"
 
+    //删除常用卡号
+    private const val USER_DEL_BANK_CARD = "api/v1_1/Recharge/del_commonno"
+
+
     //平台间转账
     private const val PLAT_TRANSFER = "platform/transfer"
 
@@ -1285,8 +1289,21 @@ object MineApi : BaseApi {
             .params("no",no)
             .params("remark",remark)
             .subscribe(subscriber)
-
     }
+
+    /**
+     * 添加常用卡号
+     */
+    fun delUserBankCard(id:String,function: ApiSubscriber<BaseApiBean>.() -> Unit){
+        val subscriber = object : ApiSubscriber<BaseApiBean>() {}
+        subscriber.function()
+        getApi().post<BaseApiBean>(USER_DEL_BANK_CARD)
+            .headers("token", UserInfoSp.getToken())
+            .params("id",id)
+            .subscribe(subscriber)
+    }
+
+
 
     /**
      * 获取是否自动转账

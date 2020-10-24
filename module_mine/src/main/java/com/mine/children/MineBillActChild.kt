@@ -164,8 +164,6 @@ class MineBillActChild : BaseContentFragment() {
     private fun betRecord() {
         MineApi.betRecord(page, isBal) {
             onSuccess {
-                setGone(tvHolder)
-                adapter1?.clear()
                 smartRefreshLayoutChildBill?.setEnableRefresh(true)
                 smartRefreshLayoutChildBill?.setEnableLoadMore(true)
                 val data = parseResult(it)
@@ -270,7 +268,14 @@ class MineBillActChild : BaseContentFragment() {
                 when (data?.type) {
                     "0" -> {
                         holder.text(R.id.tvName, "存款")
-                        holder.text(R.id.tvEnd, "+ " + data.amount + " 元")
+                        val spannableString = SpannableString("+ " + data.amount + " 元")
+                        spannableString.setSpan(
+                            ForegroundColorSpan(Color.parseColor("#ff513e")),
+                            0,
+                            ("+ " + data.amount).length,
+                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+                        holder.text(R.id.tvEnd,spannableString )
                         holder.getImageView(R.id.imgPhoto).setImageResource(R.mipmap.ic_save)
                     }
                     "1" -> {
@@ -285,7 +290,14 @@ class MineBillActChild : BaseContentFragment() {
                     }
                     "3" -> {
                         holder.text(R.id.tvName, "抢红包")
-                        holder.text(R.id.tvEnd, "+ " + data.amount + " 元")
+                        val spannableString = SpannableString("+ " + data.amount + " 元")
+                        spannableString.setSpan(
+                            ForegroundColorSpan(Color.parseColor("#ff513e")),
+                            0,
+                            ("+ " + data.amount).length,
+                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+                        holder.text(R.id.tvEnd,spannableString )
                         holder.getImageView(R.id.imgPhoto)
                             .setImageResource(R.mipmap.ic_qianghoongbao)
                     }
@@ -296,22 +308,50 @@ class MineBillActChild : BaseContentFragment() {
                     }
                     "5" -> {
                         holder.text(R.id.tvName, "会员返佣")
-                        holder.text(R.id.tvEnd, "+ " + data.amount + " 元")
+                        val spannableString = SpannableString("+ " + data.amount + " 元")
+                        spannableString.setSpan(
+                            ForegroundColorSpan(Color.parseColor("#ff513e")),
+                            0,
+                            ("+ " + data.amount).length,
+                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+                        holder.text(R.id.tvEnd,spannableString )
                         holder.getImageView(R.id.imgPhoto).setImageResource(R.mipmap.ic_fanyong)
                     }
                     "6" -> {
                         holder.text(R.id.tvName, "下级返佣")
-                        holder.text(R.id.tvEnd, "+ " + data.amount + " 元")
+                        val spannableString = SpannableString("+ " + data.amount + " 元")
+                        spannableString.setSpan(
+                            ForegroundColorSpan(Color.parseColor("#ff513e")),
+                            0,
+                            ("+ " + data.amount).length,
+                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+                        holder.text(R.id.tvEnd,spannableString )
                         holder.getImageView(R.id.imgPhoto).setImageResource(R.mipmap.ic_fanyong_2)
                     }
                     "7" -> {
                         holder.text(R.id.tvName, "邀请返佣")
-                        holder.text(R.id.tvEnd, "+ " + data.amount + " 元")
+                        val spannableString = SpannableString("+ " + data.amount + " 元")
+                        spannableString.setSpan(
+                            ForegroundColorSpan(Color.parseColor("#ff513e")),
+                            0,
+                            ("+ " + data.amount).length,
+                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+                        holder.text(R.id.tvEnd,spannableString )
                         holder.getImageView(R.id.imgPhoto).setImageResource(R.mipmap.ic_fanyong_1)
                     }
                     "8" -> {
                         holder.text(R.id.tvName, "彩金")
-                        holder.text(R.id.tvEnd, "+ " + data.amount + " 元")
+                        val spannableString = SpannableString("+ " + data.amount + " 元")
+                        spannableString.setSpan(
+                            ForegroundColorSpan(Color.parseColor("#ff513e")),
+                            0,
+                            ("+ " + data.amount).length,
+                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+                        holder.text(R.id.tvEnd,spannableString )
                         holder.getImageView(R.id.imgPhoto).setImageResource(R.mipmap.ic_caijin)
                     }
                 }
@@ -353,21 +393,41 @@ class MineBillActChild : BaseContentFragment() {
                 )
                 if (isBal == "0") {
                     val spannableString = SpannableString(data?.amount+" 钻石")
-                    spannableString.setSpan(
-                        ForegroundColorSpan(ViewUtils.getColor(R.color.color_FF513E)),
-                        0,
-                        data?.amount?.length?:0,
-                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-                    )
+                    if (data?.amount?.contains("+") == true){
+                        spannableString.setSpan(
+                            ForegroundColorSpan(ViewUtils.getColor(R.color.color_FF513E)),
+                            0,
+                            data.amount.length,
+                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+                    }else{
+                        spannableString.setSpan(
+                            ForegroundColorSpan(ViewUtils.getColor(R.color.color_333333)),
+                            0,
+                            data?.amount?.length?:0,
+                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+                    }
+
                     holder.text(R.id.tvGiftPrise, spannableString)
                 } else {
                     val spannableString = SpannableString(data?.amount+" 余额")
-                    spannableString.setSpan(
-                        ForegroundColorSpan(ViewUtils.getColor(R.color.color_333333)),
-                        0,
-                        data?.amount?.length?:0,
-                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-                    )
+                    if (data?.amount?.contains("+") == true){
+                        spannableString.setSpan(
+                            ForegroundColorSpan(ViewUtils.getColor(R.color.color_FF513E)),
+                            0,
+                            data.amount.length,
+                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+                    }else{
+                        spannableString.setSpan(
+                            ForegroundColorSpan(ViewUtils.getColor(R.color.color_333333)),
+                            0,
+                            data?.amount?.length?:0,
+                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+                    }
+
                     holder.text(R.id.tvGiftPrise, spannableString)
                 }
                 if (data?.type == "中奖") {
@@ -446,8 +506,14 @@ class MineBillActChild : BaseContentFragment() {
                     holder.text(R.id.tvName, "兑换")
                     holder.getImageView(R.id.imgPhoto).setImageResource(R.mipmap.ic_change)
                 }
-
-                holder.text(R.id.tvEnd, "+ " + data?.get_money + " 钻石")
+                val spannableString = SpannableString("+ " + data?.get_money + " 钻石")
+                spannableString.setSpan(
+                    ForegroundColorSpan(ViewUtils.getColor(R.color.color_FF513E)),
+                    0,
+                    ("+ " + data?.get_money ).length,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+                holder.text(R.id.tvEnd,spannableString )
 
             }
         }

@@ -38,7 +38,7 @@ class LoginAct : BaseMvpActivity<LoginPresenter>() {
 
 
 
-    var loadMode = 1 //  0-验证码登录  1-密码登录
+    var loadMode = 1 //  1-验证码登录  0-密码登录
 
     var registerMode = 0 // 0-注册 1-登录
 
@@ -72,7 +72,7 @@ class LoginAct : BaseMvpActivity<LoginPresenter>() {
         )
         tvLoginDescription.text = spannableString
 
-        if(AppConstant.isMain){
+        if(!AppConstant.isMain){
             etRegisterInviteNum.hint = "邀请码(必填)"
         }else  etRegisterInviteNum.hint = "邀请码(选填)"
 
@@ -224,7 +224,7 @@ class LoginAct : BaseMvpActivity<LoginPresenter>() {
                 ToastUtils.showToast("密码长度不得小于6位")
                 return@setOnClickListener
             }
-            if (AppConstant.isMain) {
+            if (!AppConstant.isMain) {
                 if (etRegisterInviteNum.text.isEmpty()) {
                     ToastUtils.showToast("请输入邀请码")
                     return@setOnClickListener
@@ -323,6 +323,7 @@ class LoginAct : BaseMvpActivity<LoginPresenter>() {
     private fun loginOrRegister() {
         if (registerMode == 0) {
             registerMode = 1
+            loadMode = 0
             tvRegister.text = "立即登录"
             setGone(containerLogin)
             setVisible(containerLoginRegister)

@@ -22,21 +22,24 @@ class MineMoneyCenterActPresenter : BaseMvpPresenter<MineMoneyCenterAct>() {
     @SuppressLint("SetTextI18n")
     fun getUserBalance() {
         if (mView.isActive()) {
-            mView.showPageLoadingDialog("加载中")
             MineApi.getUserBalance {
                 onSuccess {
                     mView.tvCenterMoney?.text = it.balance.toString()
+                    getTotalGameCenterMoney()
                 }
                 onFailed {
                     GlobalDialog.showError(mView, it)
+                    getTotalGameCenterMoney()
                 }
             }
             MineApi.getChessMoney {
                 onSuccess {
                     mView.tv_qp_money?.text = it.bl.toString()
+                    getTotalGameCenterMoney()
                 }
                 onFailed {
                     GlobalDialog.showError(mView, it)
+                    getTotalGameCenterMoney()
                 }
             }
             MineApi.getAgMoney {

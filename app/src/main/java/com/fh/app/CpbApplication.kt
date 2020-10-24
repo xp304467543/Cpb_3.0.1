@@ -63,7 +63,7 @@ class CpbApplication : BaseApplication() {
 //        val strategy = UserStrategy(this)
 //        strategy.isUploadProcess = processName == null || processName == packageName
 //        Bugly.init(getApplication(), "00b7077bbf", false,strategy)
-        Bugly.init(getApplication(), "9f9a71270c", false)
+        Bugly.init(getApplication(), "d0735290ea", false)
     }
 
 

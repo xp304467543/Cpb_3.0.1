@@ -98,8 +98,8 @@ class LiveRoomChild2 : BaseNormalFragment<LiveRoomChild2Presenter>(){
                 userId = result.anchor_id,
                 is_like = result.is_zan,
                 gender = result.sex ?: 0,
-                live_status = result.live_status
-
+                live_status = result.live_status,
+                dynamic_id = result.dynamic_id.toString()
             ).setShowType(NineGridImageView.STYLE_GRID)
             list.add(info)
         }

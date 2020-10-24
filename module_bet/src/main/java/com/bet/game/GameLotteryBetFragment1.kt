@@ -164,6 +164,16 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                 GlobalDialog.notLogged(requireActivity())
                 return@setOnClickListener
             }
+            if (etGameBetPlayMoney.text.isNullOrEmpty()) {
+                ToastUtils.showToast("请输入投注金额")
+                return@setOnClickListener
+            }
+            if (is_bl_play == 0) {
+                if (BigDecimal(etGameBetPlayMoney.text.toString()).compareTo(BigDecimal(10)) == -1) {
+                    ToastUtils.showToast("请输入≥10的整数")
+                    return@setOnClickListener
+                }
+            }
             if (!isOpen) {
                 ToastUtils.showToast("当前期已封盘或已开奖，请购买下一期")
                 return@setOnClickListener
@@ -175,26 +185,27 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
             //余额不足
             val m1 = BigDecimal(tvGameTotalMoney.text.toString())
             if (is_bl_play == 0) {
-                if (userDiamond != "-1") {
-                    val m2 = BigDecimal(userDiamond)
-                    if (m2.compareTo(m1) == -1) {
-                        val tips = context?.let { it1 ->
-                            DialogGlobalTips(
-                                it1,
-                                "您的钻石余额不足,请充值",
-                                "兑换钻石",
-                                "取消",
-                                ""
-                            )
+                if (etGameBetPlayMoney.text.toString().isNotEmpty())
+                    if (userDiamond != "-1") {
+                        val m2 = BigDecimal(userDiamond)
+                        if (m2.compareTo(m1) == -1) {
+                            val tips = context?.let { it1 ->
+                                DialogGlobalTips(
+                                    it1,
+                                    "您的钻石余额不足,请充值",
+                                    "兑换钻石",
+                                    "取消",
+                                    ""
+                                )
+                            }
+                            tips?.setConfirmClickListener {
+                                RxBus.get().post(HomeJumpToMine(true))
+                                tips.dismiss()
+                            }
+                            tips?.show()
+                            return@setOnClickListener
                         }
-                        tips?.setConfirmClickListener {
-                            RxBus.get().post(HomeJumpToMine(true))
-                            tips.dismiss()
-                        }
-                        tips?.show()
-                        return@setOnClickListener
-                    }
-                } else mPresenter.getUserBalance()
+                    } else mPresenter.getUserBalance()
             } else {
                 if (userBalance != "-1") {
                     val m2 = BigDecimal(userBalance)
@@ -301,9 +312,9 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                 if (str != null && str.isNotEmpty()) {
                     if (is_bl_play == 0) {
                         if (minMonty > 1 && str.toString().toLong() < 10) {
-                            etGameBetPlayMoney.setText("10")
+//                            etGameBetPlayMoney.setText("10")
                             ToastUtils.showToast("请输入≥10的整数")
-                            betTotalMoney = 10
+//                            betTotalMoney = 10
                         }
                     }
                     betTotalMoney = if (str.length > 9) {
@@ -1101,9 +1112,9 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
             play_class_cname = play_class_cname,
             play_odds = play_odds
         )
-        LogUtils.e("========>>>>> "+isAdd)
-        LogUtils.e("========>>>>> "+bean)
-        LogUtils.e("========>>>>> ***"+betList.contains(bean))
+        LogUtils.e("========>>>>> " + isAdd)
+        LogUtils.e("========>>>>> " + bean)
+        LogUtils.e("========>>>>> ***" + betList.contains(bean))
         if (isAdd) {
             betList.add(bean)
         } else betList.remove(bean)
@@ -1112,7 +1123,9 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
         } else if (rightTop.contains("三中")) {
             if (betList.size > 2) setVisible(bottomGameBetLayout) else setGone(bottomGameBetLayout)
         } else {
-            if (betList.isNotEmpty()) setVisible(bottomGameBetLayout) else setGone(bottomGameBetLayout)
+            if (betList.isNotEmpty()) setVisible(bottomGameBetLayout) else setGone(
+                bottomGameBetLayout
+            )
         }
         mPresenter.setTotal()
     }

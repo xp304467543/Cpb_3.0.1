@@ -88,4 +88,34 @@ class GameMainChildFragmentPresenter : BaseMvpPresenter<GameMainChildFragment>()
 
         }
     }
+
+    fun getBgFish(game_id: String) {
+        GameApi.getBgFish(game_id) {
+            if (mView.isAdded) {
+                onSuccess {
+                    Router.withApi(ApiRouter::class.java).toGlobalWeb(it.url.toString())
+                    mView.hidePageLoadingDialog()
+                }
+                onFailed {
+                    ToastUtils.showToast(it.getMsg())
+                    mView.hidePageLoadingDialog()
+                }
+            }
+        }
+    }
+
+    fun getBgSx() {
+        GameApi.getBgSx {
+            if (mView.isAdded) {
+                onSuccess {
+                    Router.withApi(ApiRouter::class.java).toGlobalWeb(it.url.toString())
+                    mView.hidePageLoadingDialog()
+                }
+                onFailed {
+                    ToastUtils.showToast(it.getMsg())
+                    mView.hidePageLoadingDialog()
+                }
+            }
+        }
+    }
 }

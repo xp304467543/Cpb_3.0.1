@@ -40,8 +40,7 @@ import com.customer.data.moments.MomentsApi
  * @ Describe 热门讨论
  *
  */
-class MomentsAnchorAdapter(val mContext: Context) :
-    XRecyclerAdapter<NineGridInfoAnchor, MomentsAnchorAdapter.NineGridHolder>() {
+class MomentsAnchorAdapter(val mContext: Context) : XRecyclerAdapter<NineGridInfoAnchor, MomentsAnchorAdapter.NineGridHolder>() {
 
     val mGoodView = GoodView(mContext)
 
@@ -199,7 +198,7 @@ class MomentsAnchorAdapter(val mContext: Context) :
             linReply?.setOnClickListener {
                 Router.withApi(ApiRouter::class.java)
                     .toMineAnchorInfo(
-                        gridInfo.getId().toString(),
+                        gridInfo.getDynamicId().toString(),
                         gridInfo.getUserId().toString(),
                         gridInfo.getUserName().toString(),
                         gridInfo.getGender(),

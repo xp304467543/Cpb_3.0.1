@@ -35,14 +35,15 @@ class RechargeWebAct : BaseNavActivity() {
         val money = intent.getFloatExtra("MINE_INVEST_AMOUNT", 0F)
         val id = intent.getIntExtra("MINE_RECHARGE_ID", 0)
         val url = intent.getStringExtra("MINE_RECHARGE_URL")
-        if (intent.getBooleanExtra("isRen", false)) {
-            byWebView = ByWebView
-                .with(this)
-                .setWebParent(rootWeb, LinearLayout.LayoutParams(-1, -1))
-                .useWebProgress(ContextCompat.getColor(this, R.color.text_red))
-                .loadUrl(url)
-        } else {
-            getInvestUrl(money, id, url)
+        when {
+            intent.getBooleanExtra("isRen", false) -> {
+                byWebView = ByWebView
+                    .with(this)
+                    .setWebParent(rootWeb, LinearLayout.LayoutParams(-1, -1))
+                    .useWebProgress(ContextCompat.getColor(this, R.color.text_red))
+                    .loadUrl(url)
+            }
+            else -> getInvestUrl(money, id, url?:"")
         }
     }
 
@@ -50,11 +51,20 @@ class RechargeWebAct : BaseNavActivity() {
         showPageLoadingDialog()
         MineApi.getToPayUrl(amount, channels, route) {
             onSuccess {
-                byWebView = ByWebView
-                    .with(this@RechargeWebAct)
-                    .setWebParent(rootWeb, LinearLayout.LayoutParams(-1, -1))
-                    .useWebProgress(ContextCompat.getColor(this@RechargeWebAct, R.color.text_red))
-                    .loadUrl(it.url.replace("\\", "/"))
+                byWebView = if (it.type == "2"){
+                    ByWebView
+                        .with(this@RechargeWebAct)
+                        .setWebParent(rootWeb, LinearLayout.LayoutParams(-1, -1))
+                        .useWebProgress(ContextCompat.getColor(this@RechargeWebAct, R.color.text_red))
+                        .loadForm(it.form.replace("\\", "/"))
+                }else{
+                    ByWebView
+                        .with(this@RechargeWebAct)
+                        .setWebParent(rootWeb, LinearLayout.LayoutParams(-1, -1))
+                        .useWebProgress(ContextCompat.getColor(this@RechargeWebAct, R.color.text_red))
+                        .loadUrl(it.url.replace("\\", "/"))
+                }
+
                 hidePageLoadingDialog()
             }
             onFailed {
@@ -63,8 +73,6 @@ class RechargeWebAct : BaseNavActivity() {
             }
         }
     }
-
-
     //===================WebChromeClient 和 WebViewClient===========================//
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

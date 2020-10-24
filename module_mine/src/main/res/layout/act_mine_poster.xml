@@ -68,7 +68,7 @@
             android:layout_marginTop="@dimen/dp_20"
             android:layout_marginBottom="10dp"
             android:gravity="center"
-            android:text="扫码下载乐购直播APP"
+            android:text="扫码下载乐购APP"
             android:textColor="@color/color_999999"
             android:textSize="@dimen/sp_12" />
     </com.lib.basiclib.base.round.RoundLinearLayout>

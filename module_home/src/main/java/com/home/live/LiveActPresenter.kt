@@ -84,7 +84,7 @@ class LiveActPresenter : BaseMvpPresenter<LiveRoomActivity>() {
         HomeApi.homeLiveSendRedEnvelope(anchorId, amount, num, text, password) {
             onSuccess {
                 //通知socket
-                RxBus.get().post(Gift(LiveRoomChatPresenterHelper.getGifParams(anchorId, "4", it.rid, "", amount, num, text, "", "")))
+//                RxBus.get().post(Gift(LiveRoomChatPresenterHelper.getGifParams(anchorId, "4", it.rid, "", amount, num, text, "", "")))
                 passWordDialog.showOrHideLoading()
                 passWordDialog.dismiss()
                 ToastUtils.showToast("红包发送成功")

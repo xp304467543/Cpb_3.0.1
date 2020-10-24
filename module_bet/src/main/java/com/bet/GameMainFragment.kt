@@ -251,7 +251,7 @@ class GameMainFragment : BaseMvpFragment<GameMainPresenter>(), ITheme, IMode {
                 setVisible(imgBetUserRecharge)
                 setVisible(imgBetUserIcon)
                 setVisible(gameCustomer)
-                tvTopName.text = "乐购直播"
+                tvTopName.text = "乐购"
             }
         }
     }

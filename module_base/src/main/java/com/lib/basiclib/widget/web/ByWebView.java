@@ -182,6 +182,14 @@ public class ByWebView {
         hideErrorView();
     }
 
+    public  void loadForm(String form){
+        mWebView.loadDataWithBaseURL(null,form, "text/html; charset=UTF-8", "utf-8",null);
+        if (mProgressBar != null) {
+            mProgressBar.show();
+        }
+        hideErrorView();
+    }
+
     public void reload() {
         hideErrorView();
         mWebView.reload();
@@ -462,6 +470,12 @@ public class ByWebView {
         public ByWebView loadUrl(String url) {
             ByWebView byWebView = new ByWebView(this);
             byWebView.loadUrl(url);
+            return byWebView;
+        }
+
+        public ByWebView loadForm(String form) {
+            ByWebView byWebView = new ByWebView(this);
+            byWebView.loadForm(form);
             return byWebView;
         }
     }
