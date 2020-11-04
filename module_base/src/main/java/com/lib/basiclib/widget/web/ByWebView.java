@@ -5,19 +5,19 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.FrameLayout;
-
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
 import com.fh.basemodle.R;
-import com.tencent.smtt.sdk.WebSettings;
-import com.tencent.smtt.sdk.WebView;
+import com.lib.basiclib.utils.LogUtils;
 
 /**
  * 网页可以处理:
@@ -50,6 +50,7 @@ public class ByWebView {
 
         FrameLayout parentLayout = new FrameLayout(activity);
         // 设置WebView
+
         setWebView(builder.mCustomWebView);
         parentLayout.addView(mWebView, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         // 进度条布局
@@ -61,11 +62,30 @@ public class ByWebView {
         }
         // 配置
         handleSetting();
+//        try {
+//            if (mWebView.getX5WebViewExtension() != null) {
+//                Bundle data = new Bundle();
+//                data.putBoolean("standardFullScreen", false);
+//                data.putBoolean("supportLiteWnd", false);
+//                data.putInt("DefaultVideoScreen", 1);
+//                mWebView.getX5WebViewExtension().invokeMiscMethod("setVideoParams", data);
+//            }
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            // chromium, enable hardware acceleration
+            mWebView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        } else {
+            // older android version, disable hardware acceleration
+            mWebView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        }
         // 视频、照片、进度条
         mWebChromeClient = new ByWebChromeClient(activity, this);
         mWebChromeClient.setOnByWebChromeCallback(builder.mOnTitleProgressCallback);
         mWebView.setWebChromeClient(mWebChromeClient);
-
         // 错误页面、页面结束、处理DeepLink
         ByWebViewClient mByWebViewClient = new ByWebViewClient(activity, this);
         mByWebViewClient.setOnByWebClientCallback(builder.mOnByWebClientCallback);
@@ -122,6 +142,8 @@ public class ByWebView {
         ws.setBlockNetworkImage(false);
         // 使用localStorage则必须打开
         ws.setDomStorageEnabled(true);
+//        ws.setPluginState(WebSettings.PluginState.ON);
+        ws.setMediaPlaybackRequiresUserGesture(true);
         // 排版适应屏幕
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             ws.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
@@ -133,7 +155,7 @@ public class ByWebView {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             // WebView从5.0开始默认不允许混合模式,https中不能加载http资源,需要设置开启。
-            ws.setMixedContentMode(WebSettings.LOAD_NO_CACHE);
+            ws.setMixedContentMode(1);
         }
     }
 
@@ -171,6 +193,8 @@ public class ByWebView {
     }
 
     public void loadUrl(String url) {
+        LogUtils.INSTANCE.e("-------->>>"+url);
+        Log.e("-------->>>",url);
         if (!TextUtils.isEmpty(url) && url.endsWith("mp4") && Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1) {
             mWebView.loadData(ByWebTools.getVideoHtmlBody(url), "text/html", "UTF-8");
         } else {

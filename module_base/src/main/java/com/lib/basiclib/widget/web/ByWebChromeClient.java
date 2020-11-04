@@ -12,17 +12,16 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import android.webkit.PermissionRequest;
+import android.webkit.ValueCallback;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
 import android.widget.FrameLayout;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
 import com.fh.basemodle.R;
-import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient;
-import com.tencent.smtt.export.external.interfaces.PermissionRequest;
-import com.tencent.smtt.sdk.ValueCallback;
-import com.tencent.smtt.sdk.WebChromeClient;
-import com.tencent.smtt.sdk.WebView;
 
 import java.lang.ref.WeakReference;
 
@@ -43,7 +42,7 @@ public class ByWebChromeClient extends WebChromeClient {
 
     private View mProgressVideo;
     private View mCustomView;
-    private IX5WebChromeClient.CustomViewCallback mCustomViewCallback;
+    private WebChromeClient.CustomViewCallback mCustomViewCallback;
     private ByFullscreenHolder videoFullView;
     private OnTitleProgressCallback onByWebChromeCallback;
 
@@ -61,7 +60,7 @@ public class ByWebChromeClient extends WebChromeClient {
      */
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
-    public void onShowCustomView(View view, IX5WebChromeClient.CustomViewCallback callback) {
+    public void onShowCustomView(View view, WebChromeClient.CustomViewCallback callback) {
         Activity mActivity = this.mActivityWeakReference.get();
         if (mActivity != null && !mActivity.isFinishing()) {
             mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);

@@ -6,19 +6,21 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.net.http.SslError;
 import android.os.Build;
 import android.text.TextUtils;
+import android.webkit.SslErrorHandler;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 
 import androidx.annotation.RequiresApi;
 
-import com.tencent.smtt.export.external.interfaces.SslError;
-import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
-import com.tencent.smtt.export.external.interfaces.WebResourceError;
-import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
-import com.tencent.smtt.export.external.interfaces.WebResourceResponse;
-import com.tencent.smtt.sdk.WebView;
-import com.tencent.smtt.sdk.WebViewClient;
+import com.lib.basiclib.utils.LogUtils;
+
 
 import java.lang.ref.WeakReference;
 
@@ -51,6 +53,7 @@ public class ByWebViewClient extends WebViewClient {
         if (TextUtils.isEmpty(url)) {
             return false;
         }
+        LogUtils.INSTANCE.e("-------->>>"+url);
         if (url.startsWith("weixin://") || url.startsWith("alipays://") ||
                 url.startsWith("mailto://") || url.startsWith("tel://")) {
             Intent intent =new Intent(Intent.ACTION_VIEW, Uri.parse(url));
@@ -75,6 +78,7 @@ public class ByWebViewClient extends WebViewClient {
         if (TextUtils.isEmpty(url)) {
             return false;
         }
+        LogUtils.INSTANCE.e("-------->>>2"+url);
         if (url.startsWith("weixin://") || url.startsWith("alipays://") ||
                 url.startsWith("mailto://") || url.startsWith("tel://")) {
             Intent intent =new Intent(Intent.ACTION_VIEW, Uri.parse(url));

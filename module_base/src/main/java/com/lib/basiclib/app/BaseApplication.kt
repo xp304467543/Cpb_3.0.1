@@ -12,8 +12,10 @@ import android.app.ActivityManager
 import android.app.Application
 import android.content.Context
 import android.text.TextUtils
+import androidx.multidex.MultiDex
 import com.lib.basiclib.utils.DebugUtils
 import com.lib.basiclib.utils.LogUtils
+import com.tencent.bugly.beta.Beta
 import me.yokeyword.fragmentation.Fragmentation
 
 
@@ -64,6 +66,14 @@ abstract class BaseApplication : Application() {
         initFragmentation()
     }
 
+
+    override fun attachBaseContext(base: Context?) {
+        super.attachBaseContext(base)
+        // you must install multiDex whatever tinker is installed!
+        MultiDex.install(base)
+        // 安装tinker
+        Beta.installTinker()
+    }
 
     private fun initBaseMultiProcess() {
 

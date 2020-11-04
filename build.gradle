@@ -9,10 +9,11 @@ buildscript {
         maven { url "http://maven.aliyun.com/nexus/content/repositories/releases" }
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:4.0.1"
+        classpath "com.android.tools.build:gradle:3.4.0"
         classpath "com.github.dcendents:android-maven-gradle-plugin:2.1"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "com.xiaojinzi.component:component-plugin:${versions.component_version}"
+        classpath "com.tencent.bugly:tinker-support:1.2.0"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }

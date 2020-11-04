@@ -2,11 +2,11 @@ package com.lib.basiclib.widget.web;
 
 import android.os.Build;
 import android.text.TextUtils;
+import android.webkit.ValueCallback;
+import android.webkit.WebView;
 
 import androidx.annotation.RequiresApi;
 
-import com.tencent.smtt.sdk.ValueCallback;
-import com.tencent.smtt.sdk.WebView;
 
 import org.json.JSONArray;
 import org.json.JSONException;

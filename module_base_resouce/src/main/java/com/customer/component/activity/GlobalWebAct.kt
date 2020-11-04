@@ -3,6 +3,7 @@ package com.customer.component.activity
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.view.KeyEvent
+import android.webkit.WebSettings
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import com.customer.data.home.HomeApi
@@ -12,7 +13,6 @@ import com.lib.basiclib.utils.TimeUtils
 import com.lib.basiclib.utils.ToastUtils
 import com.lib.basiclib.widget.web.ByWebView
 import com.lib.basiclib.widget.web.OnTitleProgressCallback
-import com.tencent.smtt.sdk.WebSettings
 import com.xiaojinzi.component.anno.RouterAnno
 import kotlinx.android.synthetic.main.act_web.*
 

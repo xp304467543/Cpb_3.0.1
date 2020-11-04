@@ -1,10 +1,9 @@
 package com.lib.basiclib.widget.web;
 
 import android.graphics.Bitmap;
-
-import com.tencent.smtt.export.external.interfaces.SslError;
-import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
-import com.tencent.smtt.sdk.WebView;
+import android.net.http.SslError;
+import android.webkit.SslErrorHandler;
+import android.webkit.WebView;
 
 
 /**

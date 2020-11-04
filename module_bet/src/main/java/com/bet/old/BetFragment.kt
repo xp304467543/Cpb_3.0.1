@@ -7,6 +7,10 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
+import android.webkit.ValueCallback
+import android.webkit.WebChromeClient
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import com.bet.R
 import com.customer.component.web.ZpWebChromeClient
 import com.customer.data.LineCheck
@@ -20,10 +24,6 @@ import com.lib.basiclib.base.mvp.BaseMvpFragment
 import com.lib.basiclib.utils.StatusBarUtils
 import com.lib.basiclib.utils.ToastUtils
 import com.lib.basiclib.utils.ViewUtils
-import com.tencent.smtt.sdk.ValueCallback
-import com.tencent.smtt.sdk.WebChromeClient
-import com.tencent.smtt.sdk.WebView
-import com.tencent.smtt.sdk.WebViewClient
 import com.xiaojinzi.component.anno.RouterAnno
 import cuntomer.them.ITheme
 import cuntomer.them.Theme

@@ -10,8 +10,6 @@ import com.player.customize.player.VideoViewConfig
 import com.player.customize.player.VideoViewManager
 import com.rxnetgo.RxNetGo
 import com.tencent.bugly.Bugly
-import com.tencent.smtt.sdk.QbSdk
-import com.tencent.smtt.sdk.QbSdk.PreInitCallback
 import com.xiaojinzi.component.Component
 import com.xiaojinzi.component.Config
 import com.xiaojinzi.component.impl.application.ModuleManager
@@ -46,12 +44,12 @@ class CpbApplication : BaseApplication() {
     override fun isEnvLog() = AppConfigConstant.ENV_LOG
 
     override fun initMainProcess() {
+
         initComponent()
         initBugly()
         initUi()
         initNetWork()
         iniPlayer()
-        initQbSdk()
     }
 
     private fun initBugly() {
@@ -63,7 +61,8 @@ class CpbApplication : BaseApplication() {
 //        val strategy = UserStrategy(this)
 //        strategy.isUploadProcess = processName == null || processName == packageName
 //        Bugly.init(getApplication(), "00b7077bbf", false,strategy)
-        Bugly.init(getApplication(), "d0735290ea", false)
+        // 调试时，将第三个参数改为true
+        Bugly.init(this, "03a436b70b", true)
     }
 
 
@@ -113,23 +112,5 @@ class CpbApplication : BaseApplication() {
                 .setScreenScaleType(VideoView.SCREEN_SCALE_16_9)
                 .build()
         )
-    }
-
-
-    private fun initQbSdk() {
-        //搜集本地tbs内核信息并上报服务器，服务器返回结果决定使用哪个内核。
-        val cb: PreInitCallback = object : PreInitCallback {
-            override fun onViewInitFinished(arg0: Boolean) {
-                // TODO Auto-generated method stub
-                //x5內核初始化完成的回调，为true表示x5内核加载成功，否则表示x5内核加载失败，会自动切换到系统内核。
-//                LogUtils.e("initQbSdk---------> onViewInitFinished is $arg0")
-            }
-
-            override fun onCoreInitFinished() {
-                // TODO Auto-generated method stub
-            }
-        }
-        //x5内核初始化接口
-        QbSdk.initX5Environment(this, cb)
     }
 }

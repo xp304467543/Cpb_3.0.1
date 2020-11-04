@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.xiaojinzi.component.plugin'
 apply plugin: 'kotlin-kapt'
-
+apply from: 'tinker-support.gradle'
 def properties = rootProject.getPublishProperty()
 // versionCode 采用自增处理，详情查看version_code.properties文件，getVersionCode（）方法
 // 在工程主gradle文件上进行定义。该方法只对alpha和beta的release包进行versionCode加一。如果需

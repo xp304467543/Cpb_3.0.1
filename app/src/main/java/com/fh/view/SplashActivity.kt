@@ -14,7 +14,6 @@ import com.fh.R
 import com.glide.GlideUtil
 import com.lib.basiclib.utils.FastClickUtil
 import com.lib.basiclib.utils.StatusBarUtils
-import com.lib.basiclib.utils.ToastUtils
 import com.lib.basiclib.utils.ViewUtils
 import com.xiaojinzi.component.impl.Router
 import cuntomer.api.WebUrlProvider
@@ -94,16 +93,16 @@ class SplashActivity : Activity(), CancelAdapt {
                 ApiConstant.API_VIDEO = systemUrl.movie_api
                 WebUrlProvider.ALL_URL_WEB_SOCKET_MAIN_S = systemUrl.notice_url
                 WebUrlProvider.API_URL_WEB_SOCKET_MAIN_S = systemUrl.chat_url
-                MineApi.getLotteryUrl {
-                    onSuccess {
-                        UserInfoSp.putCustomer(it.customer ?: urlCustomer)
-                        ViewUtils.setGone(btWaite)
-                        ViewUtils.setVisible(btEnter)
-                    }
-                    onFailed {
-                        UserInfoSp.putCustomer(urlCustomer)
-                    }
-                }
+                ViewUtils.setGone(btWaite)
+                ViewUtils.setVisible(btEnter)
+            }
+        }
+        MineApi.getLotteryUrl {
+            onSuccess {
+                UserInfoSp.putCustomer(it.customer ?: urlCustomer)
+            }
+            onFailed {
+                UserInfoSp.putCustomer(urlCustomer)
             }
         }
     }

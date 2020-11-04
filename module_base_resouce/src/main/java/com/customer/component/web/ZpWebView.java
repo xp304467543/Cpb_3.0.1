@@ -4,12 +4,12 @@ import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 
 import androidx.annotation.RequiresApi;
 
 import com.lib.basiclib.utils.ViewUtils;
-import com.tencent.smtt.sdk.WebSettings;
-import com.tencent.smtt.sdk.WebView;
 /**
  * @ Author  QinTian
  * @ Date  2020/9/2
