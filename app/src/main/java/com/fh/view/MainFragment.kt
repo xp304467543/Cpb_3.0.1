@@ -33,7 +33,6 @@ import cuntomer.them.IMode
 import cuntomer.them.ITheme
 import cuntomer.them.Theme
 import kotlinx.android.synthetic.main.fragment_main.*
-import kotlinx.coroutines.NonCancellable.isActive
 
 /**
  * @ Author  QinTian
@@ -98,7 +97,7 @@ class MainFragment : BaseContentFragment(), ITheme, IMode {
 
     override fun initData() {
         checkDialog()
-        getUpDate()
+//        getUpDate()
         getNotice()
     }
 

@@ -30,7 +30,6 @@ import com.lib.basiclib.base.recycle.BaseRecyclerAdapter
 import com.lib.basiclib.base.recycle.RecyclerViewHolder
 import com.lib.basiclib.base.xui.adapter.recyclerview.XLinearLayoutManager
 import com.lib.basiclib.utils.FastClickUtil
-import com.lib.basiclib.utils.LogUtils
 import com.lib.basiclib.utils.ToastUtils
 import com.lib.basiclib.utils.ViewUtils
 import cuntomer.them.AppMode
@@ -1112,9 +1111,6 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
             play_class_cname = play_class_cname,
             play_odds = play_odds
         )
-        LogUtils.e("========>>>>> " + isAdd)
-        LogUtils.e("========>>>>> " + bean)
-        LogUtils.e("========>>>>> ***" + betList.contains(bean))
         if (isAdd) {
             betList.add(bean)
         } else betList.remove(bean)
