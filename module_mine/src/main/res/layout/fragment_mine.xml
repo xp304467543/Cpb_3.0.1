@@ -364,6 +364,13 @@
                 app:ItemName="主播招募" />
 
             <com.customer.component.MineItemView
+                android:id="@+id/containerScanLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:ItemIcon="@drawable/ic_mine_default_11"
+                app:ItemName="扫码登录" />
+
+            <com.customer.component.MineItemView
                 android:id="@+id/containerGameReport"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

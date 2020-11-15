@@ -1,10 +1,9 @@
-package com.home.live.bet.old
+package com.customer.component.dialog
 
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.DialogFragment
-import com.home.R
-import com.hwangjr.rxbus.RxBus
+import com.fh.module_base_resouce.R
 import com.lib.basiclib.utils.ViewUtils
 
 /**

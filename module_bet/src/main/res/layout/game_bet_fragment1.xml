@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,9 +30,16 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvRightTop"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tvHx"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="0dp"
-                android:paddingEnd="@dimen/dp_10" />
+                android:gravity="center"
+                android:paddingTop="@dimen/dp_5"
+                android:textColor="@color/color_FF513E"
+                />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvGameBetContent"
@@ -45,24 +52,25 @@
     </LinearLayout>
 
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/bottomGameBetLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:elevation="0.5dp"
-        android:visibility="gone"
         android:layout_above="@+id/linBottom"
+        android:background="@color/white"
+        android:clickable="true"
+        android:elevation="0.5dp"
+        android:focusable="true"
+        android:visibility="gone"
         tools:ignore="UnusedAttribute">
 
         <RadioGroup
             android:id="@+id/selectRadio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_5"
             android:layout_marginEnd="@dimen/dp_10"
             android:orientation="horizontal"
-            android:layout_marginTop="@dimen/dp_5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -124,21 +132,22 @@
             <com.lib.basiclib.base.round.RoundRelativeLayout
                 android:layout_width="@dimen/dp_120"
                 android:layout_height="@dimen/dp_30"
+                android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/dp_10"
                 android:layout_toEndOf="@+id/tvF1"
-                app:rv_cornerRadius="@dimen/dp_20"
                 app:rv_backgroundColor="@color/grey_f5f7fa"
-                android:layout_centerVertical="true">
+                app:rv_cornerRadius="@dimen/dp_20">
+
                 <EditText
                     android:id="@+id/etGameBetPlayMoney"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@null"
                     android:gravity="center"
                     android:imeOptions="actionDone"
                     android:inputType="number"
                     android:maxEms="8"
                     android:maxLines="1"
-                    android:background="@null"
                     android:paddingStart="@dimen/dp_8"
                     android:paddingEnd="@dimen/dp_2"
                     android:text="1"
@@ -193,33 +202,35 @@
         android:id="@+id/linBottom"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_50"
-        android:background="@color/white"
-        android:orientation="horizontal"
         android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent">
+
         <ImageView
             android:id="@+id/imgIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/dp_10"
-            />
+            android:layout_marginStart="@dimen/dp_10" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvUserDiamond"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="@dimen/dp_10"
-            android:gravity="center_vertical"
-            android:drawablePadding="@dimen/dp_8"
-            android:textColor="@color/color_333333"
             android:drawableEnd="@mipmap/ic_mine_refresh"
+            android:drawablePadding="@dimen/dp_8"
+            android:gravity="center_vertical"
+            android:textColor="@color/color_333333"
             tools:text="666" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <TextView
             android:id="@+id/tvReset"

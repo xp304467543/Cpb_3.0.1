@@ -241,9 +241,13 @@ object MineApi : BaseApi {
     //删除常用卡号
     private const val USER_DEL_BANK_CARD = "api/v1_1/Recharge/del_commonno"
 
-
     //平台间转账
     private const val PLAT_TRANSFER = "platform/transfer"
+
+    //扫码登录(判断是否过期)
+    private const val SCAN_LOGIN ="v2/login/scan"
+
+
 
     /**
      * 获取用户信息
@@ -1324,6 +1328,19 @@ object MineApi : BaseApi {
         subscriber.function()
         getApiOther().post<String>(AUTO_CHANGE)
             .headers("Authorization", UserInfoSp.getTokenWithBearer())
+            .subscribe(subscriber)
+    }
+
+    /**
+     * 扫码登录
+     */
+    fun scanLogin(code:String,is_chk_exp:String="0",function: EmptySubscriber.() -> Unit){
+        val subscriber = EmptySubscriber()
+        subscriber.function()
+        getApiOther().post<String>(SCAN_LOGIN)
+            .headers("Authorization", UserInfoSp.getTokenWithBearer())
+            .params("qrid",code)
+            .params("is_chk_exp",is_chk_exp)
             .subscribe(subscriber)
     }
 

@@ -1,5 +1,6 @@
 package com.mine
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.view.View
@@ -11,6 +12,7 @@ import com.customer.component.dialog.GlobalDialog
 import com.customer.data.*
 import com.customer.data.mine.ChangeSkin
 import com.customer.data.mine.UpDateUserPhoto
+import com.customer.utils.RxPermissionHelper
 import com.glide.GlideUtil
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.thread.EventThread
@@ -36,6 +38,7 @@ import kotlinx.android.synthetic.main.fragment_mine.*
 class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme, IMode {
 
     var isInit = false
+
     //新消息
     var msg1 = ""
     var msg2 = ""
@@ -90,7 +93,7 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme, IMode {
 
     override fun initData() {
         mPresenter.getCustomerUrl()
-        if (!UserInfoSp.getMineGuide() && UserInfoSp.getAppMode()==AppMode.Normal) {
+        if (!UserInfoSp.getMineGuide() && UserInfoSp.getAppMode() == AppMode.Normal) {
             showCurtain()
             UserInfoSp.putMineGuide(true)
         }
@@ -148,7 +151,7 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme, IMode {
                 GlobalDialog.notLogged(requireActivity())
                 return@setOnClickListener
             }
-            if (!UserInfoSp.getIsSetPayPassWord()){
+            if (!UserInfoSp.getIsSetPayPassWord()) {
                 mPresenter.getIsSetPayPassWord(true)
                 return@setOnClickListener
             }
@@ -293,6 +296,24 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme, IMode {
             }
             if (!FastClickUtil.isFastClick()) Router.withApi(ApiRouter::class.java).toSetting()
         }
+        containerScanLogin.setOnClickListener {
+            if (!UserInfoSp.getIsLogin()) {
+                GlobalDialog.notLogged(requireActivity())
+                return@setOnClickListener
+            }
+            if (!FastClickUtil.isFastClick()) {
+                // 权限弹窗
+                RxPermissionHelper.request(
+                    this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.CAMERA
+                ).let {
+                    if (it.isDisposed) {
+                        startActivity(Intent(getPageActivity(), MineScanAct::class.java))
+                    }
+                }
+            }
+        }
     }
 
     //主题
@@ -329,6 +350,7 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme, IMode {
                 containerContactCustomer.setBackRes(R.drawable.ic_mine_default_8)
                 containerGroup.setBackRes(R.drawable.ic_mine_default_9)
                 containerSetting.setBackRes(R.drawable.ic_mine_default_10)
+                containerScanLogin.setBackRes(R.drawable.ic_mine_default_11)
             }
             Theme.NewYear -> {
                 tvLogin.setTextColor(ViewUtils.getColor(R.color.color_FF513E))
@@ -361,6 +383,7 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme, IMode {
                 containerContactCustomer.setBackRes(R.drawable.ic_mine_newyear_8)
                 containerGroup.setBackRes(R.drawable.ic_mine_newyear_9)
                 containerSetting.setBackRes(R.drawable.ic_mine_newyear_10)
+                containerScanLogin.setBackRes(R.drawable.ic_mine_newyear_11)
             }
             Theme.MidAutumn -> {
                 tvLogin.setTextColor(ViewUtils.getColor(R.color.colorGreenPrimary))
@@ -426,6 +449,7 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme, IMode {
                 containerContactCustomer.setBackRes(R.drawable.ic_mine_love_8)
                 containerGroup.setBackRes(R.drawable.ic_mine_love_9)
                 containerSetting.setBackRes(R.drawable.ic_mine_love_10)
+                containerScanLogin.setBackRes(R.drawable.ic_mine_love_11)
             }
             Theme.NationDay -> {
                 tvLogin.setTextColor(ViewUtils.getColor(R.color.color_EF7E12))
@@ -458,6 +482,7 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme, IMode {
                 containerContactCustomer.setBackRes(R.drawable.ic_them_gq_8)
                 containerGroup.setBackRes(R.drawable.ic_them_gq_9)
                 containerSetting.setBackRes(R.drawable.ic_them_gq_10)
+                containerScanLogin.setBackRes(R.drawable.ic_them_gq_13)
             }
         }
     }
@@ -500,9 +525,17 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme, IMode {
     @Subscribe(thread = EventThread.MAIN_THREAD)
     fun upDataMineUserDiamond(eventBean: MineUserDiamond) {
         if (isSupportVisible) {
-            tvDiamondBalance?.text = if (eventBean.diamond == "0") "0.00" else eventBean.diamond
-            mPresenter.getUserBalance()
+            if (!eventBean.isRest) {
+                tvDiamondBalance?.text = if (eventBean.diamond == "0") "0.00" else eventBean.diamond
+                mPresenter.getUserBalance()
+            } else mPresenter.getUserBalance()
         }
+    }
+
+    //扫码登录后退出
+    @Subscribe(thread = EventThread.MAIN_THREAD)
+    fun scanLoginOut(eventBean: MineUserScanLoginOut) {
+       GlobalDialog.spClear()
     }
 
     //纯净版切换

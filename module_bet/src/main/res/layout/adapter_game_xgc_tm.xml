@@ -6,23 +6,26 @@
     android:layout_marginTop="@dimen/dp_10"
     android:layout_marginStart="@dimen/dp_6"
     android:paddingTop="@dimen/dp_6"
+    android:minHeight="@dimen/dp_45"
     android:paddingBottom="@dimen/dp_6"
     android:background="@drawable/bet_normal_background"
     android:gravity="center"
     android:orientation="vertical">
-
     <TextView
-        android:id="@+id/tvCname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/tvXgcCname"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
         android:gravity="center"
         android:textSize="@dimen/sp_11"/>
 
     <TextView
-        android:id="@+id/tvOdds"
+        android:id="@+id/tvXgcOdds"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/color_FF513E"
+        android:layout_marginTop="@dimen/dp_2"
         android:textSize="@dimen/sp_10"/>
 
 </LinearLayout>

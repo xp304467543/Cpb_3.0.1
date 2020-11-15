@@ -339,7 +339,6 @@ public final class LunarCalendarUtils {
         // 当前月超过闰月，要校正
         if (leapMonth != 0 && iMonth > leapMonth) {
             --iMonth;
-            Log.i("----------->", year + "-" + month + "-" + monthDay + "====>" + iMonth + "-" + leapMonth);
             if (iMonth == leapMonth) {
                 isLeap = true;
             }

@@ -21,7 +21,6 @@ class LiveRoomBetAccessAdapter(context: Context, var is_bal:Boolean) : BaseRecyc
 
     private var onMoneyChangeListener: ((it: String, pos: Int) -> Unit)? = null
 
-    private var textWatcher: TextWatcher? = null
 
     fun onMoneyChangeListener(OnMoneyChangeListener: ((it: String, pos: Int) -> Unit)) {
         onMoneyChangeListener = OnMoneyChangeListener
@@ -37,14 +36,7 @@ class LiveRoomBetAccessAdapter(context: Context, var is_bal:Boolean) : BaseRecyc
         holder.text(R.id.tvBetPlayName, data?.playName)
         holder.text(R.id.tvBetPlayType, data?.result?.play_class_cname)
         holder.text(R.id.tvBetPlayOdds, data?.result?.play_odds.toString())
-        textWatcher = object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
 
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-        }
         //1、为了避免TextWatcher在第2步被调用，提前将他移除。
         if (edit.tag is TextWatcher) {
             edit.removeTextChangedListener(edit.tag as TextWatcher)
@@ -70,7 +62,7 @@ class LiveRoomBetAccessAdapter(context: Context, var is_bal:Boolean) : BaseRecyc
                         }
                     }
                     val now= if (editable.length > 9) {
-                        edit.setText(editable.substring(0, 9)); //截取前x位
+                        edit.setText(editable.substring(0, 9)) //截取前x位
                         edit.requestFocus()
                         edit.setSelection(edit.length()) //光标移动到最后
                         editable.substring(0, 9)

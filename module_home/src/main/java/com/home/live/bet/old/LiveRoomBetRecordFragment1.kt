@@ -78,6 +78,7 @@ class LiveRoomBetRecordFragment1 : BaseNormalFragment() {
             }
 
         }
+        getResponse()
         smBetRecord?.setOnRefreshListener {
             index = 1
             adapter?.clear()
@@ -86,7 +87,7 @@ class LiveRoomBetRecordFragment1 : BaseNormalFragment() {
         }
         smBetRecord?.setOnLoadMoreListener {
             index++
-            getResponse()
+            getResponse(true)
         }
     }
 

@@ -122,6 +122,12 @@
         <activity
             android:name=".children.recharge.MineUserAddBankCard"
             android:theme="@style/SwipeBackStyle" />
+        <activity
+            android:name=".children.MineScanAct"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+        <activity
+            android:name=".children.MineScanResultAct"
+            android:theme="@style/SwipeBackStyle" />
     </application>
 
 

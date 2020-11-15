@@ -30,7 +30,10 @@ data class UpDatePreView(var boolean: Boolean)
 data class JumpToBuyLottery(var index: Int)
 
 //用户钻石
-data class MineUserDiamond(var diamond: String)
+data class MineUserDiamond(var diamond: String,var isRest: Boolean=false)
+
+//用户钻石
+data class MineUserScanLoginOut(var diamond: String)
 
 //Rx存储用户选择的银行卡
 data class MineSaveBank(var data: MineUserBankList)

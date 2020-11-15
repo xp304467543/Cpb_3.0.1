@@ -86,7 +86,7 @@ class LiveRoomBetRecordFragment2 : BaseNormalFragment() {
         }
         smBetRecord?.setOnLoadMoreListener {
             index++
-            getResponse()
+            getResponse(true)
         }
     }
 

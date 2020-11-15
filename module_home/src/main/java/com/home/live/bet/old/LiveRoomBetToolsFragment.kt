@@ -3,6 +3,7 @@ package com.home.live.bet.old
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.viewpager.widget.ViewPager
+import com.customer.component.dialog.BottomDialogFragment
 import com.google.android.material.tabs.TabLayout
 import com.home.R
 import com.services.LotteryService

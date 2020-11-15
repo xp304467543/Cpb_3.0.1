@@ -8,8 +8,6 @@ import android.view.View
 import android.widget.EditText
 import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.customer.data.HomeJumpToMine
-import com.customer.data.HomeJumpToMineCloseLive
 import com.customer.data.LotteryResetDiamond
 import com.customer.data.UserInfoSp
 import com.customer.data.lottery.BetBean
@@ -35,7 +33,7 @@ import kotlinx.android.synthetic.main.dialog_bottom_bet_access.*
  * @ Describe
  *
  */
-class BottomBetAccessDialog( context: Context,var lotteryId:String,var rightTop:String,var nextIssue:String,var is_bal: Int,var totalMoney:String,var dataList: ArrayList<PlaySecData>) : BottomSheetDialog(context) {
+class BottomBetAccessDialog( context: Context,var lotteryId:String,var rightTop:String,var nextIssue:String,var is_bal: Int,var totalMoney:String,var dataList: MutableList<PlaySecData>) : BottomSheetDialog(context) {
 
     private var singleMoney = 0L
     private  var liveRoomBetAccessAdapter:LiveRoomBetAccessAdapter?=null
@@ -52,6 +50,9 @@ class BottomBetAccessDialog( context: Context,var lotteryId:String,var rightTop:
 
     private fun initContent() {
         singleMoney = if (totalMoney.isNotEmpty()) totalMoney.toLong()/dataList.size else 0
+        for (item in dataList){
+            item.money = singleMoney.toString()
+        }
         if (is_bal == 0) {
             tvTotalDiamond?.text = HtmlCompat.fromHtml("总下注钻石: <font color=\"#FF513E\">$totalMoney</font>", HtmlCompat.FROM_HTML_MODE_COMPACT)
         } else {
@@ -64,29 +65,21 @@ class BottomBetAccessDialog( context: Context,var lotteryId:String,var rightTop:
     }
     inner class LiveRoomBetAccessAdapter : BaseRecyclerAdapter<PlaySecData>() {
 
-        private var textWatcher: TextWatcher? = null
-
         override fun getItemLayoutId(viewType: Int): Int {
             return   R.layout.adapter_bet_access
         }
 
         override fun bindData(holder: RecyclerViewHolder, position: Int, data: PlaySecData?) {
-            data?.money = singleMoney.toString()
             val edit = holder.findViewById<EditText>(R.id.tvBetPlayMoney)
             holder.text(R.id.tvBetPlayName, data?.play_sec_cname)
             holder.text(R.id.tvBetPlayType, data?.play_class_cname)
             holder.text(R.id.tvBetPlayOdds, data?.play_odds)
-            textWatcher = object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {}
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-            }
             //1、为了避免TextWatcher在第2步被调用，提前将他移除。
             if (edit.tag is TextWatcher) {
                 edit.removeTextChangedListener(edit.tag as TextWatcher)
             }
             // 第2步：移除TextWatcher之后，设置EditText的Text。
-            edit.setText(singleMoney.toString())
+            edit.setText(data?.money)
 
             val watcher: TextWatcher = object : TextWatcher {
                 override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
@@ -157,7 +150,12 @@ class BottomBetAccessDialog( context: Context,var lotteryId:String,var rightTop:
                     val bean = arrayListOf<BetBean>()
                     if (!dataList.isNullOrEmpty()) {
                         if (!liveRoomBetAccessAdapter?.data.isNullOrEmpty()){
+                            LogUtils.e("=========>"+liveRoomBetAccessAdapter?.data)
                             for (result in liveRoomBetAccessAdapter?.data!!) {
+                                LogUtils.e("=========>"+result.money)
+//                                val money = if (result.money == "0"){
+//                                    ((totalMoney.toInt())/(liveRoomBetAccessAdapter?.data?.size?:1)).toString()
+//                                }else  result.money
                                 bean.add(BetBean(result.play_sec_name, result.play_class_name, result.money))
                             }
                             lotteryToBet(id, issue, bean)

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_100"
+        android:src="@mipmap/ic_scan_login_bg" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_48"
+        android:gravity="center"
+        android:textSize="@dimen/sp_16"
+        android:textColor="@color/color_333333"
+        android:text="乐购网页登录确认"/>
+
+    
+    <com.lib.basiclib.base.round.RoundTextView
+        android:id="@+id/tvLoginAccess"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginStart="@dimen/dp_32"
+        android:layout_marginEnd="@dimen/dp_32"
+        android:layout_marginTop="@dimen/dp_52"
+        app:rv_cornerRadius="@dimen/dp_5"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:text="确认登录"
+        app:rv_backgroundColor="@color/color_FF513E"/>
+
+    <TextView
+        android:id="@+id/tvLoginCancel"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:text="取消登录"
+        android:textSize="@dimen/sp_12"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/dp_10"/>
+</LinearLayout>

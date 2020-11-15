@@ -13,17 +13,17 @@ def publishVersionCode = rootProject.getVersionCode()
 android {
     signingConfigs {
         release {
-            storeFile file('/Users/qingtian/AndroidStudioProjects/Cpb_3.0/config/keystore/caipiaobao.jks')
-            storePassword 'caipiaobao2019'
-            keyAlias = 'caipiaobao'
-            keyPassword 'caipiaobao2019'
+            storeFile file('/Users/qingtian/AndroidStudioProjects/Cpb_3.0.1/config/keystore/cpb.jks')
+            storePassword 'cpb123456'
+            keyAlias = 'cpb'
+            keyPassword 'cpb123456'
         }
     }
     compileSdkVersion versions.android_compile_sdk
     buildToolsVersion "29.0.3"
 
     defaultConfig {
-        applicationId "com.fh.lg"
+        applicationId "com.fh.lgzb"
         minSdkVersion versions.android_min_sdk
         targetSdkVersion versions.android_target_sdk
         versionCode Integer.valueOf(publishVersionCode)

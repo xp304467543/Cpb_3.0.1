@@ -29,7 +29,6 @@ class VideoSearchAdapter(val context: Context,val isInLivePage:Boolean = false) 
         if ((data?.reads?.toInt())?:0 > 10000){
             holder.text(R.id.tvReds, (((data?.reads?.toInt())?:0)/10000).toString() +"万播放")
         }else holder.text(R.id.tvReds, data?.reads +"播放")
-        LogUtils.e("=====>"+data?.tag)
         GlideUtil.loadImage(context, data?.cover, holder.getImageView(R.id.imgCover))
         val tag = data?.tag?.split(",")
         val layoutContainer = holder.findViewById<LinearLayout>(R.id.layoutContainer)

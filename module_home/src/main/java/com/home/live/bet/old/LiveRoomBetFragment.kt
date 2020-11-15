@@ -12,6 +12,7 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.viewpager.widget.ViewPager
+import com.customer.component.dialog.BottomDialogFragment
 import com.customer.data.LotteryResetDiamond
 import com.customer.data.UserInfoSp
 import com.customer.data.lottery.LotteryApi
@@ -713,7 +714,6 @@ class LiveRoomBetFragment : BottomDialogFragment() {
 
     @Subscribe(thread = EventThread.MAIN_THREAD)
     fun lotteryResetDiamond(eventBean: LotteryResetDiamond) {
-        LogUtils.e("====>11111")
         getUserDiamond()
         getUserBalance()
         if (radioGroupLayout?.getChildAt(0) != null) (radioGroupLayout?.getChildAt(0) as RadioButton).isChecked = true

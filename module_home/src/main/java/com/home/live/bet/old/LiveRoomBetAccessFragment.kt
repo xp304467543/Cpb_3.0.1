@@ -6,6 +6,7 @@ import android.widget.TextView
 import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.customer.component.dialog.BottomDialogFragment
 import com.customer.component.dialog.DialogGlobalTips
 import com.customer.component.dialog.LoadingDialog
 import com.customer.data.HomeJumpToMineCloseLive
@@ -97,7 +98,7 @@ class LiveRoomBetAccessFragment : BottomDialogFragment() {
         liveRoomBetAccessAdapter?.onMoneyChangeListener { money, pos ->
             if (liveRoomBetAccessAdapter?.data.isNullOrEmpty()) return@onMoneyChangeListener
             if (money == "") {
-                liveRoomBetAccessAdapter?.getItem(pos)?.result?.money = "0"
+                liveRoomBetAccessAdapter?.getItem(pos)?.result?.money = (totalMoney/dataList.size).toString()
             } else liveRoomBetAccessAdapter?.getItem(pos)?.result?.money = money
             setMoney()
         }

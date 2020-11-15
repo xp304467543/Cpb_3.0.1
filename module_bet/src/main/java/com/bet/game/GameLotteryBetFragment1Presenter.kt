@@ -10,7 +10,6 @@ import com.customer.component.dialog.GlobalDialog
 import com.customer.data.lottery.LotteryApi
 import com.customer.data.mine.MineApi
 import com.lib.basiclib.base.mvp.BaseMvpPresenter
-import com.lib.basiclib.utils.LogUtils
 import com.lib.basiclib.utils.ToastUtils
 import com.lib.basiclib.utils.ViewUtils
 import kotlinx.android.synthetic.main.game_bet_fragment1.*
@@ -81,9 +80,10 @@ class GameLotteryBetFragment1Presenter : BaseMvpPresenter<GameLotteryBetFragment
 
     @SuppressLint("SetTextI18n")
      fun setTotal() {
-        if (mView.rightTop.contains("二中") || mView.rightTop.contains("三中")){ mView.betCount = 1 }
-        else mView.betCount = if (mView.betList.isEmpty()) 1 else (mView.betList.size)
-        LogUtils.e("========>>>>> "+mView.betList.size)
+        if (mView.rightTop.contains("二中二") || mView.rightTop.contains("三中三")){ mView.betCount = 1 }
+        else {
+            mView.betCount = if (mView.betList.isEmpty()) 1 else (mView.betList.size)
+        }
         mView.tvGameBetCount.text = "共" + (mView.betCount) + "注"
         mView.tvGameTotalMoney.text = (mView.betTotalMoney * (mView.betCount)).toString()
     }

@@ -84,18 +84,23 @@ class SplashActivity : Activity(), CancelAdapt {
 
 
     private fun initSysTemUrl() {
-        HomeApi.getSystemUrl {
-            onSuccess { systemUrl ->
-                ApiConstant.API_URL_DEV_LIVE_S = systemUrl.live_api
-                ApiConstant.API_URL_DEV_USER_S = systemUrl.user_api
-                ApiConstant.API_MOMENTS_FORM_S = systemUrl.forum_api
-                ApiConstant.API_LOTTERY_S = systemUrl.lottery_api
-                ApiConstant.API_VIDEO = systemUrl.movie_api
-                WebUrlProvider.ALL_URL_WEB_SOCKET_MAIN_S = systemUrl.notice_url
-                WebUrlProvider.API_URL_WEB_SOCKET_MAIN_S = systemUrl.chat_url
-                ViewUtils.setGone(btWaite)
-                ViewUtils.setVisible(btEnter)
+        if (!ApiConstant.isTest){
+            HomeApi.getSystemUrl {
+                onSuccess { systemUrl ->
+                    ApiConstant.API_URL_DEV_LIVE_S = systemUrl.live_api
+                    ApiConstant.API_URL_DEV_USER_S = systemUrl.user_api
+                    ApiConstant.API_MOMENTS_FORM_S = systemUrl.forum_api
+                    ApiConstant.API_LOTTERY_S = systemUrl.lottery_api
+                    ApiConstant.API_VIDEO = systemUrl.movie_api
+                    WebUrlProvider.ALL_URL_WEB_SOCKET_MAIN_S = systemUrl.notice_url
+                    WebUrlProvider.API_URL_WEB_SOCKET_MAIN_S = systemUrl.chat_url
+                    ViewUtils.setGone(btWaite)
+                    ViewUtils.setVisible(btEnter)
+                }
             }
+        }else{
+            ViewUtils.setGone(btWaite)
+            ViewUtils.setVisible(btEnter)
         }
         MineApi.getLotteryUrl {
             onSuccess {

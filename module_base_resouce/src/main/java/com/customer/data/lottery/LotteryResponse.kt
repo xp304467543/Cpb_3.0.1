@@ -89,11 +89,12 @@ data class LotteryPlayListResponse(
 data class PlayUnitData(
     val play_sec_cname: String,
     val play_sec_combo: Int?,
-    val play_sec_data: List<PlaySecData>,
+    val play_sec_data: MutableList<PlaySecData>,
     val play_sec_id: Int?,
     val play_sec_name: String?,
     val play_sec_merge_name:String?,
-    var isSelected: Boolean = false
+    var isSelected: Boolean = false,
+    var play_sec_options:MutableList<PlayOptions>?
 ) : Parcelable
 
 @Parcelize
@@ -103,7 +104,24 @@ data class PlaySecData(
     val play_sec_name: String? = "",
     var play_sec_cname:String?="",
     val play_class_name: String? = "",
-    val play_odds: String? ="0",
+    var play_odds: String? ="",
+    var playName: String? = "",
+    var isSelected: Boolean = false,
+    var money: String? = "0",
+    var play_sec_id: Int? = 0,
+    var title: String = "",
+    var type: String = "",
+    var play_sec_options:MutableList<PlayOptions>?=null
+) : Parcelable
+
+@Parcelize
+data class PlayOptions(
+    val play_class_cname: String? = "",
+    val play_class_id: Int? = 0,
+    val play_sec_name: String? = "",
+    var play_sec_cname:String?="",
+    val play_class_name: String? = "",
+    val play_odds: String? ="",
     var playName: String? = "",
     var isSelected: Boolean = false,
     var money: String? = "0",
