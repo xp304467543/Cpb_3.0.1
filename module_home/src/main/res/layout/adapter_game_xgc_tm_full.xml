@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    <LinearLayout
+        android:id="@+id/gameBetLinearLayout"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginStart="@dimen/dp_6"
+        android:layout_marginEnd="@dimen/dp_38"
+        android:background="@drawable/home_bet_normal_background"
+        android:gravity="center"
+        android:paddingTop="@dimen/dp_6"
+        android:paddingBottom="@dimen/dp_6"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tvXgcCname"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="@dimen/sp_11"/>
+
+        <TextView
+            android:id="@+id/tvXgcOdds"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_FF513E"
+            android:layout_marginTop="@dimen/dp_2"
+            android:textSize="@dimen/sp_10"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_weight="3"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

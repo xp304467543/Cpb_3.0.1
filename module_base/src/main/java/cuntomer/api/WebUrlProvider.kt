@@ -21,7 +21,7 @@ object WebUrlProvider {
     //    测试环境： ws://www.cpbh5.com/wss
     private const val API_URL_WEB_SOCKET = "ws://47.244.212.147/wss"
 
-    private const val API_URL_WEB_SOCKET_MAIN = "wss://www.cpbadmin.com/wss"
+    private const val API_URL_WEB_SOCKET_MAIN = "wss://www.lgadmin561.com/wss"
 
 
     //    生产环境： wss://www.cpbadmin.com/wss_notice 暂定
@@ -29,7 +29,7 @@ object WebUrlProvider {
 
     private const val ALL_URL_WEB_SOCKET = "ws://47.244.212.147/wss_notice"
 
-    private const val ALL_URL_WEB_SOCKET_MAIN = "ws://wss://www.cpbadmin.com/wss_notice"
+    private const val ALL_URL_WEB_SOCKET_MAIN = "wss://www.lgadmin561.com/wss_notice"
 
     fun getBaseUrl(): String {
         return if (ApiConstant.isTest) {

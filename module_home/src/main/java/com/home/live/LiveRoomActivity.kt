@@ -35,6 +35,7 @@ import com.lib.basiclib.utils.ViewUtils
 import com.player.ali.base.util.ScreenUtils
 import com.xiaojinzi.component.anno.RouterAnno
 import com.xiaojinzi.component.impl.Router
+import cuntomer.constant.ApiConstant
 import kotlinx.android.synthetic.main.act_live.*
 
 /**
@@ -125,16 +126,19 @@ class LiveRoomActivity : BaseNormalMvpActivity<LiveActPresenter>() {
             }
             if (inputPopWindow == null) {
                 inputPopWindow = InputPopWindowHor(this)
-                inputPopWindow?.setOnTextSendListener{
+                inputPopWindow?.setOnTextSendListener {
                     RxBus.get().post(SendDanMu(it))
                     inputPopWindow?.dismiss()
                 }
             }
             inputPopWindow?.showAtLocation(window?.decorView?.rootView, Gravity.NO_GRAVITY, 0, 0)
             window.decorView.rootView.postDelayed(
-                { if (inputPopWindow != null) {
-                    inputPopWindow?.showKeyboard()
-                } }, 50)
+                {
+                    if (inputPopWindow != null) {
+                        inputPopWindow?.showKeyboard()
+                    }
+                }, 50
+            )
             inputPopWindow?.setOnDismissListener {
             }
         }
@@ -198,20 +202,23 @@ class LiveRoomActivity : BaseNormalMvpActivity<LiveActPresenter>() {
             finish()
         }
     }
+
     var mp4 = "http://ivi.bupt.edu.cn/hls/cctv1hd.m3u8"
     fun initThings(data: HomeLiveEnterRoomResponse) {
-        lotteryId =data.lottery_id ?: "-1"
-        nickName = data.nickname?: "-1"
+        lotteryId = data.lottery_id ?: "-1"
+        nickName = data.nickname ?: "-1"
         liveStatus = data.live_status ?: "-1"
         onLine = data.online ?: "-1"
-        name =data.name ?: "-1"
+        name = data.name ?: "-1"
         avatar = data.avatar ?: "-1"
         LiveRoomHelper.titleView.setInfo(data.nickname, data.online, data.avatar, data.anchor_id)
         LiveRoomHelper.bottomController.setInfo(data.nickname, data.online, data.anchor_id)
         if (data.live_status == "1") {
             setGone(noAnchor)
             data.liveInfo?.get(2)?.liveUrl?.originPullUrl?.let {
-                LiveRoomHelper.videoView?.setUrl(it)
+                if (ApiConstant.isTest) {
+                    LiveRoomHelper.videoView?.setUrl(mp4)
+                } else LiveRoomHelper.videoView?.setUrl(it)
                 LiveRoomHelper.videoView?.start()
             }
         } else {
@@ -388,6 +395,7 @@ class LiveRoomActivity : BaseNormalMvpActivity<LiveActPresenter>() {
         backListener()
         RxBus.get().post(HomeJumpTo(clickMine.isOpenAct))
     }
+
     /**
      * Bet页面
      */
@@ -409,7 +417,7 @@ class LiveRoomActivity : BaseNormalMvpActivity<LiveActPresenter>() {
     //关注接收
     @Subscribe(thread = EventThread.MAIN_THREAD)
     fun upDateAttention(eventBean: AnchorAttention) {
-        if (eventBean.androidId == anchorId){
+        if (eventBean.androidId == anchorId) {
             changeAttention(eventBean.isFlow)
         }
     }
@@ -418,8 +426,8 @@ class LiveRoomActivity : BaseNormalMvpActivity<LiveActPresenter>() {
     @SuppressLint("SetTextI18n")
     @Subscribe(thread = EventThread.MAIN_THREAD)
     fun enter(eventBean: OnLineInfo) {
-        if (LiveRoomHelper.bottomController.tvNum!=null){
-            LiveRoomHelper.bottomController.tvNum.text = eventBean.online.toString()+" 人"
+        if (LiveRoomHelper.bottomController.tvNum != null) {
+            LiveRoomHelper.bottomController.tvNum.text = eventBean.online.toString() + " 人"
         }
     }
 

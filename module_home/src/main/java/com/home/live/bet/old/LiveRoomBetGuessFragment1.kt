@@ -57,7 +57,6 @@ class LiveRoomBetGuessFragment1 : BaseNormalFragment() {
         if (threeSelect != null) threeSelect?.clear()
         arguments?.let { playUnitData = it.getParcelable("playUnitData") }
         playUnitData?.apply {
-
             rv_guess_play_child?.layoutManager = object : GridLayoutManager(context, 4, LinearLayoutManager.VERTICAL, false) {
                 override fun canScrollVertically(): Boolean {
                     return false
@@ -83,7 +82,7 @@ class LiveRoomBetGuessFragment1 : BaseNormalFragment() {
                                     play_sec_data[position].play_class_cname.toString(),
                                     play_sec_data[position].play_class_name.toString()
                                 ))
-                                ToastUtils.showToast("二中二最多选2个号码")
+                                ToastUtils.showToast("该玩法最多选2个号码")
                             } else {
                                 play_sec_data[position].isSelected = true
                                 adapter?.notifyDataSetChanged()
@@ -116,7 +115,7 @@ class LiveRoomBetGuessFragment1 : BaseNormalFragment() {
                             ))
                             if (threeSelect?.size!! > 3) {
                                 threeSelect?.remove(Bet2Bean(play_sec_data.get(position).play_class_cname, play_sec_data[position].play_class_name))
-                                ToastUtils.showToast("三中三最多选3个号码")
+                                ToastUtils.showToast("该玩法最多选3个号码")
                             } else {
                                 play_sec_data[position].isSelected = true
                                 adapter?.notifyDataSetChanged()
@@ -141,7 +140,7 @@ class LiveRoomBetGuessFragment1 : BaseNormalFragment() {
                             singleSelect1?.add(Bet2Bean(play_sec_data[position].play_class_cname, play_sec_data[position].play_class_name))
                             if (singleSelect1?.size!! > 1) {
                                 singleSelect1?.remove(Bet2Bean(play_sec_data[position].play_class_cname, play_sec_data[position].play_class_name))
-                                ToastUtils.showToast("一中一最多选1个号码")
+                                ToastUtils.showToast("该玩法最多选1个号码")
                             } else {
                                 play_sec_data[position].isSelected = true
                                 adapter?.notifyDataSetChanged()
@@ -180,7 +179,7 @@ class LiveRoomBetGuessFragment1 : BaseNormalFragment() {
                             singleSelect3?.add(Bet2Bean(play_sec_data[position].play_class_cname, play_sec_data[position].play_class_name))
                             if (singleSelect3?.size!! > 1) {
                                 singleSelect3?.remove(Bet2Bean(play_sec_data[position].play_class_cname, play_sec_data[position].play_class_name))
-                                ToastUtils.showToast("一中三最多选1个号码")
+                                ToastUtils.showToast("该玩法最多选1个号码")
                             } else {
                                 play_sec_data[position].isSelected = true
                                 adapter?.notifyDataSetChanged()
@@ -200,7 +199,7 @@ class LiveRoomBetGuessFragment1 : BaseNormalFragment() {
                             singleSelect4?.add(Bet2Bean(play_sec_data[position].play_class_cname, play_sec_data[position].play_class_name))
                             if (singleSelect4?.size!! > 1) {
                                 singleSelect4?.remove(Bet2Bean(play_sec_data[position].play_class_cname, play_sec_data[position].play_class_name))
-                                ToastUtils.showToast("一中四最多选1个号码")
+                                ToastUtils.showToast("该玩法最多选1个号码")
                             } else {
                                 play_sec_data[position].isSelected = true
                                 adapter?.notifyDataSetChanged()
@@ -229,7 +228,7 @@ class LiveRoomBetGuessFragment1 : BaseNormalFragment() {
                                 singleSelect5?.remove(Bet2Bean(play_sec_data.get(position).play_class_cname.toString(),
                                     play_sec_data.get(position).play_class_name.toString()
                                 ))
-                                ToastUtils.showToast("一中五最多选1个号码")
+                                ToastUtils.showToast("该玩法最多选1个号码")
                             } else {
                                 play_sec_data.get(position).isSelected = true
                                 adapter?.notifyDataSetChanged()

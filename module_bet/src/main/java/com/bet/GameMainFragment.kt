@@ -149,7 +149,7 @@ class GameMainFragment : BaseMvpFragment<GameMainPresenter>(), ITheme, IMode {
                 viewPage = vpGame,
                 normalColor = ViewUtils.getColor(R.color.color_333333),
                 selectedColor = ViewUtils.getColor(R.color.color_FF513E),
-                colorLine = ViewUtils.getColor(R.color.color_FF513E),
+                colorLine =  ViewUtils.getColor(R.color.color_333333),
                 textSize = 14F
             )
             commonNavigator.adapter = tabAdapter

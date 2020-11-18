@@ -28,6 +28,8 @@ data class LotteryReset(var reset: Boolean)
 //当前选择的
 data class LotteryCurrent(var name: String?,var size:Int?)
 
+data class LotteryLiveBet(var rightTop:String,var betList:MutableList<PlaySecData>)
+
 //钻石不足
 data class LotteryDiamondNotEnough(var reset: Boolean)
 

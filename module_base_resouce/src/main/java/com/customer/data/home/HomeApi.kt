@@ -216,7 +216,6 @@ object HomeApi : BaseApi {
         getApi()
             .get<List<HomeHotLiveResponse>>(HOME_HOT_LIVE)
             .cacheMode(cacheMode)
-            .headers("token", UserInfoSp.getToken())
             .subscribe(subscriber)
         return subscriber
     }

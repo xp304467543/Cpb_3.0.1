@@ -27,7 +27,7 @@ import com.lib.basiclib.widget.tab.buildins.commonnavigator.titles.SimplePagerTi
  */
 class TabScaleAdapter(
     private var titleList: ArrayList<String>,
-    private var viewPage: ViewPager,
+    private var viewPage: ViewPager?,
     private var normalColor: Int,
     private var selectedColor: Int,
     private var colorLine: Int,
@@ -41,7 +41,7 @@ class TabScaleAdapter(
         simplePagerTitleView.normalColor = normalColor
         simplePagerTitleView.selectedColor = selectedColor
         simplePagerTitleView.setOnClickListener {
-            viewPage.currentItem = index
+            viewPage?.currentItem = index
         }
         return simplePagerTitleView
     }

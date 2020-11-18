@@ -28,7 +28,6 @@ import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.thread.EventThread
 import com.lib.basiclib.utils.FastClickUtil
-import com.lib.basiclib.utils.LogUtils
 import com.lib.basiclib.utils.ToastUtils
 import com.lib.basiclib.utils.ViewUtils
 import kotlinx.android.synthetic.main.old_dialog_lottery_select.*
@@ -101,8 +100,8 @@ class LiveRoomBetFragment : BottomDialogFragment() {
     override fun initData() {
         if (isAdded) {
             RxBus.get().register(this)
-            val id = arguments?.getString("LIVE_ROOM_LOTTERY_ID") ?: "1"
-            currentLotteryId = if (id == "" || id == "-1") "1" else id
+            val id = arguments?.getString("LIVE_ROOM_LOTTERY_ID") ?: "8"
+            currentLotteryId = if (id == "" || id == "-1") "8" else id
             val type = LotteryApi.getLotteryBetType()
             type.onSuccess {
                 val title = arrayListOf<String>()
@@ -118,8 +117,8 @@ class LiveRoomBetFragment : BottomDialogFragment() {
                 tvLotterySelectType?.text = it[currentIndex].cname
                 if (!title.isNullOrEmpty()) initDialog(title, resultList!!)
             }
-            getLotteryNewCode(if (id == "" || id == "-1") "1" else id)//默认加载重庆时时彩  1
-            setTabLayout(if (id == "" || id == "-1") "1" else id)
+            getLotteryNewCode(if (id == "" || id == "-1") "8" else id)//默认加香港彩  8
+            setTabLayout(if (id == "" || id == "-1") "8" else id)
             getPlayMoney()
             getUserDiamond()
             getUserBalance()
@@ -412,12 +411,7 @@ class LiveRoomBetFragment : BottomDialogFragment() {
                         tvOpenCount?.text = (it.issue + " 期开奖结果   ")
                         countDownTime(it.next_lottery_time?.toString() ?: "0", lottery_id)
                         //更新最新开奖数据
-                        LotteryTypeSelectUtil.addOpenCode(
-                            context!!,
-                            linLotteryOpenCode,
-                            it.code?.split(","),
-                            it.lottery_id
-                        )
+                        setContainerCode(lottery_id,it.code)
                         tvOpenCodePlaceHolder.visibility = View.GONE
                         countDownTimerClose(it.next_lottery_end_time ?: 0)
                         isOpenCode = true
@@ -442,6 +436,29 @@ class LiveRoomBetFragment : BottomDialogFragment() {
             }
             onFailed {
                 getNewResult(lottery_id)
+            }
+        }
+    }
+
+    private fun setContainerCode(lotteryId: String?, code: String?) {
+        when (lotteryId) {
+            "8" -> {
+                val tbList = code?.split(",") as java.util.ArrayList<String>
+                tbList.add(6, "+")
+                LotteryTypeSelectUtil.addOpenCode(
+                    this.requireContext(),
+                    linLotteryOpenCode,
+                    tbList,
+                    lotteryId
+                )
+            }
+            else -> {
+                LotteryTypeSelectUtil.addOpenCode(
+                    this.requireContext(),
+                    linLotteryOpenCode,
+                    code?.split(","),
+                    lotteryId
+                )
             }
         }
     }
@@ -738,6 +755,9 @@ class LiveRoomBetFragment : BottomDialogFragment() {
         currentName = eventBean.name.toString()
         currentNum = eventBean.size ?: 0
     }
+
+
+
 
     companion object {
         fun newInstance(lotteryId: String) = LiveRoomBetFragment().apply {

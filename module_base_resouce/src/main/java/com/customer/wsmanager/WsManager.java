@@ -17,6 +17,8 @@ import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
 import okio.ByteString;
 
+import static android.os.Looper.*;
+
 /**
  * @author rabtman
  */
@@ -35,7 +37,7 @@ public class WsManager implements IWsManager {
   private boolean isManualClose = false;         //是否为手动关闭websocket连接
   private WsStatusListener wsStatusListener;
   private Lock mLock;
-  private Handler wsMainHandler = new Handler(Looper.getMainLooper());
+  private Handler wsMainHandler = new Handler(getMainLooper());
   private int reconnectCount = 0;   //重连次数
   private Runnable reconnectRunnable = new Runnable() {
     @Override
@@ -54,13 +56,8 @@ public class WsManager implements IWsManager {
       setCurrentStatus(WsStatus.CONNECTED);
       connected();
       if (wsStatusListener != null) {
-        if (Looper.myLooper() != Looper.getMainLooper()) {
-          wsMainHandler.post(new Runnable() {
-            @Override
-            public void run() {
-              wsStatusListener.onOpen(response);
-            }
-          });
+        if (myLooper() != getMainLooper()) {
+          wsMainHandler.post(() -> wsStatusListener.onOpen(response));
         } else {
           wsStatusListener.onOpen(response);
         }
@@ -70,7 +67,7 @@ public class WsManager implements IWsManager {
     @Override
     public void onMessage(WebSocket webSocket, final ByteString bytes) {
       if (wsStatusListener != null) {
-        if (Looper.myLooper() != Looper.getMainLooper()) {
+        if (myLooper() != getMainLooper()) {
           wsMainHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -86,7 +83,7 @@ public class WsManager implements IWsManager {
     @Override
     public void onMessage(WebSocket webSocket, final String text) {
       if (wsStatusListener != null) {
-        if (Looper.myLooper() != Looper.getMainLooper()) {
+        if (myLooper() != getMainLooper()) {
           wsMainHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -102,7 +99,7 @@ public class WsManager implements IWsManager {
     @Override
     public void onClosing(WebSocket webSocket, final int code, final String reason) {
       if (wsStatusListener != null) {
-        if (Looper.myLooper() != Looper.getMainLooper()) {
+        if (myLooper() != getMainLooper()) {
           wsMainHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -118,7 +115,7 @@ public class WsManager implements IWsManager {
     @Override
     public void onClosed(WebSocket webSocket, final int code, final String reason) {
       if (wsStatusListener != null) {
-        if (Looper.myLooper() != Looper.getMainLooper()) {
+        if (myLooper() != getMainLooper()) {
           wsMainHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -135,13 +132,8 @@ public class WsManager implements IWsManager {
     public void onFailure(WebSocket webSocket, final Throwable t, final Response response) {
       tryReconnect();
       if (wsStatusListener != null) {
-        if (Looper.myLooper() != Looper.getMainLooper()) {
-          wsMainHandler.post(new Runnable() {
-            @Override
-            public void run() {
-              wsStatusListener.onFailure(t, response);
-            }
-          });
+        if (myLooper() != getMainLooper()) {
+          wsMainHandler.post(() -> wsStatusListener.onFailure(t, response));
         } else {
           wsStatusListener.onFailure(t, response);
         }

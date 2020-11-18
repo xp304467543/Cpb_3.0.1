@@ -4,8 +4,8 @@ import com.rxnetgo.rxcache.CacheMode
 import cuntomer.api.AllEmptySubscriber
 import cuntomer.api.ApiSubscriber
 import com.customer.data.UserInfoSp
-import com.google.gson.GsonBuilder
 import cuntomer.net.BaseApi
+import io.reactivex.disposables.Disposable
 
 /**
  *
@@ -67,14 +67,13 @@ object LotteryApi : BaseApi {
     /**
      * 获取开奖号
      */
-    fun getLotteryNewCode(lotteryId: String, function: ApiSubscriber<LotteryCodeNewResponse>.() -> Unit) {
+    fun getLotteryNewCode(lotteryId: String, function: ApiSubscriber<LotteryCodeNewResponse>.() -> Unit):Disposable {
         val subscriber = object : ApiSubscriber<LotteryCodeNewResponse>() {}
         subscriber.function()
-        getApiOpenLottery()
-            .post<LotteryCodeNewResponse>(LOTTERY_NEW_CODE)
-            .cacheMode(CacheMode.NONE)
+        return getApiOpenLottery().post<LotteryCodeNewResponse>(LOTTERY_NEW_CODE)
+           .cacheMode(CacheMode.NONE)
             .params("lottery_id", lotteryId)
-            .subscribe(subscriber)
+            .subscribeWith(subscriber)
     }
 
     /**

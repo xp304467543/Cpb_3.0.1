@@ -47,6 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_15"
                 android:contentDescription="@string/app_name"
+                android:padding="@dimen/dp_15"
                 android:src="@mipmap/ic_arrow_back_white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/statusViewMine" />
@@ -57,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_20"
-                android:layout_marginTop="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_10"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_20"
                 android:textStyle="bold"

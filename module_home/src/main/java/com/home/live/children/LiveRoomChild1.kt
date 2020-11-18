@@ -31,7 +31,7 @@ import com.customer.data.mine.MinePassWordTime
 import com.customer.utils.JsonUtils
 import com.customer.utils.ObjectAnimatorViw
 import com.home.R
-import com.home.live.bet.old.LiveRoomBetFragment
+import com.home.live.bet.new.LiveRoomBetFragment
 import com.home.live.bet.old.LotteryShareBet
 import com.home.live.children.adapter.LiveRoomChatAdapter
 import com.home.live.children.util.task.AnimUtils

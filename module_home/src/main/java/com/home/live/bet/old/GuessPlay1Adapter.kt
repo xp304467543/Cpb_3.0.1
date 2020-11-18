@@ -25,6 +25,11 @@ class GuessPlay1Adapter(val list: List<PlaySecData>?) : BaseQuickAdapter<PlaySec
                 .setTextColor(R.id.tv_gc_name, ContextCompat.getColor(mContext, R.color.color_333333))
                 .setTextColor(R.id.tv_gc_odds, ContextCompat.getColor(mContext, R.color.color_999999))
         }
+        when (item.play_sec_name){
+            "lhc_tma" ->{
+
+            }
+        }
         helper.setText(R.id.tv_gc_name, item.play_class_cname)
         helper.setText(R.id.tv_gc_odds, item.play_odds.toString())
     }

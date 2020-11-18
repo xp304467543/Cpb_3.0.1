@@ -108,7 +108,7 @@ class RxNetGo {
      * 生成默认的配置，如果想更新配置，可以使用内部的Builder更新
      */
     private fun initNetGo() {
-        mRetryCount = 25
+        mRetryCount = 5
         mCacheTime = CACHE_NEVER_EXPIRE
         // 默认不使用缓存
         mCacheMode = CacheMode.NONE

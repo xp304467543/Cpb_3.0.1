@@ -68,7 +68,7 @@ abstract class BottomDialogFragment : DialogFragment() {
         params?.width = resources.displayMetrics.widthPixels
         if (resetHeight == 0) {
             params?.height = if (isShowTop()) ViewUtils.getScreenHeight() * 2 / 3 else
-                ViewUtils.getScreenHeight() * 2 / 3 - ViewUtils.dp2px(12)
+                ViewUtils.getScreenHeight() * 2 / 3 - ViewUtils.dp2px(2)
         } else params?.height = resetHeight
         window?.attributes = params
     }

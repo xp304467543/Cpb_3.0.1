@@ -22,7 +22,7 @@ object LotteryTypeSelectUtil {
     fun addOpenCode(context: Context, codeContainer: LinearLayout, result: List<String>?, lotteryId: String?) {
         codeContainer.removeAllViews()
         codeContainer.gravity = Gravity.CENTER_VERTICAL
-        val size = (ViewUtils.getScreenWidth() - ViewUtils.dp2px(75)) / 10
+        val size = (ViewUtils.getScreenWidth() - ViewUtils.dp2px(95)) / 10
         when (lotteryId) {
             "8" -> {
                 if (result==null)return

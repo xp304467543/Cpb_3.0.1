@@ -80,7 +80,7 @@ data class PlayRuleTypeDataBean(
  */
 @Parcelize
 data class LotteryPlayListResponse(
-    val play_unit_data: List<PlayUnitData>?,
+    val play_unit_data: ArrayList<PlayUnitData>?,
     val play_unit_id: Int?,
     val play_unit_name: String?
 ) : Parcelable

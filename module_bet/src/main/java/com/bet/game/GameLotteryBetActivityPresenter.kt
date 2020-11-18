@@ -7,11 +7,10 @@ import com.bet.R
 import com.customer.data.UserInfoSp
 import com.customer.data.lottery.LotteryApi
 import com.customer.utils.SoundPoolHelper
-import com.customer.utils.countdowntimer.CountDownTimerSupport
-import com.customer.utils.countdowntimer.OnCountDownTimerListener
 import com.customer.utils.countdowntimer.lotter.LotteryTypeSelectUtil
 import com.lib.basiclib.base.mvp.BaseMvpPresenter
 import com.lib.basiclib.utils.ToastUtils
+import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.act_game_lottery_bet.*
 import java.util.*
 
@@ -37,45 +36,46 @@ class GameLotteryBetActivityPresenter : BaseMvpPresenter<GameLotteryBetActivity>
         }
     }
 
-
-    private var mTimer: CountDownTimerSupport? = null
+    // ===== 开奖倒计时 =====
+    var timer: CountDownTimer? = null
     private var handler: Handler? = null
     private var runnable: Runnable? = null
     var handlerPlay: Handler? = null
+
+
+    private fun countDownTime(millisUntilFinished: String, lotteryId: String) {
+        if (timer != null) timer?.cancel()
+        handler?.removeCallbacks(runnable)
+        val timeCountDown = millisUntilFinished.toLong() * 1000
+        timer = object : CountDownTimer(timeCountDown, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                setTime(millisUntilFinished)
+            }
+
+            override fun onFinish() {
+                if (mView.tvOpenTime != null) mView.tvOpenTime.text = "--:--"
+                mView.isPlay = true
+                getLotteryOpenCode(lotteryId)
+                mView.setVisible(mView.tvOpenCodePlaceHolder)
+            }
+        }
+        if (timer != null) timer?.start()
+    }
+
+
+    var apiResult:Disposable?=null
     @SuppressLint("SetTextI18n")
     fun getLotteryOpenCode(lotteryId: String) {
         handler?.removeCallbacks(runnable)
-        mTimer?.stop()
+        apiResult?.dispose()
         if (mView.tvCloseTime != null) mView.tvCloseTime?.text = "--:--"
         if (timerClose != null) timerClose?.cancel()
-        LotteryApi.getLotteryNewCode(lotteryId) {
+       apiResult = LotteryApi.getLotteryNewCode(lotteryId) {
             onSuccess {
                 if (mView.isActive()) {
                     if (it.next_lottery_time?.toInt() ?: 0 > 1) {
-                        if (mTimer == null) {
-                            mTimer = CountDownTimerSupport()
-                            mTimer?.setOnCountDownTimerListener(object : OnCountDownTimerListener {
-                                override fun onTick(millisUntilFinished: Long) {
-                                    setTime(millisUntilFinished)
-                                }
-
-                                override fun onFinish() {
-                                    if (mView.tvOpenTime != null) mView.tvOpenTime.text = "--:--"
-                                    mView.isPlay = true
-                                    getLotteryOpenCode(lotteryId)
-                                    mView.setVisible(mView.tvOpenCodePlaceHolder)
-                                }
-
-                                override fun onCancel() {
-
-                                }
-                            })
-                        } else mTimer?.stop()
+                        countDownTime(it.next_lottery_time.toString(),lotteryId)
                         mView.tvOpenCount.text = it.issue + " 期开奖结果"
-                        //总时长 间隔时间
-                        mTimer?.setMillisInFuture((it.next_lottery_time ?: 0) * 1000)
-
-                        mTimer?.start()
                         setContainerCode(it.lottery_id, it.code)
                         mView.setGone(mView.tvOpenCodePlaceHolder)
                         mView.betFragment?.lotteryInfo(it.issue?:"-1",it.next_issue?:"-1", lotteryId,true)
@@ -90,23 +90,103 @@ class GameLotteryBetActivityPresenter : BaseMvpPresenter<GameLotteryBetActivity>
                             }
                         }
                     } else {
-                        mTimer?.stop()
+                        if (timer != null) timer?.cancel()
                         if (!mView.isDestroyed) {
                             mView.tvOpenTime.text = "--:--"
                             mView.tvOpenCount.text = ("- - - -" + "期开奖结果   ")
                             mView.tvCloseTime.text = "--:--"
                             mView.setVisible(mView.tvOpenCodePlaceHolder)
                         }
-                        handler = Handler()
-                        runnable = Runnable {
-                            getLotteryOpenCode(lotteryId)
-                        }
-                        handler?.postDelayed(runnable, 5000)
+                        getNewResult(lotteryId)
                     }
                 }
             }
+           onFailed {
+               if (timer != null) timer?.cancel()
+               if (!mView.isDestroyed) {
+                   mView.tvOpenTime.text = "--:--"
+                   mView.tvOpenCount.text = ("- - - -" + "期开奖结果   ")
+                   mView.tvCloseTime.text = "--:--"
+                   mView.setVisible(mView.tvOpenCodePlaceHolder)
+               }
+               getNewResult(lotteryId)
+           }
         }
+
     }
+
+//    @SuppressLint("SetTextI18n")
+//    fun getLotteryOpenCode(lotteryId: String) {
+//        handler?.removeCallbacks(runnable)
+//        mTimer?.stop()
+//        if (mView.tvCloseTime != null) mView.tvCloseTime?.text = "--:--"
+//        if (timerClose != null) timerClose?.cancel()
+//         LotteryApi.getLotteryNewCode(lotteryId) {
+//            onSuccess {
+//                if (mView.isActive()) {
+//                    if (it.next_lottery_time?.toInt() ?: 0 > 1) {
+//                        if (mTimer == null) {
+//                            mTimer = CountDownTimerSupport()
+//                            mTimer?.setOnCountDownTimerListener(object : OnCountDownTimerListener {
+//                                override fun onTick(millisUntilFinished: Long) {
+//                                    setTime(millisUntilFinished)
+//                                }
+//
+//                                override fun onFinish() {
+//                                    if (mView.tvOpenTime != null) mView.tvOpenTime.text = "--:--"
+//                                    mView.isPlay = true
+//                                    getLotteryOpenCode(lotteryId)
+//                                    mView.setVisible(mView.tvOpenCodePlaceHolder)
+//                                }
+//
+//                                override fun onCancel() {
+//
+//                                }
+//                            })
+//                        } else mTimer?.stop()
+//                        mView.tvOpenCount.text = it.issue + " 期开奖结果"
+//                        //总时长 间隔时间
+//                        mTimer?.setMillisInFuture((it.next_lottery_time ?: 0) * 1000)
+//
+//                        mTimer?.start()
+//                        setContainerCode(it.lottery_id, it.code)
+//                        mView.setGone(mView.tvOpenCodePlaceHolder)
+//                        mView.betFragment?.lotteryInfo(it.issue?:"-1",it.next_issue?:"-1", lotteryId,true)
+//                        countDownTimerClose(it.issue?:"-1",it.next_issue?:"-1", lotteryId,it.next_lottery_end_time ?: 0)
+//                        isOpenCode = true
+//                        if (mView.isPlay) {
+//                            if (UserInfoSp.getIsPlaySound()) {
+//                                if (handlerPlay == null) handlerPlay = Handler()
+//                                handlerPlay?.post {
+//                                    SoundPoolHelper(mView).playSoundWithRedId(R.raw.ring)
+//                                }
+//                            }
+//                        }
+//                    } else {
+//                        mTimer?.stop()
+//                        if (!mView.isDestroyed) {
+//                            mView.tvOpenTime.text = "--:--"
+//                            mView.tvOpenCount.text = ("- - - -" + "期开奖结果   ")
+//                            mView.tvCloseTime.text = "--:--"
+//                            mView.setVisible(mView.tvOpenCodePlaceHolder)
+//                        }
+//                        getNewResult(lotteryId)
+//                    }
+//                }
+//            }
+//        }
+//
+//    }
+
+
+    fun getNewResult(lotteryId: String) {
+        handler = Handler()
+        runnable = Runnable {
+            getLotteryOpenCode(lotteryId)
+        }
+        handler?.postDelayed(runnable, 3000)
+    }
+
 
     private fun setContainerCode(lotteryId: String?, code: String?) {
         when (lotteryId) {

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/gameBetLinearLayout"
+    android:layout_width="@dimen/dp_60"
+    android:layout_height="@dimen/dp_30"
+    android:layout_marginTop="@dimen/dp_10"
+    android:layout_marginStart="@dimen/dp_6"
+    android:paddingTop="@dimen/dp_5"
+    android:paddingBottom="@dimen/dp_5"
+    android:background="@drawable/home_bet_normal_background"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvCname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="特码A"
+        android:gravity="center"
+        android:textSize="@dimen/sp_11"/>
+</LinearLayout>
