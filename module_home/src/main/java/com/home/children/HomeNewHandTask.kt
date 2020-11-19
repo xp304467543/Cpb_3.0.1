@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.appcompat.widget.AppCompatButton
 import com.customer.ApiRouter
 import com.customer.component.dialog.DialogTask
+import com.customer.component.dialog.GlobalDialog
 import com.customer.data.home.HomeApi
 import com.customer.data.home.UserTask
 import com.home.R
@@ -69,9 +70,11 @@ class HomeNewHandTask : BaseNavActivity() {
                 taskAdapter?.refresh(it)
                 taskSmartRefreshLayout?.finishRefresh()
             }
-            onFailed {
-                ToastUtils.showToast(it.getMsg())
+            onFailed {error->
                 taskSmartRefreshLayout?.finishRefresh()
+                if (error.getCode() == 2001 || error.getCode() == 401 || error.getCode() == 2000 || error.getMsg().toString().contains("请登录")) {
+                    GlobalDialog.otherLogin(this@HomeNewHandTask)
+                }else  ToastUtils.showToast(error.getMsg())
             }
         }
     }

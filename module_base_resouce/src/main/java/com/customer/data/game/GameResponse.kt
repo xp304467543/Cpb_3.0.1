@@ -17,10 +17,12 @@ data class GameAll(val name:String?,val list:List<GameAllChild0>?): Parcelable
 
 
 @Parcelize
-data class GameAllChild0(val name:String?,val list:ArrayList<GameAllChild1>?,val type:String?,val id:String?,val img_url:String?): Parcelable
+data class GameAllChild0(val name:String?, val list:ArrayList<GameAllChild1>?, val type:String?, val id:String?, val img_url:String?, val tag:String?, val remark:String?,
+                         var isOpen:Boolean = false): Parcelable
 
 @Parcelize
-data class GameAllChild1(val type:String?,val id:String?,val img_url:String?,val name:String?,val itemType:Int = 0): Parcelable
+data class GameAllChild1(val type:String?, val id:String?, val img_url:String?, val name:String?, val itemType:Int = 0, val tag:String?, val remark:String?,
+                         var isOpen:Boolean = false): Parcelable
 
 
 data class GameRecently(val data1:GameAllChild1?,val data2:GameAllChild1?,val data3:GameAllChild1?)

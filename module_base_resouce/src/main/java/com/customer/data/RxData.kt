@@ -1,5 +1,6 @@
 package com.customer.data
 
+import com.customer.data.home.DataRes
 import com.customer.data.mine.MineUserBankList
 import cuntomer.them.AppMode
 
@@ -107,6 +108,11 @@ data class ChangeLottery(val lotteryId:String)
 data class AppChangeMode(val mode: AppMode = AppMode.Normal)
 
 data class OnLine(var onLine:Long?=0)
+
+//封盘
+data class CodeClose(val data: ArrayList<DataRes>?)
+
+data class CodeOpen(val data:String?)
 
 data class BankAddSuccess(var boolean: Boolean)
 

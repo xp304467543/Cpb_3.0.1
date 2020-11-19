@@ -3,7 +3,6 @@ package com.home.live.children
 import android.annotation.SuppressLint
 import android.view.View
 import android.widget.ImageView
-import com.customer.ApiRouter
 import com.customer.component.dialog.DialogPassWord
 import com.customer.component.dialog.DialogReCharge
 import com.customer.component.dialog.DialogRedPaper
@@ -25,7 +24,6 @@ import com.hwangjr.rxbus.RxBus
 import com.lib.basiclib.base.mvp.BaseMvpPresenter
 import com.lib.basiclib.utils.LogUtils
 import com.lib.basiclib.utils.ToastUtils
-import com.xiaojinzi.component.impl.Router
 import cuntomer.api.WebUrlProvider
 import kotlinx.android.synthetic.main.act_live_panel.recycleChat
 import kotlinx.android.synthetic.main.fragmeent_live_child_1.*

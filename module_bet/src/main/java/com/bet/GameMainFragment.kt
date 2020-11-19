@@ -116,6 +116,11 @@ class GameMainFragment : BaseMvpFragment<GameMainPresenter>(), ITheme, IMode {
             if (!FastClickUtil.isFastClick()) Router.withApi(ApiRouter::class.java)
                 .toGlobalWeb(UserInfoSp.getCustomer() ?: urlCustomer)
         }
+        imgGoToRight.setOnClickListener {
+            if (!FastClickUtil.isFastClick()){
+                commonNavigator?.fullScroll()
+            }
+        }
     }
 
     fun initViewPager(data: ArrayList<GameAll>) {
@@ -140,19 +145,20 @@ class GameMainFragment : BaseMvpFragment<GameMainPresenter>(), ITheme, IMode {
     }
 
     private var tabAdapter: TabScaleAdapter? = null
+    private var commonNavigator:CommonNavigator?= null
     private fun initTopTab(mDataList: ArrayList<String>) {
         if (vpGame != null) {
-            val commonNavigator = CommonNavigator(context)
-            commonNavigator.scrollPivotX = 0.65f
+            commonNavigator = CommonNavigator(context)
+            commonNavigator?.scrollPivotX = 0.65f
             tabAdapter = TabScaleAdapter(
                 titleList = mDataList,
                 viewPage = vpGame,
                 normalColor = ViewUtils.getColor(R.color.color_333333),
                 selectedColor = ViewUtils.getColor(R.color.color_FF513E),
-                colorLine =  ViewUtils.getColor(R.color.color_333333),
+                colorLine = ViewUtils.getColor(R.color.color_333333),
                 textSize = 14F
             )
-            commonNavigator.adapter = tabAdapter
+            commonNavigator?.adapter = tabAdapter
             vpGame.offscreenPageLimit = 7
             gameSwitchVideoTab.navigator = commonNavigator
             ViewPagerHelper.bind(gameSwitchVideoTab, vpGame)
@@ -163,19 +169,34 @@ class GameMainFragment : BaseMvpFragment<GameMainPresenter>(), ITheme, IMode {
     override fun setTheme(theme: Theme) {
         when (theme) {
             Theme.Default -> {
+                imgBetUserRecharge.setTextColor(ViewUtils.getColor(R.color.alivc_orange))
+                imgBetUserRecharge.background = ViewUtils.getDrawable(R.mipmap.ic_home_top_recharge)
                 imgGameBg.setImageResource(R.drawable.ic_them_default_top)
+                gameCustomer.background = ViewUtils.getDrawable(R.mipmap.ic_customer)
             }
             Theme.NewYear -> {
+                imgBetUserRecharge.setTextColor(ViewUtils.getColor(R.color.color_FF513E))
+                imgBetUserRecharge.background = ViewUtils.getDrawable(R.mipmap.ic_home_top_recharge)
                 imgGameBg.setImageResource(R.drawable.ic_them_newyear_top)
+                gameCustomer.background = ViewUtils.getDrawable(R.mipmap.ic_customer_xn)
             }
             Theme.MidAutumn -> {
+                imgBetUserRecharge.setTextColor(ViewUtils.getColor(R.color.colorGreenPrimary))
+                imgBetUserRecharge.background = ViewUtils.getDrawable(R.drawable.home_white)
                 imgGameBg.setImageResource(R.drawable.ic_them_middle_top)
+                gameCustomer.background = ViewUtils.getDrawable(R.mipmap.ic_customer_middle)
             }
             Theme.LoverDay -> {
+                imgBetUserRecharge.setTextColor(ViewUtils.getColor(R.color.purple))
+                imgBetUserRecharge.background = ViewUtils.getDrawable(R.drawable.home_white)
                 imgGameBg.setImageResource(R.drawable.ic_them_love_top)
+                gameCustomer.background = ViewUtils.getDrawable(R.mipmap.ic_customer_love)
             }
             Theme.NationDay -> {
+                imgBetUserRecharge.setTextColor(ViewUtils.getColor(R.color.color_EF7E12))
+                imgBetUserRecharge.background = ViewUtils.getDrawable(R.mipmap.ic_home_top_recharge)
                 imgGameBg.setImageResource(R.drawable.ic_them_gq_top)
+                gameCustomer.background = ViewUtils.getDrawable(R.mipmap.ic_customer_gq)
             }
         }
         tabAdapter?.notifyDataSetChanged()
@@ -234,6 +255,7 @@ class GameMainFragment : BaseMvpFragment<GameMainPresenter>(), ITheme, IMode {
 
     }
 
+
     override fun setMode(mode: AppMode) {
         when (mode) {
             AppMode.Normal -> {
@@ -255,5 +277,7 @@ class GameMainFragment : BaseMvpFragment<GameMainPresenter>(), ITheme, IMode {
             }
         }
     }
+
+
 
 }

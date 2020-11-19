@@ -67,7 +67,7 @@ data class MinePassWordTime(var remain_times: Int)
 
 //支付通道列表
 data class MinePayTypeList(
-    var id: Int, var channels_type: String, var low_money: String,
+    var id: Int, var channels_type: String, var low_money: String,var fee:String?,
     var high_money: String, var icon: String, var apiroute: String, var pay_type: String?
 )
 

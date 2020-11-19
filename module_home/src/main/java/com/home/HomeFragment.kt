@@ -202,30 +202,32 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme, IMode {
             Theme.Default -> {
                 imgHomeUserRecharge.setTextColor(ViewUtils.getColor(R.color.alivc_orange))
                 imgHomeBg.setImageResource(R.drawable.ic_them_default_top)
-                imgHomeUserRecharge.background =
-                    ViewUtils.getDrawable(R.mipmap.ic_home_top_recharge)
+                imgHomeUserRecharge.background = ViewUtils.getDrawable(R.mipmap.ic_home_top_recharge)
+                homeCustomer.background = ViewUtils.getDrawable(R.mipmap.ic_customer)
             }
             Theme.NewYear -> {
                 imgHomeUserRecharge.setTextColor(ViewUtils.getColor(R.color.color_FF513E))
                 imgHomeBg.setImageResource(R.drawable.ic_them_newyear_top)
-                imgHomeUserRecharge.background =
-                    ViewUtils.getDrawable(R.mipmap.ic_home_top_recharge)
+                imgHomeUserRecharge.background = ViewUtils.getDrawable(R.mipmap.ic_home_top_recharge)
+                homeCustomer.background = ViewUtils.getDrawable(R.mipmap.ic_customer_xn)
             }
             Theme.MidAutumn -> {
                 imgHomeUserRecharge.setTextColor(ViewUtils.getColor(R.color.colorGreenPrimary))
                 imgHomeBg.setImageResource(R.drawable.ic_them_middle_top)
                 imgHomeUserRecharge.background = ViewUtils.getDrawable(R.drawable.home_white)
+                homeCustomer.background = ViewUtils.getDrawable(R.mipmap.ic_customer_middle)
             }
             Theme.LoverDay -> {
                 imgHomeUserRecharge.setTextColor(ViewUtils.getColor(R.color.purple))
                 imgHomeBg.setImageResource(R.drawable.ic_them_love_top)
                 imgHomeUserRecharge.background = ViewUtils.getDrawable(R.drawable.home_white)
+                homeCustomer.background = ViewUtils.getDrawable(R.mipmap.ic_customer_love)
             }
             Theme.NationDay -> {
                 imgHomeUserRecharge.setTextColor(ViewUtils.getColor(R.color.color_EF7E12))
                 imgHomeBg.setImageResource(R.drawable.ic_them_gq_top)
-                imgHomeUserRecharge.background =
-                    ViewUtils.getDrawable(R.mipmap.ic_home_top_recharge)
+                imgHomeUserRecharge.background = ViewUtils.getDrawable(R.mipmap.ic_home_top_recharge)
+                homeCustomer.background = ViewUtils.getDrawable(R.mipmap.ic_customer_gq)
             }
         }
     }

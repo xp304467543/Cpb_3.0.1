@@ -91,11 +91,12 @@ class MineRechargeActChild1 : BaseContentFragment() {
         override fun bindData(holder: RecyclerViewHolder, position: Int, data: MinePayTypeList?) {
             if (data?.pay_type != "yhkcz") {
                 holder.text(R.id.tvBankName, data?.channels_type)
-            }else   holder.text(R.id.tvBankName, "银行卡充值")
+            } else holder.text(R.id.tvBankName, "银行卡充值")
             holder.text(
                 R.id.tvMoneyBorder,
                 "(" + (if ((data?.low_money + "") == "null") "" else data?.low_money) + " ~ " + (if ((data?.low_money + "") == "null") "" else data?.high_money) + ")"
             )
+            if (data?.fee != "0") holder.text(R.id.tvSendMoney, "额外赠送 "+data?.fee+"%")
             context?.let {
                 GlideUtil.loadCircleImage(
                     it,

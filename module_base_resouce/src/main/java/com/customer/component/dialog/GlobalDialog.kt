@@ -3,9 +3,7 @@ package com.customer.component.dialog
 import android.app.Activity
 import android.content.Context
 import com.customer.ApiRouter
-import com.customer.data.HomeJumpToMine
 import com.customer.data.UserInfoSp
-import com.hwangjr.rxbus.RxBus
 import com.lib.basiclib.utils.SpUtils
 import com.lib.basiclib.utils.ToastUtils
 import com.rxnetgo.exception.ApiException
@@ -24,7 +22,6 @@ object GlobalDialog {
     //未登录
     fun notLogged(context: Activity, horizontal: Boolean = false) {
       loginTipsDialog = DialogLoginTips(context, horizontal)
-
         if (!loginTipsDialog?.isShowing!!) { if (context.isFinishing) { return }
             loginTipsDialog?.setOnDismissListener {
                 spClear()
@@ -53,6 +50,19 @@ object GlobalDialog {
         dialog.show()
     }
 
+    //登录提醒
+    fun otherLogin(context: Context) {
+        val dialog = DialogGlobalTips(context, "登录提醒", "确定", "", "您的账号已在其他设备登录\n"+"如非本人请联系客服")
+        dialog.setConfirmClickListener {
+            dialog.dismiss()
+        }
+        dialog.setOnDismissListener {
+            spClear()
+            Router.withApi(ApiRouter::class.java).toLogin()
+        }
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.show()
+    }
 
     //清除所有Sp保存的值，除去已经显示过的guide
     fun spClear() {

@@ -3,17 +3,16 @@ package com.bet
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.viewpager.widget.PagerAdapter
 import com.customer.ApiRouter
 import com.customer.base.BaseNormalFragment
+import com.customer.component.LCardView
+import com.customer.component.PagingScrollHelper
 import com.customer.component.dialog.GlobalDialog
-import com.customer.data.LoginOut
-import com.customer.data.UnDateTopGame
-import com.customer.data.UserInfoSp
+import com.customer.data.*
 import com.customer.data.game.GameAll
 import com.customer.data.game.GameAllChild1
 import com.glide.GlideUtil
@@ -35,7 +34,6 @@ import kotlinx.android.synthetic.main.fragment_game_child.*
  */
 class GameMainChildFragment : BaseNormalFragment<GameMainChildFragmentPresenter>() {
 
-    private var adapter0: Adapter0? = null
 
     private var adapter1: Adapter1? = null
 
@@ -54,36 +52,23 @@ class GameMainChildFragment : BaseNormalFragment<GameMainChildFragmentPresenter>
         initRecommend(data)
     }
 
-    private fun initRecently(data: ArrayList<GameAll>){
+    private var recentlyAdapter: Adapter0? = null
+    private fun initRecently(data: ArrayList<GameAll>) {
         if (!data[0].list?.get(0)?.list.isNullOrEmpty()) {
             //最近使用
-            vpGameUse?.removeAllViews()
-            val recyclerViewList = arrayListOf<RecyclerView>()
-            val des =data[0].list?.get(0)?.list
-            val finalList = if (des?.size?:0>6) des?.subList(0,6) else des
-            if (finalList?.size?:0 >3){
-                repeat(2){
-                    val rv = context?.let { it1 -> RecyclerView(it1) }
-                    val adapter0 = Adapter0()
-                    rv?.adapter = adapter0
-                    rv?.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
-                    if (it == 0) adapter0.refresh(finalList?.subList(0,3)) else adapter0.refresh(finalList?.subList(3, finalList.size))
-                    rv?.let { it1 -> recyclerViewList.add(it1) }
-                }
-            }else{
-                val rv = context?.let { it1 -> RecyclerView(it1) }
-                rv?.let { it1 -> recyclerViewList.add(it1) }
-                val adapter1 = Adapter0()
-                rv?.adapter = adapter1
-                rv?.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
-                adapter1.refresh(finalList)
-            }
-            vpGameUse?.adapter = PageGameAdapter(recyclerViewList)
+            recentlyAdapter = Adapter0()
+            rvGameUse?.adapter = recentlyAdapter
+            rvGameUse.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            val scrollHelper = PagingScrollHelper()
+            scrollHelper.setUpRecycleView(rvGameUse)
+            //设置页面滚动监听
+            recentlyAdapter?.refresh(data[0].list?.get(0)?.list)
             setVisible(linRecently)
         }
     }
 
-    fun initHot(data: ArrayList<GameAll>,isUpDateTop:Boolean){
+    fun initHot(data: ArrayList<GameAll>, isUpDateTop: Boolean) {
         initRecently(data)
         if (!isUpDateTop) initRecommend(data)
     }
@@ -98,7 +83,7 @@ class GameMainChildFragment : BaseNormalFragment<GameMainChildFragmentPresenter>
 
 
     //构造热门推荐数据
-    private fun initRecommend(data: ArrayList<GameAll> ) {
+    private fun initRecommend(data: ArrayList<GameAll>) {
         if (data[0].list.isNullOrEmpty()) return
         val result = data[0].list?.size?.let { data[0].list?.subList(1, it) }?.toMutableList()
         val listData = arrayListOf<GameAllChild1>()
@@ -107,22 +92,23 @@ class GameMainChildFragment : BaseNormalFragment<GameMainChildFragmentPresenter>
                 if (!x.list.isNullOrEmpty()) {
                     for ((num, bean) in x.list!!.withIndex()) {
                         if (num == 0) {
-                            listData.add(GameAllChild1("", "", "", x.name, 1))
+                            listData.add(GameAllChild1("", "", "", x.name, 1, "", ""))
                         }
                         listData.add(bean)
-                        if (num == ((x.list?.size)?:0 - 1)) {
-                            listData.add(GameAllChild1("", "", "", x.name, 2))
+                        if (num == ((x.list?.size) ?: 0 - 1)) {
+                            listData.add(GameAllChild1("", "", "", x.name, 2, "", ""))
                         }
                     }
                 }
             }
             adapter1 = Adapter1()
             rvGameType?.adapter = adapter1
-            rvGameType?.layoutManager = object :StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL){
-                override fun canScrollVertically(): Boolean {
-                    return true
+            rvGameType?.layoutManager =
+                object : StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL) {
+                    override fun canScrollVertically(): Boolean {
+                        return true
+                    }
                 }
-            }
             adapter1?.refresh(listData)
         }
     }
@@ -137,26 +123,38 @@ class GameMainChildFragment : BaseNormalFragment<GameMainChildFragmentPresenter>
         override fun bindData(holder: RecyclerViewHolder, position: Int, data: GameAllChild1?) {
             GlideUtil.loadImage(data?.img_url, holder.getImageView(R.id.imgRecentType))
             holder.text(R.id.tvGameRecentName, data?.name)
-            val lin = holder.findViewById<LinearLayout>(R.id.linAll)
+            holder.text(R.id.tvRemark, data?.remark)
+            val img = holder.findViewById<AppCompatImageView>(R.id.imgGameTag)
+            val imgClose = holder.findViewById<AppCompatImageView>(R.id.imgGameClose)
+            if (data?.isOpen == true) {
+                ViewUtils.setVisible(imgClose)
+            } else ViewUtils.setGone(imgClose)
+            when (data?.tag) {
+                "HOT" -> img.setImageResource(R.mipmap.ic_code_hot)
+                "NEW" -> img.setImageResource(R.mipmap.ic_code_new)
+                else -> img.setImageResource(0)
+            }
+            val lin = holder.findViewById<LCardView>(R.id.linAll)
             val layoutParams = lin.layoutParams
-            layoutParams.width = ViewUtils.getScreenWidth()/3
+            layoutParams.width = ViewUtils.getScreenWidth() / 3
             lin.layoutParams = layoutParams
             holder.itemView.setOnClickListener {
-                if (!UserInfoSp.getIsLogin()){
+                if (!UserInfoSp.getIsLogin()) {
                     GlobalDialog.notLogged(requireActivity())
                     return@setOnClickListener
                 }
                 showPageLoadingDialog("加载中...")
-                when(data?.type){
+                when (data?.type) {
                     "lott" -> {
                         hidePageLoadingDialog()
-                        Router.withApi(ApiRouter::class.java).toLotteryGame(data.id ?: "-1", data.name ?: "未知")
+                        Router.withApi(ApiRouter::class.java)
+                            .toLotteryGame(data.id ?: "-1", data.name ?: "未知")
                     }
                     "fh_chess" -> mPresenter.getChessGame(data.id.toString())
                     "ag_live" -> mPresenter.getAg()
                     "ag_slot" -> mPresenter.getAgDz()
                     "bg_live" -> mPresenter.getBgSx()
-                    "bg_fish" -> mPresenter.getBgFish(data?.id.toString())
+                    "bg_fish" -> mPresenter.getBgFish(data.id.toString())
                 }
             }
         }
@@ -204,24 +202,39 @@ class GameMainChildFragment : BaseNormalFragment<GameMainChildFragmentPresenter>
                     holder.text(R.id.tvTitleGame, data?.name)
                 }
                 getItemViewType(position) == FOOTER -> {
-                    val layoutParams = StaggeredGridLayoutManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 50)
+                    val layoutParams = StaggeredGridLayoutManager.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        50
+                    )
                     layoutParams.topMargin = 40
                     layoutParams.isFullSpan = true
                     holder.itemView.layoutParams = layoutParams
                 }
                 else -> {
                     holder.text(R.id.tvGameName, data?.name)
+                    holder.text(R.id.tvGameRemark, data?.remark)
+                    val img = holder.findViewById<AppCompatImageView>(R.id.imgGameTag)
+                    when (data?.tag) {
+                        "HOT" -> img.setImageResource(R.mipmap.ic_code_hot)
+                        "NEW" -> img.setImageResource(R.mipmap.ic_code_new)
+                        else -> img.setImageResource(0)
+                    }
+                    val imgClose = holder.findViewById<AppCompatImageView>(R.id.imgGameClose)
+                    if (data?.isOpen == true) {
+                        ViewUtils.setVisible(imgClose)
+                    } else ViewUtils.setGone(imgClose)
                     GlideUtil.loadImage(data?.img_url, holder.getImageView(R.id.imgGameType))
                     holder.itemView.setOnClickListener {
-                        if (!UserInfoSp.getIsLogin()){
+                        if (!UserInfoSp.getIsLogin()) {
                             GlobalDialog.notLogged(requireActivity())
                             return@setOnClickListener
                         }
                         showPageLoadingDialog("加载中...")
-                        when(data?.type){
+                        when (data?.type) {
                             "lott" -> {
                                 hidePageLoadingDialog()
-                                Router.withApi(ApiRouter::class.java).toLotteryGame(data.id ?: "-1", data.name ?: "未知")
+                                Router.withApi(ApiRouter::class.java)
+                                    .toLotteryGame(data.id ?: "-1", data.name ?: "未知")
                             }
                             "fh_chess" -> mPresenter.getChessGame(data.id.toString())
                             "ag_live" -> mPresenter.getAg()
@@ -268,14 +281,85 @@ class GameMainChildFragment : BaseNormalFragment<GameMainChildFragmentPresenter>
 
     @Subscribe(thread = EventThread.MAIN_THREAD)
     fun loginOut(eventBean: LoginOut) {
-        if (isActive()){
-          if (vpGameUse!=null){
-              vpGameUse?.removeAllViews()
-              setGone(linRecently)
-          }
+        if (isActive()) {
+            if (rvGameUse != null) {
+                rvGameUse?.removeAllViews()
+                setGone(linRecently)
+            }
         }
     }
 
+    //封盘通知
+    @Subscribe(thread = EventThread.MAIN_THREAD)
+    fun codeClose(eventBean: CodeClose) {
+        if (isActive()) {
+            if (eventBean.data.isNullOrEmpty()) return
+            val array = arrayListOf<String>()
+            for (item in eventBean.data!!){
+                array.add(item.lotteryId.toString())
+            }
+            for (item in eventBean.data!!) {
+                val data1 = recentlyAdapter?.data
+                if (!data1.isNullOrEmpty()) {
+                    for ((index, res) in data1.withIndex()) {
+                        if (item.lotteryId == res.id && item.status == "closing") {
+                            if (!res.isOpen) {
+                                res.isOpen = true
+                                recentlyAdapter?.refresh(index, res)
+                            }
+                        }else{
+                            if (res.isOpen && !array.contains(item.lotteryId)){
+                                res.isOpen = false
+                                recentlyAdapter?.refresh(index, res)
+                            }
+                        }
+                    }
+                }
+                val data2 = adapter1?.data
+                if (!data2.isNullOrEmpty()) {
+                    for ((index, res) in data2.withIndex()) {
+                        if (item.lotteryId == res.id && item.status == "closing") {
+                            if (!res.isOpen) {
+                                res.isOpen = true
+                                adapter1?.refresh(index, res)
+                            }
+                        }else{
+                            if ( !array.contains(item.lotteryId) && res.isOpen){
+                                res.isOpen = false
+                                adapter1?.refresh(index, res)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+    //当前无封盘
+    @Subscribe(thread = EventThread.MAIN_THREAD)
+    fun codeOpen(eventBean: CodeOpen) {
+        if (isActive()) {
+                val data1 = recentlyAdapter?.data
+                if (!data1.isNullOrEmpty()) {
+                    for ((index, res) in data1.withIndex()) {
+                        if (res.type == "lott" && res.isOpen) {
+                            res.isOpen = false
+                            recentlyAdapter?.refresh(index, res)
+                        }
+                    }
+                }
+                val data2 = adapter1?.data
+                if (!data2.isNullOrEmpty()) {
+                    for ((index, res) in data2.withIndex()) {
+                        if (res.type == "lott" && res.isOpen) {
+                                res.isOpen = false
+                                adapter1?.refresh(index, res)
+                        }
+                    }
+                }
+        }
+    }
 
     companion object {
         fun newInstance(index: Int, data: ArrayList<GameAll>): GameMainChildFragment {

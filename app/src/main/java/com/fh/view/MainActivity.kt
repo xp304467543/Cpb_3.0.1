@@ -3,19 +3,17 @@ package com.fh.view
 import android.content.Intent
 import android.os.Bundle
 import com.customer.component.ActivityDialogSuccess
-import com.customer.data.LoginOut
-import com.customer.data.OnLine
-import com.customer.data.UserInfoSp
+import com.customer.data.*
 import com.customer.data.home.AllSocket
+import com.customer.data.home.DataRes
 import com.customer.data.login.LoginSuccess
 import com.customer.wsmanager.WsManager
 import com.customer.wsmanager.listener.WsStatusListener
-import com.fh.R
+import com.google.gson.Gson
 import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.thread.EventThread
 import com.lib.basiclib.base.activity.BasePageActivity
-import com.lib.basiclib.base.xui.widget.popupwindow.bar.CookieBar
 import com.lib.basiclib.utils.LogUtils
 import com.lib.basiclib.utils.SoftInputUtils
 import com.lib.basiclib.utils.StatusBarUtils
@@ -29,6 +27,7 @@ import okio.ByteString
 import org.json.JSONObject
 import java.util.*
 import java.util.concurrent.TimeUnit
+
 
 @RouterAnno(host = "App", path = "main")
 class MainActivity : BasePageActivity() {
@@ -149,18 +148,34 @@ class MainActivity : BasePageActivity() {
                 "ServerPush" -> {
                     when (res.dataType) {
                         "open_lottery_push" -> {
-                            mWsManager?.sendMessage(makeSure(res.data?.msg_id))
-                            systemDialog(res.data?.msg ?: "获取消息失败")
+                            val result = WebUrlProvider.getData<DataRes>(res.data.toString(), DataRes::class.java)
+                            mWsManager?.sendMessage(makeSure(result?.msg_id))
+                            systemDialog(result?.msg ?: "获取消息失败")
                         }
                         "pop_result_push" -> {
-                            mWsManager?.sendMessage(makeSurePop(res.data?.msg_id))
+                            val result = WebUrlProvider.getData<DataRes>(res.data.toString(), DataRes::class.java)
+                            mWsManager?.sendMessage(makeSurePop(result?.msg_id))
                             val intent = Intent(this, ActivityDialogSuccess::class.java)
-                            intent.putExtra("msgSuccess",res.data?.msg)
-                            intent.putExtra("is_success",res.data?.is_success)
+                            intent.putExtra("msgSuccess",result?.msg)
+                            intent.putExtra("is_success",result?.is_success)
                             startActivity(intent)
                         }
                         "app_online_push" -> {
-                            RxBus.get().post(OnLine(res.data?.online))
+                            val result = WebUrlProvider.getData<DataRes>(res.data.toString(), DataRes::class.java)
+                            RxBus.get().post(OnLine(result?.online))
+                        }
+                        "lottery_closing_push" ->{
+                            if (res.data?.isJsonNull == false){
+                                val result = res.data?.asJsonArray
+                                val list = arrayListOf<DataRes>()
+                                if (result?.isJsonNull == false){
+                                    for (bean in result){
+                                        val des = Gson().fromJson(bean,DataRes::class.java)
+                                        list.add(des)
+                                    }
+                                    RxBus.get().post(CodeClose(list))
+                                }
+                            }else RxBus.get().post(CodeOpen("1"))
                         }
                     }
                 }

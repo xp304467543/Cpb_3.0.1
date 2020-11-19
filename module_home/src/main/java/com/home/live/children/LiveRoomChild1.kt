@@ -87,6 +87,7 @@ class LiveRoomChild1 : BaseNormalFragment<LiveRoomChild1Presenter>() {
         if (UserInfoSp.getOpenWindow()) setVisible(floatButton) else setGone(floatButton)
     }
 
+
     private fun initParams() {
         val pair2 = tvMoreInfo.layoutParams as ConstraintLayout.LayoutParams
         val height2 = (ViewUtils.getScreenHeight() - ViewUtils.dp2px(42)) / 2

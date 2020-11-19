@@ -96,7 +96,7 @@ class MinePresenter : BaseMvpPresenter<MineFragment>() {
                     onFailed {error ->
 //                        GlobalDialog.showError(mView.requireActivity(), it)
                         if (error.getCode() == 2001 || error.getCode() == 401 || error.getCode() == 2000 || error.getMsg().toString().contains("请登录")) {
-                            GlobalDialog.notLogged(mView.requireActivity(), false)
+                            GlobalDialog.otherLogin(mView.requireActivity())
                         }
                     }
                 }

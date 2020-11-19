@@ -74,6 +74,10 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
         mNavigatorHelper.setNavigatorScrollListener(this);
     }
 
+    public void fullScroll(){
+        mScrollView.fullScroll(HorizontalScrollView.FOCUS_RIGHT);
+    }
+
     @Override
     public void notifyDataSetChanged() {
         if (mAdapter != null) {

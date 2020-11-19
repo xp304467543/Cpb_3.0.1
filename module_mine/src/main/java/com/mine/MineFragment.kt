@@ -8,6 +8,7 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.customer.ApiRouter
 import com.customer.component.dialog.DialogDiamond
+import com.customer.component.dialog.DialogGlobalTips
 import com.customer.component.dialog.GlobalDialog
 import com.customer.data.*
 import com.customer.data.mine.ChangeSkin
@@ -535,7 +536,22 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme, IMode {
     //扫码登录后退出
     @Subscribe(thread = EventThread.MAIN_THREAD)
     fun scanLoginOut(eventBean: MineUserScanLoginOut) {
-       GlobalDialog.spClear()
+        val dialog = DialogGlobalTips(requireContext(), "登录提醒", "确定", "", "您的账号已在其他设备登录\n"+"如非本人请联系客服")
+        dialog.setConfirmClickListener {
+            dialog.dismiss()
+        }
+        dialog.setOnDismissListener {
+            GlobalDialog.spClear()
+            dialog.setCanceledOnTouchOutside(false)
+            dialog.show()
+            setGone(containerLogin)
+            setGone(containerSetting)
+            setVisible(containerNoLogin)
+            tvBalance?.text = "0.00"
+            tvDiamondBalance?.text = "0.00"
+            Router.withApi(ApiRouter::class.java).toLogin()
+        }
+
     }
 
     //纯净版切换
