@@ -66,11 +66,14 @@
             android:theme="@style/SwipeBackStyle" />
 
         <activity
-            android:name=".children.MineMessageCenterAct"
+            android:name=".children.message.MineMessageCenterAct"
 
             android:theme="@style/SwipeBackStyle" />
+
+        <activity android:name=".children.message.MineMessageAct"
+            android:theme="@style/SwipeBackStyle"/>
         <activity
-            android:name=".children.MineMessageCenterInfoAct"
+            android:name=".children.message.MineMessageCenterInfoAct"
 
             android:theme="@style/SwipeBackStyle" />
         <activity

@@ -1,13 +1,12 @@
 package com.mine
 
 import android.annotation.SuppressLint
+import com.customer.component.dialog.GlobalDialog
+import com.customer.data.UserInfoSp
+import com.customer.data.mine.MineApi
 import com.customer.data.urlCustomer
 import com.hwangjr.rxbus.RxBus
 import com.lib.basiclib.base.mvp.BaseMvpPresenter
-import com.customer.data.mine.MineApi
-import com.customer.component.dialog.GlobalDialog
-import com.customer.data.UserInfoSp
-import com.customer.data.mine.MineVipList
 import com.lib.basiclib.utils.ToastUtils
 import kotlinx.android.synthetic.main.fragment_mine.*
 
@@ -94,10 +93,7 @@ class MinePresenter : BaseMvpPresenter<MineFragment>() {
                         mView.tvBalance?.text = if (it.balance.toString() == "0")  "0.00" else it.balance.toString()
                     }
                     onFailed {error ->
-//                        GlobalDialog.showError(mView.requireActivity(), it)
-                        if (error.getCode() == 2001 || error.getCode() == 401 || error.getCode() == 2000 || error.getMsg().toString().contains("请登录")) {
-                            GlobalDialog.otherLogin(mView.requireActivity())
-                        }
+                        GlobalDialog.showError(mView.requireActivity(), error)
                     }
                 }
             }
@@ -131,6 +127,7 @@ class MinePresenter : BaseMvpPresenter<MineFragment>() {
                     mView.msg1 = it.countList.`_$0`
                     mView.msg2 = it.countList.`_$2`
                     mView.msg3 = it.countList.`_$3`
+                    mView.msg4 = it.countList.`_$5`
                 }
             }
         }

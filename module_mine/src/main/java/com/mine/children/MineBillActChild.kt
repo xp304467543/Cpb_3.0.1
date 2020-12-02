@@ -34,7 +34,7 @@ class MineBillActChild : BaseContentFragment() {
 
     var page = 1
 
-    private var isBal = "1"  //是否是余额
+    private var isBal = "0"  //是否是余额
 
     var adapter0: Adapter0? = null
 
@@ -83,20 +83,24 @@ class MineBillActChild : BaseContentFragment() {
     override fun initEvent() {
         tv_start.setOnClickListener {
             page = 1
-            isBal = "1"
+            isBal = "0"
             tv_start.delegate.backgroundColor = ViewUtils.getColor(R.color.color_FF513E)
             tv_start.setTextColor(ViewUtils.getColor(R.color.white))
             tv_end.delegate.backgroundColor = ViewUtils.getColor(R.color.white)
             tv_end.setTextColor(ViewUtils.getColor(R.color.color_999999))
+            setGone(tvHolder)
+            clearAdapter()
             betRecord()
         }
         tv_end.setOnClickListener {
             page = 1
-            isBal = "0"
+            isBal = "1"
             tv_end.delegate.backgroundColor = ViewUtils.getColor(R.color.color_FF513E)
             tv_end.setTextColor(ViewUtils.getColor(R.color.white))
             tv_start.delegate.backgroundColor = ViewUtils.getColor(R.color.white)
             tv_start.setTextColor(ViewUtils.getColor(R.color.color_999999))
+            setGone(tvHolder)
+            clearAdapter()
             betRecord()
         }
         smartRefreshLayoutChildBill?.setOnRefreshListener {
@@ -135,6 +139,13 @@ class MineBillActChild : BaseContentFragment() {
         }
     }
 
+
+    fun clearAdapter(){
+        adapter0?.clear()
+        adapter1?.clear()
+        adapter2?.clear()
+        adapter3?.clear()
+    }
 
     private fun getBalance() {
         MineApi.getBalance(page) {
@@ -387,10 +398,14 @@ class MineBillActChild : BaseContentFragment() {
             } else if (getItemViewType(position) == TYPE_CONTENT) {
                 holder.text(R.id.tvTime, data?.issue + "   " + data?.time)
                 holder.text(R.id.tvName, data?.lottery_name)
-                holder.text(
-                    R.id.tvGiftName,
-                    data?.method_name + "  " + data?.code + "  " + data?.type
-                )
+                if (data?.method_name?.contains("自选不中") == true && data.code.split(",").size>7){
+                    setVisible(holder.findView(R.id.tvZiX))
+                    holder.text(R.id.tvZiX, data.method_name + "\n" + data.code)
+                    holder.text(R.id.tvGiftName, data.type)
+                }else{
+                    setGone(holder.findView(R.id.tvZiX))
+                    holder.text(R.id.tvGiftName, data?.method_name + "  " + data?.code + "  " + data?.type)
+                }
                 if (isBal == "0") {
                     val spannableString = SpannableString(data?.amount+" 钻石")
                     if (data?.amount?.contains("+") == true){

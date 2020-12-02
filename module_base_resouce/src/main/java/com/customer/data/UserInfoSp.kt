@@ -18,6 +18,18 @@ import cuntomer.them.Theme
  */
 object UserInfoSp {
 
+
+    /**
+     * 系统公告
+     */
+    fun putSystemNotice(type: String, index: Int) {
+        SpUtils.putInt(type, index)
+    }
+
+    fun getSystemNotice(type: String): Int {
+        return SpUtils.getInt(type, 0)
+    }
+
     /**
      * 纯净版切换
      */
@@ -38,16 +50,15 @@ object UserInfoSp {
     }
 
 
-
     /**
      * 是否显示纯净版切换
      */
-    fun getIsShowAppModeChange():Boolean{
-       return SpUtils.getBoolean("isShowAppModeView",true)
+    fun getIsShowAppModeChange(): Boolean {
+        return SpUtils.getBoolean("isShowAppModeView", true)
     }
 
-    fun putIsShowAppModeChange(isShow:Boolean){
-        SpUtils.putBoolean("isShowAppModeView",isShow)
+    fun putIsShowAppModeChange(isShow: Boolean) {
+        SpUtils.putBoolean("isShowAppModeView", isShow)
     }
 
     /**

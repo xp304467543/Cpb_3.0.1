@@ -137,7 +137,7 @@ class TabThemAdapter(
 object TabThem {
     fun getTabSelect(): Int {
         return when (UserInfoSp.getThemInt()) {
-            1 -> ViewUtils.getColor(R.color.alivc_orange)
+            1 -> ViewUtils.getColor(R.color.color_FF513E)
             2 -> ViewUtils.getColor(R.color.color_FF513E)
             3 -> ViewUtils.getColor(R.color.colorGreenPrimary)
             4 -> ViewUtils.getColor(R.color.purple)

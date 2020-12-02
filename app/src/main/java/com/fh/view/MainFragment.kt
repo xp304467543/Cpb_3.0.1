@@ -173,11 +173,9 @@ class MainFragment : BaseContentFragment(), ITheme, IMode {
         if (UserInfoSp.getAppMode() == AppMode.Normal) {
             HomeApi.getSystemNotice {
                 onSuccess {
-                    if (it.content != null) {
                         val dialog = DialogSystemNotice(requireActivity())
-                        dialog.setContent(it.content.toString())
+                        dialog.setContent(it)
                         dialog.show()
-                    }
                 }
             }
         } else {
@@ -185,7 +183,7 @@ class MainFragment : BaseContentFragment(), ITheme, IMode {
                 onSuccess {
                     if (!it.isNullOrEmpty()) {
                         val dialog = DialogSystemNotice(requireActivity())
-                        dialog.setContent(it[0].content.toString())
+                        dialog.setContent(it)
                         dialog.show()
                     }
                 }
@@ -524,6 +522,7 @@ class MainFragment : BaseContentFragment(), ITheme, IMode {
                 showHideFragment(mFragments[0])
                 setVisible(tabHome)
                 if (tabHome != null) tabHome?.isChecked = true
+                setTheme(UserInfoSp.getThem())
             }
             AppMode.Pure -> {
                 showHideFragment(mFragments[1])

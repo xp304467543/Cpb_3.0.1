@@ -1,10 +1,10 @@
 package com.bet
-
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.viewpager.widget.PagerAdapter
 import com.customer.ApiRouter
@@ -36,6 +36,7 @@ class GameMainChildFragment : BaseNormalFragment<GameMainChildFragmentPresenter>
 
 
     private var adapter1: Adapter1? = null
+    private var rvGameUseContent:RecyclerView?=null
 
     override fun isRegisterRxBus() = true
 
@@ -45,7 +46,11 @@ class GameMainChildFragment : BaseNormalFragment<GameMainChildFragmentPresenter>
 
     override fun getLayoutRes() = R.layout.fragment_game_child
 
+
+
+
     override fun initData() {
+
         val data = arguments?.getParcelableArrayList<GameAll>("gameData")
         if (data.isNullOrEmpty()) return
         initRecently(data)
@@ -58,10 +63,10 @@ class GameMainChildFragment : BaseNormalFragment<GameMainChildFragmentPresenter>
             //最近使用
             recentlyAdapter = Adapter0()
             rvGameUse?.adapter = recentlyAdapter
-            rvGameUse.layoutManager =
+            rvGameUse?.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             val scrollHelper = PagingScrollHelper()
-            scrollHelper.setUpRecycleView(rvGameUse)
+           if (rvGameUseContent!=null) scrollHelper.setUpRecycleView(rvGameUseContent)
             //设置页面滚动监听
             recentlyAdapter?.refresh(data[0].list?.get(0)?.list)
             setVisible(linRecently)
@@ -75,6 +80,7 @@ class GameMainChildFragment : BaseNormalFragment<GameMainChildFragmentPresenter>
 
 
     override fun initContentView() {
+        rvGameUseContent = findView(R.id.rvGameUse)
 //        smartRefreshLayoutGame.setEnableOverScrollBounce(true)//是否启用越界回弹
 //        smartRefreshLayoutGame.setEnableOverScrollDrag(true)//是否启用越界拖动（仿苹果效果）
 //        smartRefreshLayoutGame.setEnableRefresh(false)//是否启用下拉刷新功能
@@ -282,8 +288,8 @@ class GameMainChildFragment : BaseNormalFragment<GameMainChildFragmentPresenter>
     @Subscribe(thread = EventThread.MAIN_THREAD)
     fun loginOut(eventBean: LoginOut) {
         if (isActive()) {
-            if (rvGameUse != null) {
-                rvGameUse?.removeAllViews()
+            if (rvGameUseContent != null) {
+                rvGameUseContent?.removeAllViews()
                 setGone(linRecently)
             }
         }
@@ -298,36 +304,34 @@ class GameMainChildFragment : BaseNormalFragment<GameMainChildFragmentPresenter>
             for (item in eventBean.data!!){
                 array.add(item.lotteryId.toString())
             }
-            for (item in eventBean.data!!) {
-                val data1 = recentlyAdapter?.data
-                if (!data1.isNullOrEmpty()) {
-                    for ((index, res) in data1.withIndex()) {
-                        if (item.lotteryId == res.id && item.status == "closing") {
-                            if (!res.isOpen) {
-                                res.isOpen = true
-                                recentlyAdapter?.refresh(index, res)
-                            }
-                        }else{
-                            if (res.isOpen && !array.contains(item.lotteryId)){
-                                res.isOpen = false
-                                recentlyAdapter?.refresh(index, res)
-                            }
+            val data1 = recentlyAdapter?.data
+            if (!data1.isNullOrEmpty()){
+                for ((num,result) in data1.withIndex()){
+                    if (result.type == "lott" && array.contains(result.id)){
+                        if (!result.isOpen){
+                            result.isOpen = true
+                            recentlyAdapter?.refresh(num, result)
+                        }
+                    }else{
+                        if (result.isOpen){
+                            result.isOpen = false
+                            recentlyAdapter?.refresh(num, result)
                         }
                     }
                 }
-                val data2 = adapter1?.data
-                if (!data2.isNullOrEmpty()) {
-                    for ((index, res) in data2.withIndex()) {
-                        if (item.lotteryId == res.id && item.status == "closing") {
-                            if (!res.isOpen) {
-                                res.isOpen = true
-                                adapter1?.refresh(index, res)
-                            }
-                        }else{
-                            if ( !array.contains(item.lotteryId) && res.isOpen){
-                                res.isOpen = false
-                                adapter1?.refresh(index, res)
-                            }
+            }
+            val data2 = adapter1?.data
+            if (!data2.isNullOrEmpty()){
+                for ((index,result2) in data2.withIndex()){
+                    if (result2.type == "lott" && array.contains(result2.id)){
+                        if (!result2.isOpen){
+                            result2.isOpen = true
+                            adapter1?.refresh(index, result2)
+                        }
+                    }else{
+                        if (result2.isOpen){
+                            result2.isOpen = false
+                            adapter1?.refresh(index, result2)
                         }
                     }
                 }

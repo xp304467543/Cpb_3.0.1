@@ -1,19 +1,19 @@
 package com.home.live
-
+import android.annotation.SuppressLint
 import com.customer.component.dialog.DialogPassWordHor
+import com.customer.component.dialog.GlobalDialog
 import com.customer.data.EnterVip
 import com.customer.data.IsFirstRecharge
 import com.customer.data.UserInfoSp
 import com.customer.data.home.HomeApi
-import com.customer.data.login.LoginApi
-import com.customer.data.mine.MineApi.getUserVip
-import com.hwangjr.rxbus.RxBus
-import com.lib.basiclib.base.mvp.BaseMvpPresenter
-import com.customer.component.dialog.GlobalDialog
-import com.customer.data.Gift
 import com.customer.data.home.HomeLiveGiftList
+import com.customer.data.login.LoginApi
+import com.customer.data.mine.MineApi
+import com.customer.data.mine.MineApi.getUserVip
 import com.customer.utils.JsonUtils
 import com.google.gson.JsonParser
+import com.hwangjr.rxbus.RxBus
+import com.lib.basiclib.base.mvp.BaseMvpPresenter
 import com.lib.basiclib.utils.ToastUtils
 
 /**
@@ -28,12 +28,13 @@ class LiveActPresenter : BaseMvpPresenter<LiveRoomActivity>() {
 
     fun getAllData(anchorID: String) {
         if (mView.isActive()) {
-            HomeApi.enterLiveRoom(anchorId = anchorID){
+            HomeApi.enterLiveRoom(anchorId = anchorID) {
                 onSuccess {
                     mView.initThings(it)
                     mView.changeAttention(it.isFollow)
                     mView.hidePageLoadingDialog()
                     getIsFirstRecharge()
+                    getUserBalance()
                     getUserVip()
                 }
                 onFailed {
@@ -58,8 +59,21 @@ class LiveActPresenter : BaseMvpPresenter<LiveRoomActivity>() {
                 }
             }
             onFailed {
-                GlobalDialog.showError(mView, it)
-                RxBus.get().post(IsFirstRecharge(true))
+                if (mView.isActive()) {
+                    RxBus.get().post(IsFirstRecharge(true))
+                }
+            }
+        }
+    }
+
+    //获取余额
+    @SuppressLint("SetTextI18n")
+    fun getUserBalance() {
+        if (mView.isActive()) {
+            MineApi.getUserBalance {
+                onFailed { error ->
+                    GlobalDialog.showError(mView, error, horizontal = false)
+                }
             }
         }
     }
@@ -80,7 +94,14 @@ class LiveActPresenter : BaseMvpPresenter<LiveRoomActivity>() {
     }
 
     //发红包
-    fun homeLiveSendRedEnvelope(anchorId: String, amount: String, num: String, text: String, password: String, passWordDialog: DialogPassWordHor) {
+    fun homeLiveSendRedEnvelope(
+        anchorId: String,
+        amount: String,
+        num: String,
+        text: String,
+        password: String,
+        passWordDialog: DialogPassWordHor
+    ) {
         HomeApi.homeLiveSendRedEnvelope(anchorId, amount, num, text, password) {
             onSuccess {
                 //通知socket
@@ -92,7 +113,7 @@ class LiveActPresenter : BaseMvpPresenter<LiveRoomActivity>() {
             onFailed {
                 passWordDialog.showOrHideLoading()
                 passWordDialog.dismiss()
-                GlobalDialog.showError(mView, it,true)
+                GlobalDialog.showError(mView, it, true)
             }
         }
     }

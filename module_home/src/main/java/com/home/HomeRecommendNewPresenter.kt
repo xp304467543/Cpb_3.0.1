@@ -2,9 +2,11 @@ package com.home
 
 import android.annotation.SuppressLint
 import android.view.View
+import com.customer.component.dialog.GlobalDialog
 import com.customer.data.UserInfoSp
 import com.customer.data.home.HomeApi
 import com.customer.data.home.HomeTypeListResponse
+import com.customer.data.mine.MineApi
 import com.customer.utils.JsonUtils
 import com.home.HomeRecommendNewFragment
 import com.lib.basiclib.base.mvp.BaseMvpPresenter
@@ -100,6 +102,18 @@ class HomeRecommendNewPresenter : BaseMvpPresenter<HomeRecommendNewFragment>() {
                        mView.onLine = BigDecimal(it.base_online)
                        mView.tvOnline?.text ="在线人数: "+ mView.onLine.toString()
                    }
+                }
+            }
+        }
+    }
+
+    //获取余额
+    @SuppressLint("SetTextI18n")
+    fun getUserBalance() {
+        if (mView.isActive()) {
+            MineApi.getUserBalance {
+                onFailed { error ->
+                    GlobalDialog.showError(mView.requireActivity(), error, horizontal = false)
                 }
             }
         }

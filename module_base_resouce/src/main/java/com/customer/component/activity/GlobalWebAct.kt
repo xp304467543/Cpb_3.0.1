@@ -7,6 +7,7 @@ import android.webkit.WebSettings
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import com.customer.data.home.HomeApi
+import com.customer.data.mine.MineApi
 import com.fh.module_base_resouce.R
 import com.lib.basiclib.base.activity.BaseNavActivity
 import com.lib.basiclib.utils.TimeUtils
@@ -55,22 +56,19 @@ class GlobalWebAct : BaseNavActivity() {
     //-----更多资讯内容
     private fun initNewView(){
         setVisible(titleNews)
-        setPageTitle("最新资讯")
+        setPageTitle("内容")
         getNewsInfo()
     }
 
     @SuppressLint("SetTextI18n", "SetJavaScriptEnabled")
     private fun getNewsInfo() {
-        HomeApi.getNewsInfo(intent?.getStringExtra("infoId") ?: "") {
+        MineApi.getMessageInfoWeb(intent?.getStringExtra("infoId") ?: "") {
             onSuccess {
-                if (!it.isNullOrEmpty()) {
-                        tvNewsTitle.text = it[0].title
-                        tvNewsInfo.text = it[0].source + "   " + it[0].timegap + "    " + TimeUtils.longToDateStringTime(it[0].createtime?.toLong()?:0)
-                        web_copy.loadDataWithBaseURL(null, it[0].detail, "text/html", "utf-8", null)
+                        tvNewsTitle.text = it.title
+                        web_copy.loadDataWithBaseURL(null, it.content, "text/html", "utf-8", null)
                         web_copy.settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN
                         web_copy.settings.javaScriptEnabled = true
                         web_copy.setBackgroundColor(0)
-                } else ToastUtils.showToast("暂无内容")
             }
             onFailed {
                 ToastUtils.showToast(it.getMsg().toString())

@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bet.R
+import com.customer.ApiRouter
 import com.customer.base.BaseNormalFragment
 import com.customer.component.dialog.BottomBetAccessDialog
 import com.customer.component.dialog.DialogGlobalTips
@@ -32,6 +33,7 @@ import com.lib.basiclib.base.recycle.RecyclerViewHolder
 import com.lib.basiclib.utils.FastClickUtil
 import com.lib.basiclib.utils.ToastUtils
 import com.lib.basiclib.utils.ViewUtils
+import com.xiaojinzi.component.impl.Router
 import cuntomer.them.AppMode
 import kotlinx.android.synthetic.main.game_bet_fragment1.*
 import java.math.BigDecimal
@@ -225,7 +227,7 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                             )
                         }
                         tips?.setConfirmClickListener {
-                            RxBus.get().post(HomeJumpToMine(true))
+                            Router.withApi(ApiRouter::class.java).toMineRecharge(0)
                             tips.dismiss()
                         }
                         tips?.show()

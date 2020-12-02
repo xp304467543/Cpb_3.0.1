@@ -107,6 +107,10 @@ class GameMainChildOtherFragment : BaseNormalFragment<GameMainChildOtherFragment
                         5 -> mPresenter.getAgBgSx()
 
                         6 -> mPresenter.getBgFish(data?.id ?: "")
+
+                        7 -> mPresenter.getKy(data?.id ?: "")
+
+                        8 -> mPresenter.getSb(data?.id ?: "")
                     }
                 }
             }
@@ -124,24 +128,22 @@ class GameMainChildOtherFragment : BaseNormalFragment<GameMainChildOtherFragment
                 array.add(item.lotteryId.toString())
             }
             if (index == 1) {
-                for (item in eventBean.data!!) {
                     val data1 = adapter0?.data
                     if (!data1.isNullOrEmpty()) {
                         for ((index, res) in data1.withIndex()) {
-                            if (item.lotteryId == res.id && item.status == "closing") {
-                                if (!res.isOpen) {
+                            if (res.type == "lott" && array.contains(res.id)){
+                                if (!res.isOpen){
                                     res.isOpen = true
                                     adapter0?.refresh(index, res)
                                 }
                             }else{
-                                if (!array.contains(item.lotteryId)&& res.isOpen){
+                                if (res.isOpen){
                                     res.isOpen = false
                                     adapter0?.refresh(index, res)
                                 }
                             }
                         }
                     }
-                }
             }
         }
     }

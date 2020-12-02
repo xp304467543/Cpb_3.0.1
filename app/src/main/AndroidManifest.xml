@@ -33,6 +33,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
+        android:resizeableActivity="true"
         tools:targetApi="q">
 
         <meta-data
@@ -82,7 +83,11 @@
 
         </activity>
 
-
+        <!--适配全面屏-->
+        <meta-data
+            android:name="android.max_aspect"
+            android:value="2.1"
+            />
     </application>
 
 </manifest>

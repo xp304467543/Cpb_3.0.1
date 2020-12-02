@@ -23,6 +23,7 @@ import com.lib.basiclib.utils.ViewUtils
 import com.mine.R
 import com.xiaojinzi.component.impl.Router
 import kotlinx.android.synthetic.main.act_mine_money_center.*
+import kotlinx.android.synthetic.main.layout_grild_game_center.*
 import java.math.BigDecimal
 
 
@@ -76,6 +77,22 @@ class MineMoneyCenterAct : BaseMvpActivity<MineMoneyCenterActPresenter>() {
     }
 
     override fun initEvent() {
+        tvShowMore.setOnClickListener {
+                setGone(layoutNormal)
+                setVisible(layoutMore)
+        }
+        tv_down.setOnClickListener {
+            setVisible(layoutNormal)
+            setGone(layoutMore)
+        }
+        imgUp.setOnClickListener {
+            setVisible(layoutNormal)
+            setGone(layoutMore)
+        }
+        tv_down.setOnClickListener {
+            setVisible(layoutNormal)
+            setGone(layoutMore)
+        }
         imgBack.setOnClickListener {
             finish()
         }
@@ -140,6 +157,8 @@ class MineMoneyCenterAct : BaseMvpActivity<MineMoneyCenterActPresenter>() {
                 val t2 = tv_qp_money.text.toString()
                 val t3 = tv_ag_money.text.toString()
                 val t4 = tv_bg_money.text.toString()
+                val t5 = tv_money_4.text.toString()
+                val t6 = tv_money_5.text.toString()
 
                 if (currentLeft == 0) {
                     if (BigDecimal(t1).compareTo(BigDecimal(all)) == -1) {
@@ -161,6 +180,18 @@ class MineMoneyCenterAct : BaseMvpActivity<MineMoneyCenterActPresenter>() {
                         "bg" -> {
                             if (t4 == "维护中") return
                             if (BigDecimal(t4).compareTo(BigDecimal(all)) == -1) {
+                                ViewUtils.setVisible(tvMoneyTips)
+                            } else ViewUtils.setGone(tvMoneyTips)
+                        }
+                        "ky" -> {
+                            if (t5 == "维护中") return
+                            if (BigDecimal(t5).compareTo(BigDecimal(all)) == -1) {
+                                ViewUtils.setVisible(tvMoneyTips)
+                            } else ViewUtils.setGone(tvMoneyTips)
+                        }
+                        "ibc" -> {
+                            if (t6 == "维护中") return
+                            if (BigDecimal(t6).compareTo(BigDecimal(all)) == -1) {
                                 ViewUtils.setVisible(tvMoneyTips)
                             } else ViewUtils.setGone(tvMoneyTips)
                         }
@@ -194,6 +225,8 @@ class MineMoneyCenterAct : BaseMvpActivity<MineMoneyCenterActPresenter>() {
             val t2 = tv_qp_money.text.toString()
             val t3 = tv_ag_money.text.toString()
             val t4 = tv_bg_money.text.toString()
+            val t5 = tv_money_4.text.toString()
+            val t6 = tv_money_5.text.toString()
             if (currentLeft == 0) {
                 if (BigDecimal(t1) == BigDecimal.ZERO) {
                     ToastUtils.showToast("转账金额不能小于1")
@@ -225,6 +258,25 @@ class MineMoneyCenterAct : BaseMvpActivity<MineMoneyCenterActPresenter>() {
                                 return@setOnClickListener
                             }
                             etMoney.setText(t4)
+                        }
+                    }
+
+                    "ky" -> {
+                        if (t5 != "维护中") {
+                            if (BigDecimal(t5) == BigDecimal.ZERO) {
+                                ToastUtils.showToast("转账金额不能小于1")
+                                return@setOnClickListener
+                            }
+                            etMoney.setText(t5)
+                        }
+                    }
+                    "ibc" -> {
+                        if (t6 != "维护中") {
+                            if (BigDecimal(t6) == BigDecimal.ZERO) {
+                                ToastUtils.showToast("转账金额不能小于1")
+                                return@setOnClickListener
+                            }
+                            etMoney.setText(t6)
                         }
                     }
                 }
@@ -264,6 +316,8 @@ class MineMoneyCenterAct : BaseMvpActivity<MineMoneyCenterActPresenter>() {
         val t2 = tv_qp_money.text.toString()
         val t3 = tv_ag_money.text.toString()
         val t4 = tv_bg_money.text.toString()
+        val t5 = tv_money_4.text.toString()
+        val t6 = tv_money_5.text.toString()
         when {
             currentLeft == 0 -> {
                 if (BigDecimal(t1).compareTo(BigDecimal(all)) == -1) {
@@ -281,6 +335,16 @@ class MineMoneyCenterAct : BaseMvpActivity<MineMoneyCenterActPresenter>() {
                             if (t4 != "维护中") {
                                 mPresenter.upAndDownMoney(3, true, etMoney.text.toString())
                             } else ToastUtils.showToast("BG平台维护中")
+                        }
+                        "ky"->{
+                            if (t5 != "维护中") {
+                                mPresenter.upAndDownMoney(4, true, etMoney.text.toString())
+                            } else ToastUtils.showToast("开元棋牌平台维护中")
+                        }
+                        "ibc" -> {
+                            if (t6 != "维护中") {
+                                mPresenter.upAndDownMoney(5, true, etMoney.text.toString())
+                            } else ToastUtils.showToast("沙巴平台维护中")
                         }
                     }
                 }
@@ -316,35 +380,72 @@ class MineMoneyCenterAct : BaseMvpActivity<MineMoneyCenterActPresenter>() {
                             }
                         } else ToastUtils.showToast("BG平台维护中")
                     }
+                    "ky"->{
+                        if (t5 != "维护中") {
+                            mPresenter.upAndDownMoney(4, false, etMoney.text.toString())
+                        } else ToastUtils.showToast("开元棋牌平台维护中")
+                    }
+                    "ibc" -> {
+                        if (t6 != "维护中") {
+                            mPresenter.upAndDownMoney(5, false, etMoney.text.toString())
+                        } else ToastUtils.showToast("沙巴平台维护中")
+                    }
                 }
             }
             else -> {
-                val left = thirdList?.get(currentLeft )?.name
-                val right = thirdList?.get(currentRight )?.name
+                val left = thirdList?.get(currentLeft)?.name
+                val right = thirdList?.get(currentRight)?.name
                 when (thirdList?.get(currentLeft)?.name) {
                     "fh_chess" -> {
-                        if (BigDecimal(t2).compareTo(BigDecimal(all)) == -1) {
-                            ViewUtils.setVisible(tvMoneyTips)
-                            ToastUtils.showToast("余额不足")
-                        } else {
-                            mPresenter.platformChange(all, left ?: "", right ?: "")
-                        }
+                        if (t2 != "维护中") {
+                            if (BigDecimal(t2).compareTo(BigDecimal(all)) == -1) {
+                                ViewUtils.setVisible(tvMoneyTips)
+                                ToastUtils.showToast("余额不足")
+                            } else {
+                                mPresenter.platformChange(all, left ?: "", right ?: "")
+                            }
+                        }else ToastUtils.showToast("乐购棋牌维护中")
                     }
                     "ag" -> {
-                        if (BigDecimal(t3).compareTo(BigDecimal(all)) == -1) {
-                            ViewUtils.setVisible(tvMoneyTips)
-                            ToastUtils.showToast("余额不足")
-                        } else {
-                            mPresenter.platformChange(all, left ?: "", right ?: "")
-                        }
+                        if (t3 != "维护中") {
+                            if (BigDecimal(t3).compareTo(BigDecimal(all)) == -1) {
+                                ViewUtils.setVisible(tvMoneyTips)
+                                ToastUtils.showToast("余额不足")
+                            } else {
+                                mPresenter.platformChange(all, left ?: "", right ?: "")
+                            }
+                        }else  ToastUtils.showToast("AG平台维护中")
+
                     }
                     "bg" -> {
-                        if (BigDecimal(t4).compareTo(BigDecimal(all)) == -1) {
-                            ViewUtils.setVisible(tvMoneyTips)
-                            ToastUtils.showToast("余额不足")
-                        } else {
-                            mPresenter.platformChange(all, left ?: "", right ?: "")
-                        }
+                        if (t4 != "维护中") {
+                            if (BigDecimal(t4).compareTo(BigDecimal(all)) == -1) {
+                                ViewUtils.setVisible(tvMoneyTips)
+                                ToastUtils.showToast("余额不足")
+                            } else {
+                                mPresenter.platformChange(all, left ?: "", right ?: "")
+                            }
+                        }else ToastUtils.showToast("BG平台维护中")
+                    }
+                    "ky"->{
+                        if (t5 != "维护中") {
+                            if (BigDecimal(t5).compareTo(BigDecimal(all)) == -1) {
+                                ViewUtils.setVisible(tvMoneyTips)
+                                ToastUtils.showToast("余额不足")
+                            } else {
+                                mPresenter.platformChange(all, left ?: "", right ?: "")
+                            }
+                        } else ToastUtils.showToast("开元棋牌平台维护中")
+                    }
+                    "ibc" -> {
+                        if (t6 != "维护中") {
+                            if (BigDecimal(t6).compareTo(BigDecimal(all)) == -1) {
+                                ViewUtils.setVisible(tvMoneyTips)
+                                ToastUtils.showToast("余额不足")
+                            } else {
+                                mPresenter.platformChange(all, left ?: "", right ?: "")
+                            }
+                        } else ToastUtils.showToast("沙巴平台维护中")
                     }
                 }
             }
@@ -354,6 +455,7 @@ class MineMoneyCenterAct : BaseMvpActivity<MineMoneyCenterActPresenter>() {
     var currentLeft = 0
     private fun showPickerViewLeft() {
         pvOptionsLeft = OptionsPickerBuilder(this) { _, options1, _, _ ->
+            setGone(tvMoneyTips)
             currentLeft = options1
             tvMoneyCenter?.text = thirdChineseList?.get(currentLeft)
             false
@@ -370,6 +472,7 @@ class MineMoneyCenterAct : BaseMvpActivity<MineMoneyCenterActPresenter>() {
     var currentRight = 1
     private fun showPickerViewRight() {
         pvOptionsRight = OptionsPickerBuilder(this) { _, options1, _, _ ->
+            setGone(tvMoneyTips)
             currentRight = options1
             tvMoneyGame?.text = thirdChineseList?.get(currentRight)
             false

@@ -28,7 +28,7 @@ class LiveRoomBetRecordFragment2 : BaseNormalFragment() {
 
     private var index = 1
 
-    var str = arrayListOf( "金额","钻石")
+    var str = arrayListOf( "余额","钻石")
 
     var currentSel = "1" //默认钻石
 
@@ -70,6 +70,7 @@ class LiveRoomBetRecordFragment2 : BaseNormalFragment() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 index = 1
                 adapter?.clear()
+                (view as TextView).text = "金额"
                 currentSel = if (position == 0) {
                     "1"
                 } else "0"

@@ -64,7 +64,7 @@ class HomeRecommendNewFragment : BaseMvpFragment<HomeRecommendNewPresenter>(), I
 
     private fun initRecycle() {
         upDateBanner(null)
-        upDateSystemNotice(null)
+//        upDateSystemNotice(null)
         upDateGame()
         initHotRecommend()
     }
@@ -74,6 +74,7 @@ class HomeRecommendNewFragment : BaseMvpFragment<HomeRecommendNewPresenter>(), I
         mPresenter.getAllData()
         homeSmartRefreshLayout.setOnRefreshListener {
             mPresenter.getAllData()
+            mPresenter.getUserBalance()
             homeSmartRefreshLayout.finishRefresh()
         }
     }
@@ -117,15 +118,20 @@ class HomeRecommendNewFragment : BaseMvpFragment<HomeRecommendNewPresenter>(), I
     //========= 公告 =========
     fun upDateSystemNotice(data: List<HomeSystemNoticeResponse>?) {
         val result = ArrayList<String>()
-        val sb = StringBuffer()
         if (data != null && data.isNotEmpty()) {
             data.forEachIndexed { index, value ->
-                val s = (index + 1).toString() + "." + value.content + "        "
-                sb.append(s)
                 result.add((index + 1).toString() + "." + value.content)
             }
-        } else sb.append("暂无公告。")
-        tvNoticeMassages.setText(sb.toString())
+        } else result.add("暂无公告。")
+        tvNoticeMassages.setContentList(result)
+        tvNoticeMassages.setOnClickListener {
+            if (!FastClickUtil.isFastClick()){
+                Router.withApi(ApiRouter::class.java)
+                    .toGlobalWeb("", true, data?.get(tvNoticeMassages.displayedChild)?.id ?: "-1")
+            }
+
+        }
+        tvNoticeMassages.start()
     }
 
     //游戏列表

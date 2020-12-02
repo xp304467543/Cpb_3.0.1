@@ -18,6 +18,7 @@ data class LotteryTypeSelect(var lotteryId: String?, var issiue: String?)
 
 data class HomeJumpToMine(var jump:Boolean)
 
+
 data class HomeJumpToMineCloseLive(var jump:Boolean,var isOpenAct:Boolean = false)
 
 data class HomeJumpTo(var isOpenAct:Boolean = false)

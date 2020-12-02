@@ -80,12 +80,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/topName">
 
-        <com.lib.basiclib.base.round.RoundRelativeLayout
+        <com.lib.basiclib.base.round.RoundLinearLayout
             android:id="@+id/betMarquee"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_35"
-            android:paddingStart="@dimen/dp_14"
-            android:paddingEnd="@dimen/dp_14"
+            android:paddingStart="@dimen/dp_6"
+            android:paddingEnd="@dimen/dp_6"
             app:layout_constraintTop_toTopOf="parent"
             app:rv_backgroundColor="@color/white">
 
@@ -93,42 +93,34 @@
                 android:id="@+id/ivNotice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
                 android:src="@mipmap/ic_notice"
                 tools:ignore="ContentDescription" />
 
-            <com.customer.component.MarqueeTextView
+            <com.customer.component.marqueen.textbanner.FlipperMarqueeView
                 android:id="@+id/tvNoticeMassages"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/dp_10"
-                android:layout_marginEnd="@dimen/dp_10"
-                android:layout_toEndOf="@+id/ivNotice"
-                android:ellipsize="marquee"
-                android:gravity="center"
-                android:marqueeRepeatLimit="marquee_forever"
-                android:padding="@dimen/dp_6"
-                android:scrollHorizontally="true"
-                android:singleLine="true"
-                android:textColor="@color/color_notice_message"
-                android:textSize="@dimen/sp_12"
-                tools:text="我是推送消息!我是推送消息!我是推送消息!我是推送消息!我是推送消息!" />
-        </com.lib.basiclib.base.round.RoundRelativeLayout>
+                android:layout_height="match_parent"
+                android:inAnimation="@anim/in_right"
+                android:outAnimation="@anim/out_left"
+                android:padding="3dp"
+                android:textSize="@dimen/sp_12" />
+
+        </com.lib.basiclib.base.round.RoundLinearLayout>
 
         <LinearLayout
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_38"
-            android:orientation="horizontal"
             android:background="@color/white"
+            android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@+id/betMarquee">
 
             <com.lib.basiclib.widget.tab.MagicIndicator
                 android:id="@+id/gameSwitchVideoTab"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="@dimen/dp_38"
+                android:layout_weight="1"
                 android:background="@color/white" />
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -136,7 +128,7 @@
                 android:layout_width="@dimen/dp_20"
                 android:layout_height="match_parent"
                 android:padding="@dimen/dp_5"
-                android:src="@mipmap/ic_arrow_right_red"/>
+                android:src="@mipmap/ic_arrow_right_red" />
         </LinearLayout>
 
 
@@ -186,5 +178,36 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <RelativeLayout
+        android:id="@+id/linHolder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/imgGame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="暂无游戏"
+            android:gravity="center"
+            android:drawablePadding="@dimen/dp_15"
+            android:textColor="@color/grey_75"
+            android:drawableTop="@mipmap/ic_no_game" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvReGet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="@dimen/dp_10"
+            android:textColor="@color/grey_75"
+            android:drawablePadding="@dimen/dp_15"
+            android:layout_marginBottom="@dimen/dp_40"
+            android:drawableTop="@drawable/alivc_refresh_orange"
+            android:text="重新获取"/>
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

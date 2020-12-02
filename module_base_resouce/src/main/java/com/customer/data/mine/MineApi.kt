@@ -6,7 +6,6 @@ import com.customer.data.MineUserDiamond
 import com.customer.data.UserInfoSp
 import com.customer.utils.AESUtils
 import com.google.gson.Gson
-import com.lib.basiclib.utils.LogUtils
 import com.rxnetgo.rxcache.CacheMode
 import cuntomer.api.AllEmptySubscriber
 import cuntomer.api.AllSubscriber
@@ -93,11 +92,18 @@ object MineApi : BaseApi {
 
     //消息中心
     private const val USER_MESSAGE_CENTER = "api/v1_1/live/get_notice/"
+
     //消息中心代理
     private const val USER_MESSAGE_CENTER_DL = " api/v1_1/live/get_notice_dl/"
 
+    //消息列表
+    private const val USER_MESSAGE_LIST = "/api/v1_1/live/get_message_list/"
+
+    //消息详情
+    private const val USER_MESSAGE_INFO = "api/v1_1/live/get_message/"
+
     //获取新消息通知
-    private const val USER_MESSAGE_NEW = "api/v1_1/live/get_notice_new/"
+    private const val USER_MESSAGE_NEW = "/api/v1_1/live/get_message_count/"
 
     //获取某个主播动态
     private const val ANCHOR_LIST = "api/v1_1/live/get_dynamic/"
@@ -160,8 +166,20 @@ object MineApi : BaseApi {
     //BG捕鱼
     private const val GAME_BG_FISH = "bg/fishing-count"
 
+    //开源棋牌
+    private const val GAME_KYQP = "ky/count"
+
+    //沙巴体育
+    private const val GAME_SBTY = "ibc/count"
+
     //BG捕鱼详情
     private const val GAME_BG_FISH_INFO = "bg/fishing-detail-count"
+
+    //开源棋牌详情
+    private const val GAME_KYQI_INFO ="ky/detail-count"
+
+    //沙巴体育详情
+    private const val GAME_SBTY_INFO ="ibc/detail-count"
 
     //AG电子
     private const val GAME_AGDZ = "ag/slot-count"
@@ -205,6 +223,12 @@ object MineApi : BaseApi {
     //BG余额
     private const val BG_MONEY ="bg/balance"
 
+    //开元棋牌余额
+    private const val KYQP_MONEY ="ky/balance"
+
+    //沙巴体育余额
+    private const val SBTY_MONEY ="ibc/balance"
+
     //棋牌上分
     private const val CHESS_UP ="fhchess/transfer-out"
 
@@ -222,6 +246,18 @@ object MineApi : BaseApi {
 
     //BG下分
     private const val BG_DOWN ="bg/transfer-in"
+
+    //开元棋牌上分
+    private const val KY_UP ="ky/transfer-out"
+
+    //开元棋牌下分
+    private const val KY_DOWN ="ky/transfer-in"
+
+    //沙巴上分
+    private const val SB_UP ="ibc/transfer-out"
+
+    //沙巴下分
+    private const val SB_DOWN ="ibc/transfer-in"
 
     //一键回收
     private const val RECYCLE_ALL = "platform/transfer-in-all"
@@ -659,6 +695,47 @@ object MineApi : BaseApi {
     }
 
     /**
+     * 消息列表
+     */
+    fun getMessageList(msg_type: String,function: ApiSubscriber<List<MineMessageNew>>.() -> Unit){
+        val subscriber = object : ApiSubscriber<List<MineMessageNew>>() {}
+        subscriber.function()
+        getApi().get<List<MineMessageNew>>(USER_MESSAGE_LIST)
+            .headers("token", UserInfoSp.getToken())
+            .params("user_id", UserInfoSp.getUserId())
+            .params("msg_type", msg_type)
+            .params("client_type", 1)
+            .params("api", if (AppConstant.isMain)1 else 5)
+            .subscribe(subscriber)
+    }
+
+    /**
+     * 消息详情
+     */
+    fun getMessageInfo(msg_id: String,isDel:Boolean = false,function: ApiSubscriber<List<MineMessageNew>>.() -> Unit){
+        val subscriber = object : ApiSubscriber<List<MineMessageNew>>() {}
+        subscriber.function()
+      val param =  getApi().get<List<MineMessageNew>>(USER_MESSAGE_INFO)
+        param.headers("token", UserInfoSp.getToken())
+        param.params("msg_id", msg_id)
+       if (isDel) param.params("del", 1)
+        param.subscribe(subscriber)
+    }
+
+    /**
+     * 消息详情
+     */
+    fun getMessageInfoWeb(msg_id: String,isDel:Boolean = false,function: ApiSubscriber<MineMessageNew>.() -> Unit){
+        val subscriber = object : ApiSubscriber<MineMessageNew>() {}
+        subscriber.function()
+        val param =  getApi().get<MineMessageNew>(USER_MESSAGE_INFO)
+        param.headers("token", UserInfoSp.getToken())
+        param.params("msg_id", msg_id)
+        if (isDel) param.params("del", 1)
+        param.subscribe(subscriber)
+    }
+
+    /**
      * 是否有新消息
      */
     fun getIsNewMessage(function: ApiSubscriber<MineNewMsg>.() -> Unit) {
@@ -667,6 +744,8 @@ object MineApi : BaseApi {
         getApi().get<MineNewMsg>(USER_MESSAGE_NEW)
             .headers("token", UserInfoSp.getToken())
             .params("user_id", UserInfoSp.getUserId())
+            .params("client_type", 1)
+            .params("api", if (AppConstant.isMain)1 else 5)
             .subscribe(subscriber)
     }
 
@@ -972,6 +1051,40 @@ object MineApi : BaseApi {
     }
 
     /**
+     * 开元棋牌
+     */
+    fun getGameKyqp(
+        start: String,
+        end: String,
+        function: ApiSubscriber<MineGameReport>.() -> Unit
+    ) {
+        val subscriber = object : ApiSubscriber<MineGameReport>() {}
+        subscriber.function()
+        getApiOther().get<MineGameReport>(GAME_KYQP)
+            .headers("Authorization", UserInfoSp.getTokenWithBearer())
+            .params("st", start)
+            .params("et", end)
+            .subscribe(subscriber)
+    }
+
+    /**
+     * 沙巴体育
+     */
+    fun getGameSbty(
+        start: String,
+        end: String,
+        function: ApiSubscriber<MineGameReport>.() -> Unit
+    ) {
+        val subscriber = object : ApiSubscriber<MineGameReport>() {}
+        subscriber.function()
+        getApiOther().get<MineGameReport>(GAME_SBTY)
+            .headers("Authorization", UserInfoSp.getTokenWithBearer())
+            .params("st", start)
+            .params("et", end)
+            .subscribe(subscriber)
+    }
+
+    /**
      * 彩票游戏详情
      */
     fun getGameLotteryInfo(
@@ -1000,6 +1113,8 @@ object MineApi : BaseApi {
             4 -> GAME_AGDZ_INFO
             5 -> GAME_BG_SX_INFO
             6 -> GAME_BG_FISH_INFO
+            7 -> GAME_KYQI_INFO
+            8 -> GAME_SBTY_INFO
             else -> GAME_CHESS_INFO }
         val subscriber = object : ApiSubscriber<List<MineGameAgReportInfo>>() {}
         subscriber.function()
@@ -1163,6 +1278,28 @@ object MineApi : BaseApi {
     }
 
     /**
+     * 开元棋牌余额
+     */
+    fun getKyMoney(function: ApiSubscriber<AgMoney>.() -> Unit){
+        val subscriber = object : ApiSubscriber<AgMoney>() {}
+        subscriber.function()
+        getApiOther().get<AgMoney>(KYQP_MONEY)
+            .headers("Authorization", UserInfoSp.getTokenWithBearer())
+            .subscribe(subscriber)
+    }
+
+    /**
+     * 沙巴体育余额
+     */
+    fun getSbMoney(function: ApiSubscriber<AgMoney>.() -> Unit){
+        val subscriber = object : ApiSubscriber<AgMoney>() {}
+        subscriber.function()
+        getApiOther().get<AgMoney>(SBTY_MONEY)
+            .headers("Authorization", UserInfoSp.getTokenWithBearer())
+            .subscribe(subscriber)
+    }
+
+    /**
      * AG 上分 下分
      */
     fun getAgMoneyUpOrDown(upOrDown: Boolean,amount:String,function: AllEmptySubscriber.() -> Unit){
@@ -1194,6 +1331,38 @@ object MineApi : BaseApi {
         }
     }
 
+    /**
+     * 开元棋牌 上分 下分
+     */
+    fun getKyMoneyUpOrDown(upOrDown: Boolean,amount:String,function: AllEmptySubscriber.() -> Unit){
+        val subscriber = AllEmptySubscriber()
+        subscriber.function()
+        val map = hashMapOf<String, Any>()
+        map["amount"] = amount
+        AESUtils.encrypt(UserInfoSp.getRandomStr(), Gson().toJson(map))?.let {
+            getApiOther().post<String>(if (upOrDown) KY_UP else KY_DOWN).isMultipart(true)
+                .headers("Authorization", UserInfoSp.getTokenWithBearer())
+                .params("datas", it)
+                .subscribe(subscriber)
+        }
+    }
+
+
+    /**
+     * 刹把游戏 上分 下分
+     */
+    fun getSbMoneyUpOrDown(upOrDown: Boolean,amount:String,function: AllEmptySubscriber.() -> Unit){
+        val subscriber = AllEmptySubscriber()
+        subscriber.function()
+        val map = hashMapOf<String, Any>()
+        map["amount"] = amount
+        AESUtils.encrypt(UserInfoSp.getRandomStr(), Gson().toJson(map))?.let {
+            getApiOther().post<String>(if (upOrDown) SB_UP else SB_DOWN).isMultipart(true)
+                .headers("Authorization", UserInfoSp.getTokenWithBearer())
+                .params("datas", it)
+                .subscribe(subscriber)
+        }
+    }
 
     /**
      * 棋牌 上分 下分

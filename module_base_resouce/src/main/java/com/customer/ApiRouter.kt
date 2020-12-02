@@ -129,7 +129,8 @@ interface ApiRouter {
     fun toMineMessage(
         @ParameterAnno("msg1") msg1: String,
         @ParameterAnno("msg2") msg2: String,
-        @ParameterAnno("msg3") msg3: String
+        @ParameterAnno("msg3") msg3: String,
+        @ParameterAnno("msg4") msg4: String
     )
 
     //消息中心详情

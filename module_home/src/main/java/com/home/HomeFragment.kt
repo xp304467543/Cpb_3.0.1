@@ -43,6 +43,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme, IMode {
     var msg1 = ""
     var msg2 = ""
     var msg3 = ""
+    var msg4 =""
 
     override fun attachView() = mPresenter.attachView(this)
 
@@ -75,13 +76,14 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme, IMode {
         setSwipeBackEnable(false)
         if (UserInfoSp.getAppMode() == AppMode.Pure) {
             tvAppMode.text = "直播版"
+            setTheme(UserInfoSp.getThem())
         } else {
             tvAppMode.text = "纯净版"
+            setTheme(Theme.Default)
         }
         StatusBarUtils.setStatusBarHeight(statusViewHome)
         initViewPager()
         initTopTab()
-        setTheme(UserInfoSp.getThem())
         setMode(UserInfoSp.getAppMode())
     }
 
@@ -132,7 +134,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme, IMode {
                 GlobalDialog.notLogged(requireActivity())
                 return@setOnClickListener
             }
-            Router.withApi(ApiRouter::class.java).toMineMessage(msg1, msg2, msg3)
+            Router.withApi(ApiRouter::class.java).toMineMessage(msg1, msg2, msg3,msg4)
         }
         imgHomeTopSearch.setOnClickListener {
             if (homeSwitchViewPager.currentItem == 0) {
@@ -166,6 +168,8 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme, IMode {
                             tvAppMode.text = "纯净版"
                             UserInfoSp.putAppMode(AppMode.Pure)
                             RxBus.get().post(AppChangeMode(AppMode.Pure))
+                            RxBus.get().post(ChangeSkin(1))
+                            UserInfoSp.putThem(1)
                         }
                     }
                 })
@@ -281,8 +285,6 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme, IMode {
             tvAppMode?.text = "直播版"
         } else {
             tvAppMode?.text = "纯净版"
-
         }
-
     }
 }

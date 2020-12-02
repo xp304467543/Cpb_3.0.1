@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="70dp"
+    android:layout_height="80dp"
     android:background="@color/white">
 
 
@@ -29,6 +29,23 @@
         app:layout_constraintStart_toEndOf="@+id/imgPhoto"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="沙发沙发上" />
+
+
+    <TextView
+        android:id="@+id/tvZiX"
+        android:layout_width="0dp"
+        android:gravity="center"
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/dp_36"
+        android:layout_marginEnd="@dimen/dp_36"
+        android:textColor="@color/color_999999"
+        android:lineSpacingExtra="2dp"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintEnd_toStartOf="@+id/tvGiftPrise"
+        app:layout_constraintStart_toEndOf="@+id/tvName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="自选不中 1,2,3,4,5,6,7,8,9,10,11,12" />
 
     <TextView
         android:id="@+id/tvTime"
@@ -70,7 +87,7 @@
         android:textSize="@dimen/sp_12"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="沙发沙发上" />
+        tools:text="自选不中 " />
 
 
     <TextView

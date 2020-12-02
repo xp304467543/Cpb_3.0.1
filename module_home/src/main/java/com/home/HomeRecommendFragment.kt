@@ -61,6 +61,7 @@ class HomeRecommendFragment : BaseMvpFragment<HomeRecommendPresenter>(), ITheme 
         mPresenter.getAllData(CacheMode.NONE)
         homeSmartRefreshLayout.setOnRefreshListener {
             mPresenter.getAllData(CacheMode.NONE)
+            mPresenter.getUserBalance()
             homeSmartRefreshLayout.finishRefresh()
         }
         toMoreNews()

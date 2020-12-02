@@ -15,14 +15,15 @@
         android:orientation="horizontal"
         android:paddingTop="@dimen/dp_10"
         android:paddingBottom="@dimen/dp_10"
-        android:visibility="gone">
+        android:visibility="gone"
+        >
 
         <com.lib.basiclib.base.round.RoundTextView
             android:id="@+id/tv_start"
             android:layout_width="@dimen/dp_96"
             android:layout_height="@dimen/dp_32"
             android:gravity="center"
-            android:text="余额"
+            android:text="钻石"
             android:textColor="@color/white"
             app:rv_backgroundColor="@color/color_FF513E"
             app:rv_cornerRadius_BL="@dimen/dp_5"
@@ -35,7 +36,7 @@
             android:layout_width="@dimen/dp_96"
             android:layout_height="@dimen/dp_32"
             android:gravity="center"
-            android:text="钻石"
+            android:text="余额"
             android:textColor="@color/color_999999"
             app:rv_cornerRadius_BR="@dimen/dp_5"
             app:rv_cornerRadius_TR="@dimen/dp_5"

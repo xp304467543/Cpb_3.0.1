@@ -39,7 +39,7 @@ class HomeNewHandTask : BaseNavActivity() {
     override val layoutResID = R.layout.act_new_hand_task
 
     override fun initContentView() {
-       if (taskStateView!=null) StatusBarUtils.setStatusBarHeight(taskStateView)
+        if (taskStateView != null) StatusBarUtils.setStatusBarHeight(taskStateView)
         taskSmartRefreshLayout?.setEnableOverScrollBounce(true)//是否启用越界回弹
         taskSmartRefreshLayout?.setEnableOverScrollDrag(true)//是否启用越界拖动（仿苹果效果）
         taskSmartRefreshLayout?.setEnableRefresh(true)//是否启用下拉刷新功能
@@ -70,11 +70,9 @@ class HomeNewHandTask : BaseNavActivity() {
                 taskAdapter?.refresh(it)
                 taskSmartRefreshLayout?.finishRefresh()
             }
-            onFailed {error->
+            onFailed { error ->
                 taskSmartRefreshLayout?.finishRefresh()
-                if (error.getCode() == 2001 || error.getCode() == 401 || error.getCode() == 2000 || error.getMsg().toString().contains("请登录")) {
-                    GlobalDialog.otherLogin(this@HomeNewHandTask)
-                }else  ToastUtils.showToast(error.getMsg())
+                GlobalDialog.showError(this@HomeNewHandTask, error)
             }
         }
     }
@@ -90,42 +88,49 @@ class HomeNewHandTask : BaseNavActivity() {
             when {
                 data?.status == -1 -> {
                     btTask?.text = "领取"
-                    btTask?.background = ViewUtils.getDrawable(R.drawable.button_task_red_background)
+                    btTask?.background =
+                        ViewUtils.getDrawable(R.drawable.button_task_red_background)
                     btTask?.setTextColor(ViewUtils.getColor(R.color.white))
                 }
                 data?.status == -2 -> {
                     btTask?.text = "已完成"
-                    btTask?.background = ViewUtils.getDrawable(R.drawable.button_task_grey_background)
+                    btTask?.background =
+                        ViewUtils.getDrawable(R.drawable.button_task_grey_background)
                     btTask?.setTextColor(ViewUtils.getColor(R.color.white))
                 }
                 data?.status == -3 -> {
                     btTask?.text = "已过期"
-                    btTask?.background = ViewUtils.getDrawable(R.drawable.button_task_grey_background)
+                    btTask?.background =
+                        ViewUtils.getDrawable(R.drawable.button_task_grey_background)
                     btTask?.setTextColor(ViewUtils.getColor(R.color.white))
                 }
                 data?.status == -4 -> {
                     btTask?.text = "已领取"
-                    btTask?.background = ViewUtils.getDrawable(R.drawable.button_task_red_line_background)
+                    btTask?.background =
+                        ViewUtils.getDrawable(R.drawable.button_task_red_line_background)
                     btTask?.setTextColor(ViewUtils.getColor(R.color.color_FF513E))
                 }
                 data?.status ?: 0 >= 0 -> {
                     when (data?.jump) {
                         0 -> {
-                            btTask?.background = ViewUtils.getDrawable(R.drawable.button_task_red_line_background)
+                            btTask?.background =
+                                ViewUtils.getDrawable(R.drawable.button_task_red_line_background)
                             btTask?.text = data.archive + "/" + data.target
                             btTask?.setTextColor(ViewUtils.getColor(R.color.color_FF513E))
                         }
-                        1-> {
+                        1 -> {
                             //个人资料
                             btTask?.text = "去完成"
-                            btTask?.background = ViewUtils.getDrawable(R.drawable.button_task_red_background)
+                            btTask?.background =
+                                ViewUtils.getDrawable(R.drawable.button_task_red_background)
                             btTask?.setTextColor(ViewUtils.getColor(R.color.white))
                         }
 
-                        2-> {
+                        2 -> {
                             //充值页面
                             btTask?.text = "去充值"
-                            btTask?.background = ViewUtils.getDrawable(R.drawable.button_task_red_background)
+                            btTask?.background =
+                                ViewUtils.getDrawable(R.drawable.button_task_red_background)
                             btTask?.setTextColor(ViewUtils.getColor(R.color.white))
                         }
                     }
@@ -140,11 +145,11 @@ class HomeNewHandTask : BaseNavActivity() {
                         }
                         data?.status ?: 0 >= 0 -> {
                             when (data?.jump) {
-                                1->{
+                                1 -> {
                                     //个人资料
                                     Router.withApi(ApiRouter::class.java).toMyPage()
                                 }
-                                2->{
+                                2 -> {
                                     //充值页面
                                     Router.withApi(ApiRouter::class.java).toMineRecharge(0)
                                 }
@@ -156,10 +161,11 @@ class HomeNewHandTask : BaseNavActivity() {
         }
     }
 
-    fun getNewTask(id:String){
-        HomeApi.getNewTask(id){
+    fun getNewTask(id: String) {
+        HomeApi.getNewTask(id) {
             onSuccess {
-               val dialog = DialogTask(this@HomeNewHandTask,it.gift_type?:0,it.amount.toString())
+                val dialog =
+                    DialogTask(this@HomeNewHandTask, it.gift_type ?: 0, it.amount.toString())
                 dialog.setOnDismissListener { getUserTask() }
                 dialog.show()
             }

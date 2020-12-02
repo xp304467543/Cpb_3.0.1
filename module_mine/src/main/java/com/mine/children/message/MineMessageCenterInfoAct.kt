@@ -1,4 +1,4 @@
-package com.mine.children
+package com.mine.children.message
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap

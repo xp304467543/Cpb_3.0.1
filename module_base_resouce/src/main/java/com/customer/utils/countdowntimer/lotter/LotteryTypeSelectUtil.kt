@@ -430,7 +430,7 @@ object LotteryTypeSelectUtil {
                     val b = ((result[6].toInt() - a) / 10) % 10
                     when {
                         result[6].toInt() == 49 -> {
-                            openText.text = "和局"
+                            openText.text = "和"
                             openText.setTextColor(ViewUtils.getColor(R.color.color_333333))
                         }
                         (a + b) % 2 == 0 -> {
@@ -448,7 +448,7 @@ object LotteryTypeSelectUtil {
                     val b = ((result[6].toInt() - a) / 10) % 10
                     when {
                         result[6].toInt() == 49 -> {
-                            openText.text = "和局"
+                            openText.text = "和"
                             openText.setTextColor(ViewUtils.getColor(R.color.color_333333))
                         }
                         (a + b) in 1..6 -> {
@@ -465,7 +465,7 @@ object LotteryTypeSelectUtil {
                     val a = result[6].toInt() % 10
                     when {
                         result[6].toInt() == 49 -> {
-                            openText.text = "和局"
+                            openText.text = "和"
                             openText.setTextColor(ViewUtils.getColor(R.color.color_333333))
                         }
                         a in 0..4 -> {

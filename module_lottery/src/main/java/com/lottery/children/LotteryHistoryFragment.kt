@@ -38,7 +38,7 @@ class LotteryHistoryFragment : BaseNormalFragment<LotteryHistoryFragmentPresente
         smartRefreshLayoutLotteryHistoryCode.setEnableOverScrollDrag(true)//是否启用越界拖动（仿苹果效果）
         codeAdapter = LotteryHistoryOpenCodeAdapter(
             requireActivity(),
-            arguments?.getString("lotteryId")!!,
+            arguments?.getString("lotteryId")?:"8",
             LotteryConstant.TYPE_1
         )
         rvLotteryHistoryCode.adapter = codeAdapter

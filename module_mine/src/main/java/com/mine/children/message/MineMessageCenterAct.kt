@@ -1,4 +1,4 @@
-package com.mine.children
+package com.mine.children.message
 
 import android.text.TextUtils
 import androidx.core.text.HtmlCompat
@@ -21,7 +21,6 @@ import kotlinx.android.synthetic.main.act_message_center.*
  * @ Describe
  *
  */
-@RouterAnno(host = "Mine", path = "message")
 class MineMessageCenterAct : BaseNavActivity() {
 
     private var list1: List<MineMessageCenter>? = null

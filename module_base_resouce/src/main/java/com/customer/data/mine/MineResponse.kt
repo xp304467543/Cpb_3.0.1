@@ -152,7 +152,8 @@ data class MineNewMsg(var msgCount: Int, var countList: MineNewBean)
 data class MineNewBean(
     @SerializedName("0") var `_$0`: String,
     @SerializedName("2") var `_$2`: String,
-    @SerializedName("3") var `_$3`: String
+    @SerializedName("3") var `_$3`: String,
+    @SerializedName("5") var `_$5`: String
 )
 
 //更新关注
@@ -195,30 +196,34 @@ data class MineTeamReportLast(
 )
 
 data class MineGameReport(
-    val amount: String?,
-    val prize: String?,
-    val count: String?,
-    val bl_amount: String?,
-    val bl_prize: String?,
-    val bl_count: String?
+    val amount: BigDecimal?,
+    val prize: BigDecimal?,
+    val count: BigDecimal?,
+    val bl_amount: BigDecimal?,
+    val bl_prize: BigDecimal?,
+    val bl_count: BigDecimal?,
+    val profit: BigDecimal?,
+    val bl_profit: BigDecimal?
 )
 
 data class MineGameReportInfo(
     val lottery_id: String?,
     val lottery_name: String?,
-    val amount: String?,
-    val prize: String?,
+    val amount: BigDecimal?,
+    val prize: BigDecimal?,
     val count: String?,
-    val lottery_icon: String?
+    val lottery_icon: String?,
+    val profit:BigDecimal?
 )
 
 data class MineGameAgReportInfo(
     val game_id: String?,
     val game_name: String?,
-    val amount: String?,
-    val prize: String?,
+    val amount: BigDecimal?,
+    val prize: BigDecimal?,
     val count: String?,
-    val img_url: String? = ""
+    val img_url: String? = "",
+    val profit:BigDecimal?
 )
 
 data class RegisterCode(var code: String)
@@ -317,3 +322,8 @@ data class BankCard(
 )
 
 data class UserBankCard(var id: String?,var name: String?,var no: String?,var mark: String?,var remark: String?)
+
+data class MineMessageNew(var msg_id: String?,var title: String?,var content: String?,var create_time: Long?,var icon: String?,var readflag: Int?,
+                          var createtime_txt: String?,var media: String?,var dynamic_id: String?,var apiType: String?,
+                          var comment_id: String?,var userType: String?,var nickname: String?,
+                          var avatar: String?)

@@ -1,11 +1,14 @@
 package com.home
 
+import android.annotation.SuppressLint
 import com.customer.ApiRouter
+import com.customer.component.dialog.GlobalDialog
 import com.glide.GlideUtil
 import com.google.gson.Gson
 import com.google.gson.JsonParser
 import com.customer.data.home.HomeApi
 import com.customer.data.home.HomeLivePreResponse
+import com.customer.data.mine.MineApi
 import com.lib.basiclib.base.mvp.BaseMvpPresenter
 import com.rxnetgo.rxcache.CacheMode
 import com.lib.basiclib.base.xui.widget.banner.widget.banner.BannerItem
@@ -142,5 +145,18 @@ class HomeRecommendPresenter : BaseMvpPresenter<HomeRecommendFragment>() {
                    getLivePreView(it)
                 }
             }
+    }
+
+
+    //获取余额
+    @SuppressLint("SetTextI18n")
+    fun getUserBalance() {
+        if (mView.isActive()) {
+            MineApi.getUserBalance {
+                onFailed { error ->
+                    GlobalDialog.showError(mView.requireActivity(), error, horizontal = false)
+                }
+            }
+        }
     }
 }

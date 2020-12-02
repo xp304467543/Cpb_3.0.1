@@ -126,14 +126,14 @@ object HomeApi : BaseApi {
     private const val VERSION_UPDATE = "api/common/init/"
 
     //系统公告
-    private const val SYSTEM_NOTICE = "api/v1_1/live/get_notice/"
+    private const val SYSTEM_NOTICE = "api/v1_1/live/get_pop_notice/"
 
     //系统公告 代理
-    private const val SYSTEM_NOTICE_DL = "api/v1_1/live/get_notice_dl/"
+    private const val SYSTEM_NOTICE_DL = "api/v1_1/live/get_pop_notice_dl/"
 
 
     //获取新消息通知
-    private const val USER_MESSAGE_NEW = "api/v1_1/live/get_notice_new/"
+    private const val USER_MESSAGE_NEW = "api/v1_1/live/get_message_count/"
 
 
     //热门游戏
@@ -289,6 +289,8 @@ object HomeApi : BaseApi {
         subscriber.function()
         getApi().get<MineNewMsg>(USER_MESSAGE_NEW)
             .headers("token", UserInfoSp.getToken())
+            .params("client_type", 1)
+            .params("api", if (AppConstant.isMain) 1 else 5)
             .params("user_id", UserInfoSp.getUserId())
             .subscribe(subscriber)
     }
@@ -450,6 +452,7 @@ object HomeApi : BaseApi {
             .subscribe(subscriber)
     }
 
+
     /**
      * 搜索主播推荐
      */
@@ -533,7 +536,7 @@ object HomeApi : BaseApi {
             .params("user_id", UserInfoSp.getUserId())
             .params("amount", amount)
             .params("num", num)
-            .params("version","v2")
+            .params("version", "v2")
             .params("text", text)
             .params("password", password)
             .subscribe(subscriber)
@@ -685,11 +688,11 @@ object HomeApi : BaseApi {
     /**
      * 系统公告
      */
-    fun getSystemNotice(function: ApiSubscriber<SystemNotice>.() -> Unit) {
-        val subscriber = object : ApiSubscriber<SystemNotice>() {}
+    fun getSystemNotice(function: ApiSubscriber<List<SystemNotice>>.() -> Unit) {
+        val subscriber = object : ApiSubscriber<List<SystemNotice>>() {}
         subscriber.function()
         getApi()
-            .get<SystemNotice>(if (UserInfoSp.getAppMode() == AppMode.Normal) SYSTEM_NOTICE else SYSTEM_NOTICE_DL)
+            .get<List<SystemNotice>>(if (UserInfoSp.getAppMode() == AppMode.Normal) SYSTEM_NOTICE else SYSTEM_NOTICE_DL)
             .headers("token", UserInfoSp.getToken())
             .params("page", 1)
             .params("limit", 1)

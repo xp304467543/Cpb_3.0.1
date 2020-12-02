@@ -15,6 +15,7 @@
         android:layout_marginEnd="@dimen/dp_20"
         app:tabIndicatorFullWidth="false"
         app:tabRippleColor="@color/transparent"
+        app:tabIndicatorColor="@color/text_red"
         app:tabSelectedTextColor="@color/color_FF513E"
         app:tabTextColor="@color/color_999999" />
 

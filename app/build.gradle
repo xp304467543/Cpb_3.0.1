@@ -23,7 +23,7 @@ android {
     buildToolsVersion "29.0.3"
 
     defaultConfig {
-        applicationId "com.fh.lgzb"
+        applicationId "com.fh.lgzb1"
         minSdkVersion versions.android_min_sdk
         targetSdkVersion versions.android_target_sdk
         versionCode Integer.valueOf(publishVersionCode)

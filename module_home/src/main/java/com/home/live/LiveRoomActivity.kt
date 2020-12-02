@@ -406,6 +406,14 @@ class LiveRoomActivity : BaseNormalMvpActivity<LiveActPresenter>() {
 //        RxBus.get().post(WebSelect(clickMine.pos))
     }
 
+    /**
+     * 跳转mine
+     */
+    @Subscribe(thread = EventThread.MAIN_THREAD)
+    fun onClickMine(clickMine: HomeJumpToMine) {
+        finish()
+    }
+
     //动画效果
     @Subscribe(thread = EventThread.MAIN_THREAD)
     fun isShowAnim(eventBean: LiveAnimClose) {

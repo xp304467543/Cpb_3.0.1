@@ -21,6 +21,8 @@ import kotlinx.android.synthetic.main.act_mine_game_report.*
 @RouterAnno(host = "Mine", path = "reportGame")
 class MineGameReportAct : BaseMvpActivity<MineGameReportPresenter>() {
 
+    var currentIndex = 0
+
     override fun attachView()  = mPresenter.attachView(this)
 
     override fun getPageTitle() = "游戏报表"
@@ -44,6 +46,9 @@ class MineGameReportAct : BaseMvpActivity<MineGameReportPresenter>() {
             setGone(zLin1)
             setGone(zLin2)
             setGone(line_3)
+            setGone(tvTotal_04)
+            setGone(tvTotal_4)
+            setGone(lin_4)
         }
     }
 
@@ -55,17 +60,21 @@ class MineGameReportAct : BaseMvpActivity<MineGameReportPresenter>() {
     override fun initEvent() {
         tv_1.setOnClickListener {
             change(1)
+            currentIndex = 0
         }
         tv_2.setOnClickListener {
             change(2)
+            currentIndex = 1
         }
         tv_3.setOnClickListener {
             change(3)
+            currentIndex = 2
         }
         tv_show_more.setOnClickListener {
             if (!FastClickUtil.isFastClick()){
                 val intent = Intent(this, MineGameReportMoreAct::class.java)
                 intent.putExtra("indexGame",1)
+                intent.putExtra("currentIndex", currentIndex)
                 startActivity(intent)
             }
         }
@@ -73,6 +82,7 @@ class MineGameReportAct : BaseMvpActivity<MineGameReportPresenter>() {
             if (!FastClickUtil.isFastClick()){
                 val intent = Intent(this, MineGameReportMoreAct::class.java)
                 intent.putExtra("indexGame",2)
+                intent.putExtra("currentIndex", currentIndex)
                 startActivity(intent)
             }
         }
@@ -80,6 +90,7 @@ class MineGameReportAct : BaseMvpActivity<MineGameReportPresenter>() {
             if (!FastClickUtil.isFastClick()){
                 val intent = Intent(this, MineGameReportMoreAct::class.java)
                 intent.putExtra("indexGame",3)
+                intent.putExtra("currentIndex", currentIndex)
                 startActivity(intent)
             }
         }
@@ -87,6 +98,7 @@ class MineGameReportAct : BaseMvpActivity<MineGameReportPresenter>() {
             if (!FastClickUtil.isFastClick()){
                 val intent = Intent(this, MineGameReportMoreAct::class.java)
                 intent.putExtra("indexGame",4)
+                intent.putExtra("currentIndex", currentIndex)
                 startActivity(intent)
             }
         }
@@ -94,6 +106,7 @@ class MineGameReportAct : BaseMvpActivity<MineGameReportPresenter>() {
             if (!FastClickUtil.isFastClick()){
                 val intent = Intent(this, MineGameReportMoreAct::class.java)
                 intent.putExtra("indexGame",5)
+                intent.putExtra("currentIndex", currentIndex)
                 startActivity(intent)
             }
         }
@@ -101,6 +114,23 @@ class MineGameReportAct : BaseMvpActivity<MineGameReportPresenter>() {
             if (!FastClickUtil.isFastClick()){
                 val intent = Intent(this, MineGameReportMoreAct::class.java)
                 intent.putExtra("indexGame",6)
+                intent.putExtra("currentIndex", currentIndex)
+                startActivity(intent)
+            }
+        }
+        tv_show_more_kyqp.setOnClickListener {
+            if (!FastClickUtil.isFastClick()){
+                val intent = Intent(this, MineGameReportMoreAct::class.java)
+                intent.putExtra("indexGame",7)
+                intent.putExtra("currentIndex", currentIndex)
+                startActivity(intent)
+            }
+        }
+        tv_show_more_sbty.setOnClickListener {
+            if (!FastClickUtil.isFastClick()){
+                val intent = Intent(this, MineGameReportMoreAct::class.java)
+                intent.putExtra("indexGame",8)
+                intent.putExtra("currentIndex", currentIndex)
                 startActivity(intent)
             }
         }

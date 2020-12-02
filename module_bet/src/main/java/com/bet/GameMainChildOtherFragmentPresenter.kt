@@ -93,4 +93,34 @@ class GameMainChildOtherFragmentPresenter : BaseMvpPresenter<GameMainChildOtherF
             }
         }
     }
+
+    fun getSb(game_id: String) {
+        GameApi.getSb(game_id) {
+            if (mView.isAdded) {
+                onSuccess {
+                    Router.withApi(ApiRouter::class.java).toGlobalWeb(it.url.toString())
+                    mView.hidePageLoadingDialog()
+                }
+                onFailed {
+                    ToastUtils.showToast(it.getMsg())
+                    mView.hidePageLoadingDialog()
+                }
+            }
+        }
+    }
+
+    fun getKy(game_id: String) {
+        GameApi.getKy(game_id) {
+            if (mView.isAdded) {
+                onSuccess {
+                    Router.withApi(ApiRouter::class.java).toGlobalWeb(it.url.toString())
+                    mView.hidePageLoadingDialog()
+                }
+                onFailed {
+                    ToastUtils.showToast(it.getMsg())
+                    mView.hidePageLoadingDialog()
+                }
+            }
+        }
+    }
 }

@@ -25,6 +25,10 @@ object GameApi : BaseApi {
 
     private const val GAME_BG_FISH ="bg/play-fishing"
 
+    private const val GAME_SHA_BA = "ibc/play"
+
+    private const val GAME_KY = "ky/play"
+
     private const val GAME_CHESS_HISTORY = "fhchess/game-record"
 
     private const val GAME_AG_LIVE_HISTORY = "ag/game-record"
@@ -35,6 +39,9 @@ object GameApi : BaseApi {
 
     private const val GAME_BG_FISH_HISTORY = "bg/fishing-record"
 
+    private const val GAME_KYQI_HISTORY = "ky/game-record"
+
+    private const val GAME_SBTY_HISTORY = "ibc/game-record"
 
     /**
      * 游戏列表
@@ -107,6 +114,33 @@ object GameApi : BaseApi {
         subscriber.function()
         getApiOther()
             .get<Game060>(GAME_BG_FISH)
+            .headers("Authorization", UserInfoSp.getTokenWithBearer())
+            .params("game_id",game_id)
+            .subscribe(subscriber)
+    }
+
+    /**
+     * 沙巴游戏
+     */
+    fun getSb(game_id:String,function: ApiSubscriber<Game060>.() -> Unit){
+        val subscriber = object : ApiSubscriber<Game060>() {}
+        subscriber.function()
+        getApiOther()
+            .get<Game060>(GAME_SHA_BA)
+            .headers("Authorization", UserInfoSp.getTokenWithBearer())
+            .params("is_mobile",1)
+            .params("game_id",game_id)
+            .subscribe(subscriber)
+    }
+
+    /**
+     * 开元棋牌
+     */
+    fun getKy(game_id:String,function: ApiSubscriber<Game060>.() -> Unit){
+        val subscriber = object : ApiSubscriber<Game060>() {}
+        subscriber.function()
+        getApiOther()
+            .get<Game060>(GAME_KY)
             .headers("Authorization", UserInfoSp.getTokenWithBearer())
             .params("game_id",game_id)
             .subscribe(subscriber)
@@ -192,6 +226,40 @@ object GameApi : BaseApi {
         subscriber.function()
         getApiOther()
             .get<List<GameAg>>(GAME_BG_FISH_HISTORY)
+            .headers("Authorization", UserInfoSp.getTokenWithBearer())
+            .params("game_id",game_id)
+            .params("st",st)
+            .params("et",et)
+            .params("page",page)
+            .params("limit",20)
+            .subscribe(subscriber)
+    }
+
+    /**
+     * 开元棋牌游戏 记录
+     */
+    fun getKyqpGameHistory(game_id:String , st:String,et:String,page:Int,function: ApiSubscriber<List<GameAg>>.() -> Unit){
+        val subscriber = object : ApiSubscriber<List<GameAg>>() {}
+        subscriber.function()
+        getApiOther()
+            .get<List<GameAg>>(GAME_KYQI_HISTORY)
+            .headers("Authorization", UserInfoSp.getTokenWithBearer())
+            .params("game_id",game_id)
+            .params("st",st)
+            .params("et",et)
+            .params("page",page)
+            .params("limit",20)
+            .subscribe(subscriber)
+    }
+
+    /**
+     * 沙巴体育游戏 记录
+     */
+    fun getSbtyGameHistory(game_id:String , st:String,et:String,page:Int,function: ApiSubscriber<List<GameAg>>.() -> Unit){
+        val subscriber = object : ApiSubscriber<List<GameAg>>() {}
+        subscriber.function()
+        getApiOther()
+            .get<List<GameAg>>(GAME_SBTY_HISTORY)
             .headers("Authorization", UserInfoSp.getTokenWithBearer())
             .params("game_id",game_id)
             .params("st",st)

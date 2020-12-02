@@ -11,6 +11,7 @@ import com.customer.component.dialog.DialogDiamond
 import com.customer.component.dialog.DialogGlobalTips
 import com.customer.component.dialog.GlobalDialog
 import com.customer.data.*
+import com.customer.data.login.LoginSuccess
 import com.customer.data.mine.ChangeSkin
 import com.customer.data.mine.UpDateUserPhoto
 import com.customer.utils.RxPermissionHelper
@@ -36,7 +37,7 @@ import kotlinx.android.synthetic.main.fragment_mine.*
 
 
 @RouterAnno(host = "Mine", path = "main")
-class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme, IMode {
+class   MineFragment : BaseMvpFragment<MinePresenter>(), ITheme, IMode {
 
     var isInit = false
 
@@ -44,6 +45,7 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme, IMode {
     var msg1 = ""
     var msg2 = ""
     var msg3 = ""
+    var msg4 =""
 
     override fun attachView() = mPresenter.attachView(this)
 
@@ -226,8 +228,7 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme, IMode {
                 return@setOnClickListener
             }
             containerMessageCenter.showNewMessage(false)
-            if (!FastClickUtil.isFastClick()) Router.withApi(ApiRouter::class.java)
-                .toMineMessage(msg1, msg2, msg3)
+            if (!FastClickUtil.isFastClick()) Router.withApi(ApiRouter::class.java).toMineMessage(msg1, msg2, msg3,msg4)
         }
         containerMineCheck.setOnClickListener {
             if (!UserInfoSp.getIsLogin()) {
@@ -417,6 +418,7 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme, IMode {
                 containerContactCustomer.setBackRes(R.drawable.ic_mine_d5_8)
                 containerGroup.setBackRes(R.drawable.ic_mine_d5_9)
                 containerSetting.setBackRes(R.drawable.ic_mine_d5_10)
+                containerScanLogin.setBackRes(R.drawable.ic_mine_d5_11)
 
             }
             Theme.LoverDay -> {
@@ -543,7 +545,6 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme, IMode {
         dialog.setOnDismissListener {
             GlobalDialog.spClear()
             dialog.setCanceledOnTouchOutside(false)
-            dialog.show()
             setGone(containerLogin)
             setGone(containerSetting)
             setVisible(containerNoLogin)
@@ -551,7 +552,8 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme, IMode {
             tvDiamondBalance?.text = "0.00"
             Router.withApi(ApiRouter::class.java).toLogin()
         }
-
+        dialog.show()
+        GlobalDialog.clearAllLog()
     }
 
     //纯净版切换
@@ -603,4 +605,68 @@ class MineFragment : BaseMvpFragment<MinePresenter>(), ITheme, IMode {
         }
     }
 
+
+
+
+    @Subscribe(thread = EventThread.MAIN_THREAD)
+    fun onClickMine(clickMine: HomeJumpToMine) {
+        initMine()
+    }
+
+    @SuppressLint("SetTextI18n")
+    @Subscribe(thread = EventThread.MAIN_THREAD)
+    fun login(eventBean: LoginSuccess) {
+        if (isAdded ){
+            tvMineUserNickName.text = UserInfoSp.getUserNickName()
+            GlideUtil.loadCircleImage(
+                requireContext(),
+                UserInfoSp.getUserPhoto(),
+                imgMineUserAvatar,
+                true
+            )
+            tvMineUserId.text = "ID: " + UserInfoSp.getUserUniqueId()
+            setVisible(containerLogin)
+            setGone(containerNoLogin)
+            mPresenter.getUserVip()
+            mPresenter.getUserBalance()
+            mPresenter.getUserDiamond()
+            mPresenter.getNewMsg()
+            mPresenter.getUserInfo()
+//            if (!UserInfoSp.getIsSetPayPassWord()) mPresenter.getIsSetPayPassWord()
+            setVisible(containerSetting)
+        }
+
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun initMine(){
+        if (!isInit){
+            if (UserInfoSp.getIsLogin()) {
+                tvMineUserNickName.text = UserInfoSp.getUserNickName()
+                GlideUtil.loadCircleImage(
+                    requireContext(),
+                    UserInfoSp.getUserPhoto(),
+                    imgMineUserAvatar,
+                    true
+                )
+                tvMineUserId.text = "ID: " + UserInfoSp.getUserUniqueId()
+                setVisible(containerLogin)
+                setGone(containerNoLogin)
+                mPresenter.getUserVip()
+                mPresenter.getUserBalance()
+                mPresenter.getUserDiamond()
+                mPresenter.getNewMsg()
+                mPresenter.getUserInfo()
+//            if (!UserInfoSp.getIsSetPayPassWord()) mPresenter.getIsSetPayPassWord()
+                setVisible(containerSetting)
+            } else {
+                imgMineUserAvatar.setBackgroundResource(R.mipmap.ic_base_user)
+                setGone(containerLogin)
+                setGone(containerSetting)
+                setVisible(containerNoLogin)
+                tvBalance.text = "0.00"
+                tvDiamondBalance.text = "0.00"
+            }
+        }
+    }
 }

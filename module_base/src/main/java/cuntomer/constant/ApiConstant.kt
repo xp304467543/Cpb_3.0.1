@@ -33,9 +33,9 @@ object ApiConstant {
      */
     const val API_URL_DEV = "http://47.244.212.147/"
 
-    const val API_URL_DEV_OTHER_TEST = "http://121.127.228.235:18000/userinfo/"
+    const val API_URL_DEV_OTHER_TEST = "http://54.255.11.229:18000/userinfo/"
 
-    const val API_MOMENTS_TEST = "http://121.127.228.235:18000/forum/"
+    const val API_MOMENTS_TEST = "http://54.255.11.229:18000/forum/"
 
     const val API_LOTTERY_BET_TEST = "http://18.136.235.23:18306/"
 

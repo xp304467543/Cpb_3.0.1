@@ -11,8 +11,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="@dimen/dp_20"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/dp_20">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -60,9 +60,9 @@
         <com.lib.basiclib.base.round.RoundLinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginStart="@dimen/dp_5"
             android:layout_marginTop="@dimen/dp_15"
-            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_5"
             android:orientation="horizontal"
             android:paddingTop="@dimen/dp_15"
             android:paddingBottom="@dimen/dp_15"
@@ -72,7 +72,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -81,10 +81,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableStart="@mipmap/ic_zs"
-                    android:drawablePadding="@dimen/dp_10"
-                    android:text="下注钻石总额  (元)"
+                    android:drawablePadding="@dimen/dp_5"
+                    android:text="下注钻石总额"
                     android:textColor="@color/color_999999"
-                    android:textSize="@dimen/sp_13" />
+                    android:textSize="@dimen/sp_11" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvTotal1"
@@ -93,14 +93,13 @@
                     android:layout_marginTop="@dimen/dp_10"
                     android:text="0.00"
                     android:textColor="@color/color_333333"
-                    android:textSize="@dimen/sp_21"
+                    android:textSize="@dimen/sp_16"
                     android:textStyle="bold" />
 
                 <View
                     android:id="@+id/lin_1"
                     android:layout_width="match_parent"
                     android:layout_height="1.5dp"
-                    android:layout_marginStart="@dimen/dp_15"
                     android:layout_marginTop="15dp"
                     android:background="@drawable/line_stroke"
                     android:layerType="software" />
@@ -110,10 +109,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_20"
                     android:drawableStart="@mipmap/ic_ye"
-                    android:drawablePadding="@dimen/dp_10"
-                    android:text="下注金额  (元)"
+                    android:drawablePadding="@dimen/dp_5"
+                    android:text="下注金额 (元)"
                     android:textColor="@color/color_999999"
-                    android:textSize="@dimen/sp_13" />
+                    android:textSize="@dimen/sp_11" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvTotal2"
@@ -122,14 +121,14 @@
                     android:layout_marginTop="@dimen/dp_10"
                     android:text="0.00"
                     android:textColor="@color/color_333333"
-                    android:textSize="@dimen/sp_21"
+                    android:textSize="@dimen/sp_16"
                     android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -137,9 +136,9 @@
                     android:id="@+id/tv_02"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="钻石中奖总额  (元)"
+                    android:text="钻石中奖总额"
                     android:textColor="@color/color_999999"
-                    android:textSize="@dimen/sp_13" />
+                    android:textSize="@dimen/sp_11" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvTotal_1"
@@ -148,7 +147,7 @@
                     android:layout_marginTop="@dimen/dp_10"
                     android:text="0.00"
                     android:textColor="@color/color_FF513E"
-                    android:textSize="@dimen/sp_21"
+                    android:textSize="@dimen/sp_16"
                     android:textStyle="bold" />
 
                 <View
@@ -156,7 +155,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="1.5dp"
                     android:layout_marginTop="15dp"
-                    android:layout_marginEnd="@dimen/dp_15"
                     android:background="@drawable/line_stroke"
                     android:layerType="software" />
 
@@ -164,9 +162,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_20"
-                    android:text="中奖金额  (元)"
+                    android:text="中奖金额 (元)"
                     android:textColor="@color/color_999999"
-                    android:textSize="@dimen/sp_13" />
+                    android:textSize="@dimen/sp_11" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvTotal_2"
@@ -175,7 +173,60 @@
                     android:layout_marginTop="@dimen/dp_10"
                     android:text="0.00"
                     android:textColor="@color/color_FF513E"
-                    android:textSize="@dimen/sp_21"
+                    android:textSize="@dimen/sp_16"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvTotal_04"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="盈利"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/sp_11" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvTotal_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:text="0.00"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/sp_16"
+                    android:textStyle="bold" />
+
+                <View
+                    android:id="@+id/lin_4"
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/line_stroke"
+                    android:layerType="software" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:text="盈利"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/sp_11" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvTotal_5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:text="0.00"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/sp_16"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -185,13 +236,11 @@
         <com.lib.basiclib.base.round.RoundLinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginStart="@dimen/dp_5"
             android:layout_marginTop="@dimen/dp_20"
-            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_5"
             android:orientation="vertical"
-            android:paddingStart="@dimen/dp_10"
             android:paddingTop="@dimen/dp_15"
-            android:paddingEnd="@dimen/dp_10"
             android:paddingBottom="@dimen/dp_15"
             app:rv_backgroundColor="@color/white"
             app:rv_cornerRadius="@dimen/dp_5">
@@ -199,9 +248,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/dp_5">
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@mipmap/ic_report_cai" />
@@ -271,6 +321,16 @@
                     android:textColor="@color/color_999999"
                     android:textSize="@dimen/sp_12" />
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_06"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="盈利"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/sp_12" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -288,7 +348,7 @@
                     android:gravity="center"
                     android:text="0"
                     android:textColor="@color/color_333333"
-                    android:textSize="@dimen/sp_16"
+                    android:textSize="@dimen/sp_13"
                     android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -299,7 +359,7 @@
                     android:gravity="center"
                     android:text="￥ 0"
                     android:textColor="@color/color_333333"
-                    android:textSize="@dimen/sp_16"
+                    android:textSize="@dimen/sp_13"
                     android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -310,7 +370,18 @@
                     android:gravity="center"
                     android:text="￥ 0"
                     android:textColor="@color/color_FF513E"
-                    android:textSize="@dimen/sp_16"
+                    android:textSize="@dimen/sp_13"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_lottery_31"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/sp_13"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -356,6 +427,15 @@
                     android:textColor="@color/color_999999"
                     android:textSize="@dimen/sp_12" />
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="盈利"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/sp_12" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -372,7 +452,7 @@
                     android:gravity="center"
                     android:text="0"
                     android:textColor="@color/color_333333"
-                    android:textSize="@dimen/sp_16"
+                    android:textSize="@dimen/sp_13"
                     android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -383,7 +463,7 @@
                     android:gravity="center"
                     android:text="￥ 0"
                     android:textColor="@color/color_333333"
-                    android:textSize="@dimen/sp_16"
+                    android:textSize="@dimen/sp_13"
                     android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -394,7 +474,18 @@
                     android:gravity="center"
                     android:text="￥ 0"
                     android:textColor="@color/color_FF513E"
-                    android:textSize="@dimen/sp_16"
+                    android:textSize="@dimen/sp_13"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_lottery_61"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/sp_13"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -406,13 +497,11 @@
         <com.lib.basiclib.base.round.RoundLinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginStart="@dimen/dp_5"
             android:layout_marginTop="@dimen/dp_20"
-            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_5"
             android:orientation="vertical"
-            android:paddingStart="@dimen/dp_10"
             android:paddingTop="@dimen/dp_15"
-            android:paddingEnd="@dimen/dp_10"
             android:paddingBottom="@dimen/dp_15"
             app:rv_backgroundColor="@color/white"
             app:rv_cornerRadius="@dimen/dp_5">
@@ -420,9 +509,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/dp_5">
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@mipmap/ic_report_qp" />
@@ -488,6 +578,15 @@
                     android:textColor="@color/color_999999"
                     android:textSize="@dimen/sp_12" />
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="盈利"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/sp_12" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -504,7 +603,7 @@
                     android:gravity="center"
                     android:text="0"
                     android:textColor="@color/color_333333"
-                    android:textSize="@dimen/sp_16"
+                    android:textSize="@dimen/sp_13"
                     android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -515,7 +614,7 @@
                     android:gravity="center"
                     android:text="￥ 0"
                     android:textColor="@color/color_333333"
-                    android:textSize="@dimen/sp_16"
+                    android:textSize="@dimen/sp_13"
                     android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -526,9 +625,20 @@
                     android:gravity="center"
                     android:text="￥ 0"
                     android:textColor="@color/color_FF513E"
-                    android:textSize="@dimen/sp_16"
+                    android:textSize="@dimen/sp_13"
                     android:textStyle="bold" />
 
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_qp_31"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/sp_13"
+                    android:textStyle="bold" />
             </LinearLayout>
 
 
@@ -538,13 +648,11 @@
         <com.lib.basiclib.base.round.RoundLinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginStart="@dimen/dp_5"
             android:layout_marginTop="@dimen/dp_20"
-            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_5"
             android:orientation="vertical"
-            android:paddingStart="@dimen/dp_10"
             android:paddingTop="@dimen/dp_15"
-            android:paddingEnd="@dimen/dp_10"
             android:paddingBottom="@dimen/dp_15"
             app:rv_backgroundColor="@color/white"
             app:rv_cornerRadius="@dimen/dp_5">
@@ -552,9 +660,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/dp_5">
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@mipmap/ic_report_agsx" />
@@ -620,6 +729,15 @@
                     android:textColor="@color/color_999999"
                     android:textSize="@dimen/sp_12" />
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="盈利"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/sp_12" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -636,7 +754,7 @@
                     android:gravity="center"
                     android:text="0"
                     android:textColor="@color/color_333333"
-                    android:textSize="@dimen/sp_16"
+                    android:textSize="@dimen/sp_13"
                     android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -647,7 +765,7 @@
                     android:gravity="center"
                     android:text="￥ 0"
                     android:textColor="@color/color_333333"
-                    android:textSize="@dimen/sp_16"
+                    android:textSize="@dimen/sp_13"
                     android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -658,9 +776,19 @@
                     android:gravity="center"
                     android:text="￥ 0"
                     android:textColor="@color/color_FF513E"
-                    android:textSize="@dimen/sp_16"
+                    android:textSize="@dimen/sp_13"
                     android:textStyle="bold" />
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_agsx_31"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/sp_13"
+                    android:textStyle="bold" />
             </LinearLayout>
         </com.lib.basiclib.base.round.RoundLinearLayout>
 
@@ -668,13 +796,11 @@
         <com.lib.basiclib.base.round.RoundLinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginStart="@dimen/dp_5"
             android:layout_marginTop="@dimen/dp_20"
-            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_5"
             android:orientation="vertical"
-            android:paddingStart="@dimen/dp_10"
             android:paddingTop="@dimen/dp_15"
-            android:paddingEnd="@dimen/dp_10"
             android:paddingBottom="@dimen/dp_15"
             app:rv_backgroundColor="@color/white"
             app:rv_cornerRadius="@dimen/dp_5">
@@ -682,9 +808,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/dp_5">
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@mipmap/ic_report_agdz" />
@@ -750,6 +877,15 @@
                     android:textColor="@color/color_999999"
                     android:textSize="@dimen/sp_12" />
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="盈利"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/sp_12" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -766,7 +902,7 @@
                     android:gravity="center"
                     android:text="0"
                     android:textColor="@color/color_333333"
-                    android:textSize="@dimen/sp_16"
+                    android:textSize="@dimen/sp_13"
                     android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -777,7 +913,7 @@
                     android:gravity="center"
                     android:text="￥ 0"
                     android:textColor="@color/color_333333"
-                    android:textSize="@dimen/sp_16"
+                    android:textSize="@dimen/sp_13"
                     android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -788,26 +924,33 @@
                     android:gravity="center"
                     android:text="￥ 0"
                     android:textColor="@color/color_FF513E"
-                    android:textSize="@dimen/sp_16"
+                    android:textSize="@dimen/sp_13"
                     android:textStyle="bold" />
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_agdz_31"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/sp_13"
+                    android:textStyle="bold" />
             </LinearLayout>
 
 
         </com.lib.basiclib.base.round.RoundLinearLayout>
 
 
-
         <com.lib.basiclib.base.round.RoundLinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginStart="@dimen/dp_5"
             android:layout_marginTop="@dimen/dp_20"
-            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_5"
             android:orientation="vertical"
-            android:paddingStart="@dimen/dp_10"
             android:paddingTop="@dimen/dp_15"
-            android:paddingEnd="@dimen/dp_10"
             android:paddingBottom="@dimen/dp_15"
             app:rv_backgroundColor="@color/white"
             app:rv_cornerRadius="@dimen/dp_5">
@@ -815,9 +958,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/dp_5">
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@mipmap/ic_bg_sx" />
@@ -883,6 +1027,15 @@
                     android:textColor="@color/color_999999"
                     android:textSize="@dimen/sp_12" />
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="盈利"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/sp_12" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -899,7 +1052,7 @@
                     android:gravity="center"
                     android:text="0"
                     android:textColor="@color/color_333333"
-                    android:textSize="@dimen/sp_16"
+                    android:textSize="@dimen/sp_13"
                     android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -910,7 +1063,7 @@
                     android:gravity="center"
                     android:text="￥ 0"
                     android:textColor="@color/color_333333"
-                    android:textSize="@dimen/sp_16"
+                    android:textSize="@dimen/sp_13"
                     android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -921,26 +1074,33 @@
                     android:gravity="center"
                     android:text="￥ 0"
                     android:textColor="@color/color_FF513E"
-                    android:textSize="@dimen/sp_16"
+                    android:textSize="@dimen/sp_13"
                     android:textStyle="bold" />
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_bgsx_31"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/sp_13"
+                    android:textStyle="bold" />
             </LinearLayout>
 
 
         </com.lib.basiclib.base.round.RoundLinearLayout>
 
 
-
         <com.lib.basiclib.base.round.RoundLinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginStart="@dimen/dp_5"
             android:layout_marginTop="@dimen/dp_20"
-            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_5"
             android:orientation="vertical"
-            android:paddingStart="@dimen/dp_10"
             android:paddingTop="@dimen/dp_15"
-            android:paddingEnd="@dimen/dp_10"
             android:paddingBottom="@dimen/dp_15"
             app:rv_backgroundColor="@color/white"
             app:rv_cornerRadius="@dimen/dp_5">
@@ -948,9 +1108,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/dp_5">
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@mipmap/ic_bg_fish" />
@@ -1016,6 +1177,14 @@
                     android:textColor="@color/color_999999"
                     android:textSize="@dimen/sp_12" />
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="盈利"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/sp_12" />
             </LinearLayout>
 
             <LinearLayout
@@ -1032,7 +1201,7 @@
                     android:gravity="center"
                     android:text="0"
                     android:textColor="@color/color_333333"
-                    android:textSize="@dimen/sp_16"
+                    android:textSize="@dimen/sp_13"
                     android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -1043,7 +1212,7 @@
                     android:gravity="center"
                     android:text="￥ 0"
                     android:textColor="@color/color_333333"
-                    android:textSize="@dimen/sp_16"
+                    android:textSize="@dimen/sp_13"
                     android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -1054,12 +1223,314 @@
                     android:gravity="center"
                     android:text="￥ 0"
                     android:textColor="@color/color_FF513E"
-                    android:textSize="@dimen/sp_16"
+                    android:textSize="@dimen/sp_13"
                     android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_bgby_31"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/sp_13"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </com.lib.basiclib.base.round.RoundLinearLayout>
+
+        <com.lib.basiclib.base.round.RoundLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_5"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_5"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/dp_15"
+            android:paddingBottom="@dimen/dp_15"
+            app:rv_backgroundColor="@color/white"
+            app:rv_cornerRadius="@dimen/dp_5">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/dp_5">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_ky" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_weight="1"
+                    android:text="开元棋牌"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/sp_12"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_show_more_kyqp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@mipmap/arrow_right"
+                    android:drawablePadding="@dimen/dp_5"
+                    android:text="更多"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/sp_12" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1.5dp"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="@drawable/line_stroke"
+                android:layerType="software" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_15"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="下单注量"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/sp_12" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="下单金额"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/sp_12" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="中奖金额"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/sp_12" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="盈利"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/sp_12" />
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:orientation="horizontal">
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_kyqp_1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/sp_13"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_kyqp_2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="￥ 0"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/sp_13"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_kyqp_3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="￥ 0"
+                    android:textColor="@color/color_FF513E"
+                    android:textSize="@dimen/sp_13"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_kyqp_4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/sp_13"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </com.lib.basiclib.base.round.RoundLinearLayout>
+
+        <com.lib.basiclib.base.round.RoundLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_5"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_5"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/dp_15"
+            android:paddingBottom="@dimen/dp_15"
+            app:rv_backgroundColor="@color/white"
+            app:rv_cornerRadius="@dimen/dp_5">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/dp_5">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_sb" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_weight="1"
+                    android:text="沙巴体育"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/sp_12"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_show_more_sbty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@mipmap/arrow_right"
+                    android:drawablePadding="@dimen/dp_5"
+                    android:text="更多"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/sp_12" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1.5dp"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="@drawable/line_stroke"
+                android:layerType="software" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_15"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="下单注量"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/sp_12" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="下单金额"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/sp_12" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="中奖金额"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/sp_12" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="盈利"
+                    android:textColor="@color/color_999999"
+                    android:textSize="@dimen/sp_12" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_sbty_1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/sp_13"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_sbty_2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="￥ 0"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/sp_13"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_sbty_3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="￥ 0"
+                    android:textColor="@color/color_FF513E"
+                    android:textSize="@dimen/sp_13"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_sbty_4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/sp_13"
+                    android:textStyle="bold" />
+            </LinearLayout>
         </com.lib.basiclib.base.round.RoundLinearLayout>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

@@ -111,6 +111,18 @@ class MineGameReportMoreInfoAct : BaseMvpActivity<MineGameReportMoreInfoPresente
                 rvGameReportInfo.adapter = gameAgGameAdapter
                 gameInfoPageTitle.text = "BG游戏注单详情"
             }
+            7->{
+                setGone(topSelect)
+                gameAgGameAdapter = GameAgAdapter()
+                rvGameReportInfo.adapter = gameAgGameAdapter
+                gameInfoPageTitle.text = "开元棋牌注单详情"
+            }
+            8->{
+                setGone(topSelect)
+                gameAgGameAdapter = GameAgAdapter()
+                rvGameReportInfo.adapter = gameAgGameAdapter
+                gameInfoPageTitle.text = "沙巴体育注单详情"
+            }
         }
         lotteryId = intent.getStringExtra("rLotteryId") ?: "0"
         currentSel = intent.getStringExtra("is_bl_play") ?: "0"
@@ -189,6 +201,28 @@ class MineGameReportMoreInfoAct : BaseMvpActivity<MineGameReportMoreInfoPresente
                     mPresenter.getGameBgGame(lotteryId,st,et,index)
                 }
             }
+            7 ->{
+                mPresenter.getGameKyqp(lotteryId,st,et,index)
+                smBetRecord_1?.setOnRefreshListener {
+                    index = 1
+                    mPresenter.getGameKyqp(lotteryId,st,et,index)
+                }
+                smBetRecord_1?.setOnLoadMoreListener {
+                    index++
+                    mPresenter.getGameKyqp(lotteryId,st,et,index)
+                }
+            }
+            8 ->{
+                mPresenter.getGameSbty(lotteryId,st,et,index)
+                smBetRecord_1?.setOnRefreshListener {
+                    index = 1
+                    mPresenter.getGameSbty(lotteryId,st,et,index)
+                }
+                smBetRecord_1?.setOnLoadMoreListener {
+                    index++
+                    mPresenter.getGameSbty(lotteryId,st,et,index)
+                }
+            }
         }
 
 
@@ -214,6 +248,8 @@ class MineGameReportMoreInfoAct : BaseMvpActivity<MineGameReportMoreInfoPresente
                 4 ->mPresenter.getGameAgGame(lotteryId,st,et,index)
                 5 ->mPresenter.getGameBgLive(lotteryId,st,et,index)
                 6 ->mPresenter.getGameBgGame(lotteryId,st,et,index)
+                7 ->mPresenter.getGameKyqp(lotteryId,st,et,index)
+                8 ->mPresenter.getGameSbty(lotteryId,st,et,index)
             }
         }
         tv_01.setOnClickListener {
@@ -234,6 +270,8 @@ class MineGameReportMoreInfoAct : BaseMvpActivity<MineGameReportMoreInfoPresente
                 4 ->mPresenter.getGameAgGame(lotteryId,st,et,index)
                 5 ->mPresenter.getGameBgLive(lotteryId,st,et,index)
                 6 ->mPresenter.getGameBgGame(lotteryId,st,et,index)
+                7 ->mPresenter.getGameKyqp(lotteryId,st,et,index)
+                8 ->mPresenter.getGameSbty(lotteryId,st,et,index)
             }
         }
         tv_02.setOnClickListener {
@@ -252,6 +290,10 @@ class MineGameReportMoreInfoAct : BaseMvpActivity<MineGameReportMoreInfoPresente
                 2 ->mPresenter.getGameResponse(lotteryId,st,et,index)
                 3 ->mPresenter.getGameAgLive(lotteryId,st,et,index)
                 4 ->mPresenter.getGameAgGame(lotteryId,st,et,index)
+                5 ->mPresenter.getGameBgLive(lotteryId,st,et,index)
+                6 ->mPresenter.getGameBgGame(lotteryId,st,et,index)
+                7 ->mPresenter.getGameKyqp(lotteryId,st,et,index)
+                8 ->mPresenter.getGameSbty(lotteryId,st,et,index)
             }
         }
         gameInfoImgDate.setOnClickListener {
@@ -263,12 +305,14 @@ class MineGameReportMoreInfoAct : BaseMvpActivity<MineGameReportMoreInfoPresente
                     et = data2
                     adapter?.clear()
                     when(gameType){
-                        1 ->mPresenter.getResponse(state, lotteryId, data1, data2, currentSel)
+                        1 ->mPresenter.getResponse(state, lotteryId, st, et, currentSel)
                         2 ->mPresenter.getGameResponse(lotteryId,st,et,index)
                         3 ->mPresenter.getGameAgLive(lotteryId,st,et,index)
                         4 ->mPresenter.getGameAgGame(lotteryId,st,et,index)
                         5 ->mPresenter.getGameBgLive(lotteryId,st,et,index)
                         6 ->mPresenter.getGameBgGame(lotteryId,st,et,index)
+                        7 ->mPresenter.getGameKyqp(lotteryId,st,et,index)
+                        8 ->mPresenter.getGameSbty(lotteryId,st,et,index)
                     }
                     dataDialog?.dismiss()
                 }
@@ -364,7 +408,15 @@ class MineGameReportMoreInfoAct : BaseMvpActivity<MineGameReportMoreInfoPresente
         override fun getItemLayoutId(viewType: Int) = R.layout.adapter_game_info
         override fun bindData(holder: RecyclerViewHolder, position: Int, data: GameAg?) {
             try {
-                holder.text(R.id.tv_1,TimeUtils.longToDateString(data?.billtime?:0))
+                when(gameType){
+                    5,6 ->{
+                        holder.text(R.id.tv_1,TimeUtils.longToDateString(data?.order_time?:0))
+                    }
+                    else ->{
+                        holder.text(R.id.tv_1,TimeUtils.longToDateString(data?.billtime?:0))
+                    }
+                }
+
                 holder.text(R.id.tv_2,data?.game_name)
                 holder.text(R.id.tv_3,data?.amount)
                 val text4 =  holder.findViewById<TextView>(R.id.tv_4)

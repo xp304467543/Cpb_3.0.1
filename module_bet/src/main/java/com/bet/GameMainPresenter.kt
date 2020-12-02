@@ -1,10 +1,13 @@
 package com.bet
 
+import com.customer.component.dialog.GlobalDialog
 import com.customer.data.game.GameApi
 import com.customer.data.home.HomeApi
 import com.customer.data.lottery.LotteryApi
 import com.lib.basiclib.base.mvp.BaseMvpPresenter
+import com.lib.basiclib.utils.ToastUtils
 import com.rxnetgo.rxcache.CacheMode
+import kotlinx.android.synthetic.main.fragment_game.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -39,6 +42,11 @@ class GameMainPresenter : BaseMvpPresenter<GameMainFragment>() {
                         if (it.isNotEmpty()) {
                             mView.initViewPager(it)
                         }
+                        mView.setGone(mView.linHolder)
+                    }
+                    resultGetLotteryType.onFailed {
+                        GlobalDialog.showError(mView.requireActivity(),it)
+                        mView.setVisible(mView.linHolder)
                     }
                 }
 

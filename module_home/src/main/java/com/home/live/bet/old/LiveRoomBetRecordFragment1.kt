@@ -27,7 +27,7 @@ import kotlinx.android.synthetic.main.old_fragment_live_bet_record_child.*
 
 class LiveRoomBetRecordFragment1 : BaseNormalFragment() {
 
-    var str = arrayListOf("金额","钻石")
+    var str = arrayListOf("余额","钻石")
 
     var currentSel = "1" //默认余额
 
@@ -71,6 +71,7 @@ class LiveRoomBetRecordFragment1 : BaseNormalFragment() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 index = 1
                 adapter?.clear()
+                (view as TextView).text = "金额"
                 currentSel = if (position == 0) {
                     "1"
                 } else "0"

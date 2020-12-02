@@ -1,7 +1,10 @@
 package com.home
 
+import android.annotation.SuppressLint
+import com.customer.component.dialog.GlobalDialog
 import com.lib.basiclib.base.mvp.BaseMvpPresenter
 import com.customer.data.home.HomeApi
+import com.customer.data.mine.MineApi
 import kotlinx.android.synthetic.main.fragment_home.*
 
 /**
@@ -26,6 +29,12 @@ class HomePresenter : BaseMvpPresenter<HomeFragment>() {
                     mView.msg1 = it.countList.`_$0`
                     mView.msg2 = it.countList.`_$2`
                     mView.msg3 = it.countList.`_$3`
+                    mView.msg4 = it.countList.`_$5`
+                }
+            }
+            onFailed {
+                if (it.getCode() == 2003){
+                    GlobalDialog.otherLogin(mView.requireActivity())
                 }
             }
         }
@@ -42,5 +51,7 @@ class HomePresenter : BaseMvpPresenter<HomeFragment>() {
             }
         }
     }
+
+
 
 }

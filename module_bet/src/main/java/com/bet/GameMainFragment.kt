@@ -19,6 +19,7 @@ import com.lib.basiclib.base.adapter.BaseFragmentPageAdapter
 import com.lib.basiclib.base.mvp.BaseMvpFragment
 import com.lib.basiclib.utils.FastClickUtil
 import com.lib.basiclib.utils.StatusBarUtils
+import com.lib.basiclib.utils.ToastUtils
 import com.lib.basiclib.utils.ViewUtils
 import com.lib.basiclib.widget.tab.ViewPagerHelper
 import com.lib.basiclib.widget.tab.buildins.commonnavigator.CommonNavigator
@@ -55,6 +56,7 @@ class GameMainFragment : BaseMvpFragment<GameMainPresenter>(), ITheme, IMode {
             tvAppMode.text = "直播版"
         } else {
             tvAppMode.text = "纯净版"
+            tvNoticeMassages?.start()
         }
         setTheme(UserInfoSp.getThem())
         setMode(UserInfoSp.getAppMode())
@@ -82,6 +84,8 @@ class GameMainFragment : BaseMvpFragment<GameMainPresenter>(), ITheme, IMode {
                             UserInfoSp.putAppMode(AppMode.Pure)
                             RxBus.get().post(AppChangeMode(AppMode.Pure))
                             setVisible(betMarquee)
+                            RxBus.get().post(ChangeSkin(1))
+                            UserInfoSp.putThem(1)
                         } else {
                             tvAppMode.text = "直播版"
                             UserInfoSp.putAppMode(AppMode.Normal)
@@ -121,6 +125,11 @@ class GameMainFragment : BaseMvpFragment<GameMainPresenter>(), ITheme, IMode {
                 commonNavigator?.fullScroll()
             }
         }
+        tvReGet.setOnClickListener {
+            if (!FastClickUtil.isFastClick()){
+                mPresenter.getAllGame()
+            }
+        }
     }
 
     fun initViewPager(data: ArrayList<GameAll>) {
@@ -132,7 +141,9 @@ class GameMainFragment : BaseMvpFragment<GameMainPresenter>(), ITheme, IMode {
                 GameMainChildOtherFragment.newInstance(3, data = data),
                 GameMainChildOtherFragment.newInstance(4, data = data),
                 GameMainChildOtherFragment.newInstance(5, data = data),
-                GameMainChildOtherFragment.newInstance(6, data = data)
+                GameMainChildOtherFragment.newInstance(6, data = data),
+                GameMainChildOtherFragment.newInstance(7, data = data),
+                GameMainChildOtherFragment.newInstance(8, data = data)
             )
             val adapter = BaseFragmentPageAdapter(childFragmentManager, fragments)
             vpGame?.adapter = adapter
@@ -223,15 +234,18 @@ class GameMainFragment : BaseMvpFragment<GameMainPresenter>(), ITheme, IMode {
     //========= 公告 =========
     fun upDateSystemNotice(data: List<HomeSystemNoticeResponse>?) {
         val result = ArrayList<String>()
-        val sb = StringBuffer()
         if (data != null && data.isNotEmpty()) {
             data.forEachIndexed { index, value ->
-                val s = (index + 1).toString() + "." + value.content + "        "
-                sb.append(s)
                 result.add((index + 1).toString() + "." + value.content)
             }
-        } else sb.append("暂无公告。")
-        tvNoticeMassages.setText(sb.toString())
+        } else result.add("暂无公告。")
+        tvNoticeMassages.setContentList(result)
+        tvNoticeMassages.setOnClickListener {
+            if (!FastClickUtil.isFastClick()){
+                Router.withApi(ApiRouter::class.java)
+                    .toGlobalWeb("", true, data?.get(tvNoticeMassages.displayedChild)?.id ?: "-1")
+            }
+        }
     }
 
     //换肤
@@ -265,7 +279,7 @@ class GameMainFragment : BaseMvpFragment<GameMainPresenter>(), ITheme, IMode {
                 setGone(imgBetUserIcon)
                 setGone(gameCustomer)
                 tvTopName.text = "游戏中心"
-
+                tvNoticeMassages?.start()
             }
             AppMode.Pure -> {
                 tvAppMode.text = "直播版"
@@ -277,7 +291,4 @@ class GameMainFragment : BaseMvpFragment<GameMainPresenter>(), ITheme, IMode {
             }
         }
     }
-
-
-
 }

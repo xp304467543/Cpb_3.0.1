@@ -39,4 +39,10 @@ class MineScanResultAct : BaseNavActivity() {
             }
         }
     }
+
+    override fun initEvent() {
+        tvLoginCancel?.setOnClickListener {
+            finish()
+        }
+    }
 }

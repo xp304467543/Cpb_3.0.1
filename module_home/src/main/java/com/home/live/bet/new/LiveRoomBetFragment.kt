@@ -15,6 +15,7 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.viewpager.widget.ViewPager
+import com.customer.ApiRouter
 import com.customer.component.dialog.BottomBetAccessDialog
 import com.customer.component.dialog.BottomDialogFragment
 import com.customer.component.dialog.DialogGlobalTips
@@ -41,6 +42,7 @@ import com.lib.basiclib.base.adapter.BaseFragmentPageAdapter
 import com.lib.basiclib.utils.FastClickUtil
 import com.lib.basiclib.utils.ToastUtils
 import com.lib.basiclib.utils.ViewUtils
+import com.xiaojinzi.component.impl.Router
 import kotlinx.android.synthetic.main.fragment_live_room_bet_content.*
 import kotlinx.android.synthetic.main.old_dialog_lottery_select.*
 import java.math.BigDecimal
@@ -187,24 +189,29 @@ class LiveRoomBetFragment : BottomDialogFragment() {
             }
         }
         rootView?.findViewById<TextView>(R.id.tvBetTools)?.setOnClickListener {
-            liveRoomBetToolsFragment =
-                LiveRoomBetToolsFragment.newInstance(lotteryID = currentLotteryId, isssue = "")
-            fragmentManager?.let { it1 ->
-                liveRoomBetToolsFragment?.show(
-                    it1,
-                    "LiveRoomBetToolsFragment"
-                )
+            if (!FastClickUtil.isFastClick()){
+                liveRoomBetToolsFragment =
+                    LiveRoomBetToolsFragment.newInstance(lotteryID = currentLotteryId, isssue = "")
+                fragmentManager?.let { it1 ->
+                    liveRoomBetToolsFragment?.show(
+                        it1,
+                        "LiveRoomBetToolsFragment"
+                    )
+                }
             }
         }
         radioGroupLayout = rootView?.findViewById(R.id.radioGroupLayout)
         rootView?.findViewById<TextView>(R.id.tvBetRecord)?.setOnClickListener {
-            liveRoomBetRecordFragment = LiveRoomBetRecordFragment()
-            fragmentManager?.let { it1 ->
-                liveRoomBetRecordFragment?.show(
-                    it1,
-                    "liveRoomBetRecordFragment"
-                )
+            if (!FastClickUtil.isFastClick()){
+                liveRoomBetRecordFragment = LiveRoomBetRecordFragment()
+                fragmentManager?.let { it1 ->
+                    liveRoomBetRecordFragment?.show(
+                        it1,
+                        "liveRoomBetRecordFragment"
+                    )
+                }
             }
+
         }
         rootView?.findViewById<ImageView>(R.id.imgBetCLose)?.setOnClickListener {
             dismiss()
@@ -323,7 +330,7 @@ class LiveRoomBetFragment : BottomDialogFragment() {
                                 )
                             }
                             tips?.setConfirmClickListener {
-                                RxBus.get().post(HomeJumpToMine(true))
+                               Router.withApi(ApiRouter::class.java).toMineRecharge(0)
                                 tips.dismiss()
                             }
                             tips?.show()
@@ -409,6 +416,15 @@ class LiveRoomBetFragment : BottomDialogFragment() {
                     ).show()
                 }
             } else ToastUtils.showToast("请勿重复点击")
+        }
+        tvUserDiamond?.setOnClickListener {
+            if (!FastClickUtil.isFastClick()){
+                tvUserDiamond?.text = "0"
+                if (is_bl_play == 1){
+                    getUserBalance()
+                }else getUserDiamond()
+            }else ToastUtils.showToast("请勿频繁点击")
+
         }
     }
 

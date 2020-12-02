@@ -134,7 +134,9 @@ class LotteryFragment : BaseMvpFragment<LotteryPresenter>(),ITheme {
         if (isActive()){
             if (eventBean.mode == AppMode.Normal){
                 setVisible(imgVideo)
-            }else setGone(imgVideo)
+            }else{
+                setGone(imgVideo)
+            }
         }
 
     }

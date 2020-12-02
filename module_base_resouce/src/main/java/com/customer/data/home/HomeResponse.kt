@@ -24,7 +24,7 @@ data class HomeBannerResponse(
 // 公告信息
 data class HomeSystemNoticeResponse(
     val msgtype: String?, val trgttype: String?,
-    val trgtuid: String?, val content: String?, val action: String?, val gnrtime: String?
+    val trgtuid: String?, val content: String?, val action: String?, val gnrtime: String?,val id:String?
 )
 
 // 彩种列表
@@ -157,7 +157,8 @@ data class MineNewMsg(var msgCount: Int, var countList: MineNewBean)
 data class MineNewBean(
     @SerializedName("0") var `_$0`: String,
     @SerializedName("2") var `_$2`: String,
-    @SerializedName("3") var `_$3`: String
+    @SerializedName("3") var `_$3`: String,
+    @SerializedName("5") var `_$5`: String
 )
 
 
@@ -194,10 +195,8 @@ data class Update(
 
 
 //系统公告
-data class SystemNotice(
-    var msg_id: String?, var msg_type: String?, var content: String?, var create_time: String?
-    , var createtime_txt: String?
-)
+data class SystemNotice(var name: String?, var data: List<SystemNoticeChild>?)
+data class SystemNoticeChild(val msg_id:String?,val msg_type:String?,val ctype:String?,val title:String?,val content:String?,val create_time:String?)
 
 //首页游戏
 data class Game(var id: String?, var name: String?, var img_url: String?,var type:String?)

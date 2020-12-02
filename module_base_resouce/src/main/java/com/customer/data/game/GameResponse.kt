@@ -52,4 +52,4 @@ data class GameChess(val play_time:Long?,val sz_server_name:String?,val prize:St
 
 data class GameAgLive(val bet_time:Long?,val game_name:String?,val prize:String?,val amount:String?)
 
-data class GameAg(val billtime:Long?,val game_name:String?,val prize:String?,val amount:String?)
+data class GameAg(val billtime:Long?,val game_name:String?,val prize:String?,val amount:String?,val order_time:Long?)

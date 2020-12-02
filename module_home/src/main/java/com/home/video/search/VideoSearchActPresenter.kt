@@ -46,7 +46,9 @@ class VideoSearchActPresenter : BaseMvpPresenter<VideoSearchAct>() {
                 }
                 onFailed {
                     ViewUtils.setVisible(mView.searchHolder)
-                    ToastUtils.showToast(it.getMsg())
+                    if (it.getCode()!=1001){
+                        ToastUtils.showToast(it.getMsg())
+                    }
                 }
             }
         }
