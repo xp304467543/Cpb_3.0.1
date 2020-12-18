@@ -12,7 +12,8 @@ object AppConstant {
 
     //是否代理  true为官方  false 为代理
 
-    var isMain = true
+    var isMain = false
+    var version = "3.1.0"
 
 
 }

@@ -22,16 +22,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imgGameClose"
-            android:layout_width="@dimen/dp_30"
-            android:layout_height="@dimen/dp_12"
-            android:layout_marginTop="@dimen/dp_5"
-            android:layout_marginStart="@dimen/dp_5"
-            android:visibility="gone"
-            android:src="@mipmap/ic_code_close"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+
 
         <ImageView
             android:id="@+id/imgRecentType"
@@ -43,7 +34,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgGameClose"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_12"
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_marginStart="@dimen/dp_5"
+            android:visibility="gone"
+            android:src="@mipmap/ic_code_close"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
         <TextView
             android:id="@+id/tvGameRecentName"
             android:layout_width="wrap_content"

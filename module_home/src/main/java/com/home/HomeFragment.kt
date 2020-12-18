@@ -1,5 +1,6 @@
 package com.home
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.view.animation.Animation
 import android.view.animation.AnimationSet
@@ -9,6 +10,7 @@ import com.customer.ApiRouter
 import com.customer.adapter.TabScaleAdapter
 import com.customer.component.dialog.GlobalDialog
 import com.customer.data.*
+import com.customer.data.login.LoginSuccess
 import com.customer.data.mine.ChangeSkin
 import com.customer.data.mine.UpDateUserPhoto
 import com.glide.GlideUtil
@@ -21,6 +23,7 @@ import com.lib.basiclib.base.adapter.BaseFragmentPageAdapter
 import com.lib.basiclib.base.fragment.BaseFragment
 import com.lib.basiclib.base.mvp.BaseMvpFragment
 import com.lib.basiclib.utils.FastClickUtil
+import com.lib.basiclib.utils.LogUtils
 import com.lib.basiclib.utils.StatusBarUtils
 import com.lib.basiclib.utils.ViewUtils
 import com.lib.basiclib.widget.tab.ViewPagerHelper
@@ -43,7 +46,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme, IMode {
     var msg1 = ""
     var msg2 = ""
     var msg3 = ""
-    var msg4 =""
+    var msg4 = ""
 
     override fun attachView() = mPresenter.attachView(this)
 
@@ -66,9 +69,9 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme, IMode {
             mPresenter.getNewMsg()
             mPresenter.getRedTask()
         } else imgHomeUserIcon.setImageResource(R.mipmap.ic_base_user)
-        if (UserInfoSp.getIsShowAppModeChange()){
+        if (UserInfoSp.getIsShowAppModeChange()) {
             setVisible(homeAppSwitchMode)
-        }else setGone(homeAppSwitchMode)
+        } else setGone(homeAppSwitchMode)
     }
 
 
@@ -81,9 +84,12 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme, IMode {
             tvAppMode.text = "纯净版"
             setTheme(Theme.Default)
         }
-        StatusBarUtils.setStatusBarHeight(statusViewHome)
-        initViewPager()
+        if ((UserInfoSp.getVipLevel() ?: "0").toInt() > 0) {
+            titleList = arrayListOf("热门", "影视区")
+            homeSwitchViewPager?.setScroll(true)
+        } else homeSwitchViewPager?.setScroll(false)
         initTopTab()
+        StatusBarUtils.setStatusBarHeight(statusViewHome)
         setMode(UserInfoSp.getAppMode())
     }
 
@@ -134,7 +140,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme, IMode {
                 GlobalDialog.notLogged(requireActivity())
                 return@setOnClickListener
             }
-            Router.withApi(ApiRouter::class.java).toMineMessage(msg1, msg2, msg3,msg4)
+            Router.withApi(ApiRouter::class.java).toMineMessage(msg1, msg2, msg3, msg4)
         }
         imgHomeTopSearch.setOnClickListener {
             if (homeSwitchViewPager.currentItem == 0) {
@@ -178,24 +184,25 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme, IMode {
         }
     }
 
-    private fun initViewPager() {
+
+    var titleList = arrayListOf("热门")
+    var topAdapter: TabScaleAdapter? = null
+    var commonNavigator: CommonNavigator? = null
+    fun initTopTab() {
         val fragments = arrayListOf<BaseFragment>(HomeRecommendNewFragment(), HomeVideoFragment())
         val adapter = BaseFragmentPageAdapter(childFragmentManager, fragments)
         homeSwitchViewPager.adapter = adapter
-    }
-
-    private fun initTopTab() {
-        val mDataList = arrayListOf("热门", "影视区")
-        val commonNavigator = CommonNavigator(context)
-        commonNavigator.scrollPivotX = 0.65f
-        commonNavigator.adapter = TabScaleAdapter(
-            titleList = mDataList,
+        commonNavigator = CommonNavigator(context)
+        commonNavigator?.scrollPivotX = 0.65f
+        topAdapter = TabScaleAdapter(
+            titleList = titleList,
             viewPage = homeSwitchViewPager,
             normalColor = ViewUtils.getColor(R.color.white),
             selectedColor = ViewUtils.getColor(R.color.white),
             colorLine = ViewUtils.getColor(R.color.white),
             isChange = false
         )
+        commonNavigator?.adapter = topAdapter
         homeSwitchVideoTab.navigator = commonNavigator
         ViewPagerHelper.bind(homeSwitchVideoTab, homeSwitchViewPager)
     }
@@ -206,13 +213,15 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme, IMode {
             Theme.Default -> {
                 imgHomeUserRecharge.setTextColor(ViewUtils.getColor(R.color.alivc_orange))
                 imgHomeBg.setImageResource(R.drawable.ic_them_default_top)
-                imgHomeUserRecharge.background = ViewUtils.getDrawable(R.mipmap.ic_home_top_recharge)
+                imgHomeUserRecharge.background =
+                    ViewUtils.getDrawable(R.mipmap.ic_home_top_recharge)
                 homeCustomer.background = ViewUtils.getDrawable(R.mipmap.ic_customer)
             }
             Theme.NewYear -> {
                 imgHomeUserRecharge.setTextColor(ViewUtils.getColor(R.color.color_FF513E))
                 imgHomeBg.setImageResource(R.drawable.ic_them_newyear_top)
-                imgHomeUserRecharge.background = ViewUtils.getDrawable(R.mipmap.ic_home_top_recharge)
+                imgHomeUserRecharge.background =
+                    ViewUtils.getDrawable(R.mipmap.ic_home_top_recharge)
                 homeCustomer.background = ViewUtils.getDrawable(R.mipmap.ic_customer_xn)
             }
             Theme.MidAutumn -> {
@@ -230,7 +239,8 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme, IMode {
             Theme.NationDay -> {
                 imgHomeUserRecharge.setTextColor(ViewUtils.getColor(R.color.color_EF7E12))
                 imgHomeBg.setImageResource(R.drawable.ic_them_gq_top)
-                imgHomeUserRecharge.background = ViewUtils.getDrawable(R.mipmap.ic_home_top_recharge)
+                imgHomeUserRecharge.background =
+                    ViewUtils.getDrawable(R.mipmap.ic_home_top_recharge)
                 homeCustomer.background = ViewUtils.getDrawable(R.mipmap.ic_customer_gq)
             }
         }
@@ -270,12 +280,62 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme, IMode {
     @Subscribe(thread = EventThread.MAIN_THREAD)
     fun loginOut(eventBean: LoginOut) {
         if (isActive() && imgHomeUserIcon != null) imgHomeUserIcon?.setImageResource(R.mipmap.ic_base_user)
+        if (isActive()) {
+            titleList = arrayListOf("热门")
+            topAdapter = TabScaleAdapter(
+                titleList = titleList,
+                viewPage = homeSwitchViewPager,
+                normalColor = ViewUtils.getColor(R.color.white),
+                selectedColor = ViewUtils.getColor(R.color.white),
+                colorLine = ViewUtils.getColor(R.color.white),
+                isChange = false
+            )
+            commonNavigator?.adapter = topAdapter
+            homeSwitchVideoTab.navigator = commonNavigator
+            ViewPagerHelper.bind(homeSwitchVideoTab, homeSwitchViewPager)
+            homeSwitchViewPager?.setScroll(false)
+            homeSwitchViewPager?.currentItem = 0
+        }
     }
+
+    //扫码登录后退出
+    @Subscribe(thread = EventThread.MAIN_THREAD)
+    fun scanLoginOut(eventBean: MineUserScanLoginOut) {
+        if (isActive()) {
+            titleList = arrayListOf("热门")
+            topAdapter = TabScaleAdapter(
+                titleList = titleList,
+                viewPage = homeSwitchViewPager,
+                normalColor = ViewUtils.getColor(R.color.white),
+                selectedColor = ViewUtils.getColor(R.color.white),
+                colorLine = ViewUtils.getColor(R.color.white),
+                isChange = false
+            )
+            commonNavigator?.adapter = topAdapter
+            homeSwitchVideoTab.navigator = commonNavigator
+            ViewPagerHelper.bind(homeSwitchVideoTab, homeSwitchViewPager)
+            homeSwitchViewPager?.setScroll(false)
+            homeSwitchViewPager?.currentItem = 0
+        }
+
+    }
+
+    @SuppressLint("SetTextI18n")
+    @Subscribe(thread = EventThread.MAIN_THREAD)
+    fun login(eventBean: LoginSuccess) {
+        mPresenter.getHomeTitle()
+    }
+
+    @Subscribe(thread = EventThread.MAIN_THREAD)
+    fun refresh(eventBean: HomeRefresh) {
+        if (UserInfoSp.getVipLevel() ?: "0" == "0") mPresenter.getHomeTitle()
+    }
+
 
     //纯净版切换
     @Subscribe(thread = EventThread.MAIN_THREAD)
     fun changeMode(eventBean: AppChangeMode) {
-        if (isActive()){
+        if (isActive()) {
             setMode(eventBean.mode)
         }
     }
@@ -287,4 +347,6 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme, IMode {
             tvAppMode?.text = "纯净版"
         }
     }
+
+
 }

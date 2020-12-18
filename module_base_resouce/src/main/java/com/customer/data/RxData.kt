@@ -54,7 +54,7 @@ data class LiveAnimClose(var closeOrOpen:Boolean)
 
 
 //直播间人数
-data class OnLineInfo(var online:Int?)
+data class OnLineInfo(var online:Int)
 
 data class LineCheck(var url:String,var boolean:Boolean = false)
 
@@ -118,3 +118,5 @@ data class CodeOpen(val data:String?)
 data class BankAddSuccess(var boolean: Boolean)
 
 data class BankCardChoose(var no: String,var userName:String)
+
+data class HomeRefresh(var op:Boolean = true)

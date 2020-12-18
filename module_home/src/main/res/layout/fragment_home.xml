@@ -147,7 +147,7 @@
     </LinearLayout>
 
 
-    <androidx.viewpager.widget.ViewPager
+    <com.customer.component.NoScrollViewPager
         android:id="@+id/homeSwitchViewPager"
         android:layout_width="match_parent"
         android:layout_height="0dp"

@@ -54,6 +54,7 @@ class LiveRoomActivity : BaseNormalMvpActivity<LiveActPresenter>() {
     lateinit var rId: String
     lateinit var name: String
     lateinit var avatar: String
+    var baseOnLine = 0
 
     private var inputPopWindow: InputPopWindowHor? = null
 
@@ -211,6 +212,7 @@ class LiveRoomActivity : BaseNormalMvpActivity<LiveActPresenter>() {
         onLine = data.online ?: "-1"
         name = data.name ?: "-1"
         avatar = data.avatar ?: "-1"
+        baseOnLine = data.base_online ?:0
         LiveRoomHelper.titleView.setInfo(data.nickname, data.online, data.avatar, data.anchor_id)
         LiveRoomHelper.bottomController.setInfo(data.nickname, data.online, data.anchor_id)
         if (data.live_status == "1") {
@@ -435,7 +437,7 @@ class LiveRoomActivity : BaseNormalMvpActivity<LiveActPresenter>() {
     @Subscribe(thread = EventThread.MAIN_THREAD)
     fun enter(eventBean: OnLineInfo) {
         if (LiveRoomHelper.bottomController.tvNum != null) {
-            LiveRoomHelper.bottomController.tvNum.text = eventBean.online.toString() + " 人"
+            LiveRoomHelper.bottomController.tvNum.text = (baseOnLine+eventBean.online).toString() + " 人"
         }
     }
 

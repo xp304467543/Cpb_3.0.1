@@ -406,7 +406,7 @@ object GlideUtil : AppGlideModule() {
      * true 不缓存 false 缓存
      */
     private fun isSkipMemoryCache(): Boolean {
-        return true
+        return false
     }
 
 

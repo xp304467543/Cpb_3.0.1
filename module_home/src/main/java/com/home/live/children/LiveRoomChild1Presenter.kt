@@ -176,7 +176,7 @@ class LiveRoomChild1Presenter(private val anchorId: String) : BaseMvpPresenter<L
             if (mView.isActive()) {
                 onSuccess {
                     //通知scoket
-//                    notifySocket(LiveRoomChatPresenterHelper.getGifParams(anchorId, "1", "", bean.git_name, "", bean.giftCount, "", bean.gift_id, bean.gift_icon))
+//       notifySocket(LiveRoomChatPresenterHelper.getGifParams(anchorId, "1", "", bean.git_name, "", bean.giftCount, "", bean.gift_id, bean.gift_icon))
                     mView.showToast()
                     if (!mView.getScreenFull()) RxBus.get().post(UpDataHorDiamon(true))
                     RxBus.get().post(GiftSendSuccess(gift_id))
@@ -546,8 +546,7 @@ class LiveRoomChild1Presenter(private val anchorId: String) : BaseMvpPresenter<L
                                 }
                             }
                             "update_online" -> {
-                                RxBus.get()
-                                    .post(OnLineInfo(data.data!!.asJsonObject.get("online").asInt))
+                                RxBus.get().post(OnLineInfo(data.data?.asJsonObject?.get("online")?.asInt?:0))
                             }
                             "push_open_issue" -> {
                                 val res = data.data!!.asJsonArray

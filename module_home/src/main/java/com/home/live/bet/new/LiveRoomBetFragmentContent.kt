@@ -752,8 +752,9 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
                             }
                         }
                     }
-//                    if (betList.isNotEmpty()) ViewUtils.setVisible(bottomGameBetLayout) else setGone(bottomGameBetLayout)
-//                    mPresenter.setTotal()
+//                    if (betList.isNotEmpty()) ViewUtils.setVisible(bottomGameBetLayout) else ViewUtils.setGone(bottomGameBetLayout)
+//                    setTotal()
+                    RxBus.get().post(LotteryLiveBet(rightTop, betList))
                 }
             }
         }

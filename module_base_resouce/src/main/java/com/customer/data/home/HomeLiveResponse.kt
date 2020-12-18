@@ -26,7 +26,7 @@ data class HomeLiveEnterRoomResponse(
     val liveEndTimeTxt: String?,
     val online: String?,
     val name: String?,
-    val base_online: String?,
+    val base_online: Int?,
     val liveInfo: List<HomeLiveRoomListBean>? = null,
     val red_paper: List<HomeLiveRedRoom>? = null,
     val isFollow: Boolean,

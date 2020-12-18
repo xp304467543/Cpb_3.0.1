@@ -408,13 +408,23 @@ class MineGameReportMoreInfoAct : BaseMvpActivity<MineGameReportMoreInfoPresente
         override fun getItemLayoutId(viewType: Int) = R.layout.adapter_game_info
         override fun bindData(holder: RecyclerViewHolder, position: Int, data: GameAg?) {
             try {
+                val tv1 = holder.findViewById<TextView>(R.id.tvOdds)
+                val tv2 = holder.findViewById<TextView>(R.id.tv_5)
                 when(gameType){
-                    5,6 ->{
+                    5,6,7,8 ->{
                         holder.text(R.id.tv_1,TimeUtils.longToDateString(data?.order_time?:0))
                     }
                     else ->{
                         holder.text(R.id.tv_1,TimeUtils.longToDateString(data?.billtime?:0))
                     }
+                }
+                if (gameType == 8){
+                    setVisible(tv1)
+                    setVisible(tv2)
+                    holder.text(R.id.tv_5,data?.odds)
+                }else{
+                    setGone(tv1)
+                    setGone(tv2)
                 }
 
                 holder.text(R.id.tv_2,data?.game_name)

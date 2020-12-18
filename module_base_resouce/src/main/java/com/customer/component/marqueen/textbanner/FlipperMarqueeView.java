@@ -57,7 +57,7 @@ public class FlipperMarqueeView extends ViewFlipper {
                 final ScrollTextView currentView = (ScrollTextView) getCurrentView();
                 final int dx = currentView.getTextWidth() - currentView.getWidth();
                 if (dx > 0) {
-                    postDelayed(() -> currentView.start(dx), 500);
+                    postDelayed(() -> currentView.start(dx), 1000);
                 }
             }
 
@@ -85,7 +85,7 @@ public class FlipperMarqueeView extends ViewFlipper {
         public void run() {
             if (isStart) {
                 showNext();
-                postDelayed(flipRunnable, 9000);
+                postDelayed(flipRunnable, 28000);
             }
         }
     };
@@ -119,7 +119,7 @@ public class FlipperMarqueeView extends ViewFlipper {
 
             //设置跑马灯动画
             animator.setInterpolator(new LinearInterpolator());
-            animator.setDuration(7000);
+            animator.setDuration(25000);
             animator.addUpdateListener(animation -> {
                 dx = -(int) animation.getAnimatedValue();
                 invalidate();

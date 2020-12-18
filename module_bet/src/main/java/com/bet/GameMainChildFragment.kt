@@ -1,4 +1,5 @@
 package com.bet
+
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -36,7 +37,7 @@ class GameMainChildFragment : BaseNormalFragment<GameMainChildFragmentPresenter>
 
 
     private var adapter1: Adapter1? = null
-    private var rvGameUseContent:RecyclerView?=null
+    private var rvGameUseContent: RecyclerView? = null
 
     override fun isRegisterRxBus() = true
 
@@ -47,33 +48,30 @@ class GameMainChildFragment : BaseNormalFragment<GameMainChildFragmentPresenter>
     override fun getLayoutRes() = R.layout.fragment_game_child
 
 
-
-
     override fun initData() {
 
-        val data = arguments?.getParcelableArrayList<GameAll>("gameData")
-        if (data.isNullOrEmpty()) return
+        val data = arguments?.getParcelable<GameAll>("gameData") ?: return
         initRecently(data)
         initRecommend(data)
     }
 
     private var recentlyAdapter: Adapter0? = null
-    private fun initRecently(data: ArrayList<GameAll>) {
-        if (!data[0].list?.get(0)?.list.isNullOrEmpty()) {
+    private fun initRecently(data: GameAll) {
+        if (!data.list?.get(0)?.list.isNullOrEmpty()) {
             //最近使用
             recentlyAdapter = Adapter0()
             rvGameUse?.adapter = recentlyAdapter
             rvGameUse?.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             val scrollHelper = PagingScrollHelper()
-           if (rvGameUseContent!=null) scrollHelper.setUpRecycleView(rvGameUseContent)
+            if (rvGameUseContent != null) scrollHelper.setUpRecycleView(rvGameUseContent)
             //设置页面滚动监听
-            recentlyAdapter?.refresh(data[0].list?.get(0)?.list)
+            recentlyAdapter?.refresh(data.list?.get(0)?.list)
             setVisible(linRecently)
         }
     }
 
-    fun initHot(data: ArrayList<GameAll>, isUpDateTop: Boolean) {
+    fun initHot(data: GameAll, isUpDateTop: Boolean) {
         initRecently(data)
         if (!isUpDateTop) initRecommend(data)
     }
@@ -89,9 +87,9 @@ class GameMainChildFragment : BaseNormalFragment<GameMainChildFragmentPresenter>
 
 
     //构造热门推荐数据
-    private fun initRecommend(data: ArrayList<GameAll>) {
-        if (data[0].list.isNullOrEmpty()) return
-        val result = data[0].list?.size?.let { data[0].list?.subList(1, it) }?.toMutableList()
+    private fun initRecommend(data: GameAll) {
+        if (data.list.isNullOrEmpty()) return
+        val result = data.list?.size?.let { data.list?.subList(1, it) }?.toMutableList()
         val listData = arrayListOf<GameAllChild1>()
         if (!result.isNullOrEmpty()) {
             for (x in result) {
@@ -161,6 +159,8 @@ class GameMainChildFragment : BaseNormalFragment<GameMainChildFragmentPresenter>
                     "ag_slot" -> mPresenter.getAgDz()
                     "bg_live" -> mPresenter.getBgSx()
                     "bg_fish" -> mPresenter.getBgFish(data.id.toString())
+                    "ky" -> mPresenter.getKy(data.id.toString())
+                    "ibc" -> mPresenter.getSb(data.id.toString())
                 }
             }
         }
@@ -246,7 +246,9 @@ class GameMainChildFragment : BaseNormalFragment<GameMainChildFragmentPresenter>
                             "ag_live" -> mPresenter.getAg()
                             "ag_slot" -> mPresenter.getAgDz()
                             "bg_live" -> mPresenter.getBgSx()
-                            "bg_fish" -> mPresenter.getBgFish(data?.id.toString())
+                            "bg_fish" -> mPresenter.getBgFish(data.id.toString())
+                            "ky" -> mPresenter.getKy(data.id.toString())
+                            "ibc" -> mPresenter.getSb(data.id.toString())
                         }
                     }
                 }
@@ -301,19 +303,19 @@ class GameMainChildFragment : BaseNormalFragment<GameMainChildFragmentPresenter>
         if (isActive()) {
             if (eventBean.data.isNullOrEmpty()) return
             val array = arrayListOf<String>()
-            for (item in eventBean.data!!){
+            for (item in eventBean.data!!) {
                 array.add(item.lotteryId.toString())
             }
             val data1 = recentlyAdapter?.data
-            if (!data1.isNullOrEmpty()){
-                for ((num,result) in data1.withIndex()){
-                    if (result.type == "lott" && array.contains(result.id)){
-                        if (!result.isOpen){
+            if (!data1.isNullOrEmpty()) {
+                for ((num, result) in data1.withIndex()) {
+                    if (result.type == "lott" && array.contains(result.id)) {
+                        if (!result.isOpen) {
                             result.isOpen = true
                             recentlyAdapter?.refresh(num, result)
                         }
-                    }else{
-                        if (result.isOpen){
+                    } else {
+                        if (result.isOpen) {
                             result.isOpen = false
                             recentlyAdapter?.refresh(num, result)
                         }
@@ -321,15 +323,15 @@ class GameMainChildFragment : BaseNormalFragment<GameMainChildFragmentPresenter>
                 }
             }
             val data2 = adapter1?.data
-            if (!data2.isNullOrEmpty()){
-                for ((index,result2) in data2.withIndex()){
-                    if (result2.type == "lott" && array.contains(result2.id)){
-                        if (!result2.isOpen){
+            if (!data2.isNullOrEmpty()) {
+                for ((index, result2) in data2.withIndex()) {
+                    if (result2.type == "lott" && array.contains(result2.id)) {
+                        if (!result2.isOpen) {
                             result2.isOpen = true
                             adapter1?.refresh(index, result2)
                         }
-                    }else{
-                        if (result2.isOpen){
+                    } else {
+                        if (result2.isOpen) {
                             result2.isOpen = false
                             adapter1?.refresh(index, result2)
                         }
@@ -344,33 +346,33 @@ class GameMainChildFragment : BaseNormalFragment<GameMainChildFragmentPresenter>
     @Subscribe(thread = EventThread.MAIN_THREAD)
     fun codeOpen(eventBean: CodeOpen) {
         if (isActive()) {
-                val data1 = recentlyAdapter?.data
-                if (!data1.isNullOrEmpty()) {
-                    for ((index, res) in data1.withIndex()) {
-                        if (res.type == "lott" && res.isOpen) {
-                            res.isOpen = false
-                            recentlyAdapter?.refresh(index, res)
-                        }
+            val data1 = recentlyAdapter?.data
+            if (!data1.isNullOrEmpty()) {
+                for ((index, res) in data1.withIndex()) {
+                    if (res.type == "lott" && res.isOpen) {
+                        res.isOpen = false
+                        recentlyAdapter?.refresh(index, res)
                     }
                 }
-                val data2 = adapter1?.data
-                if (!data2.isNullOrEmpty()) {
-                    for ((index, res) in data2.withIndex()) {
-                        if (res.type == "lott" && res.isOpen) {
-                                res.isOpen = false
-                                adapter1?.refresh(index, res)
-                        }
+            }
+            val data2 = adapter1?.data
+            if (!data2.isNullOrEmpty()) {
+                for ((index, res) in data2.withIndex()) {
+                    if (res.type == "lott" && res.isOpen) {
+                        res.isOpen = false
+                        adapter1?.refresh(index, res)
                     }
                 }
+            }
         }
     }
 
     companion object {
-        fun newInstance(index: Int, data: ArrayList<GameAll>): GameMainChildFragment {
+        fun newInstance(index: Int, data: GameAll): GameMainChildFragment {
             val fragment = GameMainChildFragment()
             val bundle = Bundle()
             bundle.putInt("indexGame", index)
-            bundle.putParcelableArrayList("gameData", data)
+            bundle.putParcelable("gameData", data)
             fragment.arguments = bundle
             return fragment
         }

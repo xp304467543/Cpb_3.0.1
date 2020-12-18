@@ -6,6 +6,7 @@ import com.customer.data.login.LoginApi
 import com.customer.data.login.LoginResponse
 import com.customer.data.login.LoginSuccess
 import com.customer.data.login.RegisterSuccess
+import com.customer.data.mine.MineApi
 import com.customer.utils.AESUtils
 import com.customer.utils.CountDownTimerUtils
 import com.customer.utils.JsonUtils
@@ -62,7 +63,11 @@ class LoginPresenter : BaseMvpPresenter<LoginAct>(), BaseApi {
     fun userLoginWithPassWord(phone: String, passWord: String, loadMode: String) {
         LoginApi.userLoginWithPassWord(phone, passWord, loadMode) {
             onSuccess {
-                it.data?.asJsonObject?.get("user_type")?.asString?.let { it1 -> UserInfoSp.setUserType(it1) }
+                it.data?.asJsonObject?.get("user_type")?.asString?.let { it1 ->
+                    UserInfoSp.setUserType(
+                        it1
+                    )
+                }
                 val str = AESUtils.decrypt(getBase64Key(), it.encryption)
                 val res = str?.let { it1 -> JsonUtils.fromJson(it1, LoginResponse::class.java) }
                 res?.let { result ->
@@ -93,7 +98,8 @@ class LoginPresenter : BaseMvpPresenter<LoginAct>(), BaseApi {
                         )
                     }
                     val str = AESUtils.decrypt(getBase64Key(), it.encryption)
-                    val last = str?.let { it1 -> JsonUtils.fromJson(it1, LoginResponse::class.java) }
+                    val last =
+                        str?.let { it1 -> JsonUtils.fromJson(it1, LoginResponse::class.java) }
                     last?.let { result ->
                         UserInfoSp.putToken(result.token)
                         getLoginInfo("Bearer ${result.token}")
@@ -127,6 +133,8 @@ class LoginPresenter : BaseMvpPresenter<LoginAct>(), BaseApi {
                 }
             }
         }
+
+
     }
 
 
@@ -145,9 +153,14 @@ class LoginPresenter : BaseMvpPresenter<LoginAct>(), BaseApi {
             LoginApi.userRegister(phone, code, password, is_auto_login, market_code) {
                 if (mView.isActive()) {
                     onSuccess {
-                        it.data?.asJsonObject?.get("user_type")?.asString?.let { it1 -> UserInfoSp.setUserType(it1) }
-                        val str = AESUtils.decrypt(getBase64Key(), it.encryption?:"99999999999")
-                        val last = str?.let { it1 -> JsonUtils.fromJson(it1, LoginResponse::class.java) }
+                        it.data?.asJsonObject?.get("user_type")?.asString?.let { it1 ->
+                            UserInfoSp.setUserType(
+                                it1
+                            )
+                        }
+                        val str = AESUtils.decrypt(getBase64Key(), it.encryption ?: "99999999999")
+                        val last =
+                            str?.let { it1 -> JsonUtils.fromJson(it1, LoginResponse::class.java) }
                         last?.let { result ->
                             UserInfoSp.putToken(result.token)
                             UserInfoSp.putRandomStr(result.random_str)

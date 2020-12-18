@@ -45,10 +45,10 @@ class GameMainChildOtherFragment : BaseNormalFragment<GameMainChildOtherFragment
     override fun getLayoutRes() = R.layout.adapter_game_child_other
 
     override fun initData() {
-        val data = arguments?.getParcelableArrayList<GameAll>("gameData")
+        val data = arguments?.getParcelable<GameAll>("gameData")
         index = arguments?.getInt("indexGame") ?: 0
-        if (data?.get(index)?.list.isNullOrEmpty()) return
-        val result = data?.get(index)?.list
+        if (data?.list.isNullOrEmpty()) return
+        val result = data?.list
         //最近使用
         adapter0 = Adapter()
         rvGame.adapter = adapter0
@@ -92,25 +92,25 @@ class GameMainChildOtherFragment : BaseNormalFragment<GameMainChildOtherFragment
                         return@setOnClickListener
                     }
                     showPageLoadingDialog("加载中...")
-                    when (index) {
-                        1 -> {
+                    when (data?.type) {
+                         "lott" -> {
                             hidePageLoadingDialog()
                             Router.withApi(ApiRouter::class.java)
-                                .toLotteryGame(data?.id ?: "-1", data?.name ?: "未知")
+                                .toLotteryGame(data.id ?: "-1", data.name ?: "未知")
                         }
-                        2 -> mPresenter.getChessGame(data?.id.toString())
+                        "fh_chess" -> mPresenter.getChessGame(data.id.toString())
 
-                        3 -> mPresenter.getAg()
+                        "ag_live" -> mPresenter.getAg()
 
-                        4 -> mPresenter.getAgDz()
+                        "ag_slot" -> mPresenter.getAgDz()
 
-                        5 -> mPresenter.getAgBgSx()
+                        "bg_live" -> mPresenter.getAgBgSx()
 
-                        6 -> mPresenter.getBgFish(data?.id ?: "")
+                        "bg_fish" -> mPresenter.getBgFish(data.id ?: "")
 
-                        7 -> mPresenter.getKy(data?.id ?: "")
+                        "ky" -> mPresenter.getKy(data.id ?: "")
 
-                        8 -> mPresenter.getSb(data?.id ?: "")
+                        "ibc" -> mPresenter.getSb(data.id ?: "")
                     }
                 }
             }
@@ -168,11 +168,11 @@ class GameMainChildOtherFragment : BaseNormalFragment<GameMainChildOtherFragment
 
 
     companion object {
-        fun newInstance(index: Int, data: ArrayList<GameAll>): GameMainChildOtherFragment {
+        fun newInstance(index: Int, data: GameAll): GameMainChildOtherFragment {
             val fragment = GameMainChildOtherFragment()
             val bundle = Bundle()
             bundle.putInt("indexGame", index)
-            bundle.putParcelableArrayList("gameData", data)
+            bundle.putParcelable("gameData", data)
             fragment.arguments = bundle
             return fragment
         }

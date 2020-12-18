@@ -97,6 +97,10 @@ class SplashActivity : Activity(), CancelAdapt {
                     ViewUtils.setGone(btWaite)
                     ViewUtils.setVisible(btEnter)
                 }
+                onFailed {
+                    ViewUtils.setGone(btWaite)
+                    ViewUtils.setVisible(btEnter)
+                }
             }
         }else{
             ViewUtils.setGone(btWaite)

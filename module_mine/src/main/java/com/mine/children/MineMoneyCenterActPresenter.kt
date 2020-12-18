@@ -54,8 +54,10 @@ class MineMoneyCenterActPresenter : BaseMvpPresenter<MineMoneyCenterAct>() {
                         getTotalGameCenterMoney()
                     }
                     onFailed {
-                        if (it.getCode() == 16) mView.tv_bg_money.text =
-                            "维护中" else ToastUtils.showToast(it.getMsg())
+                        if (it.getCode() == 16) {
+                            mView.tv_bg_money.text = "维护中"
+                            mView.tv_money_2.text = "维护中"
+                        } else ToastUtils.showToast(it.getMsg())
                         mView.hidePageLoadingDialog()
                         getTotalGameCenterMoney()
                     }
@@ -68,8 +70,10 @@ class MineMoneyCenterActPresenter : BaseMvpPresenter<MineMoneyCenterAct>() {
                         getTotalGameCenterMoney()
                     }
                     onFailed {
-                        if (it.getCode() == 16) mView.tv_ag_money.text =
-                            "维护中" else ToastUtils.showToast(it.getMsg())
+                        if (it.getCode() == 16) {
+                            mView.tv_ag_money.text = "维护中"
+                            mView.tv_money_3.text = "维护中"
+                        } else ToastUtils.showToast(it.getMsg())
                         mView.hidePageLoadingDialog()
                         getTotalGameCenterMoney()
                     }
@@ -82,7 +86,7 @@ class MineMoneyCenterActPresenter : BaseMvpPresenter<MineMoneyCenterAct>() {
                         getTotalGameCenterMoney()
                     }
                     onFailed {
-                        if (it.getCode() == 16) mView.tv_bg_money.text =
+                        if (it.getCode() == 16) mView.tv_money_4.text =
                             "维护中" else ToastUtils.showToast(it.getMsg())
                         mView.hidePageLoadingDialog()
                         getTotalGameCenterMoney()
@@ -96,7 +100,7 @@ class MineMoneyCenterActPresenter : BaseMvpPresenter<MineMoneyCenterAct>() {
                         getTotalGameCenterMoney()
                     }
                     onFailed {
-                        if (it.getCode() == 16) mView.tv_bg_money.text =
+                        if (it.getCode() == 16) mView.tv_money_5.text =
                             "维护中" else ToastUtils.showToast(it.getMsg())
                         mView.hidePageLoadingDialog()
                         getTotalGameCenterMoney()
@@ -126,8 +130,10 @@ class MineMoneyCenterActPresenter : BaseMvpPresenter<MineMoneyCenterAct>() {
                                 getTotalGameCenterMoney()
                             }
                             onFailed {
-                                if (it.getCode() == 16) mView.tv_bg_money.text =
-                                    "维护中" else ToastUtils.showToast(it.getMsg())
+                                if (it.getCode() == 16) {
+                                    mView.tv_bg_money.text = "维护中"
+                                    mView.tv_money_2.text = "维护中"
+                                } else ToastUtils.showToast(it.getMsg())
                                 mView.hidePageLoadingDialog()
                                 getTotalGameCenterMoney()
                             }
@@ -141,8 +147,10 @@ class MineMoneyCenterActPresenter : BaseMvpPresenter<MineMoneyCenterAct>() {
                                 getTotalGameCenterMoney()
                             }
                             onFailed {
-                                if (it.getCode() == 16) mView.tv_ag_money.text =
-                                    "维护中" else ToastUtils.showToast(it.getMsg())
+                                if (it.getCode() == 16) {
+                                    mView.tv_ag_money.text = "维护中"
+                                    mView.tv_money_3.text = "维护中"
+                                } else ToastUtils.showToast(it.getMsg())
                                 mView.hidePageLoadingDialog()
                                 getTotalGameCenterMoney()
                             }
@@ -156,7 +164,7 @@ class MineMoneyCenterActPresenter : BaseMvpPresenter<MineMoneyCenterAct>() {
                                 getTotalGameCenterMoney()
                             }
                             onFailed {
-                                if (it.getCode() == 16) mView.tv_bg_money.text =
+                                if (it.getCode() == 16) mView.tv_money_4.text =
                                     "维护中" else ToastUtils.showToast(it.getMsg())
                                 mView.hidePageLoadingDialog()
                                 getTotalGameCenterMoney()
@@ -171,7 +179,7 @@ class MineMoneyCenterActPresenter : BaseMvpPresenter<MineMoneyCenterAct>() {
                                 getTotalGameCenterMoney()
                             }
                             onFailed {
-                                if (it.getCode() == 16) mView.tv_bg_money.text =
+                                if (it.getCode() == 16) mView.tv_money_5.text =
                                     "维护中" else ToastUtils.showToast(it.getMsg())
                                 mView.hidePageLoadingDialog()
                                 getTotalGameCenterMoney()

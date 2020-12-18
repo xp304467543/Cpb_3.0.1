@@ -1,5 +1,4 @@
 package com.customer.component.dialog.live
-
 import android.content.Context
 import android.graphics.Color
 import android.view.View

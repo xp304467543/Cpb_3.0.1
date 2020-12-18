@@ -1,5 +1,4 @@
 package com.customer.data.home
-
 import com.google.gson.annotations.SerializedName
 
 /**
@@ -177,6 +176,10 @@ data class UpdateData(var version_data: Update?)
 data class RedRain(var amount: String?)
 
 data class Online(var base_online:Long=100,var online:Long=100)
+
+data class HomeTitle(var customer:String?,var index_nav:List<HomeTitleChild>?)
+
+data class HomeTitleChild(var code:String?,var name:String?)
 
 data class RedTask(var prompt: Int?)
 

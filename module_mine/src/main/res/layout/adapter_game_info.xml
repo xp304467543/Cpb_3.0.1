@@ -11,9 +11,9 @@
     <com.lib.basiclib.base.round.RoundLinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginStart="@dimen/dp_5"
         android:layout_marginTop="@dimen/dp_5"
-        android:layout_marginEnd="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_5"
         android:gravity="center"
         android:padding="@dimen/dp_5"
         app:rv_backgroundColor="@color/color_F5F7FA"
@@ -44,6 +44,16 @@
             android:textSize="@dimen/sp_12" />
 
         <TextView
+            android:id="@+id/tvOdds"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="赔率"
+            android:textSize="@dimen/sp_12"
+            android:visibility="gone" />
+
+        <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -58,10 +68,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_10"
-        android:layout_marginEnd="@dimen/dp_10"
+        android:layout_marginStart="@dimen/dp_5"
+        android:layout_marginEnd="@dimen/dp_5"
         android:gravity="center"
-        android:padding="@dimen/dp_10">
+        android:padding="@dimen/dp_5">
 
         <TextView
             android:id="@+id/tv_1"
@@ -86,8 +96,17 @@
             android:layout_weight="1"
             android:gravity="center"
             android:textColor="@color/color_333333"
+            android:textSize="@dimen/sp_12" />
+
+        <TextView
+            android:id="@+id/tv_5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/color_333333"
             android:textSize="@dimen/sp_12"
-            android:textStyle="bold" />
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_4"
@@ -95,7 +114,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:textSize="@dimen/sp_12" />
+            android:textSize="@dimen/sp_12"
+            android:textStyle="bold" />
 
 
     </LinearLayout>

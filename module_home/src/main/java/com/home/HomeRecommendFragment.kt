@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.customer.ApiRouter
 import com.customer.adapter.HomeHotLiveAdapter
 import com.customer.adapter.TabThemAdapter
+import com.customer.data.HomeRefresh
 import com.customer.data.LoginOut
 import com.customer.data.UserInfoSp
 import com.customer.data.home.*
@@ -24,6 +25,7 @@ import com.home.children.LivePreAct
 import com.home.children.MoreAnchorAct
 import com.home.children.NewsAct
 import com.home.weight.HomeLotteryTypeView
+import com.hwangjr.rxbus.RxBus
 import com.hwangjr.rxbus.annotation.Subscribe
 import com.hwangjr.rxbus.thread.EventThread
 import com.lib.basiclib.base.mvp.BaseMvpFragment
@@ -63,6 +65,7 @@ class HomeRecommendFragment : BaseMvpFragment<HomeRecommendPresenter>(), ITheme 
             mPresenter.getAllData(CacheMode.NONE)
             mPresenter.getUserBalance()
             homeSmartRefreshLayout.finishRefresh()
+            RxBus.get().post(HomeRefresh())
         }
         toMoreNews()
         toMorePre()

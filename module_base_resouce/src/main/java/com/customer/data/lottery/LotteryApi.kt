@@ -59,7 +59,7 @@ object LotteryApi : BaseApi {
     fun getLotteryType(): ApiSubscriber<List<LotteryTypeResponse>> {
         val subscriber = object : ApiSubscriber<List<LotteryTypeResponse>>() {}
         getApiOpenLottery()
-            .post<List<LotteryTypeResponse>>(LOTTERY_TYPE)
+            .post<List<LotteryTypeResponse>>(LOTTERY_BET_TYPE)
             .subscribe(subscriber)
         return subscriber
     }

@@ -78,7 +78,7 @@ class HomeRecommendNewPresenter : BaseMvpPresenter<HomeRecommendNewFragment>() {
 
                 resultGetHomeHotLive.onSuccess {
                     mView.hotLiveAdapter?.clear()
-                    mView.rvHotLiveNew.removeAllViews()
+                    mView.rvHotLiveNew?.removeAllViews()
                     mView.hotLiveAdapter?.refresh(it) }
 
                 resultGetHomeLotteryTypeResult.onSuccess {bean ->

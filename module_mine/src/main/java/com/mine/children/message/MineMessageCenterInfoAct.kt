@@ -142,7 +142,7 @@ class MineMessageCenterInfoAct : BaseNavActivity() {
             holder.text(R.id.tvNickName, data?.nickname)
             holder.text(
                 R.id.tvTime,
-                TimeUtils.longToDateStringMDTime(data?.create_time?.toLong() ?: 0)
+               data?.createtime_txt
             )
             holder.text(
                 R.id.content,

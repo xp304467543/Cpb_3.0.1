@@ -1,6 +1,8 @@
 package com.mine.children
 
+import android.annotation.SuppressLint
 import com.customer.ApiRouter
+import com.customer.AppConstant
 import com.customer.component.dialog.DialogGlobalTips
 import com.customer.component.dialog.GlobalDialog
 import com.customer.data.AppChangeMode
@@ -44,12 +46,14 @@ class MineSettingAct : BaseNavActivity() {
     override fun isShowBackIconWhite() = false
 
 
+    @SuppressLint("SetTextI18n")
     override fun initContentView() {
         videoSwitch.isChecked = UserInfoSp.getOpenWindow()
         appModeSwitch.isChecked = UserInfoSp.getIsShowAppModeChange()
         if (UserInfoSp.getAppMode() == AppMode.Pure){
             setGone(linLiveIcon)
         }
+        tvVersion.text = "版本:"+AppConstant.version
     }
 
     override fun initData() {

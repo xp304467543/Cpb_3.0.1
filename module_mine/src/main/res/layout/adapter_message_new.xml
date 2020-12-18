@@ -34,15 +34,15 @@
 
             <com.lib.basiclib.base.round.RoundTextView
                 android:id="@+id/tvMessageNum1"
-                android:layout_width="@dimen/dp_10"
-                android:layout_height="@dimen/dp_10"
-                android:layout_marginStart="@dimen/dp_34"
+                android:layout_width="@dimen/dp_5"
+                android:layout_height="@dimen/dp_5"
+                android:layout_marginStart="@dimen/dp_28"
                 android:layout_marginTop="@dimen/dp_14"
-                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="@+id/img1"
                 app:layout_constraintStart_toStartOf="@+id/img1"
                 app:layout_constraintTop_toTopOf="parent"
                 app:rv_backgroundColor="@color/color_FF513E"
+                android:visibility="gone"
                 app:rv_cornerRadius="@dimen/dp_20" />
 
             <TextView

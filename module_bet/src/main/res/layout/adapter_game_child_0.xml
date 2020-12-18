@@ -19,18 +19,8 @@
             android:id="@+id/imgGameTag"
             android:layout_width="@dimen/dp_30"
             android:layout_height="@dimen/dp_30"
-            android:layout_alignParentEnd="true"/>
+            android:layout_alignParentEnd="true" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imgGameClose"
-            android:layout_width="@dimen/dp_30"
-            android:layout_height="@dimen/dp_12"
-            android:layout_marginTop="@dimen/dp_5"
-            android:layout_marginStart="@dimen/dp_5"
-            android:src="@mipmap/ic_code_close"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,8 +30,8 @@
 
             <ImageView
                 android:id="@+id/imgGameType"
-                android:layout_width="@dimen/dp_70"
-                android:layout_height="@dimen/dp_70"
+                android:layout_width="@dimen/dp_60"
+                android:layout_height="@dimen/dp_60"
                 android:src="@mipmap/ic_placeholder" />
 
             <TextView
@@ -59,8 +49,18 @@
                 android:layout_marginTop="@dimen/dp_3"
                 android:textColor="@color/color_999999"
                 android:textSize="@dimen/sp_10" />
-
         </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgGameClose"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_12"
+            android:layout_marginStart="@dimen/dp_5"
+            android:layout_marginTop="@dimen/dp_5"
+            android:src="@mipmap/ic_code_close"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </RelativeLayout>
 
 </com.customer.component.LCardView>

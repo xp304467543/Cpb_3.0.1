@@ -157,6 +157,9 @@ object HomeApi : BaseApi {
     //在线人数
     private const val GET_ONLINE = "api/v1_1/user/user_online/"
 
+    //导航栏
+    private const val HOME_TITLE = "/api/common/siteConfig/"
+
 
     /**
      * 配置服务器地址
@@ -681,7 +684,7 @@ object HomeApi : BaseApi {
         getApi()
             .get<UpdateData>(VERSION_UPDATE)
             .params("client_type", "android")
-            .params("version", "3.1.3")
+            .params("version",AppConstant.version)
             .subscribe(subscriber)
     }
 
@@ -796,6 +799,20 @@ object HomeApi : BaseApi {
             .subscribe(subscriber)
         return subscriber
 
+    }
+
+    /**
+     * 首页导航
+     */
+    fun getHomeTitle(function: ApiSubscriber<HomeTitle>.() -> Unit){
+        val subscriber = object : ApiSubscriber<HomeTitle>() {}
+        subscriber.function()
+        getApi()
+            .get<HomeTitle>(HOME_TITLE)
+            .headers("token", UserInfoSp.getToken())
+            .params("client", 3)
+            .params("version", AppConstant.version)
+            .subscribe(subscriber)
     }
 
 }

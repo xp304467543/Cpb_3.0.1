@@ -2,9 +2,11 @@ package com.home
 
 import android.annotation.SuppressLint
 import com.customer.component.dialog.GlobalDialog
+import com.customer.data.UserInfoSp
 import com.lib.basiclib.base.mvp.BaseMvpPresenter
 import com.customer.data.home.HomeApi
 import com.customer.data.mine.MineApi
+import com.lib.basiclib.utils.SpUtils
 import kotlinx.android.synthetic.main.fragment_home.*
 
 /**
@@ -52,6 +54,27 @@ class HomePresenter : BaseMvpPresenter<HomeFragment>() {
         }
     }
 
+
+    fun getHomeTitle(){
+        HomeApi.getHomeTitle{
+            onSuccess {
+                if (mView.isActive()){
+                    UserInfoSp.putCustomer(it.customer?:"")
+                    if (!it.index_nav.isNullOrEmpty() && it.index_nav!!.size>1){
+                        mView.homeSwitchViewPager?.setScroll(true)
+                        mView.titleList.clear()
+                        for ( item in it.index_nav!!){
+                            mView.titleList.add(item.name?:"null")
+                        }
+                    }
+                    mView.topAdapter?.notifyDataSetChanged()
+                }
+            }
+            onFailed {
+
+            }
+        }
+    }
 
 
 }

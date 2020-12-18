@@ -134,17 +134,14 @@ class GameMainFragment : BaseMvpFragment<GameMainPresenter>(), ITheme, IMode {
 
     fun initViewPager(data: ArrayList<GameAll>) {
         if (vpGame != null) {
-            val fragments = arrayListOf<Fragment>(
-                GameMainChildFragment.newInstance(0, data = data),
-                GameMainChildOtherFragment.newInstance(1, data = data),
-                GameMainChildOtherFragment.newInstance(2, data = data),
-                GameMainChildOtherFragment.newInstance(3, data = data),
-                GameMainChildOtherFragment.newInstance(4, data = data),
-                GameMainChildOtherFragment.newInstance(5, data = data),
-                GameMainChildOtherFragment.newInstance(6, data = data),
-                GameMainChildOtherFragment.newInstance(7, data = data),
-                GameMainChildOtherFragment.newInstance(8, data = data)
-            )
+            val fragments = arrayListOf<Fragment>()
+            for ((index,item) in data.withIndex()){
+                if (index == 0){
+                   fragments.add(GameMainChildFragment.newInstance(0, data = item))
+                }else {
+                    fragments.add(GameMainChildOtherFragment.newInstance(index, data = item))
+                }
+            }
             val adapter = BaseFragmentPageAdapter(childFragmentManager, fragments)
             vpGame?.adapter = adapter
             val list = arrayListOf<String>()
@@ -239,6 +236,7 @@ class GameMainFragment : BaseMvpFragment<GameMainPresenter>(), ITheme, IMode {
                 result.add((index + 1).toString() + "." + value.content)
             }
         } else result.add("暂无公告。")
+        if (result.size <2)result.add("")
         tvNoticeMassages.setContentList(result)
         tvNoticeMassages.setOnClickListener {
             if (!FastClickUtil.isFastClick()){

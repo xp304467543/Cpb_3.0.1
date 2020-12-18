@@ -76,7 +76,7 @@ class MineMessageActContent : BaseNavFragment() {
         override fun bindData(holder: RecyclerViewHolder, position: Int, data: MineMessageNew?) {
             holder.text(R.id.tv1, data?.title)
             holder.text(R.id.tv1_content, data?.content)
-            holder.text(R.id.tv1_time, TimeUtils.longToDateStringMDTime(data?.create_time ?: 0))
+            holder.text(R.id.tv1_time,  data?.createtime_txt)
             val flag = holder.findViewById<RoundTextView>(R.id.tvMessageNum1)
             val img = holder.findViewById<ImageView>(R.id.img1)
             if (data?.readflag == 0) {

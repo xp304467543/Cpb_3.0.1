@@ -36,7 +36,7 @@ import java.math.BigDecimal
  * @ Describe
  *
  */
-class BottomGiftWindow (context: Context) : BottomSheetDialog(context) {
+class BottomGiftWindow(context: Context) : BottomSheetDialog(context) {
 
 
     var viewPager: ViewPager? = null
@@ -51,7 +51,8 @@ class BottomGiftWindow (context: Context) : BottomSheetDialog(context) {
         val root = delegate?.findViewById<View>(R.id.design_bottom_sheet)
         val behavior = root?.let { BottomSheetBehavior.from(it) }
         behavior?.isHideable = false
-        delegate?.findViewById<View>(R.id.design_bottom_sheet)?.setBackgroundColor(Color.TRANSPARENT)
+        delegate?.findViewById<View>(R.id.design_bottom_sheet)
+            ?.setBackgroundColor(Color.TRANSPARENT)
         initViews()
         iniEvent()
     }
@@ -72,8 +73,15 @@ class BottomGiftWindow (context: Context) : BottomSheetDialog(context) {
             }
             hideLoading()
             RxBus.get().post(
-                HomeLiveAnimatorBean(homeLiveGiftListBean?.id!!, homeLiveGiftListBean?.name!!, homeLiveGiftListBean?.icon!!,
-                ""+UserInfoSp.getUserId(), UserInfoSp.getUserPhoto().toString(), UserInfoSp.getUserNickName().toString(), "1")
+                HomeLiveAnimatorBean(
+                    homeLiveGiftListBean?.id!!,
+                    homeLiveGiftListBean?.name!!,
+                    homeLiveGiftListBean?.icon!!,
+                    "" + UserInfoSp.getUserId(),
+                    UserInfoSp.getUserPhoto().toString(),
+                    UserInfoSp.getUserNickName().toString(),
+                    "1"
+                )
             )
         }
         tvGiftSend.setOnClickListener {
@@ -82,12 +90,21 @@ class BottomGiftWindow (context: Context) : BottomSheetDialog(context) {
                 return@setOnClickListener
             }
             hideLoading()
-            RxBus.get().post(HomeLiveAnimatorBean(homeLiveGiftListBean?.id!!, homeLiveGiftListBean?.name!!, homeLiveGiftListBean?.icon!!,
-                ""+ UserInfoSp.getUserId(), UserInfoSp.getUserPhoto().toString(), UserInfoSp.getUserNickName().toString(), tvGiftMount.text.toString()))
+            RxBus.get().post(
+                HomeLiveAnimatorBean(
+                    homeLiveGiftListBean?.id!!,
+                    homeLiveGiftListBean?.name!!,
+                    homeLiveGiftListBean?.icon!!,
+                    "" + UserInfoSp.getUserId(),
+                    UserInfoSp.getUserPhoto().toString(),
+                    UserInfoSp.getUserNickName().toString(),
+                    tvGiftMount.text.toString()
+                )
+            )
         }
     }
 
-    fun setDiamond(dia:String){
+    fun setDiamond(dia: String) {
         tvDiamondTotal.text = dia
     }
 
@@ -98,10 +115,10 @@ class BottomGiftWindow (context: Context) : BottomSheetDialog(context) {
     }
 
 
-     fun hideLoading() {
-        if ( loadingView.visibility == View.VISIBLE){
+    fun hideLoading() {
+        if (loadingView.visibility == View.VISIBLE) {
             loadingView.visibility = View.GONE
-        }else  loadingView.visibility = View.VISIBLE
+        } else loadingView.visibility = View.VISIBLE
     }
 
     fun setData(title: List<String>, content: List<List<HomeLiveGiftList>>) {
@@ -109,13 +126,12 @@ class BottomGiftWindow (context: Context) : BottomSheetDialog(context) {
             for ((index, tabText) in title.withIndex()) {
                 chatGifTabView.addTab(chatGifTabView.newTab().setText(tabText))
                 val view = RecyclerView(context)
-                view.layoutManager = GridLayoutManager(context,4)
+                view.layoutManager = GridLayoutManager(context, 4)
                 val rvAdapter = RecycleGiftAdapter()
                 view.adapter = rvAdapter
                 adapterList.add(rvAdapter)
                 rvAdapter.refresh(content[index])
-                rvAdapter.setOnItemClickListener{
-                        itemView,item,position ->
+                rvAdapter.setOnItemClickListener { itemView, item, position ->
                     homeLiveGiftListBean = item
                     tvGiftMount.text = "1"
                     notifyAllData(item.name.toString(), item)
@@ -127,9 +143,16 @@ class BottomGiftWindow (context: Context) : BottomSheetDialog(context) {
             viewPager?.offscreenPageLimit = 10
             viewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
                 override fun onPageScrollStateChanged(state: Int) {}
-                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+                override fun onPageScrolled(
+                    position: Int,
+                    positionOffset: Float,
+                    positionOffsetPixels: Int
+                ) {
+                }
+
                 override fun onPageSelected(position: Int) {
-                    if (chatGifTabView.getTabAt(position) != null) chatGifTabView.getTabAt(position)!!.select()
+                    if (chatGifTabView.getTabAt(position) != null) chatGifTabView.getTabAt(position)!!
+                        .select()
                 }
 
             })
@@ -149,18 +172,17 @@ class BottomGiftWindow (context: Context) : BottomSheetDialog(context) {
     //发送成功
     @Subscribe(thread = EventThread.MAIN_THREAD)
     fun gift(eventBean: GiftSendSuccess) {
-        for (item in adapterList){
-           for (child in item.data){
-               if (child.id == eventBean.gift_id && child.free_num?:0>0){
-                   val num = child.free_num?.minus(1)
-                   child.free_num = num
-                   item.notifyDataSetChanged()
-                   return
-               }
-           }
+        for (item in adapterList) {
+            for (child in item.data) {
+                if (child.id == eventBean.gift_id && child.free_num ?: 0 > 0) {
+                    val num = child.free_num?.minus(1)
+                    child.free_num = num
+                    item.notifyDataSetChanged()
+                    return
+                }
+            }
         }
     }
-
 
 
     private fun notifyAllData(name: String, homeLiveGiftList: HomeLiveGiftList) {
@@ -182,7 +204,7 @@ class BottomGiftWindow (context: Context) : BottomSheetDialog(context) {
 
     }
 
-   inner class BottomGiftAdapter(private val mViewList: List<View>?) : PagerAdapter() {
+    inner class BottomGiftAdapter(private val mViewList: List<View>?) : PagerAdapter() {
 
         override fun getItemPosition(`object`: Any): Int {
             return super.getItemPosition(`object`)
@@ -208,26 +230,30 @@ class BottomGiftWindow (context: Context) : BottomSheetDialog(context) {
     }
 
     var nameCurrent = ""
-    inner class RecycleGiftAdapter : BaseRecyclerAdapter<HomeLiveGiftList>(){
-        override fun getItemLayoutId(viewType: Int): Int { return R.layout.item_view }
-        override fun bindData(holder: RecyclerViewHolder, position: Int, data: HomeLiveGiftList?) {
-            holder.text(R.id.tv_item_name,data?.name)
-            if (BigDecimal(data?.free_num?:0).compareTo(BigDecimal.ZERO) ==1){
-                holder.text(R.id.tvGiftPrise,"免费")
-            }else holder.text(R.id.tvGiftPrise,data?.amount+ " 钻石")
 
-            GlideUtil.loadImage(context,data?.icon,holder.findViewById(R.id.im_item_icon))
-            val pagerGridContainer = holder.findViewById<RelativeLayout>(R.id.pagerGridContainer)
-            if (nameCurrent == data?.name){
-                pagerGridContainer.background = ViewUtils.getDrawable(R.drawable.shape_home_live_chat_gif_selected_bg)
-            }else pagerGridContainer.background = null
-            if (data?.free_num?:0 > 0){
-                ViewUtils.setVisible(holder.findView(R.id.tvFreeNum))
-                holder.text(R.id.tvFreeNum,data?.free_num.toString())
-            }else  ViewUtils.setGone(holder.findView(R.id.tvFreeNum))
+    inner class RecycleGiftAdapter : BaseRecyclerAdapter<HomeLiveGiftList>() {
+        override fun getItemLayoutId(viewType: Int): Int {
+            return R.layout.item_view
         }
 
-        fun changeBg(name:String){
+        override fun bindData(holder: RecyclerViewHolder, position: Int, data: HomeLiveGiftList?) {
+            holder.text(R.id.tv_item_name, data?.name)
+            if (BigDecimal(data?.free_num ?: 0).compareTo(BigDecimal.ZERO) == 1) {
+                holder.text(R.id.tvGiftPrise, "免费")
+            } else holder.text(R.id.tvGiftPrise, data?.amount + " 钻石")
+            GlideUtil.loadImage(context, data?.icon, holder.findViewById(R.id.im_item_icon))
+            val pagerGridContainer = holder.findViewById<RelativeLayout>(R.id.pagerGridContainer)
+            if (nameCurrent == data?.name) {
+                pagerGridContainer.background =
+                    ViewUtils.getDrawable(R.drawable.shape_home_live_chat_gif_selected_bg)
+            } else pagerGridContainer.background = null
+            if (data?.free_num ?: 0 > 0) {
+                ViewUtils.setVisible(holder.findView(R.id.tvFreeNum))
+                holder.text(R.id.tvFreeNum, data?.free_num.toString())
+            } else ViewUtils.setGone(holder.findView(R.id.tvFreeNum))
+        }
+
+        fun changeBg(name: String) {
             nameCurrent = name
             notifyDataSetChanged()
         }
