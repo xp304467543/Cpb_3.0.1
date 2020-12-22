@@ -118,6 +118,7 @@ class MomentFragment : BaseMvpFragment<MomentPresenter>(),ITheme {
             3 ->  setTheme(Theme.MidAutumn)
             4 ->  setTheme(Theme.LoverDay)
             5 ->setTheme(Theme.NationDay)
+            6 -> setTheme(Theme.ChristmasDay)
         }
         tabAdapter?.notifyDataSetChanged()
     }

@@ -50,6 +50,7 @@ class LotteryChildLuZhuAdapter(private val context: Context, private val lottery
             Theme.MidAutumn -> holder.findViewById<RoundTextView>(R.id.topLine).delegate.backgroundColor = ViewUtils.getColor(R.color.colorGreen)
             Theme.LoverDay -> holder.findViewById<RoundTextView>(R.id.topLine).delegate.backgroundColor = ViewUtils.getColor(R.color.purple)
             Theme.NationDay -> holder.findViewById<RoundTextView>(R.id.topLine).delegate.backgroundColor = ViewUtils.getColor(R.color.color_EF7E12)
+            Theme.ChristmasDay -> holder.findViewById<RoundTextView>(R.id.topLine).delegate.backgroundColor = ViewUtils.getColor(R.color.color_SD)
             else -> holder.findViewById<RoundTextView>(R.id.topLine).delegate.backgroundColor = ViewUtils.getColor(R.color.text_red)
         }
         if (hideList != null && hideList!!.isNotEmpty()) {

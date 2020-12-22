@@ -89,14 +89,13 @@
         </attr>
 
     </declare-styleable>
-    <declare-styleable name="CustomerMarqueeView">
-        <!--每条item切换的时间间隔-->
-        <attr name="switch_item_duration" format="integer" />
-        <!--滚动完成 切换到下一条前的时间间隔-->
-        <attr name="next_pause_duration" format="integer" />
-        <!--内容文字颜色-->
-        <attr name="content_text_color" format="color|reference" />
-        <!--内容文字大小-->
-        <attr name="content_text_size" format="dimension|reference" />
+    <!-- MarqueeTextView -->
+    <declare-styleable name="MarqueeTextView">
+        <!--滚动速度， 默认为3-->
+        <attr name="mtv_speed" format="integer" />
+        <!--尺寸是否自适应， 默认false-->
+        <attr name="mtv_isAutoFit" format="boolean" />
+        <!--控件是否自动显示与隐藏（根据显示数量）， 默认false-->
+        <attr name="mtv_isAutoDisplay" format="boolean" />
     </declare-styleable>
 </resources>

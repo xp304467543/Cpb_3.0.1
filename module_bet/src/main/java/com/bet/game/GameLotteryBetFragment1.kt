@@ -31,6 +31,7 @@ import com.hwangjr.rxbus.thread.EventThread
 import com.lib.basiclib.base.recycle.BaseRecyclerAdapter
 import com.lib.basiclib.base.recycle.RecyclerViewHolder
 import com.lib.basiclib.utils.FastClickUtil
+import com.lib.basiclib.utils.LogUtils
 import com.lib.basiclib.utils.ToastUtils
 import com.lib.basiclib.utils.ViewUtils
 import com.xiaojinzi.component.impl.Router
@@ -301,6 +302,7 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                     }
                 }
             }
+            LogUtils.e("====>1" + betList)
             context?.let { it1 ->
                 BottomBetAccessDialog(
                     it1,
@@ -333,6 +335,7 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                     mPresenter.setTotal()
                 }
             }
+
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
@@ -470,7 +473,8 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                 rightTopAdapter = RightTopAdapter()
                 rvRightTop.setPadding(0, 0, 10, 0)
                 rvRightTop.adapter = rightTopAdapter
-                rvRightTop.layoutManager =   LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                rvRightTop.layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 dmAdapter = AdapterDM()
                 rvGameBetContent?.adapter = dmAdapter
                 rvGameBetContent?.layoutManager = GridLayoutManager(context, 4)
@@ -854,7 +858,7 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                 if (lotteryId != "8") {
                     view.text = data?.title
                 } else {
-                    if (position == 0){
+                    if (position == 0) {
                         val param = holder.itemView.layoutParams
                         param.height = 0
                         param.width = 0
@@ -1555,8 +1559,8 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
             rightTop = getData()[currentPos]?.play_sec_cname.toString()
             dmAdapter?.currentRightTop = getData()[currentPos]?.play_sec_cname.toString()
             data?.isSelected = currentPos == position
-            changeBg(data?.isSelected, container, tv1, null,true)
-            if (isFirst)dmAdapter?.refresh(getData()[currentPos]?.play_sec_data)
+            changeBg(data?.isSelected, container, tv1, null, true)
+            if (isFirst) dmAdapter?.refresh(getData()[currentPos]?.play_sec_data)
             holder.itemView.setOnClickListener {
                 isFirst = false
                 if (currentPos == position) return@setOnClickListener
@@ -1645,7 +1649,7 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                     betList.clear()
                     val resultList = CalculationGame.combination(xgcLmSelectList, minSelect + 1)
                     for (item in resultList) {
-                        val num = when (minSelect) {
+                        val numCname = when (minSelect) {
                             1 -> item[0] + "," + item[1]
                             2 -> item[0] + "," + item[1] + "," + item[2]
                             3 -> item[0] + "," + item[1] + "," + item[2] + "," + item[3]
@@ -1655,12 +1659,22 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                                 return
                             }
                         }
+                        val numName = when (minSelect) {
+                            1 -> judgeName(item[0]?:"") + "," + judgeName(item[1]?:"")
+                            2 -> judgeName(item[0]?:"") + "," +  judgeName(item[1]?:"") + "," +  judgeName(item[2]?:"")
+                            3 -> judgeName(item[0]?:"") + "," +  judgeName(item[1]?:"") + "," +  judgeName(item[2]?:"") + "," +judgeName(item[3]?:"")
+                            4 ->judgeName(item[0]?:"") + "," +  judgeName(item[1]?:"") + "," +  judgeName(item[2]?:"") + "," + judgeName(item[3]?:"")  + "," + judgeName(item[4]?:"")
+                            else -> {
+                                ToastUtils.showToast("内部错误")
+                                return
+                            }
+                        }
                         addOrDeleteBetData(
                             true,
                             data?.play_sec_name.toString(),
-                            num,
+                            numName,
                             data?.play_sec_cname.toString(),
-                            num,
+                            numCname,
                             data?.play_odds.toString()
                         )
                     }
@@ -1683,12 +1697,22 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                             return
                         }
                     }
+                    val numName = when (minSelect) {
+                        1 -> judgeName(item[0]?:"") + "," + judgeName(item[1]?:"")
+                        2 -> judgeName(item[0]?:"") + "," +  judgeName(item[1]?:"") + "," +  judgeName(item[2]?:"")
+                        3 -> judgeName(item[0]?:"") + "," +  judgeName(item[1]?:"") + "," +  judgeName(item[2]?:"") + "," +judgeName(item[3]?:"")
+                        4 ->judgeName(item[0]?:"") + "," +  judgeName(item[1]?:"") + "," +  judgeName(item[2]?:"") + "," + judgeName(item[3]?:"")  + "," + judgeName(item[4]?:"")
+                        else -> {
+                            ToastUtils.showToast("内部错误")
+                            return
+                        }
+                    }
                     addOrDeleteBetData(
                         true,
                         data.play_sec_name.toString(),
                         num,
                         data.play_sec_cname.toString(),
-                        num,
+                        numName,
                         data.play_odds.toString()
                     )
                 }
@@ -1698,10 +1722,29 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
         }
     }
 
+    fun judgeName(name: String): String {
+        return when (name) {
+            "鼠" -> "mouse"
+            "牛" -> "ox"
+            "虎" -> "tiger"
+            "兔" -> "rabbit"
+            "龙" -> "dragon"
+            "蛇" -> "snake"
+            "马" -> "horse"
+            "羊" -> "sheep"
+            "猴" -> "monkey"
+            "鸡" -> "rooster"
+            "狗" -> "dog"
+            "猪" -> "pig"
+            else -> ""
+        }
+    }
+
     /**
      * 合肖（香港彩）处理
      */
     private var xgcHxSelectList = ArrayList<String>()
+
     @SuppressLint("SetTextI18n")
     fun cgcHx(adapter: BaseRecyclerAdapter<PlaySecData>, position: Int, data: PlaySecData?) {
         var maxSelect = -1

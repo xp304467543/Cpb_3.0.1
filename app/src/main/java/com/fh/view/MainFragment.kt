@@ -441,6 +441,46 @@ class MainFragment : BaseContentFragment(), ITheme, IMode {
                     )
                 }
             }
+            Theme.ChristmasDay ->{
+                val drawable1 = ViewUtils.getDrawable(R.drawable.ic_tab_sd_1)
+                val drawable2 = ViewUtils.getDrawable(R.drawable.ic_tab_sd_2)
+                val drawable3 = ViewUtils.getDrawable(R.drawable.ic_tab_sd_3)
+                val drawable4 = ViewUtils.getDrawable(R.drawable.ic_tab_sd_4)
+                drawable1?.setBounds(0, 0, ViewUtils.dp2px(30), ViewUtils.dp2px(25))
+                drawable2?.setBounds(0, 0, ViewUtils.dp2px(30), ViewUtils.dp2px(25))
+                drawable3?.setBounds(0, 0, ViewUtils.dp2px(30), ViewUtils.dp2px(25))
+                drawable4?.setBounds(0, 0, ViewUtils.dp2px(30), ViewUtils.dp2px(25))
+                tabHome.setCompoundDrawables(null, drawable1, null, null)
+                tabGame.setCompoundDrawables(null, drawable2, null, null)
+                tabLotteryOpen.setCompoundDrawables(null, drawable3, null, null)
+                tabMine.setCompoundDrawables(null, drawable4, null, null)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    tabHome.setTextColor(
+                        ContextCompat.getColorStateList(
+                            requireContext(),
+                            R.drawable.tab_them_text_sd
+                        )
+                    )
+                    tabLotteryOpen.setTextColor(
+                        ContextCompat.getColorStateList(
+                            requireContext(),
+                            R.drawable.tab_them_text_sd
+                        )
+                    )
+                    tabGame.setTextColor(
+                        ContextCompat.getColorStateList(
+                            requireContext(),
+                            R.drawable.tab_them_text_sd
+                        )
+                    )
+                    tabMine.setTextColor(
+                        ContextCompat.getColorStateList(
+                            requireContext(),
+                            R.drawable.tab_them_text_sd
+                        )
+                    )
+                }
+            }
         }
     }
 
@@ -453,6 +493,7 @@ class MainFragment : BaseContentFragment(), ITheme, IMode {
             3 -> setTheme(Theme.MidAutumn)
             4 -> setTheme(Theme.LoverDay)
             5 -> setTheme(Theme.NationDay)
+            6 -> setTheme(Theme.ChristmasDay)
         }
 
     }

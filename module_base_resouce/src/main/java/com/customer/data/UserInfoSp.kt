@@ -450,6 +450,9 @@ object UserInfoSp {
             5 -> {
                 Theme.NationDay
             }
+            6 -> {
+                Theme.ChristmasDay
+            }
             else -> Theme.Default
         }
     }

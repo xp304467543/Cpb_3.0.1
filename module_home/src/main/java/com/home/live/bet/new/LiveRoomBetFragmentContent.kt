@@ -1337,7 +1337,7 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
                     betList.clear()
                     val resultList = CalculationGame.combination(xgcLmSelectList, minSelect + 1)
                     for (item in resultList) {
-                        val num = when (minSelect) {
+                        val numCname = when (minSelect) {
                             1 -> item[0] + "," + item[1]
                             2 -> item[0] + "," + item[1] + "," + item[2]
                             3 -> item[0] + "," + item[1] + "," + item[2] + "," + item[3]
@@ -1347,12 +1347,22 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
                                 return
                             }
                         }
+                        val numName = when (minSelect) {
+                            1 -> judgeName(item[0]?:"") + "," + judgeName(item[1]?:"")
+                            2 -> judgeName(item[0]?:"") + "," +  judgeName(item[1]?:"") + "," +  judgeName(item[2]?:"")
+                            3 -> judgeName(item[0]?:"") + "," +  judgeName(item[1]?:"") + "," +  judgeName(item[2]?:"") + "," +judgeName(item[3]?:"")
+                            4 ->judgeName(item[0]?:"") + "," +  judgeName(item[1]?:"") + "," +  judgeName(item[2]?:"") + "," + judgeName(item[3]?:"")  + "," + judgeName(item[4]?:"")
+                            else -> {
+                                ToastUtils.showToast("内部错误")
+                                return
+                            }
+                        }
                         addOrDeleteBetData(
                             true,
                             data?.play_sec_name.toString(),
-                            num,
+                            numName,
                             data?.play_sec_cname.toString(),
-                            num,
+                            numCname,
                             data?.play_odds.toString()
                         )
                     }
@@ -1375,10 +1385,20 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
                             return
                         }
                     }
+                    val numName = when (minSelect) {
+                        1 -> judgeName(item[0]?:"") + "," + judgeName(item[1]?:"")
+                        2 -> judgeName(item[0]?:"") + "," +  judgeName(item[1]?:"") + "," +  judgeName(item[2]?:"")
+                        3 -> judgeName(item[0]?:"") + "," +  judgeName(item[1]?:"") + "," +  judgeName(item[2]?:"") + "," +judgeName(item[3]?:"")
+                        4 ->judgeName(item[0]?:"") + "," +  judgeName(item[1]?:"") + "," +  judgeName(item[2]?:"") + "," + judgeName(item[3]?:"")  + "," + judgeName(item[4]?:"")
+                        else -> {
+                            ToastUtils.showToast("内部错误")
+                            return
+                        }
+                    }
                     addOrDeleteBetData(
                         true,
                         data.play_sec_name.toString(),
-                        num,
+                        numName,
                         data.play_sec_cname.toString(),
                         num,
                         data.play_odds.toString()
@@ -1390,7 +1410,23 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
             adapter.notifyItemChanged(position)
         }
     }
-
+    private fun judgeName(name: String): String {
+        return when (name) {
+            "鼠" -> "mouse"
+            "牛" -> "ox"
+            "虎" -> "tiger"
+            "兔" -> "rabbit"
+            "龙" -> "dragon"
+            "蛇" -> "snake"
+            "马" -> "horse"
+            "羊" -> "sheep"
+            "猴" -> "monkey"
+            "鸡" -> "rooster"
+            "狗" -> "dog"
+            "猪" -> "pig"
+            else -> ""
+        }
+    }
     /**
      * 合肖（香港彩）处理
      */

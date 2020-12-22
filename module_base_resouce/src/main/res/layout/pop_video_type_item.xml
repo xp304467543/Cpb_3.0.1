@@ -17,6 +17,7 @@
         android:gravity="center_vertical">
 
         <com.lib.basiclib.base.round.RoundTextView
+            android:id="@+id/tag_line"
             android:layout_width="@dimen/dp_3"
             android:layout_height="@dimen/dp_14"
             app:rv_backgroundColor="@color/text_red"

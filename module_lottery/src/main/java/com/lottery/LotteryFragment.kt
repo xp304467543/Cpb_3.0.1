@@ -26,7 +26,7 @@ import kotlinx.android.synthetic.main.fragment_lottery.*
     host = "Lottery",
     path = "main"
 )
-class LotteryFragment : BaseMvpFragment<LotteryPresenter>(),ITheme {
+class LotteryFragment : BaseMvpFragment<LotteryPresenter>(), ITheme {
 
     var currentLotteryId = "1"
 
@@ -49,7 +49,7 @@ class LotteryFragment : BaseMvpFragment<LotteryPresenter>(),ITheme {
         setTheme(UserInfoSp.getThem())
         //加载底部
         loadRootFragment(R.id.childContainer, LotteryBaseFragment())
-        if (UserInfoSp.getAppMode() == AppMode.Pure){
+        if (UserInfoSp.getAppMode() == AppMode.Pure) {
             setGone(imgVideo)
         }
     }
@@ -69,7 +69,8 @@ class LotteryFragment : BaseMvpFragment<LotteryPresenter>(),ITheme {
     var lotteryTypeAdapter: LotteryTypeAdapter? = null
     fun initLotteryType(it: List<LotteryTypeResponse>) {
         lotteryTypeAdapter = LotteryTypeAdapter()
-        val layoutManager = LinearLayoutManager(getPageActivity(), LinearLayoutManager.HORIZONTAL, false)
+        val layoutManager =
+            LinearLayoutManager(getPageActivity(), LinearLayoutManager.HORIZONTAL, false)
         rvLotteryType.layoutManager = layoutManager
         rvLotteryType.adapter = lotteryTypeAdapter
         lotteryTypeAdapter?.refresh(it)
@@ -108,8 +109,11 @@ class LotteryFragment : BaseMvpFragment<LotteryPresenter>(),ITheme {
             Theme.LoverDay -> {
                 imgLotteryBg.setImageResource(R.drawable.ic_them_love_top)
             }
-            Theme.NationDay ->{
+            Theme.NationDay -> {
                 imgLotteryBg.setImageResource(R.drawable.ic_them_gq_top)
+            }
+            Theme.ChristmasDay -> {
+                imgLotteryBg.setImageResource(R.drawable.ic_them_sd_top)
             }
         }
         lotteryTypeAdapter?.notifyDataSetChanged()
@@ -120,21 +124,22 @@ class LotteryFragment : BaseMvpFragment<LotteryPresenter>(),ITheme {
     @Subscribe(thread = EventThread.MAIN_THREAD)
     fun changeSkin(eventBean: ChangeSkin) {
         when (eventBean.id) {
-            1 ->  setTheme(Theme.Default)
-            2 ->  setTheme(Theme.NewYear)
-            3 ->  setTheme(Theme.MidAutumn)
-            4 ->  setTheme(Theme.LoverDay)
-            5 ->setTheme(Theme.NationDay)
+            1 -> setTheme(Theme.Default)
+            2 -> setTheme(Theme.NewYear)
+            3 -> setTheme(Theme.MidAutumn)
+            4 -> setTheme(Theme.LoverDay)
+            5 -> setTheme(Theme.NationDay)
+            6 -> setTheme(Theme.ChristmasDay)
         }
     }
 
     //纯净版切换
     @Subscribe(thread = EventThread.MAIN_THREAD)
     fun changeMode(eventBean: AppChangeMode) {
-        if (isActive()){
-            if (eventBean.mode == AppMode.Normal){
+        if (isActive()) {
+            if (eventBean.mode == AppMode.Normal) {
                 setVisible(imgVideo)
-            }else{
+            } else {
                 setGone(imgVideo)
             }
         }

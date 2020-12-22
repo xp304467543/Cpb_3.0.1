@@ -97,12 +97,13 @@
                 android:src="@mipmap/ic_notice"
                 tools:ignore="ContentDescription" />
 
-            <com.customer.component.marqueen.textbanner.FlipperMarqueeView
+            <com.customer.component.marquee.MarqueeTextView
                 android:id="@+id/tvNoticeMassages"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inAnimation="@anim/in_right"
-                android:outAnimation="@anim/out_left"
+                app:mtv_isAutoFit="true"
+                app:mtv_isAutoDisplay="true"
+                android:textColor="@color/color_333333"
                 android:padding="3dp"
                 android:textSize="@dimen/sp_12" />
 

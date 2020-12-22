@@ -16,6 +16,7 @@ import com.lib.basiclib.widget.tab.buildins.commonnavigator.indicators.LinePager
 import com.lib.basiclib.widget.tab.buildins.commonnavigator.titles.ColorFlipPagerTitleView
 import com.lib.basiclib.widget.tab.buildins.commonnavigator.titles.ScaleTransitionPagerTitleView
 import com.lib.basiclib.widget.tab.buildins.commonnavigator.titles.SimplePagerTitleView
+import cuntomer.them.Theme
 
 
 /**
@@ -39,7 +40,45 @@ class TabScaleAdapter(
         simplePagerTitleView.text = titleList[index]
         simplePagerTitleView.textSize = textSize
         simplePagerTitleView.normalColor = normalColor
-        simplePagerTitleView.selectedColor = selectedColor
+        simplePagerTitleView.selectedColor =  selectedColor
+        simplePagerTitleView.setOnClickListener {
+            viewPage?.currentItem = index
+        }
+        return simplePagerTitleView
+    }
+
+    override fun getCount() = titleList.size
+
+    override fun getIndicator(context: Context?): IPagerIndicator {
+        val indicator = LinePagerIndicator(context)
+        indicator.mode = LinePagerIndicator.MODE_EXACTLY
+        indicator.lineHeight = ViewUtils.dp2px(4F)
+        indicator.lineWidth = ViewUtils.dp2px(15F)
+        indicator.roundRadius = ViewUtils.dp2px(3F)
+        indicator.startInterpolator = AccelerateInterpolator()
+        indicator.endInterpolator = DecelerateInterpolator(2F)
+        if (isChange){
+            indicator.setColors(TabThem.getTabSelect())
+        }else  indicator.setColors(colorLine)
+
+        return indicator
+    }
+}
+class TabScaleAdapterBet(
+    private var titleList: ArrayList<String>,
+    private var viewPage: ViewPager?,
+    private var normalColor: Int,
+    private var selectedColor: Int,
+    private var colorLine: Int,
+    private var textSize:Float = 18F,
+    private var isChange:Boolean=true
+) : CommonNavigatorAdapter() {
+    override fun getTitleView(context: Context?, index: Int): IPagerTitleView {
+        val simplePagerTitleView: SimplePagerTitleView = ScaleTransitionPagerTitleView(context)
+        simplePagerTitleView.text = titleList[index]
+        simplePagerTitleView.textSize = textSize
+        simplePagerTitleView.normalColor = normalColor
+        simplePagerTitleView.selectedColor = if (UserInfoSp.getThemInt() == 6) ViewUtils.getColor(R.color.color_SD) else selectedColor
         simplePagerTitleView.setOnClickListener {
             viewPage?.currentItem = index
         }
@@ -142,6 +181,7 @@ object TabThem {
             3 -> ViewUtils.getColor(R.color.colorGreenPrimary)
             4 -> ViewUtils.getColor(R.color.purple)
             5 -> ViewUtils.getColor(R.color.color_EF7E12)
+            6 -> ViewUtils.getColor(R.color.color_SD)
             else -> ViewUtils.getColor(R.color.color_FF513E)
         }
     }

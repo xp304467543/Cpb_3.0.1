@@ -82,6 +82,7 @@ class VideoTypeAdapter(var context: Context, var urlTop: String, var urlCenter: 
             when(UserInfoSp.getThemInt()){
                 3 ->nineView.setLineColor(R.color.colorGreenPrimary)
                 4 ->nineView.setLineColor(R.color.purple)
+                6 ->nineView.setLineColor(R.color.color_SD)
                 else -> nineView.setLineColor(R.color.color_FF513E)
             }
             holder.click(R.id.imgInfo){
@@ -119,6 +120,7 @@ class VideoTypeAdapter(var context: Context, var urlTop: String, var urlCenter: 
             when(UserInfoSp.getThemInt()){
                 3 ->nineView1.setLineColor(R.color.colorGreenPrimary)
                 4 ->nineView1.setLineColor(R.color.purple)
+                6 ->nineView1.setLineColor(R.color.color_SD)
                 else -> nineView1.setLineColor(R.color.color_FF513E)
             }
 

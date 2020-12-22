@@ -5,15 +5,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.customer.data.UserInfoSp
 import com.customer.data.video.MovieType
 import com.customer.data.video.MovieTypeChild
 import com.fh.module_base_resouce.R
 import com.lib.basiclib.base.recycle.BaseRecyclerAdapter
 import com.lib.basiclib.base.recycle.RecyclerViewHolder
+import com.lib.basiclib.base.round.RoundTextView
 import com.lib.basiclib.base.xui.adapter.recyclerview.XLinearLayoutManager
 import com.lib.basiclib.base.xui.widget.flowlayout.BaseTagAdapter
 import com.lib.basiclib.base.xui.widget.flowlayout.FlowTagLayout
+import com.lib.basiclib.utils.ViewUtils
 import com.lib.basiclib.widget.popup.BasePopupWindow
+import cuntomer.them.Theme
 
 /**
  *
@@ -51,6 +55,12 @@ class PopWindowVideo (context: Context, private val dataList:List<MovieType>,pri
         override fun getItemLayoutId(viewType: Int) = R.layout.pop_video_type_item
         override fun bindData(holder: RecyclerViewHolder, position: Int, data: MovieType?) {
            holder.text(R.id.tvTitle,data?.name)
+            val line =  holder.findViewById<RoundTextView>(R.id.tag_line)
+            if (UserInfoSp.getThemInt() == 6){
+                line.delegate.backgroundColor = ViewUtils.getColor(R.color.white)
+            }else {
+                line.delegate.backgroundColor = ViewUtils.getColor(R.color.text_red)
+            }
             val mSingleFlowTagLayout =holder.findViewById<FlowTagLayout>(R.id.flowlayout)
             val tagAdapter = FlowTagAdapter(context)
             mSingleFlowTagLayout.adapter = tagAdapter
@@ -67,10 +77,16 @@ class PopWindowVideo (context: Context, private val dataList:List<MovieType>,pri
     }
 
     inner class FlowTagAdapter(context: Context): BaseTagAdapter<MovieTypeChild, TextView>(context) {
-        override fun newViewHolder(convertView: View?): TextView { return (convertView!!.findViewById<View>(R.id.tv_tag) as TextView) }
+        override fun newViewHolder(convertView: View?): TextView { return (convertView?.findViewById<View>(R.id.tv_tag) as TextView) }
 
         override fun getLayoutId() =  R.layout.adapter_video_item_tag
         override fun convert(holder: TextView?, item: MovieTypeChild?, position: Int) {
+            val tag = holder?.findViewById<TextView>(R.id.tv_tag)
+            if (UserInfoSp.getThemInt() == 6){
+                tag?.background = ViewUtils.getDrawable(R.drawable.bg_rect_round_tag_btn_sd)
+            }else {
+                tag?.background = ViewUtils.getDrawable(R.drawable.bg_rect_round_tag_btn)
+            }
             holder?.text = item?.name
         }
     }

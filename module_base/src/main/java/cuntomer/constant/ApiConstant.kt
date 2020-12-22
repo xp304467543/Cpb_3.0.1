@@ -21,11 +21,11 @@ object ApiConstant {
     /**
      * 正式
      */
-    const val API_URL_DEV_Main = "https://www.lgadmin561.com/" //davis
+    const val API_URL_DEV_Main = "https://api.zhibojk.com/" //davis
 
-    const val API_URL_DEV_OTHER = "http://api.lgadmin561.com/userinfo/" //用户中心
+    const val API_URL_DEV_OTHER = "https://api.zhibojk.com/userinfo/" //用户中心
 
-    const val API_MOMENTS_MAIN = "http://api.lgadmin561.com/forum/"  //圈子
+    const val API_MOMENTS_MAIN = "http://api.zhibojk.com/forum/"  //圈子
 
     const val API_LOTTERY_BET_MAIN = "http://lott.zhibojk.com/" //竞猜
     /**
@@ -41,7 +41,7 @@ object ApiConstant {
 
     const val API_VIDEO_TEST ="http://47.244.212.147:18306"
 
-    const val  isTest = false
+    const val  isTest = true
 
 
 

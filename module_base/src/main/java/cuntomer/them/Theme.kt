@@ -32,5 +32,11 @@ enum class Theme {
     /**
      * 国庆节
      */
-    NationDay
+    NationDay,
+
+    /**
+     * 圣诞
+     */
+    ChristmasDay
+
 }

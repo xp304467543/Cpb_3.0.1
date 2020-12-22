@@ -79,10 +79,10 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme, IMode {
         setSwipeBackEnable(false)
         if (UserInfoSp.getAppMode() == AppMode.Pure) {
             tvAppMode.text = "直播版"
-            setTheme(UserInfoSp.getThem())
+            setTheme(Theme.Default)
         } else {
             tvAppMode.text = "纯净版"
-            setTheme(Theme.Default)
+            setTheme(UserInfoSp.getThem())
         }
         if ((UserInfoSp.getVipLevel() ?: "0").toInt() > 0) {
             titleList = arrayListOf("热门", "影视区")
@@ -243,6 +243,12 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme, IMode {
                     ViewUtils.getDrawable(R.mipmap.ic_home_top_recharge)
                 homeCustomer.background = ViewUtils.getDrawable(R.mipmap.ic_customer_gq)
             }
+            Theme.ChristmasDay -> {
+                imgHomeUserRecharge.setTextColor(ViewUtils.getColor(R.color.color_SD))
+                imgHomeBg.setImageResource(R.drawable.ic_them_sd_top)
+                imgHomeUserRecharge.background = ViewUtils.getDrawable(R.mipmap.ic_home_top_recharge_sd)
+                homeCustomer.background = ViewUtils.getDrawable(R.mipmap.ic_customer_sd)
+            }
         }
     }
 
@@ -255,6 +261,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme, IMode {
             3 -> setTheme(Theme.MidAutumn)
             4 -> setTheme(Theme.LoverDay)
             5 -> setTheme(Theme.NationDay)
+            6 -> setTheme(Theme.ChristmasDay)
         }
 
     }

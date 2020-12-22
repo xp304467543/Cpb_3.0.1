@@ -12,7 +12,7 @@ import cuntomer.them.AppMode
  * @ Describe
  *
  */
-const val urlCustomer = "https://chatlink.mstatik.com/widget/standalone.html?eid=222397"
+const val urlCustomer = "https://chat.meiqia.cn/widget/standalone.html?eid=b041d22a5535e0130cf802e04432966c"
 
 data class LotteryTypeSelect(var lotteryId: String?, var issiue: String?)
 

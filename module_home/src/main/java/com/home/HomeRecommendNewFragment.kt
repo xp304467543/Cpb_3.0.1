@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.customer.ApiRouter
 import com.customer.adapter.HomeHotLiveAdapter
 import com.customer.component.dialog.GlobalDialog
+import com.customer.component.marquee.DisplayEntity
+import com.customer.component.marquee.MarqueeTextView
 import com.customer.data.OnLine
 import com.customer.data.ToBetView
 import com.customer.data.UserInfoSp
@@ -28,6 +30,7 @@ import com.lib.basiclib.base.recycle.RecyclerViewHolder
 import com.lib.basiclib.base.xui.widget.banner.widget.banner.BannerItem
 import com.lib.basiclib.utils.FastClickUtil
 import com.lib.basiclib.utils.ToastUtils
+import com.lib.basiclib.utils.ViewUtils
 import com.xiaojinzi.component.impl.Router
 import cuntomer.them.ITheme
 import cuntomer.them.Theme
@@ -116,22 +119,31 @@ class HomeRecommendNewFragment : BaseMvpFragment<HomeRecommendNewPresenter>(), I
     }
 
     //========= 公告 =========
-    fun upDateSystemNotice(data: List<HomeSystemNoticeResponse>?) {
+     fun upDateSystemNotice(data: List<HomeSystemNoticeResponse>?) {
         val result = ArrayList<String>()
         if (data != null && data.isNotEmpty()) {
             data.forEachIndexed { index, value ->
                 result.add((index + 1).toString() + "." + value.content)
             }
-        } else result.add("暂无公告。")
-        tvNoticeMassages.setContentList(result)
+        } else  result.add("暂无公告")
         tvNoticeMassages.setOnClickListener {
-            if (!FastClickUtil.isFastClick()){
+            if (!FastClickUtil.isFastClick()) {
                 Router.withApi(ApiRouter::class.java)
-                    .toGlobalWeb("", true, data?.get(tvNoticeMassages.displayedChild)?.id ?: "-1")
+                    .toGlobalWeb("", true, data?.get(tvNoticeMassages.currentIndex)?.id ?: "-1")
+            }
+        }
+        tvNoticeMassages.setOnMarqueeListener(object : MarqueeTextView.OnMarqueeListener {
+            override fun onStartMarquee(displayEntity: DisplayEntity?, index: Int): DisplayEntity? {
+                return displayEntity
             }
 
-        }
-        tvNoticeMassages.start()
+            override fun onMarqueeFinished(displayDatas: MutableList<DisplayEntity>): MutableList<DisplayEntity> {
+                return displayDatas
+            }
+
+        })
+        tvNoticeMassages.speed = 3
+        tvNoticeMassages.startSimpleRoll(result)
     }
 
     //游戏列表
@@ -343,6 +355,25 @@ class HomeRecommendNewFragment : BaseMvpFragment<HomeRecommendNewPresenter>(), I
                     isShowLine = false
                 )
             }
+            Theme.ChristmasDay -> {
+                desGame.setDesNew(
+                    title = "热门游戏",
+                    image = R.drawable.ic_them_sd_11,
+                    isShowLine = false
+                )
+                desHotLive.setDesNew(
+                    title = "热门直播",
+                    image = R.drawable.ic_them_sd_12,
+                    isShowLine = false
+                )
+            }
+        }
+        if (theme == Theme.ChristmasDay) {
+            arrow_1?.setImageDrawable(ViewUtils.getDrawable(R.mipmap.ic_arrow_double_sd))
+            arrow_2?.setImageDrawable(ViewUtils.getDrawable(R.mipmap.ic_arrow_double_sd))
+        } else {
+            arrow_1?.setImageDrawable(ViewUtils.getDrawable(R.mipmap.ic_arrow_double))
+            arrow_2?.setImageDrawable(ViewUtils.getDrawable(R.mipmap.ic_arrow_double))
         }
     }
 
@@ -355,13 +386,14 @@ class HomeRecommendNewFragment : BaseMvpFragment<HomeRecommendNewPresenter>(), I
             3 -> setTheme(Theme.MidAutumn)
             4 -> setTheme(Theme.LoverDay)
             5 -> setTheme(Theme.NationDay)
+            6 -> setTheme(Theme.ChristmasDay)
         }
     }
 
     @SuppressLint("SetTextI18n")
     @Subscribe(thread = EventThread.MAIN_THREAD)
     fun onLine(eventBean: OnLine) {
-       val real = this.onLine.add(BigDecimal(eventBean.onLine?:0))
+        val real = this.onLine.add(BigDecimal(eventBean.onLine ?: 0))
         tvOnline?.text = "在线人数: $real"
     }
 
@@ -372,7 +404,7 @@ class HomeRecommendNewFragment : BaseMvpFragment<HomeRecommendNewPresenter>(), I
         val res = HomeApi.getOnLine()
         res.onSuccess {
             this.onLine = BigDecimal(it.base_online)
-           tvOnline?.visibility = View.VISIBLE
+            tvOnline?.visibility = View.VISIBLE
             tvOnline?.text = "在线人数: $onLine"
         }
     }

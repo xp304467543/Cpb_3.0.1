@@ -487,6 +487,39 @@ class   MineFragment : BaseMvpFragment<MinePresenter>(), ITheme, IMode {
                 containerSetting.setBackRes(R.drawable.ic_them_gq_10)
                 containerScanLogin.setBackRes(R.drawable.ic_them_gq_13)
             }
+            Theme.ChristmasDay -> {
+                tvLogin.setTextColor(ViewUtils.getColor(R.color.color_SD))
+                imgMineBg.setImageResource(R.drawable.ic_them_sd_top)
+                tvDepositMoney.setCompoundDrawablesWithIntrinsicBounds(
+                    null,
+                    getDrawable(R.mipmap.ic_mine_deposit),
+                    null,
+                    null
+                )
+                tvDrawMoney.setCompoundDrawablesWithIntrinsicBounds(
+                    null,
+                    getDrawable(R.mipmap.ic_mine_wallet),
+                    null,
+                    null
+                )
+                tvAttention.setCompoundDrawablesWithIntrinsicBounds(
+                    null,
+                    getDrawable(R.mipmap.ic_mine_attention),
+                    null,
+                    null
+                )
+                containerMessageCenter.setBackRes(R.drawable.ic_them_sd_1)
+                containerMineCheck.setBackRes(R.drawable.ic_them_sd_2)
+                containerMainSkin.setBackRes(R.drawable.ic_them_sd_3)
+                containerAnchorGet.setBackRes(R.drawable.ic_them_sd_4)
+                containerGameReport.setBackRes(R.drawable.ic_them_sd_5)
+                containerTuiReport.setBackRes(R.drawable.ic_them_sd_6)
+                containerFeedBack.setBackRes(R.drawable.ic_them_sd_7)
+                containerContactCustomer.setBackRes(R.drawable.ic_them_sd_8)
+                containerGroup.setBackRes(R.drawable.ic_them_sd_9)
+                containerSetting.setBackRes(R.drawable.ic_them_sd_10)
+                containerScanLogin.setBackRes(R.drawable.ic_them_sd_13)
+            }
         }
     }
 
@@ -499,6 +532,7 @@ class   MineFragment : BaseMvpFragment<MinePresenter>(), ITheme, IMode {
             3 -> setTheme(Theme.MidAutumn)
             4 -> setTheme(Theme.LoverDay)
             5 -> setTheme(Theme.NationDay)
+            6 -> setTheme(Theme.ChristmasDay)
         }
 
     }

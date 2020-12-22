@@ -5,8 +5,10 @@ import android.view.animation.AnimationSet
 import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import com.customer.ApiRouter
-import com.customer.adapter.TabScaleAdapter
+import com.customer.adapter.TabScaleAdapterBet
 import com.customer.component.dialog.GlobalDialog
+import com.customer.component.marquee.DisplayEntity
+import com.customer.component.marquee.MarqueeTextView
 import com.customer.data.*
 import com.customer.data.game.GameAll
 import com.customer.data.home.HomeSystemNoticeResponse
@@ -19,7 +21,6 @@ import com.lib.basiclib.base.adapter.BaseFragmentPageAdapter
 import com.lib.basiclib.base.mvp.BaseMvpFragment
 import com.lib.basiclib.utils.FastClickUtil
 import com.lib.basiclib.utils.StatusBarUtils
-import com.lib.basiclib.utils.ToastUtils
 import com.lib.basiclib.utils.ViewUtils
 import com.lib.basiclib.widget.tab.ViewPagerHelper
 import com.lib.basiclib.widget.tab.buildins.commonnavigator.CommonNavigator
@@ -56,7 +57,6 @@ class GameMainFragment : BaseMvpFragment<GameMainPresenter>(), ITheme, IMode {
             tvAppMode.text = "直播版"
         } else {
             tvAppMode.text = "纯净版"
-            tvNoticeMassages?.start()
         }
         setTheme(UserInfoSp.getThem())
         setMode(UserInfoSp.getAppMode())
@@ -152,13 +152,13 @@ class GameMainFragment : BaseMvpFragment<GameMainPresenter>(), ITheme, IMode {
         }
     }
 
-    private var tabAdapter: TabScaleAdapter? = null
+    private var tabAdapter: TabScaleAdapterBet? = null
     private var commonNavigator:CommonNavigator?= null
     private fun initTopTab(mDataList: ArrayList<String>) {
         if (vpGame != null) {
             commonNavigator = CommonNavigator(context)
             commonNavigator?.scrollPivotX = 0.65f
-            tabAdapter = TabScaleAdapter(
+            tabAdapter = TabScaleAdapterBet(
                 titleList = mDataList,
                 viewPage = vpGame,
                 normalColor = ViewUtils.getColor(R.color.color_333333),
@@ -206,6 +206,12 @@ class GameMainFragment : BaseMvpFragment<GameMainPresenter>(), ITheme, IMode {
                 imgGameBg.setImageResource(R.drawable.ic_them_gq_top)
                 gameCustomer.background = ViewUtils.getDrawable(R.mipmap.ic_customer_gq)
             }
+            Theme.ChristmasDay -> {
+                imgBetUserRecharge.setTextColor(ViewUtils.getColor(R.color.color_SD))
+                imgBetUserRecharge.background = ViewUtils.getDrawable(R.mipmap.ic_home_top_recharge_sd)
+                imgGameBg.setImageResource(R.drawable.ic_them_sd_top)
+                gameCustomer.background = ViewUtils.getDrawable(R.mipmap.ic_customer_sd)
+            }
         }
         tabAdapter?.notifyDataSetChanged()
     }
@@ -236,14 +242,25 @@ class GameMainFragment : BaseMvpFragment<GameMainPresenter>(), ITheme, IMode {
                 result.add((index + 1).toString() + "." + value.content)
             }
         } else result.add("暂无公告。")
-        if (result.size <2)result.add("")
-        tvNoticeMassages.setContentList(result)
         tvNoticeMassages.setOnClickListener {
-            if (!FastClickUtil.isFastClick()){
+            if (!FastClickUtil.isFastClick()) {
                 Router.withApi(ApiRouter::class.java)
-                    .toGlobalWeb("", true, data?.get(tvNoticeMassages.displayedChild)?.id ?: "-1")
+                    .toGlobalWeb("", true, data?.get(tvNoticeMassages.currentIndex)?.id ?: "-1")
             }
         }
+        tvNoticeMassages.setOnMarqueeListener(object : MarqueeTextView.OnMarqueeListener {
+            override fun onStartMarquee(displayEntity: DisplayEntity?, index: Int): DisplayEntity? {
+                return displayEntity
+            }
+
+            override fun onMarqueeFinished(displayDatas: MutableList<DisplayEntity>): MutableList<DisplayEntity> {
+                return displayDatas
+            }
+
+        })
+        tvNoticeMassages.speed = 3
+        tvNoticeMassages.startSimpleRoll(result)
+
     }
 
     //换肤
@@ -255,6 +272,7 @@ class GameMainFragment : BaseMvpFragment<GameMainPresenter>(), ITheme, IMode {
             3 -> setTheme(Theme.MidAutumn)
             4 -> setTheme(Theme.LoverDay)
             5 -> setTheme(Theme.NationDay)
+            6 -> setTheme(Theme.ChristmasDay)
         }
     }
 
@@ -277,7 +295,6 @@ class GameMainFragment : BaseMvpFragment<GameMainPresenter>(), ITheme, IMode {
                 setGone(imgBetUserIcon)
                 setGone(gameCustomer)
                 tvTopName.text = "游戏中心"
-                tvNoticeMassages?.start()
             }
             AppMode.Pure -> {
                 tvAppMode.text = "直播版"
