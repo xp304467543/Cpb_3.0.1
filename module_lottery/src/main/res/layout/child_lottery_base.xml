@@ -9,11 +9,9 @@
     <com.lib.basiclib.widget.tab.MagicIndicator
         android:id="@+id/switchLotteryTypeTab"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_38"
+        android:layout_height="@dimen/dp_28"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/dp_5"
-        android:background="@color/white"
-        />
+        android:background="@color/white" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/vpLotteryFragment"

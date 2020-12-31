@@ -70,6 +70,13 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
 
     var xgcTmAdapter: AdapterXgcTm? = null //特码(香港彩)
 
+    /**
+     * 福彩3D
+     */
+    var fc3DAdapter: Fc3dAdapter? = null
+    var fc3DTopAdapter: Right3DTopAdapter? = null
+
+
     var betList = mutableListOf<PlaySecData>()  //投注集合
 
     var selectMoneyList: ArrayList<RadioButton>? = null  //投注金额Raido
@@ -369,6 +376,8 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
         rvGameBetType.adapter = typeAdapter
         leftLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         rvGameBetType.layoutManager = leftLayoutManager
+        rvGameBetContent.isFocusable = false
+        rvGameBetContent.isNestedScrollingEnabled = false
     }
 
 
@@ -498,7 +507,7 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                     }
                 }
             }
-            "正码xgc", "7色波xgc", "头尾数xgc", "总肖xgc", "正肖xgc", "五行xgc", "合肖xgc" -> {
+            "正码xgc", "7色波xgc", "头尾数xgc", "总肖xgc", "正肖xgc", "五行xgc", "合肖xgc", "组选三", "组选六" -> {
                 xgcTmAdapter = AdapterXgcTm()
                 rvGameBetContent?.adapter = xgcTmAdapter
                 val layoutManager = GridLayoutManager(context, 4)
@@ -506,14 +515,62 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                 layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                     override fun getSpanSize(position: Int): Int {
                         return when (xgcTmAdapter?.getItemViewType(position)) {
-                            xgcTmAdapter?.TYPE_1, xgcTmAdapter?.TYPE_2 -> 1
+                            xgcTmAdapter?.TYPE_1, xgcTmAdapter?.TYPE_2, xgcTmAdapter?.TYPE_8 -> 1
                             xgcTmAdapter?.TYPE_7 -> 2
                             else -> 4
                         }
                     }
                 }
             }
-
+            "主势盘", "一字组合", "二字组合", "三字组合", "一字定位", "三字和数" ,"跨度" -> {
+                fc3DAdapter = Fc3dAdapter()
+                rvGameBetContent?.adapter = fc3DAdapter
+                val layoutManager = GridLayoutManager(context, 12)
+                rvGameBetContent?.layoutManager = layoutManager
+                layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                    override fun getSpanSize(position: Int): Int {
+                        return when (fc3DAdapter?.getItemViewType(position)) {
+                            fc3DAdapter?.TYPE_1 -> 12
+                            fc3DAdapter?.TYPE_2 -> 6
+                            fc3DAdapter?.TYPE_3 -> 3
+                            fc3DAdapter?.TYPE_4 -> 4
+                            else -> 12
+                        }
+                    }
+                }
+            }
+            "二字定位" -> {
+                fc3DTopAdapter = Right3DTopAdapter()
+                rvRightTop.adapter = fc3DTopAdapter
+                rvRightTop.layoutManager = GridLayoutManager(context, 3)
+                if (fc3DAdapter == null) fc3DAdapter = Fc3dAdapter()
+                rvGameBetContent?.adapter = fc3DAdapter
+                val layoutManager = GridLayoutManager(context, 2)
+                rvGameBetContent?.layoutManager = layoutManager
+            }
+            "三字定位" -> {
+                if (fc3DAdapter == null) fc3DAdapter = Fc3dAdapter()
+                rvGameBetContent?.adapter = fc3DAdapter
+                val layoutManager = GridLayoutManager(context, 3)
+                rvGameBetContent?.layoutManager = layoutManager
+            }
+            "二字和数" -> {
+                fc3DTopAdapter = Right3DTopAdapter(false)
+                rvRightTop.adapter = fc3DTopAdapter
+                rvRightTop.layoutManager = GridLayoutManager(context, 3)
+                fc3DAdapter = Fc3dAdapter()
+                rvGameBetContent?.adapter = fc3DAdapter
+                val layoutManager = GridLayoutManager(context, 4)
+                rvGameBetContent?.layoutManager = layoutManager
+                layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                    override fun getSpanSize(position: Int): Int {
+                        return when (fc3DAdapter?.getItemViewType(position)) {
+                            fc3DAdapter?.TYPE_1 -> 4
+                            else -> 1
+                        }
+                    }
+                }
+            }
         }
         modifyContentData(it, name)
     }
@@ -590,17 +647,19 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                                     )
                                 )
                                 if (index == it.size - 1) {
-                                    for (child in item.play_sec_data) {
-                                        listData.add(
-                                            PlaySecDataKj(
-                                                play_sec_id = child.play_sec_id,
-                                                play_sec_name = child.play_sec_name,
-                                                play_class_id = child.play_class_id,
-                                                play_class_name = child.play_class_name,
-                                                play_class_cname = child.play_class_cname,
-                                                play_odds = child.play_odds
+                                    if (!item.play_sec_data.isNullOrEmpty()) {
+                                        for (child in item.play_sec_data) {
+                                            listData.add(
+                                                PlaySecDataKj(
+                                                    play_sec_id = child.play_sec_id,
+                                                    play_sec_name = child.play_sec_name,
+                                                    play_class_id = child.play_class_id,
+                                                    play_class_name = child.play_class_name,
+                                                    play_class_cname = child.play_class_cname,
+                                                    play_odds = child.play_odds
+                                                )
                                             )
-                                        )
+                                        }
                                     }
                                 }
                             }
@@ -683,7 +742,7 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                         }
                         rightTopXgcAdapter?.refresh(listData)
                     }
-                    "正码xgc", "7色波xgc", "头尾数xgc", "总肖xgc", "正肖xgc", "五行xgc", "合肖xgc" -> {
+                    "正码xgc", "7色波xgc", "头尾数xgc", "总肖xgc", "正肖xgc", "五行xgc", "合肖xgc", "组选三" ,"组选六" -> {
                         val listData = arrayListOf<PlaySecData>()
                         for ((num, item) in it.withIndex()) {
                             if (!item.play_sec_data.isNullOrEmpty()) {
@@ -701,6 +760,9 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                                             result.type = "xgc_tm_ct"
                                         } else if (result.play_sec_name == "lhc_hx") {
                                             result.type = "xgc_tm_hx"
+                                            result.play_sec_options = item.play_sec_options
+                                        } else if (result.play_sec_name == "3d_zxs" || result.play_sec_name == "3d_zxl") {
+                                            result.type = "fc3d_zss"
                                             result.play_sec_options = item.play_sec_options
                                         }
 
@@ -823,6 +885,206 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                             )
                         )
                         xgcTmAdapter?.refresh(listData)
+                    }
+                    "主势盘", "一字组合", "二字组合", "三字组合", "一字定位", "三字和数","跨度" -> {
+                        val listData = arrayListOf<PlaySecData>()
+                        for ((num, item) in it.withIndex()) {
+                            if (!item.play_sec_data.isNullOrEmpty()) {
+                                for ((index, result) in item.play_sec_data.withIndex()) {
+                                    if (index == 0) listData.add(
+                                        PlaySecData(
+                                            title = item.play_sec_cname,
+                                            type = "3d_full"
+                                        )
+                                    )
+                                    when (item.play_sec_merge_name) {
+                                        "3d_yzzh" -> {
+                                            result.type = "3d_4"
+                                        }
+                                        "3d_b_lm", "3d_s_lm", "3d_g_lm" -> {
+                                            result.type = "3d_3"
+                                        }
+                                        "3d_bsh_lm", "3d_bgh_lm", "3d_sgh_lm" -> {
+                                            result.type = "3d_2"
+                                        }
+                                        "3d_bshw_lm", "3d_bghw_lm", "3d_bsgh_lm", "3d_ezzh",
+                                        "3d_szzh", "3d_yzdw_b", "3d_yzdw_s", "3d_yzdw_g",
+                                        "3d_bsghw_lm", "3d_sghw_lm", "3d_szhs", "3d_szhsw","3d_kd" -> {
+                                            result.type = "3d_4"
+                                        }
+                                    }
+                                    result.title = item.play_sec_cname
+                                    listData.add(result)
+                                }
+                            }
+                        }
+                        listData.add(
+                            PlaySecData(
+                                title = "",
+                                type = ""
+                            )
+                        )
+                        fc3DAdapter?.refresh(listData)
+
+                    }
+                    "二字定位" -> {
+                        val listData = arrayListOf<PlayUnitData>()
+                        for ((num, item) in it.withIndex()) {
+                            if (!item.play_sec_data.isNullOrEmpty()) {
+                                val childData = arrayListOf<PlaySecData>()
+                                for ((index, result) in item.play_sec_data.withIndex()) {
+                                    childData.add(
+                                        PlaySecData(
+                                            type = "3d_ezdw",
+                                            title = item.play_sec_cname,
+                                            play_odds = item.play_sec_options?.get(0)?.play_odds
+                                                ?: "0",
+                                            play_sec_name = result.play_sec_name,
+                                            play_class_name = result.play_class_name,
+                                            play_class_cname = result.play_class_cname,
+                                            rzPosition = 0
+                                        )
+                                    )
+                                    childData.add(
+                                        PlaySecData(
+                                            type = "3d_ezdw",
+                                            title = item.play_sec_cname,
+                                            play_odds = item.play_sec_options?.get(0)?.play_odds
+                                                ?: "0",
+                                            play_sec_name = result.play_sec_name,
+                                            play_class_name = result.play_class_name,
+                                            play_class_cname = result.play_class_cname,
+                                            rzPosition = 1
+                                        )
+                                    )
+                                    if (index == item.play_sec_data.size - 1) {
+                                        childData.add(
+                                            PlaySecData(type = "")
+                                        )
+                                    }
+                                }
+
+                                listData.add(
+                                    PlayUnitData(
+                                        play_sec_cname = item.play_sec_cname,
+                                        play_sec_combo = item.play_sec_combo,
+                                        play_sec_merge_name = item.play_sec_merge_name,
+                                        play_sec_name = item.play_sec_name,
+                                        play_sec_data = childData,
+                                        play_sec_id = item.play_sec_id,
+                                        play_sec_info = item.play_sec_info,
+                                        play_sec_options = item.play_sec_options
+                                    )
+                                )
+                            }
+                        }
+                        fc3DTopAdapter?.refresh(listData)
+                    }
+                    "三字定位" -> {
+                        val listData = arrayListOf<PlaySecData>()
+                        for ((num, item) in it.withIndex()) {
+                            if (!item.play_sec_data.isNullOrEmpty()) {
+                                for ((index, result) in item.play_sec_data.withIndex()) {
+                                    listData.add(
+                                        PlaySecData(
+                                            type = "3d_szdw",
+                                            title = item.play_sec_cname,
+                                            play_odds = item.play_sec_options?.get(0)?.play_odds
+                                                ?: "0",
+                                            play_sec_name = result.play_sec_name,
+                                            play_class_name = result.play_class_name,
+                                            play_class_cname = result.play_class_cname,
+                                            rzPosition = 0
+                                        )
+                                    )
+                                    listData.add(
+                                        PlaySecData(
+                                            type = "3d_szdw",
+                                            title = item.play_sec_cname,
+                                            play_odds = item.play_sec_options?.get(0)?.play_odds
+                                                ?: "0",
+                                            play_sec_name = result.play_sec_name,
+                                            play_class_name = result.play_class_name,
+                                            play_class_cname = result.play_class_cname,
+                                            rzPosition = 1
+                                        )
+                                    )
+                                    listData.add(
+                                        PlaySecData(
+                                            type = "3d_szdw",
+                                            title = item.play_sec_cname,
+                                            play_odds = item.play_sec_options?.get(0)?.play_odds
+                                                ?: "0",
+                                            play_sec_name = result.play_sec_name,
+                                            play_class_name = result.play_class_name,
+                                            play_class_cname = result.play_class_cname,
+                                            rzPosition = 2
+                                        )
+                                    )
+                                    if (index == item.play_sec_data.size - 1) {
+                                        listData.add(
+                                            PlaySecData(type = "")
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                        fc3DAdapter?.refresh(listData)
+                        tvTitle.text = "三字定位"
+                        setVisible(layoutOdds)
+                        try {
+                            tvHx.text = it[0].play_sec_options?.get(0)?.play_odds ?: "null"
+                            tv3d3z1.text = it[0].play_sec_info?.get(0) ?: "null"
+                            tv3d3z2.text = it[0].play_sec_info?.get(1) ?: "null"
+                            tv3d3z3.text = it[0].play_sec_info?.get(2) ?: "null"
+                        } catch (e: Exception) {
+                            ToastUtils.showToast("数据错误 X")
+                        }
+                    }
+                    "二字和数" -> {
+                        val listData = arrayListOf<PlayUnitData>()
+                        for ((num, item) in it.withIndex()) {
+                            if (!item.play_sec_data.isNullOrEmpty()) {
+                                val childData = arrayListOf<PlaySecData>()
+                                for ((index, result) in item.play_sec_data.withIndex()) {
+                                    if (!result.play_sec_data.isNullOrEmpty()) {
+                                        for ((pos, child) in result.play_sec_data!!.withIndex()) {
+                                            if (pos == 0) {
+                                                childData.add(
+                                                    PlaySecData(
+                                                        type = "3d_full",
+                                                        title = result.play_sec_cname ?: "null"
+                                                    )
+                                                )
+                                            }
+                                            childData.add(
+                                                PlaySecData(
+                                                    type = "3d_4",
+                                                    title = result.play_sec_cname ?: "null",
+                                                    play_odds = child.play_odds ?: "0",
+                                                    play_sec_name = child.play_sec_name,
+                                                    play_class_name = child.play_class_name,
+                                                    play_class_cname = child.play_class_cname
+                                                )
+                                            )
+                                        }
+                                    }
+                                }
+                                listData.add(
+                                    PlayUnitData(
+                                        play_sec_cname = item.play_sec_cname,
+                                        play_sec_combo = item.play_sec_combo,
+                                        play_sec_merge_name = item.play_sec_merge_name,
+                                        play_sec_name = item.play_sec_name,
+                                        play_sec_data = childData,
+                                        play_sec_id = item.play_sec_id,
+                                        play_sec_info = null,
+                                        play_sec_options = null
+                                    )
+                                )
+                            }
+                        }
+                        fc3DTopAdapter?.refresh(listData)
                     }
                 }
             }
@@ -1045,6 +1307,7 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                     if (betList.isNotEmpty()) setVisible(bottomGameBetLayout) else setGone(
                         bottomGameBetLayout
                     )
+                    LogUtils.e("======>" + betList)
                     mPresenter.setTotal()
                 }
             }
@@ -1321,6 +1584,7 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
         val TYPE_5 = 5
         val TYPE_6 = 6
         val TYPE_7 = 7
+        val TYPE_8 = 8
         override fun getItemViewType(position: Int): Int {
             return when (data[position].type) {
                 "xgc_tm_nor" -> TYPE_1
@@ -1330,6 +1594,7 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                 "xgc_tm_title" -> TYPE_5
                 "xgc_tm_lx" -> TYPE_6
                 "xgc_tm_hx" -> TYPE_7
+                "fc3d_zss" -> TYPE_8
                 else -> TYPE_4
             }
         }
@@ -1342,7 +1607,7 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                 TYPE_4 -> R.layout.adapter_game_xgc_holder
                 TYPE_5 -> R.layout.adapter_game_bet_title
                 TYPE_6 -> R.layout.adapter_game_xgc_tm
-                TYPE_7 -> R.layout.adapter_game_xgc_tm
+                TYPE_7,TYPE_8 -> R.layout.adapter_game_xgc_tm
                 else -> R.layout.adapter_game_xgc_holder
             }
         }
@@ -1497,12 +1762,22 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                                 data?.play_sec_name ?: "-1",
                                 data?.play_class_name ?: "-1",
                                 data?.play_sec_cname ?: "-1",
-                                data?.play_class_cname ?: "-1",
+                                data?.title ?: "-1",
                                 data?.play_odds ?: "-1"
                             )
                             notifyItemChanged(position)
                         }
-
+                    }
+                }
+                TYPE_8 -> {
+                    val tv1 = holder.findViewById<TextView>(R.id.tvXgcCname)
+                    val tv2 = holder.findViewById<TextView>(R.id.tvXgcOdds)
+                    tv1.text = data?.play_class_cname
+                    tv2.text = data?.play_odds
+                    setGone(tv2)
+                    GamePlay.changeBg(data?.isSelected, container, tv1)
+                    container.setOnClickListener {
+                        cgcHx(this, position, data)
                     }
                 }
                 else -> {
@@ -1530,10 +1805,10 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                     .setTextColor(ViewUtils.getColor(R.color.color_FF513E))
             } else holder.findViewById<TextView>(R.id.tvGameType)
                 .setTextColor(ViewUtils.getColor(R.color.color_333333))
-            currentLeft = data.toString()
             holder.itemView.setOnClickListener {
                 if (currentPos == position) return@setOnClickListener
                 currentPos = position
+                currentLeft = data.toString()
                 resetAdapter()
                 firstData?.get(position)?.let { it1 -> modifyContent(it1) }
                 notifyDataSetChanged()
@@ -1545,6 +1820,40 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
             currentPos = 0
         }
     }
+
+    //右上福彩3D 体彩排列三  (二字定位，三字定位)
+    inner class Right3DTopAdapter(private var isShowOdds: Boolean = true) :
+        BaseRecyclerAdapter<PlayUnitData>() {
+        private var currentPos = 0
+        private var isFirst = true
+        override fun getItemLayoutId(viewType: Int) = R.layout.adapter_game_bet_right_top
+        override fun bindData(holder: RecyclerViewHolder, position: Int, data: PlayUnitData?) {
+            val container = holder.findViewById<LinearLayout>(R.id.gameBetLinearLayout)
+            val tv1 = holder.findViewById<TextView>(R.id.tvCname)
+            container.setPadding(5, 10, 5, 10)
+            tv1.text = data?.play_sec_cname
+            data?.isSelected = currentPos == position
+            changeBg(data?.isSelected, container, tv1, null, true)
+            if (isFirst) fc3DAdapter?.refresh(getData()[currentPos]?.play_sec_data)
+            if (isShowOdds) {
+                setVisible(layoutOdds)
+                tvHx.text = data?.play_sec_options?.get(0)?.play_odds ?: "0"
+                tv3dRight.text = getData()[currentPos]?.play_sec_info?.get(0) ?: "null"
+                tv3dLeft.text = getData()[currentPos]?.play_sec_info?.get(1) ?: "null"
+            } else {
+                setGone(layoutOdds)
+            }
+            holder.itemView.setOnClickListener {
+                isFirst = false
+                if (currentPos == position) return@setOnClickListener
+                currentPos = position
+                resetAdapter(true)
+                fc3DAdapter?.refresh(getData()[currentPos]?.play_sec_data)
+                notifyDataSetChanged()
+            }
+        }
+    }
+
 
     //右边上部分类
     inner class RightTopAdapter : BaseRecyclerAdapter<PlayUnitData>() {
@@ -1660,10 +1969,18 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                             }
                         }
                         val numName = when (minSelect) {
-                            1 -> judgeName(item[0]?:"") + "," + judgeName(item[1]?:"")
-                            2 -> judgeName(item[0]?:"") + "," +  judgeName(item[1]?:"") + "," +  judgeName(item[2]?:"")
-                            3 -> judgeName(item[0]?:"") + "," +  judgeName(item[1]?:"") + "," +  judgeName(item[2]?:"") + "," +judgeName(item[3]?:"")
-                            4 ->judgeName(item[0]?:"") + "," +  judgeName(item[1]?:"") + "," +  judgeName(item[2]?:"") + "," + judgeName(item[3]?:"")  + "," + judgeName(item[4]?:"")
+                            1 -> judgeName(item[0] ?: "") + "," + judgeName(item[1] ?: "")
+                            2 -> judgeName(item[0] ?: "") + "," + judgeName(
+                                item[1] ?: ""
+                            ) + "," + judgeName(item[2] ?: "")
+                            3 -> judgeName(item[0] ?: "") + "," + judgeName(
+                                item[1] ?: ""
+                            ) + "," + judgeName(item[2] ?: "") + "," + judgeName(item[3] ?: "")
+                            4 -> judgeName(item[0] ?: "") + "," + judgeName(
+                                item[1] ?: ""
+                            ) + "," + judgeName(item[2] ?: "") + "," + judgeName(
+                                item[3] ?: ""
+                            ) + "," + judgeName(item[4] ?: "")
                             else -> {
                                 ToastUtils.showToast("内部错误")
                                 return
@@ -1698,10 +2015,18 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                         }
                     }
                     val numName = when (minSelect) {
-                        1 -> judgeName(item[0]?:"") + "," + judgeName(item[1]?:"")
-                        2 -> judgeName(item[0]?:"") + "," +  judgeName(item[1]?:"") + "," +  judgeName(item[2]?:"")
-                        3 -> judgeName(item[0]?:"") + "," +  judgeName(item[1]?:"") + "," +  judgeName(item[2]?:"") + "," +judgeName(item[3]?:"")
-                        4 ->judgeName(item[0]?:"") + "," +  judgeName(item[1]?:"") + "," +  judgeName(item[2]?:"") + "," + judgeName(item[3]?:"")  + "," + judgeName(item[4]?:"")
+                        1 -> judgeName(item[0] ?: "") + "," + judgeName(item[1] ?: "")
+                        2 -> judgeName(item[0] ?: "") + "," + judgeName(
+                            item[1] ?: ""
+                        ) + "," + judgeName(item[2] ?: "")
+                        3 -> judgeName(item[0] ?: "") + "," + judgeName(
+                            item[1] ?: ""
+                        ) + "," + judgeName(item[2] ?: "") + "," + judgeName(item[3] ?: "")
+                        4 -> judgeName(item[0] ?: "") + "," + judgeName(
+                            item[1] ?: ""
+                        ) + "," + judgeName(item[2] ?: "") + "," + judgeName(
+                            item[3] ?: ""
+                        ) + "," + judgeName(item[4] ?: "")
                         else -> {
                             ToastUtils.showToast("内部错误")
                             return
@@ -1751,12 +2076,20 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
         var minSelect = -1
         when (data?.play_sec_name) {
             "lhc_hx" -> {
-                maxSelect = 10
+                maxSelect = 10  //最大不用减一 最小要减一
                 minSelect = 1
             }
             "lhc_zxbz" -> {
                 maxSelect = 12
                 minSelect = 4
+            }
+            "3d_zxs" -> {
+                maxSelect = 10
+                minSelect = 4
+            }
+            "3d_zxl" -> {
+                maxSelect = 9
+                minSelect = 3
             }
         }
         if (data?.isSelected != true) {
@@ -1765,8 +2098,8 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                 xgcHxSelectList.add(data?.play_class_name.toString())
                 if (xgcLmSelectList.size > minSelect) {
                     val result = data?.play_sec_options?.get(xgcLmSelectList.size - (minSelect + 1))
-                    setVisible(tvHx)
-                    tvHx.text = "赔率：" + result?.play_odds
+                    setVisible(layoutOdds)
+                    tvHx.text = result?.play_odds
                     betList.clear()
                     val num = CalculationGame.listToString(xgcLmSelectList).toString()
                     val numName = CalculationGame.listToString(xgcHxSelectList).toString()
@@ -1778,7 +2111,7 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                         num,
                         result?.play_odds.toString()
                     )
-                } else setGone(tvHx)
+                } else setGone(layoutOdds)
                 data?.isSelected = true
                 adapter.notifyItemChanged(position)
             } else ToastUtils.showToast("当前玩法最多可选择" + maxSelect + "个号码!")
@@ -1788,8 +2121,8 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
             xgcHxSelectList.remove(data.play_class_name)
             if (xgcLmSelectList.size > minSelect) {
                 val result = data.play_sec_options?.get(xgcLmSelectList.size - (minSelect + 1))
-                setVisible(tvHx)
-                tvHx.text = "赔率：" + result?.play_odds
+                setVisible(layoutOdds)
+                tvHx.text = result?.play_odds
                 val num = CalculationGame.listToString(xgcLmSelectList).toString()
                 val numName = CalculationGame.listToString(xgcHxSelectList).toString()
                 addOrDeleteBetData(
@@ -1802,10 +2135,204 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                 )
             } else {
                 setGone(bottomGameBetLayout)
-                setGone(tvHx)
+                setGone(layoutOdds)
             }
             data.isSelected = false
             adapter.notifyItemChanged(position)
+        }
+    }
+
+    /**
+     * 福彩3D
+     */
+    inner class Fc3dAdapter : BaseRecyclerAdapter<PlaySecData>() {
+        val TYPE_1 = 1
+        val TYPE_2 = 2
+        val TYPE_3 = 3
+        val TYPE_4 = 4
+        val TYPE_5 = 5
+        val TYPE_6 = 6
+        val TYPE_7 = 7
+
+        override fun getItemViewType(position: Int): Int {
+            return when (data[position].type) {
+                "3d_full" -> TYPE_1
+                "3d_2" -> TYPE_2
+                "3d_4" -> TYPE_3
+                "3d_3" -> TYPE_4
+                "3d_ezdw" -> TYPE_6
+                "3d_szdw" -> TYPE_7
+                else -> TYPE_5
+            }
+        }
+
+        override fun getItemLayoutId(viewType: Int): Int {
+            return when (viewType) {
+                TYPE_1 -> R.layout.adapter_game_bet_title
+                TYPE_2, TYPE_3, TYPE_4 -> R.layout.adapter_game_bet_content
+                TYPE_6, TYPE_7 -> R.layout.adapter_game_xgc_tm
+                else -> R.layout.adapter_game_xgc_holder
+            }
+        }
+
+        override fun bindData(holder: RecyclerViewHolder, position: Int, data: PlaySecData?) {
+            when (getItemViewType(position)) {
+                TYPE_1 -> {
+                    holder.text(R.id.tvGameType, data?.title)
+                }
+                TYPE_2, TYPE_3, TYPE_4 -> {
+                    val container = holder.findViewById<LinearLayout>(R.id.gameBetLinearLayout)
+                    val tv1 = holder.findViewById<TextView>(R.id.tvCname)
+                    val tv2 = holder.findViewById<TextView>(R.id.tvOdds)
+                    tv1.text = data?.play_class_cname
+                    tv2.text = data?.play_odds.toString()
+                    changeBg(data?.isSelected, container, tv1, tv2)
+                    holder.itemView.setOnClickListener {
+                        data?.isSelected = data?.isSelected != true
+                        addOrDeleteBetData(
+                            data?.isSelected == true,
+                            data?.play_sec_name ?: "-1",
+                            data?.play_class_name ?: "-1",
+                            data?.title ?: "-1",
+                            data?.play_class_cname ?: "-1",
+                            data?.play_odds ?: "-1"
+                        )
+                        notifyItemChanged(position)
+                    }
+                }
+                TYPE_6 -> {
+                    val container = holder.findViewById<LinearLayout>(R.id.gameBetLinearLayout)
+                    val tv1 = holder.findViewById<TextView>(R.id.tvXgcCname)
+                    val tv2 = holder.findViewById<TextView>(R.id.tvXgcOdds)
+                    GamePlay.changeBg(data?.isSelected, container, tv1)
+                    tv1.text = data?.play_class_cname
+                    ViewUtils.setGone(tv2)
+                    tv1.text = data?.play_class_cname
+                    holder.itemView.setOnClickListener {
+                        data?.isSelected = data?.isSelected != true
+                        calculationEz(
+                            data?.isSelected == true,
+                            data?.rzPosition ?: -1,
+                            data?.play_class_name ?: "null",
+                            data?.play_sec_name ?: "null",
+                            data?.title ?: "null",
+                            data?.play_odds ?: "null"
+                        )
+                        notifyItemChanged(position)
+                    }
+                }
+                TYPE_7 -> {
+                    val container = holder.findViewById<LinearLayout>(R.id.gameBetLinearLayout)
+                    val tv1 = holder.findViewById<TextView>(R.id.tvXgcCname)
+                    val tv2 = holder.findViewById<TextView>(R.id.tvXgcOdds)
+                    GamePlay.changeBg(data?.isSelected, container, tv1)
+                    tv1.text = data?.play_class_cname
+                    ViewUtils.setGone(tv2)
+                    tv1.text = data?.play_class_cname
+                    holder.itemView.setOnClickListener {
+                        data?.isSelected = data?.isSelected != true
+                        calculationSz(
+                            data?.isSelected == true,
+                            data?.rzPosition ?: -1,
+                            data?.play_class_name ?: "null",
+                            data?.play_sec_name ?: "null",
+                            data?.title ?: "null",
+                            data?.play_odds ?: "null"
+                        )
+                        notifyItemChanged(position)
+                    }
+                }
+            }
+        }
+
+        fun resetData() {
+            for (item in this.data) {
+                if (item.isSelected) item.isSelected = false
+            }
+            notifyDataSetChanged()
+        }
+    }
+
+    /**
+     * 二字定位
+     */
+    var ezLeft = arrayListOf<String>()
+    var ezRight = arrayListOf<String>()
+    fun calculationEz(
+        isAdd: Boolean,
+        index: Int,
+        data: String,
+        play_sec_name: String,
+        play_sec_cname: String,
+        odds: String
+    ) {
+        if (index == 0) {
+            if (isAdd) ezLeft.add(data) else ezLeft.remove(data)
+        } else {
+            if (isAdd) ezRight.add(data) else ezRight.remove(data)
+        }
+        if (ezLeft.isNotEmpty() && ezRight.isNotEmpty()) {
+            val list3: ArrayList<List<String>> = ArrayList()
+            list3.add(ezLeft)
+            list3.add(ezRight)
+            val result = CalculationGame.getPermutations(list3)
+            if (!result.isNullOrEmpty()) {
+                betList.clear()
+                for (item in result) {
+                    addOrDeleteBetData(
+                        true,
+                        play_class_cname = item,
+                        play_class_name = item,
+                        play_sec_name = play_sec_name,
+                        play_odds = odds,
+                        play_sec_cname = play_sec_cname
+                    )
+                }
+            }
+        }
+    }
+
+    /**
+     * 三字定位
+     */
+    var sz1 = arrayListOf<String>()
+    var sz2 = arrayListOf<String>()
+    var sz3 = arrayListOf<String>()
+    fun calculationSz(
+        isAdd: Boolean,
+        index: Int,
+        data: String,
+        play_sec_name: String,
+        play_sec_cname: String,
+        odds: String
+    ) {
+        if (index == 0) {
+            if (isAdd) sz1.add(data) else sz1.remove(data)
+        } else if (index == 1) {
+            if (isAdd) sz2.add(data) else sz2.remove(data)
+        } else {
+            if (isAdd) sz3.add(data) else sz3.remove(data)
+        }
+        if (sz1.isNotEmpty() && sz2.isNotEmpty() && sz3.isNotEmpty()) {
+            val list3: ArrayList<List<String>> = ArrayList()
+            list3.add(sz1)
+            list3.add(sz2)
+            list3.add(sz3)
+            val result = CalculationGame.getPermutations(list3)
+            LogUtils.e("======>" + result)
+            if (!result.isNullOrEmpty()) {
+                betList.clear()
+                for (item in result) {
+                    addOrDeleteBetData(
+                        true,
+                        play_class_cname = item,
+                        play_class_name = item,
+                        play_sec_name = play_sec_name,
+                        play_odds = odds,
+                        play_sec_cname = play_sec_cname
+                    )
+                }
+            }
         }
     }
 
@@ -1825,7 +2352,6 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
             play_class_cname = play_class_cname,
             play_odds = play_odds
         )
-
         if (isAdd) {
             betList.add(bean)
         } else removeElement(betList, bean)
@@ -1871,23 +2397,42 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
         dmAdapter?.resetData()
         xgcTmAdapter?.resetData()
         xgcTmAdapter?.clear()
+        fc3DAdapter?.resetData()
+        fc3DAdapter?.clear()
         if (!boolean) {
             dmAdapter?.clear()
             rightTopAdapter?.clear()
             rvRightTop?.removeAllViews()
             rightTopXgcAdapter?.clear()
+            fc3DTopAdapter?.clear()
         }
         betList.clear()
         kjContentList.clear()
         xgcLmSelectList.clear()
         xgcHxSelectList.clear()
         kjList.clear()
+        ezLeft.clear()
+        ezRight.clear()
+        sz1.clear()
+        sz2.clear()
+        sz3.clear()
         rightTop = "-1"
         setGone(bottomGameBetLayout)
-        setGone(tvHx)
         currentDouble = 0
         currentSingle = 0
         currentTriple = 0
+        if (currentLeft == "二字定位") setVisible(layout3D) else {
+            setGone(layoutOdds)
+            setGone(layout3D)
+        }
+        if (currentLeft == "三字定位") {
+            setVisible(layout3D3z)
+            setVisible(tvTitle)
+        } else {
+            setGone(layout3D3z)
+            setGone(tvTitle)
+        }
+        myScrollView.scrollTo(0, 0)
     }
 
     //按钮重置
@@ -1898,15 +2443,21 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
         gyhAdapter?.resetData()
         zhAdapter?.resetData()
         dmAdapter?.resetData()
+        fc3DAdapter?.resetData()
         kjContentList.clear()
         betList.clear()
         xgcLmSelectList.clear()
         xgcHxSelectList.clear()
         kjContentList.clear()
         kjList.clear()
+        ezLeft.clear()
+        ezRight.clear()
+        sz1.clear()
+        sz2.clear()
+        sz3.clear()
         xgcTmAdapter?.resetData()
         setGone(bottomGameBetLayout)
-        setGone(tvHx)
+        setGone(layoutOdds)
         currentDouble = 0
         currentSingle = 0
         currentTriple = 0
@@ -1956,6 +2507,7 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
         if (isAdded) {
             typeAdapter?.resetData()
             typeAdapter?.clear()
+            currentLeft = ""
             resetAdapter()
             this.lotteryId = eventBean.lotteryId
             mPresenter.getPlayList(eventBean.lotteryId)

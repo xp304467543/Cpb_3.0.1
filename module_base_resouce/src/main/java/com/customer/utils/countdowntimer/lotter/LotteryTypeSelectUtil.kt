@@ -64,7 +64,11 @@ object LotteryTypeSelectUtil {
                     openText.layoutParams = params
                     if (result.size >= 10) {
                         openText.background = CodeBackGroundUtil.setBackGroundColor(context, it, lotteryId?:"0")
-                    } else openText.background = ViewUtils.getDrawable(R.drawable.xcode_blue)
+                    } else {
+                        if (lotteryId == "5" || lotteryId == "14"){
+                            openText.background = ViewUtils.getDrawable(R.drawable.xcode_red)
+                        }else openText.background = ViewUtils.getDrawable(R.drawable.xcode_blue)
+                    }
                 }
             }
         }
@@ -74,7 +78,7 @@ object LotteryTypeSelectUtil {
     fun addOpenCodeBigger(context: Context, codeContainer: LinearLayout, result: List<String>, lotteryId: String) {
         codeContainer.removeAllViews()
         codeContainer.gravity = Gravity.CENTER_VERTICAL
-        val size = (ViewUtils.getScreenWidth() - ViewUtils.dp2px(75)) / 10
+        val size = (ViewUtils.getScreenWidth() - ViewUtils.dp2px(95)) / 10
         for (it in result) {
             val openText = TextView(context)
             openText.gravity = Gravity.CENTER
@@ -113,7 +117,7 @@ object LotteryTypeSelectUtil {
     fun addOpenCodeSingle(context: Context, codeContainer: LinearLayout, result: List<String>) {
         codeContainer.removeAllViews()
         codeContainer.gravity = Gravity.CENTER_VERTICAL
-        val size = (ViewUtils.getScreenWidth() - ViewUtils.dp2px(75)) / 10
+        val size = (ViewUtils.getScreenWidth() - ViewUtils.dp2px(95)) / 10
         for (it in result) {
             val openText = TextView(context)
             openText.gravity = Gravity.CENTER
@@ -142,7 +146,7 @@ object LotteryTypeSelectUtil {
         val type = LotteryComposeUtil.lotterySumAndType(result)
         codeContainer.removeAllViews()
         codeContainer.gravity = Gravity.CENTER_VERTICAL
-        val size = (ViewUtils.getScreenWidth() - ViewUtils.dp2px(80)) / 7
+        val size = (ViewUtils.getScreenWidth() - ViewUtils.dp2px(95)) / 7
         repeat(7) {
             val openText = TextView(context)
             openText.gravity = Gravity.CENTER

@@ -72,10 +72,10 @@ class LiveRoomBetGuessFragment1 : BaseNormalFragment() {
                 when (this.play_sec_cname) {
                     "二中二" -> {
                         if (moreSelect == null) moreSelect = arrayListOf()
-                        if (!play_sec_data.get(position).isSelected) {
+                        if (!play_sec_data[position].isSelected) {
                             moreSelect?.add(Bet2Bean(
                                 play_sec_data[position].play_class_cname.toString(),
-                                play_sec_data.get(position).play_class_name.toString()
+                                play_sec_data[position].play_class_name.toString()
                             ))
                             if (moreSelect?.size!! > 2) {
                                 moreSelect?.remove(Bet2Bean(

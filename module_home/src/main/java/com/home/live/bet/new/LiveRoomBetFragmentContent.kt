@@ -232,13 +232,13 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
                         val listData = arrayListOf<PlaySecData>()
                         for ((pos, item) in it.withIndex()) {
                             if (!item.play_sec_data.isNullOrEmpty()) {
-                                for ((index, result) in item.play_sec_data.withIndex()) {
+                                for ((index, result) in item.play_sec_data!!.withIndex()) {
                                     if (index == 0) listData.add(
-                                        PlaySecData(title = item.play_sec_cname, type = "lm_full")
+                                        PlaySecData(title = item.play_sec_cname?:"null", type = "lm_full")
                                     )  //一行占满
                                     if (result.play_sec_id != 0 && pos == 0) result.type =
                                         "lm_4"  //一行四个
-                                    result.title = item.play_sec_cname
+                                    result.title = item.play_sec_cname?:"null"
                                     listData.add(result)
                                 }
                             }
@@ -252,10 +252,10 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
                         val listData = arrayListOf<PlaySecData>()
                         for (item in it) {
                             if (!item.play_sec_data.isNullOrEmpty()) {
-                                for ((index, result) in item.play_sec_data.withIndex()) {
+                                for ((index, result) in item.play_sec_data!!.withIndex()) {
                                     if (index == 0) listData.add(
                                         PlaySecData(
-                                            title = item.play_sec_cname,
+                                            title = item.play_sec_cname?:"null",
                                             type = "zh_full"
                                         )
                                     )  //一行占满
@@ -296,17 +296,19 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
                                     )
                                 )
                                 if (index == it.size - 1) {
-                                    for (child in item.play_sec_data) {
-                                        listData.add(
-                                            PlaySecDataKj(
-                                                play_sec_id = child.play_sec_id,
-                                                play_sec_name = child.play_sec_name,
-                                                play_class_id = child.play_class_id,
-                                                play_class_name = child.play_class_name,
-                                                play_class_cname = child.play_class_cname,
-                                                play_odds = child.play_odds
+                                    if (!item.play_sec_data.isNullOrEmpty()){
+                                        for (child in item.play_sec_data) {
+                                            listData.add(
+                                                PlaySecDataKj(
+                                                    play_sec_id = child.play_sec_id,
+                                                    play_sec_name = child.play_sec_name,
+                                                    play_class_id = child.play_class_id,
+                                                    play_class_name = child.play_class_name,
+                                                    play_class_cname = child.play_class_cname,
+                                                    play_odds = child.play_odds
+                                                )
                                             )
-                                        )
+                                        }
                                     }
                                 }
                             }

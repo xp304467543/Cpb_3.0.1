@@ -39,7 +39,7 @@ import kotlinx.android.synthetic.main.act_game_lottery_bet.*
  * @ Describe
  */
 @RouterAnno(host = "BetMain", path = "gameLotteryBet")
-class GameLotteryBetActivity : BaseMvpActivity<GameLotteryBetActivityPresenter>() {
+class   GameLotteryBetActivity : BaseMvpActivity<GameLotteryBetActivityPresenter>() {
 
     var lotteryId = "-1"
 

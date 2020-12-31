@@ -89,29 +89,45 @@ data class LotteryPlayListResponse(
 data class PlayUnitData(
     val play_sec_cname: String,
     val play_sec_combo: Int?,
-    val play_sec_data: MutableList<PlaySecData>,
+    var play_sec_data: MutableList<PlaySecData>,
+    val play_sec_info: MutableList<String>?,
     val play_sec_id: Int?,
     val play_sec_name: String?,
-    val play_sec_merge_name:String?,
+    val play_sec_merge_name: String?,
     var isSelected: Boolean = false,
-    var play_sec_options:MutableList<PlayOptions>?
+    var play_sec_options: MutableList<PlayOptions>?
 ) : Parcelable
 
 @Parcelize
 data class PlaySecData(
     val play_class_cname: String? = "",
     val play_class_id: Int? = 0,
-    val play_sec_name: String? = "",
-    var play_sec_cname:String?="",
+    var play_sec_name: String? = "",
+    var play_sec_cname: String? = "",
     val play_class_name: String? = "",
-    var play_odds: String? ="",
+    var play_odds: String? = "",
     var playName: String? = "",
     var isSelected: Boolean = false,
     var money: String? = "0",
     var play_sec_id: Int? = 0,
+    var play_sec_data: MutableList<SecData>? = null,
     var title: String = "",
     var type: String = "",
-    var play_sec_options:MutableList<PlayOptions>?=null
+    var play_sec_merge_name: String? = "",
+    var selectPos: Int = 0,
+    var rzPosition: Int = -1,//二字定位 判断 左右 0左 1右
+    var play_sec_options: MutableList<PlayOptions>? = null
+) : Parcelable
+
+@Parcelize
+data class SecData(
+    val play_class_id: Int? = 0,
+    var play_sec_name: String? = "",
+    var play_sec_cname: String? = "",
+    var play_sec_id: Int? = 0,
+    val play_class_name: String? = "",
+    val play_class_cname: String? = "",
+    var play_odds: String? = ""
 ) : Parcelable
 
 @Parcelize
@@ -119,9 +135,9 @@ data class PlayOptions(
     val play_class_cname: String? = "",
     val play_class_id: Int? = 0,
     val play_sec_name: String? = "",
-    var play_sec_cname:String?="",
+    var play_sec_cname: String? = "",
     val play_class_name: String? = "",
-    val play_odds: String? ="",
+    val play_odds: String? = "",
     var playName: String? = "",
     var isSelected: Boolean = false,
     var money: String? = "0",
@@ -132,16 +148,19 @@ data class PlayOptions(
 
 //快捷数据
 data class PlaySecDataKj(
+    var title: String? = "null",
     var play_sec_id: Int? = 0,
     val play_sec_name: String? = "",
     val play_sec_cname: String? = "",
-    val play_sec_merge_name:String?="",
+    val play_sec_merge_name: String? = "",
     val play_class_id: Int? = 0,
     val play_class_name: String? = "",
     val play_class_cname: String? = "",
-    val play_odds:String? ="0",
+    val play_odds: String? = "0",
     var isSelected: Boolean = false,
-    var type: String = "")
+    var type: String = "",
+    var currentData: PlaySecData? = null
+)
 
 data class PlayMoneyData(
     val play_sum_id: Int?,

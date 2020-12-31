@@ -48,7 +48,6 @@ class LotteryHistoryOpenCodeAdapter(val context: Context, val lotteryId: String,
                     lotteryId
                 )
                 when (typeSelect) {
-
                     LotteryConstant.TYPE_5 -> LotteryTypeSelectUtil.specialLotterySum(
                         context,
                         holder.findViewById(R.id.codeContainer),

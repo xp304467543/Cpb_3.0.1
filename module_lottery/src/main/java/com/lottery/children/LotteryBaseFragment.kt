@@ -1,6 +1,5 @@
 package com.lottery.children
 
-import com.customer.adapter.TabNormalAdapter
 import com.customer.adapter.TabThemAdapter
 import com.customer.data.LotteryTypeSelect
 import com.customer.data.mine.ChangeSkin
@@ -12,7 +11,6 @@ import com.lib.basiclib.base.fragment.BaseContentFragment
 import com.lib.basiclib.utils.ViewUtils
 import com.lib.basiclib.widget.tab.ViewPagerHelper
 import com.lib.basiclib.widget.tab.buildins.commonnavigator.CommonNavigator
-import cuntomer.them.Theme
 import kotlinx.android.synthetic.main.child_lottery_base.*
 
 /**
@@ -47,27 +45,38 @@ class LotteryBaseFragment : BaseContentFragment() {
     private var tabAdapter: TabThemAdapter? = null
     private fun loadBottomTab(lotteryId: String, issue: String) {
         if (lotteryId == "-1" || issue == "-1") return
-       if (vpLotteryFragment!=null) vpLotteryFragment.removeAllViews() else return
+        if (vpLotteryFragment != null) vpLotteryFragment.removeAllViews() else return
         val title: ArrayList<String>
         val fragments: ArrayList<*>
         val adapter: BaseFragmentPageAdapter
-        if (lotteryId != "8") {
-            title = arrayListOf("历史开奖", "路珠", "走势", "专家计划")
-            fragments = arrayListOf(
-                LotteryHistoryFragment.newInstance(lotteryId, issue),
-                LotteryLuZhuFragment.newInstance(lotteryId, issue),
-                LotteryTrendFragment.newInstance(lotteryId, issue),
-                LotteryExpertFragment.newInstance(lotteryId, issue)
-            )
-            adapter = BaseFragmentPageAdapter(childFragmentManager, fragments)
-        } else {
-            title = arrayListOf("历史开奖", "露珠", "专家计划")
-            fragments = arrayListOf(
-                LotteryHistoryFragment.newInstance(lotteryId, issue),
-                LotteryLuZhuFragment.newInstance(lotteryId, issue),
-                LotteryExpertFragment.newInstance(lotteryId, issue)
-            )
-            adapter = BaseFragmentPageAdapter(childFragmentManager, fragments)
+        when (lotteryId) {
+            "8" -> {
+                title = arrayListOf("历史开奖", "露珠", "专家计划")
+                fragments = arrayListOf(
+                    LotteryHistoryFragment.newInstance(lotteryId, issue),
+                    LotteryLuZhuFragment.newInstance(lotteryId, issue),
+                    LotteryExpertFragment.newInstance(lotteryId, issue)
+                )
+                adapter = BaseFragmentPageAdapter(childFragmentManager, fragments)
+            }
+            "5","14" -> {
+                title = arrayListOf("历史开奖", "专家计划")
+                fragments = arrayListOf(
+                    LotteryHistoryFragment.newInstance(lotteryId, issue),
+                    LotteryExpertFragment.newInstance(lotteryId, issue)
+                )
+                adapter = BaseFragmentPageAdapter(childFragmentManager, fragments)
+            }
+            else -> {
+                title = arrayListOf("历史开奖", "路珠", "走势", "专家计划")
+                fragments = arrayListOf(
+                    LotteryHistoryFragment.newInstance(lotteryId, issue),
+                    LotteryLuZhuFragment.newInstance(lotteryId, issue),
+                    LotteryTrendFragment.newInstance(lotteryId, issue),
+                    LotteryExpertFragment.newInstance(lotteryId, issue)
+                )
+                adapter = BaseFragmentPageAdapter(childFragmentManager, fragments)
+            }
         }
         tabAdapter = TabThemAdapter(
             titleList = title, viewPage = vpLotteryFragment,

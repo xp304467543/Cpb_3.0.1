@@ -38,7 +38,7 @@ class LotteryHistoryFragment : BaseNormalFragment<LotteryHistoryFragmentPresente
         smartRefreshLayoutLotteryHistoryCode.setEnableOverScrollDrag(true)//是否启用越界拖动（仿苹果效果）
         codeAdapter = LotteryHistoryOpenCodeAdapter(
             requireActivity(),
-            arguments?.getString("lotteryId")?:"8",
+            arguments?.getString("lotteryId") ?: "8",
             LotteryConstant.TYPE_1
         )
         rvLotteryHistoryCode.adapter = codeAdapter
@@ -74,6 +74,12 @@ class LotteryHistoryFragment : BaseNormalFragment<LotteryHistoryFragmentPresente
                 )
             } else if (lotteryID == "8") {
                 arrayOf(LotteryConstant.TYPE_1, LotteryConstant.TYPE_5, LotteryConstant.TYPE_6)
+            } else if (lotteryID == "5" || lotteryID == "14") {
+                arrayOf(
+                    LotteryConstant.TYPE_1,
+                    LotteryConstant.TYPE_2,
+                    LotteryConstant.TYPE_3
+                )
             } else {
                 arrayOf(
                     LotteryConstant.TYPE_1,
