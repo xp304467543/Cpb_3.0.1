@@ -252,12 +252,37 @@ class HomeRecommendNewFragment : BaseMvpFragment<HomeRecommendNewPresenter>(), I
                             GameApi.getAgDZ {
                                 onSuccess {
                                     hidePageLoadingDialog()
-                                    Router.withApi(ApiRouter::class.java)
-                                        .toGlobalWeb(it.url.toString())
+                                    Router.withApi(ApiRouter::class.java).toGlobalWeb(it.url.toString())
                                 }
                                 onFailed {
                                     hidePageLoadingDialog()
                                     ToastUtils.showToast(it.getMsg())
+                                }
+                            }
+                        }
+                        "ky" -> {
+                            showPageLoadingDialog()
+                            GameApi.getKy(item.id?:"") {
+                                    onSuccess {
+                                        Router.withApi(ApiRouter::class.java).toGlobalWeb(it.url.toString())
+                                        hidePageLoadingDialog()
+                                    }
+                                    onFailed {
+                                        ToastUtils.showToast(it.getMsg())
+                                        hidePageLoadingDialog()
+                                    }
+                            }
+                        }
+                        "ibc" -> {
+                            showPageLoadingDialog()
+                            GameApi.getSb(item.id?:"") {
+                                    onSuccess { game060 ->
+                                        Router.withApi(ApiRouter::class.java).toGlobalWeb(game060.url.toString())
+                                        hidePageLoadingDialog()
+                                    onFailed {
+                                        ToastUtils.showToast(it.getMsg())
+                                       hidePageLoadingDialog()
+                                    }
                                 }
                             }
                         }

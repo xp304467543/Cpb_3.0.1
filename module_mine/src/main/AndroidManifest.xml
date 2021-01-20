@@ -131,6 +131,12 @@
         <activity
             android:name=".children.MineScanResultAct"
             android:theme="@style/SwipeBackStyle" />
+        <activity
+            android:name=".children.vip.MineVipInfoActivity"
+            android:theme="@style/SwipeBackStyle" />
+        <activity
+            android:name=".children.vip.MineVipPageActivity"
+            android:theme="@style/SwipeBackStyle" />
     </application>
 
 

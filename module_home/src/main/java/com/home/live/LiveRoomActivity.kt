@@ -225,7 +225,7 @@ class LiveRoomActivity : BaseNormalMvpActivity<LiveActPresenter>() {
             }
         } else {
             setVisible(noAnchor)
-            GlideUtil.loadCircleImage(this, data.avatar, ImgNoAnchor, true)
+           if (isActive()) GlideUtil.loadCircleImage(this, data.avatar, ImgNoAnchor, true)
         }
     }
 

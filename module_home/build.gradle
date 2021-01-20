@@ -42,6 +42,4 @@ dependencies {
     implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'//这个tabLayout可以设置指示器宽度以及圆弧度
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40'
 
-    //条件选择器
-    implementation 'com.github.zyyoona7:pickerview:1.1.0'
 }

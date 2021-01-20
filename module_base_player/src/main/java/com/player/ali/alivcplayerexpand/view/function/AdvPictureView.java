@@ -106,7 +106,6 @@ public class AdvPictureView extends RelativeLayout {
             new ImageLoaderImpl().loadImage(getContext(), mAdvPictureUrl, new ImageLoaderOptions.Builder()
                                             .crossFade()
                                             .centerCrop()
-                                            .error(R.drawable.alivc_player_adv_picture)
                                             .build())
             .into(mAdvImageView);
         }

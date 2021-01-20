@@ -191,25 +191,25 @@ object LiveRoomHelper {
 
                 val drawable = when (data.vip) {
                     "1" -> {
-                        ViewUtils.getDrawable(R.mipmap.v1)
+                        ViewUtils.getDrawable(R.mipmap.svip_1)
                     }
                     "2" -> {
-                        ViewUtils.getDrawable(R.mipmap.v2)
+                        ViewUtils.getDrawable(R.mipmap.svip_2)
                     }
                     "3" -> {
-                        ViewUtils.getDrawable(R.mipmap.v3)
+                        ViewUtils.getDrawable(R.mipmap.svip_3)
                     }
                     "4" -> {
-                        ViewUtils.getDrawable(R.mipmap.v4)
+                        ViewUtils.getDrawable(R.mipmap.svip_4)
                     }
                     "5" -> {
-                        ViewUtils.getDrawable(R.mipmap.v5)
+                        ViewUtils.getDrawable(R.mipmap.svip_5)
                     }
                     "6" -> {
-                        ViewUtils.getDrawable(R.mipmap.v6)
+                        ViewUtils.getDrawable(R.mipmap.svip_6)
                     }
                     "7" -> {
-                        ViewUtils.getDrawable(R.mipmap.v7)
+                        ViewUtils.getDrawable(R.mipmap.svip_7)
                     }
                     else -> {
                         spanBuilder.append(" " + data.userName + " : ")

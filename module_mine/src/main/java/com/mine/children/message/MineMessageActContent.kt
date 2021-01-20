@@ -35,6 +35,8 @@ class MineMessageActContent : BaseNavFragment() {
 
     var type = "0"
 
+    var currentIndex = 1
+
     var adapter: AdapterMessage? = null
 
     override fun isSwipeBackEnable() = false
@@ -44,8 +46,8 @@ class MineMessageActContent : BaseNavFragment() {
     override fun getContentResID() = R.layout.fragment_message
 
     override fun initContentView() {
-        messageRefresh?.setEnableRefresh(false)//是否启用下拉刷新功能
-        messageRefresh?.setEnableLoadMore(false)//是否启用上拉加载功能
+        messageRefresh?.setEnableRefresh(true)//是否启用下拉刷新功能
+        messageRefresh?.setEnableLoadMore(true)//是否启用上拉加载功能
         messageRefresh?.setEnableOverScrollBounce(true)//是否启用越界回弹
         messageRefresh?.setEnableOverScrollDrag(true)//是否启用越界拖动（仿苹果效果）
         type = arguments?.getString("messageType") ?: "0"
@@ -53,14 +55,44 @@ class MineMessageActContent : BaseNavFragment() {
         rvMessageNew?.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         rvMessageNew?.adapter = adapter
+        messageRefresh.setOnRefreshListener {
+            currentIndex = 1
+            getList()
+        }
+        messageRefresh.setOnLoadMoreListener {
+            currentIndex++
+            getList()
+        }
     }
 
+
     override fun initData() {
-        MineApi.getMessageList(type) {
+        messageRefresh.autoRefresh()
+    }
+
+    private fun getList(){
+        MineApi.getMessageList(type,currentIndex) {
             onSuccess {
-                if (it.isNullOrEmpty()) {
-                    setVisible(holderText)
-                } else adapter?.refresh(it)
+                if (isAdded){
+                    if (it.isNullOrEmpty()) {
+                        if (currentIndex == 1) {
+                            setVisible(holderText)
+                            messageRefresh.finishRefresh()
+                        } else {
+                            messageRefresh.finishLoadMoreWithNoMoreData()
+                        }
+                    } else {
+                        setGone(holderText)
+                        if (currentIndex == 1)  {
+                            adapter?.refresh(it)
+                            messageRefresh.finishRefresh()
+                        } else {
+                            adapter?.loadMore(it)
+                            messageRefresh.finishLoadMore()
+                        }
+
+                    }
+                }
             }
             onFailed {
                 if (isAdded) {

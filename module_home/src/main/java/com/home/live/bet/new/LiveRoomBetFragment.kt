@@ -16,10 +16,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.viewpager.widget.ViewPager
 import com.customer.ApiRouter
-import com.customer.component.dialog.BottomBetAccessDialog
-import com.customer.component.dialog.BottomDialogFragment
-import com.customer.component.dialog.DialogGlobalTips
-import com.customer.component.dialog.GlobalDialog
+import com.customer.component.dialog.*
 import com.customer.data.HomeJumpToMine
 import com.customer.data.LotteryResetDiamond
 import com.customer.data.UserInfoSp
@@ -43,8 +40,6 @@ import com.lib.basiclib.utils.FastClickUtil
 import com.lib.basiclib.utils.ToastUtils
 import com.lib.basiclib.utils.ViewUtils
 import com.xiaojinzi.component.impl.Router
-import kotlinx.android.synthetic.main.fragment_live_room_bet_content.*
-import kotlinx.android.synthetic.main.old_dialog_lottery_select.*
 import java.math.BigDecimal
 
 /**
@@ -145,11 +140,12 @@ class LiveRoomBetFragment : BottomDialogFragment() {
         }
     }
 
+    private val indexLotteryId = "5"
     override fun initData() {
         if (isAdded) {
             RxBus.get().register(this)
-            val id = arguments?.getString("LIVE_ROOM_LOTTERY_ID") ?: "8"
-            currentLotteryId = if (id == "" || id == "-1") "8" else id
+            val id = arguments?.getString("LIVE_ROOM_LOTTERY_ID") ?: indexLotteryId
+            currentLotteryId = if (id == "" || id == "-1") indexLotteryId else id
             val type = LotteryApi.getLotteryBetType()
             type.onSuccess {
                 val title = arrayListOf<String>()
@@ -161,12 +157,12 @@ class LiveRoomBetFragment : BottomDialogFragment() {
                         currentIndex = index
                     }
                 }
-                if (tvRedBall != null) GlideUtil.loadImage(it[currentIndex].logo_url, tvRedBall!!)
+                if (tvRedBall != null && isAdded) GlideUtil.loadImage(it[currentIndex].logo_url, tvRedBall!!)
                 tvLotterySelectType?.text = it[currentIndex].cname
                 if (!title.isNullOrEmpty()) initDialog(title, resultList!!)
             }
-            getLotteryNewCode(if (id == "" || id == "-1") "8" else id)//默认加香港彩  8
-            setTabLayout(if (id == "" || id == "-1") "8" else id)
+            getLotteryNewCode(if (id == "" || id == "-1") indexLotteryId else id)//默认加香港彩  8
+            setTabLayout(if (id == "" || id == "-1") indexLotteryId else id)
             getPlayMoney()
             getUserDiamond()
             getUserBalance()
@@ -446,10 +442,13 @@ class LiveRoomBetFragment : BottomDialogFragment() {
 
 
     //底部弹框
-    var dialog: BottomLotterySelectDialog? = null
     private fun initDialog(title: ArrayList<String>, list: ArrayList<LotteryTypeResponse>) {
         tvLotterySelectType?.setOnClickListener {
-            val lotterySelectDialog = BottomLotterySelectDialog(context!!, title)
+            val lotterySelectDialog =
+                BottomLotterySelectDialog(
+                    context!!,
+                    title
+                )
             lotterySelectDialog.setCanceledOnTouchOutside(false)
             tvLotterySelectType?.setCompoundDrawablesWithIntrinsicBounds(
                 0,
@@ -465,12 +464,12 @@ class LiveRoomBetFragment : BottomDialogFragment() {
                     0
                 )
             }
-            lotterySelectDialog.tvLotteryWheelSure.setOnClickListener {
+            lotterySelectDialog.tvLotteryWheelSure?.setOnClickListener {
                 isPlay = false
                 if (runnable != null) handler?.removeCallbacks(runnable!!)
                 tvLotterySelectType?.text =
-                    lotterySelectDialog.lotteryPickerView.opt1SelectedData as String
-                opt1SelectedPosition = lotterySelectDialog.lotteryPickerView.opt1SelectedPosition
+                    lotterySelectDialog.lotteryPickerView?.opt1SelectedData as String
+                opt1SelectedPosition = lotterySelectDialog.lotteryPickerView?.opt1SelectedPosition?:0
                 currentLotteryId = list[opt1SelectedPosition].lottery_id ?: ""
                 getLotteryNewCode(list[opt1SelectedPosition].lottery_id ?: "")
                 setTabLayout(list[opt1SelectedPosition].lottery_id ?: "")
@@ -484,7 +483,7 @@ class LiveRoomBetFragment : BottomDialogFragment() {
                 reSetData()
                 lotterySelectDialog.dismiss()
             }
-            lotterySelectDialog.lotteryPickerView.opt1SelectedPosition = opt1SelectedPosition
+            lotterySelectDialog.lotteryPickerView?.opt1SelectedPosition = opt1SelectedPosition
             lotterySelectDialog.show()
 
         }
@@ -530,7 +529,7 @@ class LiveRoomBetFragment : BottomDialogFragment() {
         if (!fragmentList.isNullOrEmpty()){
             viewPagerAdapter = BaseFragmentPageAdapter(childFragmentManager, fragmentList!!, title)
             vpGuss?.adapter = viewPagerAdapter
-            vpGuss?.offscreenPageLimit = 10
+            vpGuss?.offscreenPageLimit = fragmentList?.size?:0
             tabGuss?.setViewPager(vpGuss)
             //可用于切换 整合 单码之类的tab时清空
             vpGuss?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
@@ -548,15 +547,15 @@ class LiveRoomBetFragment : BottomDialogFragment() {
         LotteryApi.getLotteryNewCode(lottery_id) {
             onSuccess {
                 if (isVisible) {
-                    if (it.next_lottery_time?.toInt() ?: 0 > 0 && it.next_lottery_end_time ?: 0 > 0) {
+                    if (it.next_lottery_time?.toInt() ?: 0 > 0 ) {
                         nextIssue = it.next_issue ?: "0"
                         tvOpenCount?.text = (it.issue + " 期开奖结果   ")
                         countDownTime(it.next_lottery_time?.toString() ?: "0", lottery_id)
                         //更新最新开奖数据
                         setContainerCode(lottery_id, it.code)
                         tvOpenCodePlaceHolder?.visibility = View.GONE
+                        isOpenCode = it.next_lottery_end_time ?: 0 > 0
                         countDownTimerClose(it.next_lottery_end_time ?: 0)
-                        isOpenCode = true
                         if (isPlay) {
                             if (UserInfoSp.getIsPlaySound()) {
                                 if (handlerPlay == null) handlerPlay = Handler()

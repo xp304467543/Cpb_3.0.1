@@ -31,7 +31,7 @@ class GameLotteryBetActivityPresenter : BaseMvpPresenter<GameLotteryBetActivity>
                 mView.showPickerView(it)
             }
             result.onFailed {
-                ToastUtils.showToast("彩种获取失败")
+                ToastUtils.showToast(it.getMsg()+": 彩种获取失败")
             }
         }
     }

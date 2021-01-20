@@ -141,9 +141,7 @@ class LiveRoomChild1Presenter(private val anchorId: String) : BaseMvpPresenter<L
                     //开红包
                     mView.stopRedAnimation()
                     redPaperDialog.showGetRed(
-                        it.send_user_name ?: "", it.send_text
-                            ?: "恭喜发财", it.amount ?: "", it.send_user_avatar ?: ""
-                    )
+                        it.send_user_name ?: "", it.send_text ?: "恭喜发财", it.amount ?: "", it.send_user_avatar ?: "")
                     mView.hidePageLoadingDialog()
                 }
                 onFailed {

@@ -38,5 +38,10 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/Theme.Crop" />
 
+        <activity android:name="com.customer.component.dialog.DialogLoginTips"
+            android:launchMode="singleTask"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@style/DialogActivity"/>
+
     </application>
 </manifest>

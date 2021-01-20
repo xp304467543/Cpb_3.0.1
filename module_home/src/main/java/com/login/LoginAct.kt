@@ -348,6 +348,9 @@ class LoginAct : BaseMvpActivity<LoginPresenter>() {
         result.username?.let { UserInfoSp.putUserName(it) }
         result.profile?.let { UserInfoSp.putUserProfile(it) }
         result.avatar?.let { UserInfoSp.putUserPhoto(it) }
+        UserInfoSp.setNobleLevel(result.noble)
+        UserInfoSp.setVipLevel(result.vip)
+
         UserInfoSp.putIsLogin(true)//更新登录状态
         UserInfoSp.putUserFans(result.following + "," + result.followers + "," + result.like)
     }

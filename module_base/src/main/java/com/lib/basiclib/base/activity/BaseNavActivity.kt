@@ -4,6 +4,7 @@ import androidx.appcompat.widget.Toolbar
 import com.fh.basemodle.R
 import com.lib.basiclib.base.fragment.BaseFragment
 import com.lib.basiclib.base.fragment.PlaceholderFragment
+import com.lib.basiclib.utils.ViewUtils
 import kotlinx.android.synthetic.main.base_nav_page.*
 
 /**
@@ -28,7 +29,7 @@ open class BaseNavActivity(override val layoutResID: Int = R.layout.base_nav_pag
             if (isShowToolBar()) {
                 // 设置标题
                 setPageTitle(getPageTitle())
-
+                setPageTitleColor(isShowTitleWhite())
                 // 设置Toolbar标题样式
                 mDelegate.setToolbarStyle(isMainPage(), toolbar)
 
@@ -120,6 +121,12 @@ open class BaseNavActivity(override val layoutResID: Int = R.layout.base_nav_pag
     protected open fun isShowBackIconWhite(): Boolean = true
 
     /**
+     * 是否展示白色标题
+     */
+    protected open fun isShowTitleWhite(): Boolean = false
+
+
+    /**
      * 是否可以返回，如果可以则展示返回按钮，并且设置返回事件
      * 默认可以返回
      */
@@ -152,6 +159,14 @@ open class BaseNavActivity(override val layoutResID: Int = R.layout.base_nav_pag
         mDelegate.setPageTitle(tvTitle, title)
     }
 
+
+    /**
+     * 主动设置页面标题，给子类调用
+     */
+    protected fun setPageTitleColor(title: Boolean) {
+        if (title) tvTitle.setTextColor(ViewUtils.getColor(R.color.white)) else tvTitle.setTextColor(ViewUtils.getColor(R.color.black))
+
+    }
     /**
      * 设置ToolBar的展示状态
      * @param isShow 是否展示

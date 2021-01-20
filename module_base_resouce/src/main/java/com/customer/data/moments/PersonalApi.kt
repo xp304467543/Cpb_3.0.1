@@ -14,9 +14,9 @@ import cuntomer.net.BaseApi
  */
 object PersonalApi : BaseApi {
     //用户个人页
-    private const val USER_PAGE = "api/v1_1/user/user_owner/"
+    private const val USER_PAGE = "api/v2/user/user_owner/"
     //主播个人页
-    private const val ANCHOR_PAGE = "api/v1_1/live/get_anchor_info/"
+    private const val ANCHOR_PAGE = "api/v2/live/get_anchor_info/"
     //专家个人页
     private const val EXPERT_PAGE = "plan/expert"
     //专家历史

@@ -142,9 +142,11 @@ class MoreAnchorAct : BaseNavActivity() {
                     val content = it.data?.let { it1 -> JsonUtils.fromJson(it1, Array<HomeHotLiveResponse>::class.java) }
                     content?.let { it1 -> initAdvanceRecycle(it1,isRefresh) }
                 }else  {
-                    setVisible(emptyHolder)
-                    contentAdapter.clear()
-                    recyclerViewContent?.removeAllViews()
+                    if (page ==1){
+                        setVisible(emptyHolder)
+                        contentAdapter.clear()
+                        recyclerViewContent?.removeAllViews()
+                    }else smartContent.finishLoadMoreWithNoMoreData()
                 }
                 hidePageLoadingDialog()
                 smartContent.finishRefresh()

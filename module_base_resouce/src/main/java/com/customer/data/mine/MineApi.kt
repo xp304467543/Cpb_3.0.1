@@ -34,19 +34,19 @@ object MineApi : BaseApi {
     const val USER_UPLOAD_AVATAR = "index/upload-avatar"
 
     //意见反馈
-    private const val MINE_FEED_BACK = "api/v1_1/user/user_feedback"
+    private const val MINE_FEED_BACK = "api/v2/user/user_feedback"
 
     //获取皮肤列表/详情
     private const val MINE_THEM_SKIN = "api/common/get_skin_list/"
 
     //查询Vip等级
-    private const val MINE_CHECK_VIP = "api/v1_1/user/vip_now/"
+//    private const val MINE_CHECK_VIP = "api/v2/user/vip_now/"
 
     //获取余额
     private const val USER_BALANCE = "index/balance"
 
     //获取钻石
-    private const val USER_DIAMOND = "api/v1_1/user/diamond_now/"
+    private const val USER_DIAMOND = "api/v2/user/diamond_now/"
 
     //是否设置支付密码
     private const val USER_IS_SET_PAY_PASS = "index/check-fund-password"
@@ -55,10 +55,10 @@ object MineApi : BaseApi {
     private const val MINE_VERIFY_PASS_WORD = "index/verify-fund-password"
 
     //兑换钻石
-    private const val USER_EXCHANGE_DIAMOND = "api/v1_1/user/exchange_diamond/"
+    private const val USER_EXCHANGE_DIAMOND = "api/v2/user/exchange_diamond/"
 
     //获取支付列表
-    private const val PAY_TYPE_LIST = "api/v1_1/Recharge/getList"
+    private const val PAY_TYPE_LIST = "api/v2/Recharge/getList"
 
     //银行卡列表
     private const val BANK_LIST = "index/bank-list"
@@ -70,43 +70,43 @@ object MineApi : BaseApi {
     private const val USER_BANK_LIST = "index/user-card-list/"
 
     //用户提现
-    private const val USER_DEPOAIT = "api/v1_1/withdraws/UserDeposit/"
+    private const val USER_DEPOAIT = "api/v2/withdraws/UserDeposit/"
 
     //关注列表 用户 主播
-    private const val USER_ATTENTION = "api/v1_1/user/User_follow_list/"
+    private const val USER_ATTENTION = "api/v2/user/User_follow_list/"
 
     //关注列表 专家
     private const val USER_ATTENTION_EXPERT = "plan/follow-list"
 
     //余额记录
-    private const val USER_BALANCE_LIST = "api/v1_1/Recharge/accountChange"
+    private const val USER_BALANCE_LIST = "api/v2/Recharge/accountChange"
 
     //打赏记录
-    private const val USER_PAY_LIST = "api/v1_1/user/user_reward_list_new/"
+    private const val USER_PAY_LIST = "api/v2/user/user_reward_list_new/"
 
     //兑换记录
-    private const val USER_CHANGE_LIST = "api/v1_1/user/diamond_list/"
+    private const val USER_CHANGE_LIST = "api/v2/user/diamond_list/"
 
     //投注记录
     private const val USER_BET_LIST = "quiz/change_log"
 
     //消息中心
-    private const val USER_MESSAGE_CENTER = "api/v1_1/live/get_notice/"
+    private const val USER_MESSAGE_CENTER = "api/v2/live/get_notice/"
 
     //消息中心代理
-    private const val USER_MESSAGE_CENTER_DL = " api/v1_1/live/get_notice_dl/"
+    private const val USER_MESSAGE_CENTER_DL = " api/v2/live/get_notice_dl/"
 
     //消息列表
-    private const val USER_MESSAGE_LIST = "/api/v1_1/live/get_message_list/"
+    private const val USER_MESSAGE_LIST = "/api/v2/live/get_message_list/"
 
     //消息详情
-    private const val USER_MESSAGE_INFO = "api/v1_1/live/get_message/"
+    private const val USER_MESSAGE_INFO = "api/v2/live/get_message/"
 
     //获取新消息通知
-    private const val USER_MESSAGE_NEW = "/api/v1_1/live/get_message_count/"
+    private const val USER_MESSAGE_NEW = "/api/v2/live/get_message_count/"
 
     //获取某个主播动态
-    private const val ANCHOR_LIST = "api/v1_1/live/get_dynamic/"
+    private const val ANCHOR_LIST = "api/v2/live/get_dynamic/"
 
     //修改支付密码
     private const val HOME_LIVE_RED_SET_PASS = "index/set-fund-password/"
@@ -121,7 +121,7 @@ object MineApi : BaseApi {
     private const val HOT_DISCUSS = "article/index"
 
     //官方联系
-    private const val CONTENT_GROUP = "api/v1_1/live/contact/"
+    private const val CONTENT_GROUP = "api/v2/live/contact/"
 
     //卡密充值
     private const val RECHARGE_CARD = "api/v2/Recharge/code_recharge"
@@ -203,7 +203,7 @@ object MineApi : BaseApi {
     private const val GET_CODE_SMS = "reg/send-sms"
 
     //购彩
-    private const val LOTTERY_URL = "api/v1_1/user/jump_to/"
+    private const val LOTTERY_URL = "api/v2/user/jump_to/"
 
     //投注记录
     private const val LOTTERY_BET_HISTORY = "guess/play_bet_history"
@@ -263,25 +263,31 @@ object MineApi : BaseApi {
     private const val RECYCLE_ALL = "platform/transfer-in-all"
 
     //银行卡充值列表
-    private const val BANK_CARD = "api/v1_1/Recharge/bankList"
+    private const val BANK_CARD = "api/v2/Recharge/bankList"
 
     //银行卡充值
-    private const val BANK_CARD_RECHARGE = "api/v1_1/Recharge/bank_recharge"
+    private const val BANK_CARD_RECHARGE = "api/v2/Recharge/bank_recharge"
 
     //获取常用卡号列表
-    private const val USER_BANK_CARD = "api/v1_1/Recharge/get_commonno"
+    private const val USER_BANK_CARD = "api/v2/Recharge/get_commonno"
 
     //添加常用卡号
-    private const val USER_ADD_BANK_CARD = "api/v1_1/Recharge/add_commonno"
+    private const val USER_ADD_BANK_CARD = "api/v2/Recharge/add_commonno"
 
     //删除常用卡号
-    private const val USER_DEL_BANK_CARD = "api/v1_1/Recharge/del_commonno"
+    private const val USER_DEL_BANK_CARD = "api/v2/Recharge/del_commonno"
 
     //平台间转账
     private const val PLAT_TRANSFER = "platform/transfer"
 
     //扫码登录(判断是否过期)
     private const val SCAN_LOGIN ="v2/login/scan"
+
+    //VIP卡片
+    private const val VIP_CARD_INFO = "api/v2/user/get_vip/"
+
+    //VIP详情
+    private const val VIP_INFO = "api/v2/user/get_vip_detail/"
 
 
 
@@ -374,14 +380,14 @@ object MineApi : BaseApi {
     /**
      * 查询Vip等级
      */
-    fun getUserVip(function: ApiSubscriber<MineUserVipType>.() -> Unit) {
-        val subscriber = object : ApiSubscriber<MineUserVipType>() {}
-        subscriber.function()
-        getApi().get<MineUserVipType>(MINE_CHECK_VIP)
-            .headers("token", UserInfoSp.getToken())
-            .params("user_id", UserInfoSp.getUserId())
-            .subscribe(subscriber)
-    }
+//    fun getUserVip(function: ApiSubscriber<MineUserVipType>.() -> Unit) {
+//        val subscriber = object : ApiSubscriber<MineUserVipType>() {}
+//        subscriber.function()
+//        getApi().get<MineUserVipType>(MINE_CHECK_VIP)
+//            .headers("token", UserInfoSp.getToken())
+//            .params("user_id", UserInfoSp.getUserId())
+//            .subscribe(subscriber)
+//    }
 
     /**
      * 查询余额
@@ -697,7 +703,7 @@ object MineApi : BaseApi {
     /**
      * 消息列表
      */
-    fun getMessageList(msg_type: String,function: ApiSubscriber<List<MineMessageNew>>.() -> Unit){
+    fun getMessageList(msg_type: String,page: Int,function: ApiSubscriber<List<MineMessageNew>>.() -> Unit){
         val subscriber = object : ApiSubscriber<List<MineMessageNew>>() {}
         subscriber.function()
         getApi().get<List<MineMessageNew>>(USER_MESSAGE_LIST)
@@ -706,6 +712,8 @@ object MineApi : BaseApi {
             .params("msg_type", msg_type)
             .params("client_type", 1)
             .params("api", if (AppConstant.isMain)1 else 5)
+            .params("page",page)
+            .params("limit",10)
             .subscribe(subscriber)
     }
 
@@ -1179,7 +1187,7 @@ object MineApi : BaseApi {
 
 
     //关注
-    private const val HOME_ATTENTION_ANCHCOR = "api/v1_1/live/follow/"
+    private const val HOME_ATTENTION_ANCHCOR = "api/v2/live/follow/"
 
     /**
      * 主播关注or取关 增加用户关注
@@ -1510,6 +1518,28 @@ object MineApi : BaseApi {
             .headers("Authorization", UserInfoSp.getTokenWithBearer())
             .params("qrid",code)
             .params("is_chk_exp",is_chk_exp)
+            .subscribe(subscriber)
+    }
+
+    /**
+     * vip卡片页
+     */
+    fun getVipCardInfo(function: ApiSubscriber<VipCardInfo>.() -> Unit){
+        val subscriber = object : ApiSubscriber<VipCardInfo>() {}
+        subscriber.function()
+        getApi().get<VipCardInfo>(VIP_CARD_INFO)
+            .headers("token", UserInfoSp.getToken())
+            .subscribe(subscriber)
+    }
+
+    /**
+     * vip详情
+     */
+    fun getVipInfo(function: ApiSubscriber<VipInfo>.() -> Unit){
+        val subscriber = object : ApiSubscriber<VipInfo>() {}
+        subscriber.function()
+        getApi().get<VipInfo>(VIP_INFO)
+            .headers("token", UserInfoSp.getToken())
             .subscribe(subscriber)
     }
 

@@ -3,9 +3,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:orientation="vertical">
 
+
+    <com.lib.basiclib.base.xui.widget.tabbar.TabControlView
+        android:id="@+id/tcv_select"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/dp_8"
+        android:gravity="center"
+        app:tcv_textSize="@dimen/sp_12"
+        app:tcv_equalWidth="true"
+        app:tcv_unselectedColor="@color/white"
+        app:tcv_selectedColor="@color/color_FF513E"
+        android:layout_height="wrap_content"
+        app:tcv_selectedTextColor="@color/white"
+        app:tcv_unselectedTextColor="@color/grey_75"
+        app:tcv_defaultSelection="0"/>
+    <com.lib.basiclib.base.round.RoundTextView
+        android:id="@+id/singleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_10"
+        android:gravity="center"
+        android:textSize="@dimen/sp_12"
+        app:rv_strokeWidth="1dp"
+        android:visibility="gone"
+        app:rv_strokeColor="@color/color_FF513E"
+        android:textColor="@color/grey_75"
+        android:layout_gravity="center"
+        app:rv_cornerRadius="@dimen/dp_5"
+        android:text="排列3"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvRuleTypeSelect"
         android:layout_width="match_parent"
@@ -13,12 +42,6 @@
         android:layout_marginTop="@dimen/dp_10"
         android:paddingStart="@dimen/dp_5"
         tools:ignore="RtlSymmetry" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_marginTop="@dimen/dp_15"
-        android:background="@color/color_EEEEEE" />
 
     <ScrollView
         android:layout_width="match_parent"

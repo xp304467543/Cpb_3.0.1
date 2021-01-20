@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_vertical"
+    android:layout_width="70dp"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tvHolder"
+        android:layout_width="@dimen/dp_15"
+        android:layout_height="match_parent"/>
+
+    <com.lib.basiclib.base.round.RoundTextView
+        android:id="@+id/tvVip"
+        android:layout_width="30dp"
+        android:layout_height="15dp"
+        android:text="vip1"
+        android:gravity="center"
+        app:rv_cornerRadius="7dp"
+        android:textSize="@dimen/sp_10"
+        android:textColor="@color/color_666666"
+        app:rv_backgroundColor="#cfcfde" />
+
+    <TextView
+        android:id="@+id/tvLine"
+        android:layout_width="40dp"
+        android:background="#E1E1E1"
+        android:layout_height="0.5dp"/>
+</LinearLayout>

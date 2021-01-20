@@ -1,9 +1,9 @@
 package com.customer.data.lottery
 
+import com.customer.data.UserInfoSp
 import com.rxnetgo.rxcache.CacheMode
 import cuntomer.api.AllEmptySubscriber
 import cuntomer.api.ApiSubscriber
-import com.customer.data.UserInfoSp
 import cuntomer.net.BaseApi
 import io.reactivex.disposables.Disposable
 

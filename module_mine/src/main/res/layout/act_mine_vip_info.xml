@@ -1,0 +1,612 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:overScrollMode="never"
+    android:scrollbars="none">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:id="@+id/vipStateView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_0"
+            android:background="@color/black"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="@dimen/dp_10"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/ic_vip_bg" />
+
+        <RelativeLayout
+            android:id="@+id/topBar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_40"
+            app:layout_constraintTop_toBottomOf="@+id/vipStateView">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/vipBack"
+                android:layout_width="@dimen/dp_60"
+                android:layout_height="match_parent"
+                android:padding="@dimen/dp_13"
+                app:srcCompat="@mipmap/ic_arrow_back_white"
+                tools:ignore="VectorDrawableCompat" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="VIP 特权"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_16" />
+
+        </RelativeLayout>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgBg2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_18"
+            android:layout_marginTop="245dp"
+            android:layout_marginEnd="@dimen/dp_18"
+            android:scaleType="fitXY"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/ic_vip_bg2" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/bg3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imgBg2"
+            app:srcCompat="@drawable/ic_vip_bg_3" />
+
+        <LinearLayout
+            android:id="@+id/v1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_35"
+            android:layout_marginStart="@dimen/dp_18"
+            android:layout_marginEnd="@dimen/dp_18"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/bg3">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/vip1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@mipmap/normal_vip_1" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/vip2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@mipmap/normal_vip_2" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/vip3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@mipmap/normal_vip_3" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/vip4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@mipmap/normal_vip_4" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/v2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_35"
+            android:layout_marginStart="@dimen/dp_18"
+            android:layout_marginTop="@dimen/dp_15"
+            android:layout_marginEnd="@dimen/dp_18"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/v1">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/vip5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@mipmap/normal_vip_5" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/vip6"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@mipmap/normal_vip_6" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/vip7"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@mipmap/normal_vip_7" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/vip8"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@mipmap/normal_vip_8" />
+
+        </LinearLayout>
+
+        <com.lib.basiclib.base.round.RoundLinearLayout
+            android:id="@+id/container1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_120"
+            android:layout_marginStart="@dimen/dp_28"
+            android:layout_marginTop="@dimen/dp_15"
+            android:layout_marginEnd="@dimen/dp_28"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/v2"
+            app:rv_cornerRadius="@dimen/dp_5"
+            app:rv_strokeColor="#ddad81"
+            app:rv_strokeWidth="0.5dp">
+
+            <com.lib.basiclib.base.round.RoundTextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_25"
+                android:gravity="center"
+                android:text="等级条件"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_12"
+                app:rv_backgroundColor="#ddad81"
+                app:rv_cornerRadius_TL="@dimen/dp_5"
+                app:rv_cornerRadius_TR="@dimen/dp_5" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_0"
+                android:layout_weight="2"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="晋级条件"
+                    android:textColor="#FF725431"
+                    android:textSize="@dimen/sp_12" />
+
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="match_parent"
+                    android:background="#ddad81" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv1"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textSize="@dimen/sp_11" />
+
+                    <TextView
+                        android:id="@+id/tv2"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textSize="@dimen/sp_11" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#ddad81" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_0"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="保级条件"
+                    android:textColor="#FF725431"
+                    android:textSize="@dimen/sp_12" />
+
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="match_parent"
+                    android:background="#ddad81" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/tv3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:textSize="@dimen/sp_11" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.lib.basiclib.base.round.RoundLinearLayout>
+
+
+        <com.lib.basiclib.base.round.RoundLinearLayout
+            android:id="@+id/container2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_28"
+            android:layout_marginTop="@dimen/dp_15"
+            android:layout_marginEnd="@dimen/dp_28"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/container1"
+            app:rv_cornerRadius="@dimen/dp_5"
+            app:rv_strokeColor="#ddad81"
+            app:rv_strokeWidth="0.5dp">
+
+            <com.lib.basiclib.base.round.RoundTextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_25"
+                android:gravity="center"
+                android:text="VIP专属奖励"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_12"
+                app:rv_backgroundColor="#ddad81"
+                app:rv_cornerRadius_TL="@dimen/dp_5"
+                app:rv_cornerRadius_TR="@dimen/dp_5" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <com.lib.basiclib.base.round.RoundTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="@dimen/dp_5"
+                        android:text="升级礼金"
+                        android:textColor="#FF725431"
+                        android:textSize="@dimen/sp_12" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="#ddad81" />
+
+                    <com.lib.basiclib.base.round.RoundTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="@dimen/dp_5"
+                        android:text="生日礼金"
+                        android:textColor="#FF725431"
+                        android:textSize="@dimen/sp_12" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="#ddad81" />
+
+                    <com.lib.basiclib.base.round.RoundTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="@dimen/dp_5"
+                        android:text="每月红包（18日）"
+                        android:textColor="#FF725431"
+                        android:textSize="@dimen/sp_12" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="#ddad81" />
+
+                    <com.lib.basiclib.base.round.RoundTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="@dimen/dp_5"
+                        android:text="专属客服"
+                        android:textColor="#FF725431"
+                        android:textSize="@dimen/sp_12" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="match_parent"
+                    android:background="#ddad81" />
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <com.lib.basiclib.base.round.RoundTextView
+                        android:id="@+id/tv4"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="@dimen/dp_5"
+                        android:textColor="#FF725431"
+                        android:textSize="@dimen/sp_12" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="#ddad81" />
+
+                    <com.lib.basiclib.base.round.RoundTextView
+                        android:id="@+id/tv5"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="@dimen/dp_5"
+                        android:textColor="#FF725431"
+                        android:textSize="@dimen/sp_12" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="#ddad81" />
+
+                    <com.lib.basiclib.base.round.RoundTextView
+                        android:id="@+id/tv6"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="@dimen/dp_5"
+                        android:textColor="#FF725431"
+                        android:textSize="@dimen/sp_12" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="#ddad81" />
+
+                    <com.lib.basiclib.base.round.RoundTextView
+                        android:id="@+id/tv7"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="@dimen/dp_5"
+                        android:textColor="#FF725431"
+                        android:textSize="@dimen/sp_12" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </com.lib.basiclib.base.round.RoundLinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_18"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_18"
+            app:layout_constraintTop_toBottomOf="@+id/container2">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgV5"
+                android:layout_width="@dimen/dp_144"
+                android:layout_height="@dimen/dp_144"
+                app:layout_constraintEnd_toStartOf="@+id/imgV6"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvImg5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_333333"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imgV5"
+                app:layout_constraintEnd_toEndOf="@+id/imgV5"
+                app:layout_constraintStart_toStartOf="@+id/imgV5" />
+
+            <TextView
+                android:id="@+id/tvV5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_16"
+                android:text="VIP5专享"
+                android:textColor="@color/color_FF513E"
+                android:textSize="@dimen/sp_12"
+                app:layout_constraintEnd_toEndOf="@+id/imgV5"
+                app:layout_constraintStart_toStartOf="@+id/imgV5"
+                app:layout_constraintTop_toBottomOf="@+id/imgV5" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgV6"
+                android:layout_width="@dimen/dp_144"
+                android:layout_height="@dimen/dp_144"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imgV5"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvImg6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_333333"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imgV6"
+                app:layout_constraintEnd_toEndOf="@+id/imgV6"
+                app:layout_constraintStart_toStartOf="@+id/imgV6" />
+
+            <TextView
+                android:id="@+id/tvV6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_16"
+                android:text="VIP6专享"
+                android:textColor="@color/color_FF513E"
+                android:textSize="@dimen/sp_12"
+                app:layout_constraintEnd_toEndOf="@+id/imgV6"
+                app:layout_constraintStart_toStartOf="@+id/imgV6"
+                app:layout_constraintTop_toBottomOf="@+id/imgV6" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgV7"
+                android:layout_width="@dimen/dp_144"
+                android:layout_height="@dimen/dp_144"
+                app:layout_constraintEnd_toStartOf="@+id/imgV8"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvV5" />
+
+            <TextView
+                android:id="@+id/tvImg7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_333333"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imgV7"
+                app:layout_constraintEnd_toEndOf="@+id/imgV7"
+                app:layout_constraintStart_toStartOf="@+id/imgV7" />
+
+            <TextView
+                android:id="@+id/tvV7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_16"
+                android:text="VIP6专享"
+                android:textColor="@color/color_FF513E"
+                android:textSize="@dimen/sp_12"
+                app:layout_constraintEnd_toEndOf="@+id/imgV7"
+                app:layout_constraintStart_toStartOf="@+id/imgV7"
+                app:layout_constraintTop_toBottomOf="@+id/imgV7" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgV8"
+                android:layout_width="@dimen/dp_144"
+                android:layout_height="@dimen/dp_144"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imgV7"
+                app:layout_constraintTop_toBottomOf="@+id/tvV6" />
+
+
+            <TextView
+                android:id="@+id/tvImg8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_333333"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imgV8"
+                app:layout_constraintEnd_toEndOf="@+id/imgV8"
+                app:layout_constraintStart_toStartOf="@+id/imgV8" />
+
+            <TextView
+                android:id="@+id/tvV8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_16"
+                android:text="VIP6专享"
+                android:textColor="@color/color_FF513E"
+                android:textSize="@dimen/sp_12"
+                app:layout_constraintEnd_toEndOf="@+id/imgV8"
+                app:layout_constraintStart_toStartOf="@+id/imgV8"
+                app:layout_constraintTop_toBottomOf="@+id/imgV8" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgBg4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_18"
+            android:layout_marginTop="@dimen/dp_35"
+            android:layout_marginEnd="@dimen/dp_18"
+            android:scaleType="fitXY"
+            app:layout_constraintTop_toBottomOf="@+id/container3"
+            android:src="@mipmap/ic_vip_bg4" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgBg3"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_55"
+            android:layout_marginStart="@dimen/dp_38"
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_marginEnd="@dimen/dp_38"
+            android:scaleType="fitXY"
+            app:layout_constraintTop_toBottomOf="@+id/container3"
+            android:src="@mipmap/ic_vip_bg3" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgBg6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_35"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imgBg4"
+            android:src="@mipmap/ic_vvip_bg5" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvWords"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_18"
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_marginEnd="@dimen/dp_18"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/dp_15"
+            android:paddingEnd="@dimen/dp_15"
+            app:layout_constraintTop_toBottomOf="@+id/imgBg6" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

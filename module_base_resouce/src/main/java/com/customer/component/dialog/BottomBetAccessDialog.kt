@@ -2,6 +2,7 @@ package com.customer.component.dialog
 
 import android.content.Context
 import android.graphics.Color
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -14,17 +15,26 @@ import com.customer.data.UserInfoSp
 import com.customer.data.lottery.BetBean
 import com.customer.data.lottery.LotteryApi
 import com.customer.data.lottery.PlaySecData
+import com.customer.data.mine.MineApi
+import com.customer.data.mine.UpDateUserPhoto
 import com.customer.utils.AESUtils
+import com.customer.utils.okutil.BaseCallBack
+import com.customer.utils.okutil.BaseOkHttpClient
 import com.fh.module_base_resouce.R
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.GsonBuilder
+import com.google.gson.JsonParser
 import com.hwangjr.rxbus.RxBus
 import com.lib.basiclib.base.recycle.BaseRecyclerAdapter
 import com.lib.basiclib.base.recycle.RecyclerViewHolder
 import com.lib.basiclib.utils.FastClickUtil
+import com.lib.basiclib.utils.LogUtils
 import com.lib.basiclib.utils.ToastUtils
 import kotlinx.android.synthetic.main.dialog_bottom_bet_access.*
+import okhttp3.*
+import java.io.IOException
+
 
 /**
  *
@@ -178,33 +188,31 @@ class BottomBetAccessDialog(
 
     private fun initEvent() {
         tvBetAccessSubmit.setOnClickListener {
-            if (!FastClickUtil.isFastClick()) {
-                //投注
-                loadingDialog?.show()
-                try {
-                    val id = lotteryId
-                    val issue = nextIssue
-                    val bean = arrayListOf<BetBean>()
-                    if (!dataList.isNullOrEmpty()) {
-                        if (!liveRoomBetAccessAdapter?.data.isNullOrEmpty()) {
-                            for (result in liveRoomBetAccessAdapter?.data!!) {
+            //投注
+            loadingDialog?.show()
+            try {
+                val id = lotteryId
+                val issue = nextIssue
+                val bean = arrayListOf<BetBean>()
+                if (!dataList.isNullOrEmpty()) {
+                    if (!liveRoomBetAccessAdapter?.data.isNullOrEmpty()) {
+                        for (result in liveRoomBetAccessAdapter?.data!!) {
 //                                val money = if (result.money == "0"){
 //                                    ((totalMoney.toInt())/(liveRoomBetAccessAdapter?.data?.size?:1)).toString()
 //                                }else  result.money
-                                bean.add(
-                                    BetBean(
-                                        result.play_sec_name,
-                                        result.play_class_name,
-                                        result.money
-                                    )
+                            bean.add(
+                                BetBean(
+                                    result.play_sec_name,
+                                    result.play_class_name,
+                                    result.money
                                 )
-                            }
-                            lotteryToBet(id, issue, bean)
-                        } else ToastUtils.showToast("投注错误，请重新选择投注选项")
-                    }
-                } catch (e: Exception) {
-                    ToastUtils.showToast(e.message.toString())
+                            )
+                        }
+                        lotteryToBet(id, issue, bean)
+                    } else ToastUtils.showToast("投注错误，请重新选择投注选项")
                 }
+            } catch (e: Exception) {
+                ToastUtils.showToast(e.message.toString())
             }
         }
     }
@@ -214,6 +222,7 @@ class BottomBetAccessDialog(
      * 投注
      */
     private var loadingDialog: LoadingDialog? = null
+
     private fun lotteryToBet(
         play_bet_lottery_id: String,
         play_bet_issue: String,
@@ -230,25 +239,81 @@ class BottomBetAccessDialog(
         AESUtils.encrypt(UserInfoSp.getRandomStr() ?: "", goon.toJson(orderMap))?.let {
             val param = HashMap<String, String>()
             param["datas"] = it
-            LotteryApi.toBet(it) {
-                onSuccess {
-                    //投注成功
+            val builder = MultipartBody.Builder()
+                .setType(MultipartBody.FORM)//表单类型
+                .addFormDataPart("datas", it)
+            val requestBody = builder.build()
+            val request = Request.Builder()
+                .url(MineApi.getBaseUrlMoments() + LotteryApi.LOTTERY_BET)
+                .addHeader("Authorization", UserInfoSp.getTokenWithBearer().toString())
+                .post(requestBody)
+                .build()
+            val client = OkHttpClient.Builder().build()
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    Looper.prepare()
                     loadingDialog?.dismiss()
-                    context.let { it1 -> DialogGlobalTips(it1, "投注成功", "确定", "", "").show() }
-                    RxBus.get().post(LotteryResetDiamond(true))
-                    dismiss()
+                    ToastUtils.showToast(e.toString())
+                    Looper.loop()
                 }
-                onFailed { err ->
-                    loadingDialog?.dismiss()
-                    if (err.getCode() == 1012) {
-                        if (is_bal == 1) {
-                            ToastUtils.showToast("您余额不足")
-                        } else {
-                            ToastUtils.showToast("您的钻石余额不足")
+                override fun onResponse(call: Call, response: Response) {
+                    if (isShowing) {
+                        Looper.prepare()
+                        try {
+                            val json = JsonParser.parseString(response.body?.string()!!).asJsonObject
+                            if (json.get("code").asInt == 1) {
+                                //投注成功
+                                loadingDialog?.dismiss()
+                                context.let { it1 ->
+                                    DialogGlobalTips(
+                                        it1,
+                                        "投注成功",
+                                        "确定",
+                                        "",
+                                        ""
+                                    ).show()
+                                }
+                                RxBus.get().post(LotteryResetDiamond(true))
+                                dismiss()
+                            } else {
+                                loadingDialog?.dismiss()
+                                if (json.get("code").asInt == 1012) {
+                                    if (is_bal == 1) {
+                                        ToastUtils.showToast("您余额不足")
+                                    } else {
+                                        ToastUtils.showToast("您的钻石余额不足")
+                                    }
+                                } else ToastUtils.showToast(json.get("msg").asString)
+                            }
+                        } catch (e: Exception) {
+                            loadingDialog?.dismiss()
+                            e.printStackTrace()
+                            ToastUtils.showToast("内部异常,提交失败")
                         }
-                    } else ToastUtils.showToast(err.getMsg())
+                        Looper.loop()
+                    }
                 }
-            }
+            })
+
+//            LotteryApi.toBet(it) {
+//                onSuccess {
+//                    //投注成功
+//                    loadingDialog?.dismiss()
+//                    context.let { it1 -> DialogGlobalTips(it1, "投注成功", "确定", "", "").show() }
+//                    RxBus.get().post(LotteryResetDiamond(true))
+//                    dismiss()
+//                }
+//                onFailed { err ->
+//                    loadingDialog?.dismiss()
+//                    if (err.getCode() == 1012) {
+//                        if (is_bal == 1) {
+//                            ToastUtils.showToast("您余额不足")
+//                        } else {
+//                            ToastUtils.showToast("您的钻石余额不足")
+//                        }
+//                    } else ToastUtils.showToast(err.getMsg())
+//                }
+//            }
         }
     }
 }

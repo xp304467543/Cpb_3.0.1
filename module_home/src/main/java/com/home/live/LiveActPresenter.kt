@@ -2,14 +2,12 @@ package com.home.live
 import android.annotation.SuppressLint
 import com.customer.component.dialog.DialogPassWordHor
 import com.customer.component.dialog.GlobalDialog
-import com.customer.data.EnterVip
 import com.customer.data.IsFirstRecharge
 import com.customer.data.UserInfoSp
 import com.customer.data.home.HomeApi
 import com.customer.data.home.HomeLiveGiftList
 import com.customer.data.login.LoginApi
 import com.customer.data.mine.MineApi
-import com.customer.data.mine.MineApi.getUserVip
 import com.customer.utils.JsonUtils
 import com.google.gson.JsonParser
 import com.hwangjr.rxbus.RxBus
@@ -35,7 +33,7 @@ class LiveActPresenter : BaseMvpPresenter<LiveRoomActivity>() {
                     mView.hidePageLoadingDialog()
                     getIsFirstRecharge()
                     getUserBalance()
-                    getUserVip()
+//                    getUserVip()
                 }
                 onFailed {
                     mView.hidePageLoadingDialog()
@@ -79,19 +77,19 @@ class LiveActPresenter : BaseMvpPresenter<LiveRoomActivity>() {
     }
 
     //vip等级
-    private fun getUserVip() {
-        getUserVip {
-            if (mView.isActive()) {
-                onSuccess {
-                    UserInfoSp.setVipLevel(it.vip)
-                    RxBus.get().post(EnterVip(it.vip))
-                }
-                onFailed {
-                    UserInfoSp.setVipLevel("0")
-                }
-            }
-        }
-    }
+//    private fun getUserVip() {
+//        getUserVip {
+//            if (mView.isActive()) {
+//                onSuccess {
+//                    UserInfoSp.setVipLevel(it.vip)
+//                    RxBus.get().post(EnterVip(it.vip))
+//                }
+//                onFailed {
+//                    UserInfoSp.setVipLevel("0")
+//                }
+//            }
+//        }
+//    }
 
     //发红包
     fun homeLiveSendRedEnvelope(

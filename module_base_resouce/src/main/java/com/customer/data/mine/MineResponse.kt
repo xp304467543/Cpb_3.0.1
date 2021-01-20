@@ -19,7 +19,12 @@ data class MineUserInfoResponse(
     var profile: String?,
     var avatar: String?,
     var gender: Int = 0,
+    var noble: Int = 0,
     var phone: String?,
+    var market_code: String?,
+    var free_watch_nums: Int = 0,
+    var sum_watch_nums: Int = 0,
+    var vip: Int,
     var following: String?, var followers: String?, var like: String?
 )
 
@@ -67,7 +72,7 @@ data class MinePassWordTime(var remain_times: Int)
 
 //支付通道列表
 data class MinePayTypeList(
-    var id: Int, var channels_type: String, var low_money: String,var fee:String?,
+    var id: Int, var channels_type: String, var low_money: String, var fee: String?,
     var high_money: String, var icon: String, var apiroute: String, var pay_type: String?
 )
 
@@ -82,7 +87,7 @@ data class MineUpDateMoney(var money: String, var isUpdate: Boolean, var isDiamo
 
 
 //支付Url
-data class MinePayUrl(var url: String,var type:String,var form:String)
+data class MinePayUrl(var url: String, var type: String, var form: String)
 
 
 //关注 用户、主播 bean
@@ -213,7 +218,7 @@ data class MineGameReportInfo(
     val prize: BigDecimal?,
     val count: String?,
     val lottery_icon: String?,
-    val profit:BigDecimal?
+    val profit: BigDecimal?
 )
 
 data class MineGameAgReportInfo(
@@ -223,7 +228,7 @@ data class MineGameAgReportInfo(
     val prize: BigDecimal?,
     val count: String?,
     val img_url: String? = "",
-    val profit:BigDecimal?
+    val profit: BigDecimal?
 )
 
 data class RegisterCode(var code: String)
@@ -306,7 +311,12 @@ data class BetLotteryBean(
 
 data class AgMoney(val bl: String?)
 
-data class Third(val name: String?, val name_cn: String?,val transfer_out:String?,val transfer_in:String?)
+data class Third(
+    val name: String?,
+    val name_cn: String?,
+    val transfer_out: String?,
+    val transfer_in: String?
+)
 
 data class StartBanner(var type: String?, var image_url: String?, var url: String?)
 
@@ -321,9 +331,86 @@ data class BankCard(
     var high_money: String
 )
 
-data class UserBankCard(var id: String?,var name: String?,var no: String?,var mark: String?,var remark: String?)
+data class UserBankCard(
+    var id: String?,
+    var name: String?,
+    var no: String?,
+    var mark: String?,
+    var remark: String?
+)
 
-data class MineMessageNew(var msg_id: String?,var title: String?,var content: String?,var create_time: Long?,var icon: String?,var readflag: Int?,
-                          var createtime_txt: String?,var media: String?,var dynamic_id: String?,var apiType: String?,
-                          var comment_id: String?,var userType: String?,var nickname: String?,
-                          var avatar: String?)
+data class MineMessageNew(
+    var msg_id: String?,
+    var title: String?,
+    var content: String?,
+    var create_time: Long?,
+    var icon: String?,
+    var readflag: Int?,
+    var createtime_txt: String?,
+    var media: String?,
+    var dynamic_id: String?,
+    var apiType: String?,
+    var comment_id: String?,
+    var userType: String?,
+    var nickname: String?,
+    var avatar: String?
+)
+
+data class VipInfo(
+    var tips: List<String>?,
+    var vip_list: List<VipObject>?,
+    var gift_list: List<GiftObject>?
+)
+
+data class VipObject(
+    val vip_id: Int?,
+    val name: String?,
+    val code: String?,
+    val cz_total: String?,
+    val flow_total: String?,
+    val rg_flow: String?,
+    val rg_day: String?,
+    val upgrade_bonus: String?,
+    val birthday_gift: String?,
+    val month_hb: String?,
+    val gift: String?,
+    val customer_service: String?,
+    val rebate_ag: String?,
+    val rebate_bg: String?
+)
+
+data class GiftObject(val name: String?, val list: List<ItemList>?)
+
+data class ItemList(val name: String?, val icon: String?, val price: String?)
+
+
+data class VipCardInfo(var user_growth: VipCardObject?)
+data class VipCardObject(
+    var nickname: String?,
+    var vip: Int?,
+    var next_vip: Int?,
+    var avatar: String?,
+    var total_recharge: Double?,
+    var total_flow: BigDecimal?,
+    var next_cz_total: Double?,
+    var next_flow_total: BigDecimal?,
+    var vip_list: List<VipList>
+)
+
+data class VipList(
+    var vip_id: String?,
+    var name: String?,
+    var code: Int?,
+    var cz_total: BigDecimal?,
+    var flow_total: BigDecimal?,
+    var rg_flow: BigDecimal?,
+    var rg_day: Int?,
+    var upgrade_bonus: Int,
+    var birthday_gift: Int,
+    var month_hbval: Int?,
+    var customer_service: String?,
+    var rebate_ag: String?,
+    var rebate_bg: String?
+)
+
+data class VipBean(var isSelect: Boolean = false,var data:String)

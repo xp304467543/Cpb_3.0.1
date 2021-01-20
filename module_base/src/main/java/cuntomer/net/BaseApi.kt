@@ -17,13 +17,13 @@ import cuntomer.constant.ApiConstant.TEST_KEY
 import cuntomer.constant.ApiConstant.isTest
 import com.rxnetgo.RxNetGo
 import cuntomer.constant.ApiConstant.API_VIDEO
+import cuntomer.constant.ApiConstant.API_VIDEO_MAIN
 import cuntomer.constant.ApiConstant.API_VIDEO_TEST
 
 /**
  * 网络请求基类
  */
 interface BaseApi {
-
 
     /**
      * 获取URL  davis
@@ -70,7 +70,7 @@ interface BaseApi {
             API_VIDEO_TEST
         }else{
             if (API_VIDEO.isNullOrEmpty()) {
-                API_VIDEO_TEST
+                API_VIDEO_MAIN
             }else "$API_VIDEO/"
         }
     }
@@ -98,7 +98,7 @@ interface BaseApi {
      * 服务器地址获取
      */
     fun getSystemApi(): RxNetGo {
-        return RxNetGo.getInstance().getRetrofitService("https://www.lgadmin561.com/")
+        return RxNetGo.getInstance().getRetrofitService(getBaseUrl())
     }
 
     /**

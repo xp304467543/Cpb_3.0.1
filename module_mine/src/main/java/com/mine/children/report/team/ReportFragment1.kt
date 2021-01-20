@@ -1,11 +1,17 @@
 package com.mine.children.report.team
 
 import com.lib.basiclib.base.mvp.BaseMvpFragment
+import com.lib.basiclib.base.xui.widget.picker.widget.builder.TimePickerBuilder
+import com.lib.basiclib.base.xui.widget.picker.widget.configure.TimePickerType
+import com.lib.basiclib.base.xui.widget.picker.widget.listener.OnTimeSelectListener
 import com.lib.basiclib.utils.TimeUtils
 import com.lib.basiclib.utils.ToastUtils
 import com.mine.R
 import com.mine.dialog.DialogDataPick
+import kotlinx.android.synthetic.main.act_bank_recharge.*
 import kotlinx.android.synthetic.main.fragment_report_1.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  *
@@ -40,20 +46,10 @@ class ReportFragment1 : BaseMvpFragment<ReportFragment1P>() {
 
     override fun initEvent() {
         tv_data1.setOnClickListener {
-            dataPickDialog = DialogDataPick(requireContext())
-            dataPickDialog?.setConfirmClickListener {
-                tv_data1.text = it
-                dataPickDialog?.dismiss()
-            }
-            dataPickDialog?.show()
+            timePicker(0)
         }
         tv_data2.setOnClickListener {
-            dataPickDialog = DialogDataPick(requireContext())
-            dataPickDialog?.setConfirmClickListener {
-                tv_data2.text = it
-                dataPickDialog?.dismiss()
-            }
-            dataPickDialog?.show()
+            timePicker(1)
         }
 
 
@@ -76,5 +72,24 @@ class ReportFragment1 : BaseMvpFragment<ReportFragment1P>() {
             }
 
         }
+    }
+
+
+    private fun timePicker(int: Int) {
+        val calendar: Calendar = Calendar.getInstance()
+        calendar.time = Date()
+        val mTimePicker = TimePickerBuilder(context,
+            OnTimeSelectListener { date, v ->
+                val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                val str: String = sdf.format(date)
+                if (int == 0) tv_data1.text = str else tv_data2.text = str
+            })
+            .setType(TimePickerType.DEFAULT)
+            .setTitleText("时间选择")
+            .isDialog(false)
+            .setOutSideCancelable(true)
+            .setDate(calendar)
+            .build()
+        mTimePicker.show()
     }
 }

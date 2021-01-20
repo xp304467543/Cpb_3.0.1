@@ -92,6 +92,7 @@
             android:layout_marginStart="@dimen/dp_10"
             android:layout_weight="1"
             android:textSize="@dimen/sp_14"
+            android:textColor="@color/color_333333"
             tools:text="1111" />
 
         <TextView

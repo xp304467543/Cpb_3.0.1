@@ -13,6 +13,7 @@ import android.widget.*
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.viewpager.widget.ViewPager
 import com.customer.component.dialog.BottomDialogFragment
+import com.customer.component.dialog.BottomLotterySelectDialog
 import com.customer.data.LotteryResetDiamond
 import com.customer.data.UserInfoSp
 import com.customer.data.lottery.LotteryApi
@@ -30,7 +31,6 @@ import com.hwangjr.rxbus.thread.EventThread
 import com.lib.basiclib.utils.FastClickUtil
 import com.lib.basiclib.utils.ToastUtils
 import com.lib.basiclib.utils.ViewUtils
-import kotlinx.android.synthetic.main.old_dialog_lottery_select.*
 import kotlinx.android.synthetic.main.old_fragment_live_bet.*
 
 
@@ -363,7 +363,11 @@ class LiveRoomBetFragment : BottomDialogFragment() {
     var dialog: BottomLotterySelectDialog? = null
     private fun initDialog(title: ArrayList<String>, list: ArrayList<LotteryTypeResponse>) {
         tvLotterySelectType?.setOnClickListener {
-            val lotterySelectDialog = BottomLotterySelectDialog(context!!, title)
+            val lotterySelectDialog =
+                BottomLotterySelectDialog(
+                    context!!,
+                    title
+                )
             lotterySelectDialog.setCanceledOnTouchOutside(false)
             tvLotterySelectType?.setCompoundDrawablesWithIntrinsicBounds(
                 0,
@@ -379,11 +383,11 @@ class LiveRoomBetFragment : BottomDialogFragment() {
                     0
                 )
             }
-            lotterySelectDialog.tvLotteryWheelSure.setOnClickListener {
+            lotterySelectDialog.tvLotteryWheelSure?.setOnClickListener {
                 isPlay = false
                 if (runnable != null) handler?.removeCallbacks(runnable!!)
-                tvLotterySelectType?.text = lotterySelectDialog.lotteryPickerView.opt1SelectedData as String
-                opt1SelectedPosition = lotterySelectDialog.lotteryPickerView.opt1SelectedPosition
+                tvLotterySelectType?.text = lotterySelectDialog.lotteryPickerView?.opt1SelectedData as String
+                opt1SelectedPosition = lotterySelectDialog.lotteryPickerView?.opt1SelectedPosition?:0
                 currentLotteryId = list[opt1SelectedPosition].lottery_id ?: ""
                 getLotteryNewCode(list[opt1SelectedPosition].lottery_id ?: "")
                 setTabLayout(list[opt1SelectedPosition].lottery_id ?: "")
@@ -395,7 +399,7 @@ class LiveRoomBetFragment : BottomDialogFragment() {
                 reSetData()
                 lotterySelectDialog.dismiss()
             }
-            lotterySelectDialog.lotteryPickerView.opt1SelectedPosition = opt1SelectedPosition
+            lotterySelectDialog.lotteryPickerView?.opt1SelectedPosition = opt1SelectedPosition
             lotterySelectDialog.show()
 
         }

@@ -74,13 +74,13 @@ class UserPersonalPage : BaseNavActivity() {
         tvUserId.text = data.unique_id
         initGiftView(data.gift)
         when (data.vip) {
-            "1" -> imgLevel.background = ViewUtils.getDrawable(R.mipmap.vip_1)
-            "2" -> imgLevel.background = ViewUtils.getDrawable(R.mipmap.vip_2)
-            "3" -> imgLevel.background = ViewUtils.getDrawable(R.mipmap.vip_3)
-            "4" -> imgLevel.background = ViewUtils.getDrawable(R.mipmap.vip_4)
-            "5" -> imgLevel.background = ViewUtils.getDrawable(R.mipmap.vip_5)
-            "6" -> imgLevel.background = ViewUtils.getDrawable(R.mipmap.vip_6)
-            "7" -> imgLevel.background = ViewUtils.getDrawable(R.mipmap.vip_7)
+            "1" -> imgLevel.background = ViewUtils.getDrawable(R.mipmap.vip1)
+            "2" -> imgLevel.background = ViewUtils.getDrawable(R.mipmap.vip2)
+            "3" -> imgLevel.background = ViewUtils.getDrawable(R.mipmap.vip3)
+            "4" -> imgLevel.background = ViewUtils.getDrawable(R.mipmap.vip4)
+            "5" -> imgLevel.background = ViewUtils.getDrawable(R.mipmap.vip5)
+            "6" -> imgLevel.background = ViewUtils.getDrawable(R.mipmap.vip6)
+            "7" -> imgLevel.background = ViewUtils.getDrawable(R.mipmap.vip7)
         }
         when (data.gender) {
             "1" -> userSex.text = "男"

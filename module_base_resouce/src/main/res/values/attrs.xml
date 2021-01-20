@@ -35,6 +35,8 @@
         <attr name="ItemName" format="string" />
     </declare-styleable>
 
+
+
     <declare-styleable name="MarqueeView">
         <attr name="marqueeAnimDuration" format="integer" />
     </declare-styleable>
@@ -97,5 +99,41 @@
         <attr name="mtv_isAutoFit" format="boolean" />
         <!--控件是否自动显示与隐藏（根据显示数量）， 默认false-->
         <attr name="mtv_isAutoDisplay" format="boolean" />
+    </declare-styleable>
+
+    <!-- AutoWrap -->
+    <!--网格线宽-->
+    <attr name="autowrap_gridLineWidth" format="dimension|reference" />
+    <!--网格线颜色-->
+    <attr name="autowrap_gridLineColor" format="reference|color" />
+    <!--单元格宽-->
+    <attr name="autowrap_gridCellWidth" format="dimension|reference" />
+    <!--单元格高-->
+    <attr name="autowrap_gridCellHeight" format="dimension|reference" />
+    <!--单元格内对齐方式-->
+    <attr name="autowrap_gridCellGravity">
+        <flag name="left" value="1" />
+        <flag name="top" value="2" />
+        <flag name="right" value="4" />
+        <flag name="bottom" value="8" />
+        <flag name="center" value="16" />
+        <flag name="fill" value="32" />
+    </attr>
+    <!--firstChild独占一行-->
+    <attr name="autowrap_stickFirst" format="boolean" />
+
+    <declare-styleable name="AutoWrapGridLayout">
+        <!--网格线宽-->
+        <attr name="autowrap_gridLineWidth" />
+        <!--网格线颜色-->
+        <attr name="autowrap_gridLineColor" />
+        <!--单元格宽-->
+        <attr name="autowrap_gridCellWidth" />
+        <!--单元格高-->
+        <attr name="autowrap_gridCellHeight" />
+        <!--单元格内对齐方式-->
+        <attr name="autowrap_gridCellGravity" />
+        <!--firstChild独占一行-->
+        <attr name="autowrap_stickFirst" />
     </declare-styleable>
 </resources>

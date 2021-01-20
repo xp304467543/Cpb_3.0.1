@@ -67,7 +67,7 @@ public class BasePickerView {
 
     protected Dialog mDialog;
     protected View clickView;//是通过哪个View弹出的
-    private boolean isAnim = true;
+    private boolean isAnim = false;
 
     public BasePickerView(Context context) {
         this.context = context;
@@ -224,16 +224,13 @@ public class BasePickerView {
 
     public void dismissImmediately() {
 
-        mPickerOptions.decorView.post(new Runnable() {
-            @Override
-            public void run() {
-                //从根视图移除
-                mPickerOptions.decorView.removeView(rootView);
-                isShowing = false;
-                dismissing = false;
-                if (onDismissListener != null) {
-                    onDismissListener.onDismiss(BasePickerView.this);
-                }
+        mPickerOptions.decorView.post(() -> {
+            //从根视图移除
+            mPickerOptions.decorView.removeView(rootView);
+            isShowing = false;
+            dismissing = false;
+            if (onDismissListener != null) {
+                onDismissListener.onDismiss(BasePickerView.this);
             }
         });
 

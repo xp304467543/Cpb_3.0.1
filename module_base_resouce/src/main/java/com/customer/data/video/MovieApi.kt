@@ -21,7 +21,7 @@ object MovieApi : BaseApi {
     private const val VIDEO_TYPE_DATA = "VideoAPI/classification"
 
     //banner
-    private const val VIDEO_BANNER = "api/v1_1/user/get_movie_banner"
+    private const val VIDEO_BANNER = "api/v2/user/get_movie_banner"
 
     //更多视频
    private const val VIDEO_TYPE_MORE = "VideoAPI/domestic"

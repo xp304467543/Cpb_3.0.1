@@ -61,13 +61,13 @@ class LiveRoomChild3 : BaseNormalFragment<LiveRoomChild3Presenter>(){
                 else -> holder.text(R.id.tvRankLevel, (position + 1).toString())
             }
             when (data?.vip) {
-                "1" -> holder.findViewById<ImageView>(R.id.imgRankUserVipLevel).setBackgroundResource(R.mipmap.v1)
-                "2" -> holder.findViewById<ImageView>(R.id.imgRankUserVipLevel).setBackgroundResource(R.mipmap.v2)
-                "3" -> holder.findViewById<ImageView>(R.id.imgRankUserVipLevel).setBackgroundResource(R.mipmap.v3)
-                "4" -> holder.findViewById<ImageView>(R.id.imgRankUserVipLevel).setBackgroundResource(R.mipmap.v4)
-                "5" -> holder.findViewById<ImageView>(R.id.imgRankUserVipLevel).setBackgroundResource(R.mipmap.v5)
-                "6" -> holder.findViewById<ImageView>(R.id.imgRankUserVipLevel).setBackgroundResource(R.mipmap.v6)
-                "7" -> holder.findViewById<ImageView>(R.id.imgRankUserVipLevel).setBackgroundResource(R.mipmap.v7)
+                "1" -> holder.findViewById<ImageView>(R.id.imgRankUserVipLevel).setBackgroundResource(R.mipmap.svip_1)
+                "2" -> holder.findViewById<ImageView>(R.id.imgRankUserVipLevel).setBackgroundResource(R.mipmap.svip_2)
+                "3" -> holder.findViewById<ImageView>(R.id.imgRankUserVipLevel).setBackgroundResource(R.mipmap.svip_3)
+                "4" -> holder.findViewById<ImageView>(R.id.imgRankUserVipLevel).setBackgroundResource(R.mipmap.svip_4)
+                "5" -> holder.findViewById<ImageView>(R.id.imgRankUserVipLevel).setBackgroundResource(R.mipmap.svip_5)
+                "6" -> holder.findViewById<ImageView>(R.id.imgRankUserVipLevel).setBackgroundResource(R.mipmap.svip_6)
+                "7" -> holder.findViewById<ImageView>(R.id.imgRankUserVipLevel).setBackgroundResource(R.mipmap.svip_7)
             }
             context?.let { GlideUtil.loadCircleImage(it,data?.avatar, holder.getImageView(R.id.imgRankUserPhoto),true) }
             holder.text(R.id.tvRankUserName, data?.nickname)

@@ -87,4 +87,72 @@ object CalculationGame {
     }
 
 
+    /**
+     * 多个数组排列组合
+     * @param list 原始list
+     * @param <T> 数据类型
+     * @return
+    </T> */
+    private fun <T> getDescartes(list: List<List<T>>): List<List<T>> {
+        val returnList: MutableList<List<T>> = ArrayList()
+        descartesRecursive(list, 0, returnList, ArrayList())
+        return returnList
+    }
+
+    /**
+     * 递归实现
+     * 原理：从原始list的0开始依次遍历到最后
+     *
+     * @param originalList 原始list
+     * @param position     当前递归在原始list的position
+     * @param returnList   返回结果
+     * @param cacheList    临时保存的list
+     */
+    private fun <T> descartesRecursive(
+        originalList: List<List<T>>,
+        position: Int,
+        returnList: MutableList<List<T>>,
+        cacheList: MutableList<T>
+    ) {
+        val originalItemList = originalList[position]
+        for (i in originalItemList.indices) {
+            //最后一个复用cacheList，节省内存
+            val childCacheList =
+                if (i == originalItemList.size - 1) cacheList else ArrayList(cacheList)
+            childCacheList.add(originalItemList[i])
+            if (position == originalList.size - 1) { //遍历到最后退出递归
+                returnList.add(childCacheList)
+                continue
+            }
+            descartesRecursive(originalList, position + 1, returnList, childCacheList)
+        }
+    }
+
+    /**
+     * 多个数组排列组合
+     * @param list 原始list
+     * @return
+     */
+    fun getPermutations(list: List<List<String>>): List<String>? {
+        val resultList: MutableList<String> = ArrayList()
+        val list1 = getDescartes(list)
+        if (list1.isNotEmpty()) {
+            list1.forEach { temp ->
+                val str = listToStr(temp)
+                if (str.isNotEmpty()) {
+                    resultList.add(str)
+                }
+            }
+        }
+        return resultList
+    }
+
+    private fun listToStr(list: List<String>): String {
+        val str = StringBuffer()
+        for ((index,item) in list.withIndex()){
+            if (index == 0) str.append(item) else str.append(",$item")
+        }
+        return str.toString()
+    }
+
 }

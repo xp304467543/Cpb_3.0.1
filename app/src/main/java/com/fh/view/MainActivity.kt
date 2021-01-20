@@ -198,6 +198,7 @@ class MainActivity : BasePageActivity() {
         jsonObject.put("type", "login")
         jsonObject.put("client_id", client_id)
         jsonObject.put("user_id", user_id)
+        jsonObject.put("client_type", "ANDROID")
         return jsonObject.toString()
     }
 

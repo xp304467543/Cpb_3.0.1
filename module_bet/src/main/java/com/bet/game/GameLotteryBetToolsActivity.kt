@@ -7,6 +7,7 @@ import androidx.viewpager.widget.ViewPager
 import com.bet.R
 import com.google.android.material.tabs.TabLayout
 import com.lib.basiclib.base.activity.BaseNavActivity
+import com.lib.basiclib.base.adapter.BaseFragmentPageAdapter
 import com.services.HomeService
 import com.services.LotteryService
 import com.xiaojinzi.component.impl.service.ServiceManager
@@ -30,19 +31,51 @@ class GameLotteryBetToolsActivity : BaseNavActivity() {
     override fun isShowBackIconWhite() = false
 
     override fun initContentView() {
-
-        if (gameBetTab != null) {
-            gameBetTab?.newTab()?.setText("露珠走势")?.let { gameBetTab?.addTab(it) }
-            gameBetTab?.newTab()?.setText("历史开奖")?.let { gameBetTab?.addTab(it) }
-            gameBetTab?.newTab()?.setText("玩法规则")?.let { gameBetTab?.addTab(it) }
-        }
         val lotteryId = intent.getStringExtra("gameLotteryToolsId") ?: "1"
-        //初始化viewPager
-        val fragments = arrayListOf(
-            ServiceManager.get(LotteryService::class.java)?.getLuZhuFragment(lotteryId, ""),
-            ServiceManager.get(LotteryService::class.java)?.getHistoryFragment(lotteryId, ""),
-            ServiceManager.get(HomeService::class.java)?.getRulerFragment(lotteryId)
-        )
+        if (gameBetTab != null) {
+
+            when (lotteryId) {
+                "8" -> {
+                    gameBetTab?.newTab()?.setText("露珠走势")?.let { gameBetTab?.addTab(it) }
+                    gameBetTab?.newTab()?.setText("历史开奖")?.let { gameBetTab?.addTab(it) }
+                    gameBetTab?.newTab()?.setText("玩法规则")?.let { gameBetTab?.addTab(it) }
+                }
+                "5","14" -> {
+                    gameBetTab?.newTab()?.setText("历史开奖")?.let { gameBetTab?.addTab(it) }
+                    gameBetTab?.newTab()?.setText("玩法规则")?.let { gameBetTab?.addTab(it) }
+                }
+                else -> {
+                    gameBetTab?.newTab()?.setText("露珠走势")?.let { gameBetTab?.addTab(it) }
+                    gameBetTab?.newTab()?.setText("历史开奖")?.let { gameBetTab?.addTab(it) }
+                    gameBetTab?.newTab()?.setText("玩法规则")?.let { gameBetTab?.addTab(it) }
+                }
+            }
+        }
+
+        val fragments = when (lotteryId) {
+            "8" -> {
+                arrayListOf(
+                    ServiceManager.get(LotteryService::class.java)?.getLuZhuFragment(lotteryId, ""),
+                    ServiceManager.get(LotteryService::class.java)?.getHistoryFragment(lotteryId, ""),
+                    ServiceManager.get(HomeService::class.java)?.getRulerFragment(lotteryId)
+                )
+            }
+            "5","14" -> {
+                arrayListOf(
+                    ServiceManager.get(LotteryService::class.java)?.getHistoryFragment(lotteryId, ""),
+                    ServiceManager.get(HomeService::class.java)?.getRulerFragment(lotteryId)
+                )
+            }
+            else -> {
+                arrayListOf(
+                    ServiceManager.get(LotteryService::class.java)?.getLuZhuFragment(lotteryId, ""),
+                    ServiceManager.get(LotteryService::class.java)?.getHistoryFragment(lotteryId, ""),
+                    ServiceManager.get(HomeService::class.java)?.getRulerFragment(lotteryId)
+                )
+            }
+        }
+
+
         val   pagerAdapter = ViewPagerAdapter(supportFragmentManager, fragments)
         gameBetToolsViewPager?.adapter = pagerAdapter
         gameBetToolsViewPager?.currentItem = 0

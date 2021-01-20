@@ -22,6 +22,8 @@ import com.lib.basiclib.base.recycle.RecyclerViewHolder
 import com.lib.basiclib.utils.LogUtils
 import com.lib.basiclib.utils.ToastUtils
 import com.lib.basiclib.utils.ViewUtils
+import kotlinx.android.synthetic.main.fragment_live_room_bet_content.*
+import okhttp3.internal.notify
 
 /**
  *
@@ -53,15 +55,34 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
 
     var xgcTmAdapter: AdapterXgcTm? = null //特码(香港彩)
 
+    /**
+     * 福彩3D
+     */
+    var fc3DAdapter: Fc3dAdapter? = null
+    var fc3DTopAdapter: Right3DTopAdapter? = null
+
     var betList = mutableListOf<PlaySecData>()  //投注集合
 
     var lotteryId = "-1" //彩种ID
 
     var rightTop = "-1"
 
+    var currentLeft = "-1"
+
     private var rvType: RecyclerView? = null
     private var rvContent: RecyclerView? = null
+    private var layoutOdds: LinearLayout? = null
+    private var layout3D: LinearLayout? = null
+    private var layout3D3z: LinearLayout? = null
+    private var tv3d3z1: TextView? = null
+    private var tv3d3z2: TextView? = null
+    private var tv3d3z3: TextView? = null
+    private var tv3dRight: TextView? = null
+    private var tv3dLeft: TextView? = null
     private var tvHx: TextView? = null
+    private var tvTitle: TextView? = null
+    private var contentHolder:TextView?=null
+
 
     override fun getLayoutRes(): Int = R.layout.fragment_live_room_bet_content
 
@@ -69,13 +90,26 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
         rvType = rootView?.findViewById(R.id.rvType)
         rvContent = rootView?.findViewById(R.id.rvContent)
         tvHx = rootView?.findViewById(R.id.tvHx)
+        layoutOdds = rootView?.findViewById(R.id.layoutOdds)
+        layout3D = rootView?.findViewById(R.id.layout3D)
+        layout3D3z = rootView?.findViewById(R.id.layout3D3z)
+        tv3d3z1 = rootView?.findViewById(R.id.tv3d3z1)
+        tv3d3z2 = rootView?.findViewById(R.id.tv3d3z2)
+        tv3d3z3 = rootView?.findViewById(R.id.tv3d3z3)
+        tv3dRight = rootView?.findViewById(R.id.tv3dRight)
+        tv3dLeft = rootView?.findViewById(R.id.tv3dLeft)
+//        tvTitle = rootView?.findViewById(R.id.tvTitle)
+        contentHolder = rootView?.findViewById(R.id.contentHolder)
     }
 
 
     override fun initData() {
         lotteryPlayListResponse = arguments?.getParcelableArrayList("LotteryPlayListResponse")
         lotteryId = arguments?.getString("lotteryId") ?: "null"
+        currentLeft = arguments?.getString("currentType") ?: "null"
         lotteryPlayListResponse?.let { modifyData(it) }
+        rvContent?.isFocusable = false
+        rvContent?.isNestedScrollingEnabled = false
     }
 
 
@@ -205,7 +239,28 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
                     }
                 }
             }
-            "正码xgc", "7色波xgc", "头尾数xgc", "总肖xgc", "正肖xgc", "五行xgc", "合肖xgc" -> {
+            "主势盘", "一字组合", "二字组合", "三字组合", "一字定位", "三字和数", "跨度" -> {
+                fc3DTopAdapter = Right3DTopAdapter()
+                rvType?.adapter = fc3DTopAdapter
+                rvType?.layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                fc3DAdapter = Fc3dAdapter()
+                rvContent?.adapter = fc3DAdapter
+                val layoutManager = GridLayoutManager(context, 12)
+                rvContent?.layoutManager = layoutManager
+                layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                    override fun getSpanSize(position: Int): Int {
+                        return when (fc3DAdapter?.getItemViewType(position)) {
+                            fc3DAdapter?.TYPE_1 -> 12
+                            fc3DAdapter?.TYPE_2 -> 6
+                            fc3DAdapter?.TYPE_3 -> 3
+                            fc3DAdapter?.TYPE_4 -> 4
+                            else -> 12
+                        }
+                    }
+                }
+            }
+            "正码xgc", "7色波xgc", "头尾数xgc", "总肖xgc", "正肖xgc", "五行xgc", "合肖xgc", "组选三", "组选六" -> {
                 xgcTmAdapter = AdapterXgcTm()
                 rvContent?.adapter = xgcTmAdapter
                 val layoutManager = GridLayoutManager(context, 4)
@@ -213,8 +268,60 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
                 layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                     override fun getSpanSize(position: Int): Int {
                         return when (xgcTmAdapter?.getItemViewType(position)) {
-                            xgcTmAdapter?.TYPE_1, xgcTmAdapter?.TYPE_2 -> 1
+                            xgcTmAdapter?.TYPE_1, xgcTmAdapter?.TYPE_2, xgcTmAdapter?.TYPE_8 -> 1
                             xgcTmAdapter?.TYPE_7 -> 2
+                            else -> 4
+                        }
+                    }
+                }
+            }
+//            "一字组合", "二字组合", "三字组合", "一字定位", "三字和数", "跨度" -> {
+//                fc3DAdapter = Fc3dAdapter()
+//                rvContent?.adapter = fc3DAdapter
+//                val layoutManager = GridLayoutManager(context, 12)
+//                rvContent?.layoutManager = layoutManager
+//                layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+//                    override fun getSpanSize(position: Int): Int {
+//                        return when (fc3DAdapter?.getItemViewType(position)) {
+//                            fc3DAdapter?.TYPE_1 -> 12
+//                            fc3DAdapter?.TYPE_2 -> 6
+//                            fc3DAdapter?.TYPE_3 -> 3
+//                            fc3DAdapter?.TYPE_4 -> 4
+//                            else -> 12
+//                        }
+//                    }
+//                }
+//            }
+            "二字定位" -> {
+                fc3DTopAdapter = Right3DTopAdapter(true)
+                rvType?.adapter = fc3DTopAdapter
+                rvType?.layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                fc3DAdapter = Fc3dAdapter()
+                rvContent?.adapter = fc3DAdapter
+                val layoutManager = GridLayoutManager(context, 2)
+                rvContent?.layoutManager = layoutManager
+            }
+            "三字定位" -> {
+                if (fc3DAdapter == null) fc3DAdapter = Fc3dAdapter()
+                rvContent?.adapter = fc3DAdapter
+                val layoutManager = GridLayoutManager(context, 3)
+                rvContent?.layoutManager = layoutManager
+            }
+            "二字和数" -> {
+                fc3DTopAdapter = Right3DTopAdapter()
+                rvType?.adapter = fc3DTopAdapter
+                rvType?.layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                fc3DAdapter = Fc3dAdapter()
+                rvContent?.adapter = fc3DAdapter
+                val layoutManager = GridLayoutManager(context, 4)
+                rvContent?.layoutManager = layoutManager
+                layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                    override fun getSpanSize(position: Int): Int {
+                        return when (fc3DAdapter?.getItemViewType(position)) {
+                            fc3DAdapter?.TYPE_1 -> 4
+                            fc3DAdapter?.TYPE_3 -> 1
                             else -> 4
                         }
                     }
@@ -234,11 +341,14 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
                             if (!item.play_sec_data.isNullOrEmpty()) {
                                 for ((index, result) in item.play_sec_data!!.withIndex()) {
                                     if (index == 0) listData.add(
-                                        PlaySecData(title = item.play_sec_cname?:"null", type = "lm_full")
+                                        PlaySecData(
+                                            title = item.play_sec_cname ?: "null",
+                                            type = "lm_full"
+                                        )
                                     )  //一行占满
                                     if (result.play_sec_id != 0 && pos == 0) result.type =
                                         "lm_4"  //一行四个
-                                    result.title = item.play_sec_cname?:"null"
+                                    result.title = item.play_sec_cname ?: "null"
                                     listData.add(result)
                                 }
                             }
@@ -252,10 +362,10 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
                         val listData = arrayListOf<PlaySecData>()
                         for (item in it) {
                             if (!item.play_sec_data.isNullOrEmpty()) {
-                                for ((index, result) in item.play_sec_data!!.withIndex()) {
+                                for ((index, result) in item.play_sec_data.withIndex()) {
                                     if (index == 0) listData.add(
                                         PlaySecData(
-                                            title = item.play_sec_cname?:"null",
+                                            title = item.play_sec_cname,
                                             type = "zh_full"
                                         )
                                     )  //一行占满
@@ -279,9 +389,9 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
                                 }
                             }
                         }
-                        repeat(10) {
-                            listData.add(PlaySecData(title = "", type = "zh_full"))  //添加footer 一行占满
-                        }
+//                        repeat(10) {
+//                            listData.add(PlaySecData(title = "", type = "zh_full"))  //添加footer 一行占满
+//                        }
                         zhAdapter?.refresh(listData)
                     }
                     "快捷" -> {
@@ -296,7 +406,7 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
                                     )
                                 )
                                 if (index == it.size - 1) {
-                                    if (!item.play_sec_data.isNullOrEmpty()){
+                                    if (!item.play_sec_data.isNullOrEmpty()) {
                                         for (child in item.play_sec_data) {
                                             listData.add(
                                                 PlaySecDataKj(
@@ -313,9 +423,9 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
                                 }
                             }
                         }
-                        repeat(10) {
-                            listData.add(PlaySecDataKj(type = "kj_full"))  //添加footer 一行占满
-                        }
+//                        repeat(10) {
+//                            listData.add(PlaySecDataKj(type = "kj_full"))  //添加footer 一行占满
+//                        }
                         kjAdapter?.refresh(listData)
                     }
                     "单号1-10" -> {
@@ -337,9 +447,9 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
                                 }
                             }
                         }
-                        repeat(10) {
-                            listData.add(PlaySecData(title = "", type = "full"))  //添加footer 一行占满
-                        }
+//                        repeat(10) {
+//                            listData.add(PlaySecData(title = "", type = "full"))  //添加footer 一行占满
+//                        }
                         dan1D10Adapter?.refresh(listData)
                     }
                     "冠亚军组合" -> {
@@ -378,20 +488,20 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
                                     }
                                     result.play_sec_cname = it[num].play_sec_cname
                                 }
-                                if (item.play_sec_data.size == 65) {
-                                    item.play_sec_data.add(
-                                        PlaySecData(
-                                            title = "",
-                                            type = "xgc_full"
-                                        )
-                                    )  //添加footer 一行占满
-                                }
+//                                if (item.play_sec_data.size == 65) {
+//                                    item.play_sec_data.add(
+//                                        PlaySecData(
+//                                            title = "",
+//                                            type = "xgc_full"
+//                                        )
+//                                    )  //添加footer 一行占满
+//                                }
                             }
                             listData.add(item)
                         }
                         rightTopXgcAdapter?.refresh(listData)
                     }
-                    "正码xgc", "7色波xgc", "头尾数xgc", "总肖xgc", "正肖xgc", "五行xgc", "合肖xgc" -> {
+                    "正码xgc", "7色波xgc", "头尾数xgc", "总肖xgc", "正肖xgc", "五行xgc", "合肖xgc", "组选三", "组选六" -> {
                         val listData = arrayListOf<PlaySecData>()
                         for ((num, item) in it.withIndex()) {
                             if (!item.play_sec_data.isNullOrEmpty()) {
@@ -410,6 +520,9 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
                                         } else if (result.play_sec_name == "lhc_hx") {
                                             result.type = "xgc_tm_hx"
                                             result.play_sec_options = item.play_sec_options
+                                        } else if (result.play_sec_name == "3d_zxs" || result.play_sec_name == "3d_zxl") {
+                                            result.type = "fc3d_zss"
+                                            result.play_sec_options = item.play_sec_options
                                         }
 
                                     }
@@ -418,12 +531,12 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
                                 }
                             }
                         }
-                        listData.add(
-                            PlaySecData(
-                                title = "",
-                                type = "xgc_full"
-                            )
-                        )
+//                        listData.add(
+//                            PlaySecData(
+//                                title = "",
+//                                type = "xgc_full"
+//                            )
+//                        )
                         xgcTmAdapter?.refresh(listData)
                     }
                     "正码特xgc" -> {
@@ -441,14 +554,14 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
                                     }
                                     result.play_sec_cname = it[num].play_sec_cname
                                 }
-                                if (item.play_sec_data.size == 64) {
-                                    item.play_sec_data.add(
-                                        PlaySecData(
-                                            title = "",
-                                            type = "xgc_full"
-                                        )
-                                    )  //添加footer 一行占满
-                                }
+//                                if (item.play_sec_data.size == 64) {
+//                                    item.play_sec_data.add(
+//                                        PlaySecData(
+//                                            title = "",
+//                                            type = "xgc_full"
+//                                        )
+//                                    )  //添加footer 一行占满
+//                                }
                             }
                             listData.add(item)
                         }
@@ -476,14 +589,14 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
                                             it[num].play_sec_options?.get(0)?.play_odds ?: "null"
                                     }
                                 }
-                                if (item.play_sec_data.size == 50) {
-                                    item.play_sec_data.add(
-                                        PlaySecData(
-                                            title = "",
-                                            type = "xgc_full"
-                                        )
-                                    )  //添加footer 一行占满
-                                }
+//                                if (item.play_sec_data.size == 50) {
+//                                    item.play_sec_data.add(
+//                                        PlaySecData(
+//                                            title = "",
+//                                            type = "xgc_full"
+//                                        )
+//                                    )  //添加footer 一行占满
+//                                }
                             }
                             listData.add(item)
                         }
@@ -499,14 +612,14 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
                                         result.play_sec_cname = it[num].play_sec_cname
                                     }
                                 }
-                                if (item.play_sec_data.size == 12) {
-                                    item.play_sec_data.add(
-                                        PlaySecData(
-                                            title = "",
-                                            type = "xgc_full"
-                                        )
-                                    )  //添加footer 一行占满
-                                }
+//                                if (item.play_sec_data.size == 12) {
+//                                    item.play_sec_data.add(
+//                                        PlaySecData(
+//                                            title = "",
+//                                            type = "xgc_full"
+//                                        )
+//                                    )  //添加footer 一行占满
+//                                }
                             }
                             listData.add(item)
                         }
@@ -524,13 +637,228 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
                                 }
                             }
                         }
-                        listData.add(
-                            PlaySecData(
-                                title = "",
-                                type = "xgc_full"
-                            )
-                        )
+//                        listData.add(
+//                            PlaySecData(
+//                                title = "",
+//                                type = "xgc_full"
+//                            )
+//                        )
                         xgcTmAdapter?.refresh(listData)
+                    }
+                    "主势盘", "一字组合", "二字组合", "三字组合", "一字定位", "三字和数", "跨度" -> {
+                        val listData = arrayListOf<PlayUnitData>()
+                        for ((num, item) in it.withIndex()) {
+                            if (!item.play_sec_data.isNullOrEmpty()) {
+                                for ((index, result) in item.play_sec_data.withIndex()) {
+                                    when (item.play_sec_merge_name) {
+                                        "3d_yzzh" -> {
+                                            result.type = "3d_4"
+                                        }
+                                        "3d_b_lm", "3d_s_lm", "3d_g_lm" -> {
+                                            result.type = "3d_3"
+                                        }
+                                        "3d_bsh_lm", "3d_bgh_lm", "3d_sgh_lm" -> {
+                                            result.type = "3d_2"
+                                        }
+                                        "3d_bshw_lm", "3d_bghw_lm", "3d_bsgh_lm", "3d_ezzh",
+                                        "3d_szzh", "3d_yzdw_b", "3d_yzdw_s", "3d_yzdw_g",
+                                        "3d_bsghw_lm", "3d_sghw_lm", "3d_szhs", "3d_szhsw", "3d_kd" -> {
+                                            result.type = "3d_4"
+                                        }
+                                    }
+                                    result.title = item.play_sec_cname
+                                }
+//                                item.play_sec_data.add(PlaySecData(title = "", type = ""))
+                                listData.add(item)
+                            }
+                        }
+                        fc3DTopAdapter?.refresh(listData)
+                    }
+//                    -> {
+//                        val listData = arrayListOf<PlaySecData>()
+//                        for ((num, item) in it.withIndex()) {
+//                            if (!item.play_sec_data.isNullOrEmpty()) {
+//                                for ((index, result) in item.play_sec_data.withIndex()) {
+//                                    if (index == 0) listData.add(
+//                                        PlaySecData(
+//                                            title = item.play_sec_cname,
+//                                            type = "3d_full"
+//                                        )
+//                                    )
+//
+//                                    result.title = item.play_sec_cname
+//                                    listData.add(result)
+//                                }
+//                            }
+//                        }
+//                        listData.add(
+//                            PlaySecData(
+//                                title = "",
+//                                type = ""
+//                            )
+//                        )
+//                        fc3DAdapter?.refresh(listData)
+//
+//                    }
+                    "二字定位" -> {
+                        val listData = arrayListOf<PlayUnitData>()
+                        for ((num, item) in it.withIndex()) {
+                            if (!item.play_sec_data.isNullOrEmpty()) {
+                                val childData = arrayListOf<PlaySecData>()
+                                for ((index, result) in item.play_sec_data.withIndex()) {
+                                    childData.add(
+                                        PlaySecData(
+                                            type = "3d_ezdw",
+                                            title = item.play_sec_cname,
+                                            play_odds = item.play_sec_options?.get(0)?.play_odds
+                                                ?: "0",
+                                            play_sec_name = result.play_sec_name,
+                                            play_class_name = result.play_class_name,
+                                            play_class_cname = result.play_class_cname,
+                                            rzPosition = 0
+                                        )
+                                    )
+                                    childData.add(
+                                        PlaySecData(
+                                            type = "3d_ezdw",
+                                            title = item.play_sec_cname,
+                                            play_odds = item.play_sec_options?.get(0)?.play_odds
+                                                ?: "0",
+                                            play_sec_name = result.play_sec_name,
+                                            play_class_name = result.play_class_name,
+                                            play_class_cname = result.play_class_cname,
+                                            rzPosition = 1
+                                        )
+                                    )
+//                                    if (index == item.play_sec_data.size - 1) {
+//                                        childData.add(
+//                                            PlaySecData(type = "")
+//                                        )
+//                                    }
+                                }
+
+                                listData.add(
+                                    PlayUnitData(
+                                        play_sec_cname = item.play_sec_cname,
+                                        play_sec_combo = item.play_sec_combo,
+                                        play_sec_merge_name = item.play_sec_merge_name,
+                                        play_sec_name = item.play_sec_name,
+                                        play_sec_data = childData,
+                                        play_sec_id = item.play_sec_id,
+                                        play_sec_info = item.play_sec_info,
+                                        play_sec_options = item.play_sec_options
+                                    )
+                                )
+                            }
+                        }
+                        fc3DTopAdapter?.refresh(listData)
+                    }
+                    "三字定位" -> {
+                        val listData = arrayListOf<PlaySecData>()
+                        for ((num, item) in it.withIndex()) {
+                            if (!item.play_sec_data.isNullOrEmpty()) {
+                                for ((index, result) in item.play_sec_data.withIndex()) {
+                                    listData.add(
+                                        PlaySecData(
+                                            type = "3d_szdw",
+                                            title = item.play_sec_cname,
+                                            play_odds = item.play_sec_options?.get(0)?.play_odds
+                                                ?: "0",
+                                            play_sec_name = result.play_sec_name,
+                                            play_class_name = result.play_class_name,
+                                            play_class_cname = result.play_class_cname,
+                                            rzPosition = 0
+                                        )
+                                    )
+                                    listData.add(
+                                        PlaySecData(
+                                            type = "3d_szdw",
+                                            title = item.play_sec_cname,
+                                            play_odds = item.play_sec_options?.get(0)?.play_odds
+                                                ?: "0",
+                                            play_sec_name = result.play_sec_name,
+                                            play_class_name = result.play_class_name,
+                                            play_class_cname = result.play_class_cname,
+                                            rzPosition = 1
+                                        )
+                                    )
+                                    listData.add(
+                                        PlaySecData(
+                                            type = "3d_szdw",
+                                            title = item.play_sec_cname,
+                                            play_odds = item.play_sec_options?.get(0)?.play_odds
+                                                ?: "0",
+                                            play_sec_name = result.play_sec_name,
+                                            play_class_name = result.play_class_name,
+                                            play_class_cname = result.play_class_cname,
+                                            rzPosition = 2
+                                        )
+                                    )
+//                                    if (index == item.play_sec_data.size - 1) {
+//                                        listData.add(
+//                                            PlaySecData(type = "")
+//                                        )
+//                                    }
+                                }
+                            }
+                        }
+                        fc3DAdapter?.refresh(listData)
+//                        tvTitle?.text = "三字定位"
+                        try {
+                            tvHx?.text = it[0].play_sec_options?.get(0)?.play_odds ?: "null"
+                            tv3d3z1?.text = it[0].play_sec_info?.get(0) ?: "null"
+                            tv3d3z2?.text = it[0].play_sec_info?.get(1) ?: "null"
+                            tv3d3z3?.text = it[0].play_sec_info?.get(2) ?: "null"
+                        } catch (e: Exception) {
+                            ToastUtils.showToast("数据错误 !!!")
+                        }
+                    }
+                    "二字和数" -> {
+                        val listData = arrayListOf<PlayUnitData>()
+                        for ((num, item) in it.withIndex()) {
+                            if (!item.play_sec_data.isNullOrEmpty()) {
+                                val childData = arrayListOf<PlaySecData>()
+                                for ((index, result) in item.play_sec_data.withIndex()) {
+                                    if (!result.play_sec_data.isNullOrEmpty()) {
+                                        for ((pos, child) in result.play_sec_data!!.withIndex()) {
+                                            if (pos == 0) {
+                                                childData.add(
+                                                    PlaySecData(
+                                                        type = "3d_full",
+                                                        title = result.play_sec_cname ?: "null"
+                                                    )
+                                                )
+                                            }
+                                            childData.add(
+                                                PlaySecData(
+                                                    type = "3d_4",
+                                                    title = result.play_sec_cname ?: "null",
+                                                    play_odds = child.play_odds ?: "0",
+                                                    play_sec_name = child.play_sec_name,
+                                                    play_class_name = child.play_class_name,
+                                                    play_class_cname = child.play_class_cname
+                                                )
+                                            )
+                                        }
+                                    }
+                                }
+
+                                listData.add(
+                                    PlayUnitData(
+                                        play_sec_cname = item.play_sec_cname,
+                                        play_sec_combo = item.play_sec_combo,
+                                        play_sec_merge_name = item.play_sec_merge_name,
+                                        play_sec_name = item.play_sec_name,
+                                        play_sec_data = childData,
+                                        play_sec_id = item.play_sec_id,
+                                        play_sec_info = null,
+                                        play_sec_options = null
+                                    )
+                                )
+
+                            }
+                        }
+                        fc3DTopAdapter?.refresh(listData)
                     }
                 }
             }
@@ -1032,6 +1360,7 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
         val TYPE_5 = 5
         val TYPE_6 = 6
         val TYPE_7 = 7
+        val TYPE_8 = 8
         override fun getItemViewType(position: Int): Int {
             return when (data[position].type) {
                 "xgc_tm_nor" -> TYPE_1
@@ -1041,6 +1370,7 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
                 "xgc_tm_title" -> TYPE_5
                 "xgc_tm_lx" -> TYPE_6
                 "xgc_tm_hx" -> TYPE_7
+                "fc3d_zss" -> TYPE_8
                 else -> TYPE_4
             }
         }
@@ -1053,7 +1383,7 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
                 TYPE_4 -> R.layout.adapter_game_xgc_holder
                 TYPE_5 -> R.layout.adapter_game_bet_title
                 TYPE_6 -> R.layout.adapter_game_xgc_tm
-                TYPE_7 -> R.layout.adapter_game_xgc_tm
+                TYPE_7, TYPE_8 -> R.layout.adapter_game_xgc_tm
                 else -> R.layout.adapter_game_xgc_holder
             }
         }
@@ -1216,6 +1546,17 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
 
                     }
                 }
+                TYPE_8 -> {
+                    val tv1 = holder.findViewById<TextView>(R.id.tvXgcCname)
+                    val tv2 = holder.findViewById<TextView>(R.id.tvXgcOdds)
+                    tv1.text = data?.play_class_cname
+                    tv2.text = data?.play_odds
+                    ViewUtils.setGone(tv2)
+                    GamePlay.changeBg(data?.isSelected, container, tv1)
+                    container.setOnClickListener {
+                        cgcHx(this, position, data)
+                    }
+                }
                 else -> {
 
                 }
@@ -1256,7 +1597,52 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
             currentPos = 0
             notifyDataSetChanged()
         }
+
     }
+
+    //右上福彩3D 体彩排列三  (二字定位，三字定位)
+    inner class Right3DTopAdapter(private var isShowOdds: Boolean = false) :
+        BaseRecyclerAdapter<PlayUnitData>() {
+        private var currentPos = 0
+        private var isFirst = true
+        override fun getItemLayoutId(viewType: Int) = R.layout.adapter_game_bet_right_top
+        override fun bindData(holder: RecyclerViewHolder, position: Int, data: PlayUnitData?) {
+            val container = holder.findViewById<LinearLayout>(R.id.gameBetLinearLayout)
+            val tv1 = holder.findViewById<TextView>(R.id.tvCname)
+            container.setPadding(5, 10, 5, 10)
+            tv1.text = data?.play_sec_cname
+            data?.isSelected = currentPos == position
+            changeBg(data?.isSelected, container, tv1, null, true)
+            if (isFirst) fc3DAdapter?.refresh(getData()[currentPos]?.play_sec_data)
+            if (isShowOdds) {
+                tvHx?.text = data?.play_sec_options?.get(0)?.play_odds ?: "0"
+                tv3dRight?.text = getData()[currentPos]?.play_sec_info?.get(0) ?: "null"
+                tv3dLeft?.text = getData()[currentPos]?.play_sec_info?.get(1) ?: "null"
+            }
+            holder.itemView.setOnClickListener {
+                isFirst = false
+                if (currentPos == position) return@setOnClickListener
+                currentPos = position
+                fc3DAdapter?.refresh(getData()[currentPos]?.play_sec_data)
+                notifyDataSetChanged()
+
+            }
+        }
+
+        fun resetSelect() {
+            for (res in data) {
+                if (!res.play_sec_data.isNullOrEmpty()) {
+                    for (result in res.play_sec_data) {
+                        if (result.isSelected) {
+                            result.isSelected = false
+                        }
+                    }
+                }
+            }
+            notifyDataSetChanged()
+        }
+    }
+
 
     //右边上部分类 香港彩
     inner class RightTopXgcAdapter : BaseRecyclerAdapter<PlayUnitData>() {
@@ -1274,12 +1660,14 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
             holder.itemView.setOnClickListener {
                 if (currentPos == position) return@setOnClickListener
                 currentPos = position
-                xgcTmAdapter?.resetData()
-                xgcTmAdapter?.clear()
+                if (currentLeft == "连码" || currentLeft == "连肖连尾") {
+                    xgcTmAdapter?.resetData()
+                    xgcTmAdapter?.clear()
+                    betList.clear()
+                    RxBus.get().post(LotteryLiveBet("", betList))
+                    xgcLmSelectList.clear()
+                }
                 rvContent?.removeAllViews()
-                betList.clear()
-                xgcLmSelectList.clear()
-//                setGone(bottomGameBetLayout)
                 xgcTmAdapter?.refresh(getData()[currentPos]?.play_sec_data)
                 this.notifyDataSetChanged()
             }
@@ -1287,6 +1675,19 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
 
         fun resetData() {
             currentPos = 0
+            notifyDataSetChanged()
+        }
+
+        fun resetSelect() {
+            for (res in data) {
+                if (!res.play_sec_data.isNullOrEmpty()) {
+                    for (result in res.play_sec_data) {
+                        if (result.isSelected) {
+                            result.isSelected = false
+                        }
+                    }
+                }
+            }
             notifyDataSetChanged()
         }
     }
@@ -1350,10 +1751,18 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
                             }
                         }
                         val numName = when (minSelect) {
-                            1 -> judgeName(item[0]?:"") + "," + judgeName(item[1]?:"")
-                            2 -> judgeName(item[0]?:"") + "," +  judgeName(item[1]?:"") + "," +  judgeName(item[2]?:"")
-                            3 -> judgeName(item[0]?:"") + "," +  judgeName(item[1]?:"") + "," +  judgeName(item[2]?:"") + "," +judgeName(item[3]?:"")
-                            4 ->judgeName(item[0]?:"") + "," +  judgeName(item[1]?:"") + "," +  judgeName(item[2]?:"") + "," + judgeName(item[3]?:"")  + "," + judgeName(item[4]?:"")
+                            1 -> judgeName(item[0] ?: "") + "," + judgeName(item[1] ?: "")
+                            2 -> judgeName(item[0] ?: "") + "," + judgeName(
+                                item[1] ?: ""
+                            ) + "," + judgeName(item[2] ?: "")
+                            3 -> judgeName(item[0] ?: "") + "," + judgeName(
+                                item[1] ?: ""
+                            ) + "," + judgeName(item[2] ?: "") + "," + judgeName(item[3] ?: "")
+                            4 -> judgeName(item[0] ?: "") + "," + judgeName(
+                                item[1] ?: ""
+                            ) + "," + judgeName(item[2] ?: "") + "," + judgeName(
+                                item[3] ?: ""
+                            ) + "," + judgeName(item[4] ?: "")
                             else -> {
                                 ToastUtils.showToast("内部错误")
                                 return
@@ -1388,10 +1797,18 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
                         }
                     }
                     val numName = when (minSelect) {
-                        1 -> judgeName(item[0]?:"") + "," + judgeName(item[1]?:"")
-                        2 -> judgeName(item[0]?:"") + "," +  judgeName(item[1]?:"") + "," +  judgeName(item[2]?:"")
-                        3 -> judgeName(item[0]?:"") + "," +  judgeName(item[1]?:"") + "," +  judgeName(item[2]?:"") + "," +judgeName(item[3]?:"")
-                        4 ->judgeName(item[0]?:"") + "," +  judgeName(item[1]?:"") + "," +  judgeName(item[2]?:"") + "," + judgeName(item[3]?:"")  + "," + judgeName(item[4]?:"")
+                        1 -> judgeName(item[0] ?: "") + "," + judgeName(item[1] ?: "")
+                        2 -> judgeName(item[0] ?: "") + "," + judgeName(
+                            item[1] ?: ""
+                        ) + "," + judgeName(item[2] ?: "")
+                        3 -> judgeName(item[0] ?: "") + "," + judgeName(
+                            item[1] ?: ""
+                        ) + "," + judgeName(item[2] ?: "") + "," + judgeName(item[3] ?: "")
+                        4 -> judgeName(item[0] ?: "") + "," + judgeName(
+                            item[1] ?: ""
+                        ) + "," + judgeName(item[2] ?: "") + "," + judgeName(
+                            item[3] ?: ""
+                        ) + "," + judgeName(item[4] ?: "")
                         else -> {
                             ToastUtils.showToast("内部错误")
                             return
@@ -1412,6 +1829,7 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
             adapter.notifyItemChanged(position)
         }
     }
+
     private fun judgeName(name: String): String {
         return when (name) {
             "鼠" -> "mouse"
@@ -1426,9 +1844,10 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
             "鸡" -> "rooster"
             "狗" -> "dog"
             "猪" -> "pig"
-            else -> ""
+            else -> name
         }
     }
+
     /**
      * 合肖（香港彩）处理
      */
@@ -1447,6 +1866,14 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
                 maxSelect = 12
                 minSelect = 4
             }
+            "3d_zxs" -> {
+                maxSelect = 10
+                minSelect = 4
+            }
+            "3d_zxl" -> {
+                maxSelect = 8
+                minSelect = 3
+            }
         }
         if (data?.isSelected != true) {
             if (xgcLmSelectList.size < maxSelect) {
@@ -1454,8 +1881,8 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
                 xgcHxSelectList.add(data?.play_class_name.toString())
                 if (xgcLmSelectList.size > minSelect) {
                     val result = data?.play_sec_options?.get(xgcLmSelectList.size - (minSelect + 1))
-                    ViewUtils.setVisible(tvHx)
-                    tvHx?.text = "赔率：" + result?.play_odds
+                    ViewUtils.setVisible(layoutOdds)
+                    tvHx?.text = result?.play_odds
                     betList.clear()
                     val num = CalculationGame.listToString(xgcLmSelectList).toString()
                     val numName = CalculationGame.listToString(xgcHxSelectList).toString()
@@ -1467,7 +1894,7 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
                         num,
                         result?.play_odds.toString()
                     )
-                } else ViewUtils.setGone(tvHx)
+                } else ViewUtils.setGone(layoutOdds)
                 data?.isSelected = true
                 adapter.notifyItemChanged(position)
             } else ToastUtils.showToast("当前玩法最多可选择" + maxSelect + "个号码!")
@@ -1477,8 +1904,8 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
             xgcHxSelectList.remove(data.play_class_name)
             if (xgcLmSelectList.size > minSelect) {
                 val result = data.play_sec_options?.get(xgcLmSelectList.size - (minSelect + 1))
-                ViewUtils.setVisible(tvHx)
-                tvHx?.text = "赔率：" + result?.play_odds
+                ViewUtils.setVisible(layoutOdds)
+                tvHx?.text = result?.play_odds
                 val num = CalculationGame.listToString(xgcLmSelectList).toString()
                 val numName = CalculationGame.listToString(xgcHxSelectList).toString()
                 addOrDeleteBetData(
@@ -1491,12 +1918,212 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
                 )
             } else {
 //                setGone(bottomGameBetLayout)
-                ViewUtils.setGone(tvHx)
+                ViewUtils.setGone(layoutOdds)
             }
             data.isSelected = false
             adapter.notifyItemChanged(position)
         }
     }
+
+
+    /**
+     * 福彩3D
+     */
+    inner class Fc3dAdapter : BaseRecyclerAdapter<PlaySecData>() {
+        val TYPE_1 = 1
+        val TYPE_2 = 2
+        val TYPE_3 = 3
+        val TYPE_4 = 4
+        val TYPE_5 = 5
+        val TYPE_6 = 6
+        val TYPE_7 = 7
+
+        override fun getItemViewType(position: Int): Int {
+            return when (data[position].type) {
+                "3d_full" -> TYPE_1
+                "3d_2" -> TYPE_2
+                "3d_4" -> TYPE_3
+                "3d_3" -> TYPE_4
+                "3d_ezdw" -> TYPE_6
+                "3d_szdw" -> TYPE_7
+                else -> TYPE_5
+            }
+        }
+
+        override fun getItemLayoutId(viewType: Int): Int {
+            return when (viewType) {
+                TYPE_1 -> R.layout.adapter_game_bet_title
+                TYPE_2, TYPE_3, TYPE_4 -> R.layout.adapter_game_bet_content
+                TYPE_6, TYPE_7 -> R.layout.adapter_game_xgc_tm
+                else -> R.layout.adapter_game_xgc_holder
+            }
+        }
+
+        override fun bindData(holder: RecyclerViewHolder, position: Int, data: PlaySecData?) {
+            when (getItemViewType(position)) {
+                TYPE_1 -> {
+                    holder.text(R.id.tvGameType, data?.title)
+                }
+                TYPE_2, TYPE_3, TYPE_4 -> {
+                    val container = holder.findViewById<LinearLayout>(R.id.gameBetLinearLayout)
+                    val tv1 = holder.findViewById<TextView>(R.id.tvCname)
+                    val tv2 = holder.findViewById<TextView>(R.id.tvOdds)
+                    tv1.text = data?.play_class_cname
+                    tv2.text = data?.play_odds.toString()
+                    changeBg(data?.isSelected, container, tv1, tv2)
+                    holder.itemView.setOnClickListener {
+                        data?.isSelected = data?.isSelected != true
+                        addOrDeleteBetData(
+                            data?.isSelected == true,
+                            data?.play_sec_name ?: "-1",
+                            data?.play_class_name ?: "-1",
+                            data?.title ?: "-1",
+                            data?.play_class_cname ?: "-1",
+                            data?.play_odds ?: "-1"
+                        )
+                        notifyItemChanged(position)
+                    }
+                }
+                TYPE_5->{}
+                TYPE_6 -> {
+                    val container = holder.findViewById<LinearLayout>(R.id.gameBetLinearLayout)
+                    val tv1 = holder.findViewById<TextView>(R.id.tvXgcCname)
+                    val tv2 = holder.findViewById<TextView>(R.id.tvXgcOdds)
+                    GamePlay.changeBg(data?.isSelected, container, tv1)
+                    tv1.text = data?.play_class_cname
+                    ViewUtils.setGone(tv2)
+                    tv1.text = data?.play_class_cname
+                    holder.itemView.setOnClickListener {
+                        data?.isSelected = data?.isSelected != true
+                        calculationEz(
+                            data?.isSelected == true,
+                            data?.rzPosition ?: -1,
+                            data?.play_class_name ?: "null",
+                            data?.play_sec_name ?: "null",
+                            data?.title ?: "null",
+                            data?.play_odds ?: "null"
+                        )
+                        notifyItemChanged(position)
+                    }
+                }
+                TYPE_7 -> {
+                    val container = holder.findViewById<LinearLayout>(R.id.gameBetLinearLayout)
+                    val tv1 = holder.findViewById<TextView>(R.id.tvXgcCname)
+                    val tv2 = holder.findViewById<TextView>(R.id.tvXgcOdds)
+                    GamePlay.changeBg(data?.isSelected, container, tv1)
+                    tv1.text = data?.play_class_cname
+                    ViewUtils.setGone(tv2)
+                    tv1.text = data?.play_class_cname
+                    holder.itemView.setOnClickListener {
+                        data?.isSelected = data?.isSelected != true
+                        calculationSz(
+                            data?.isSelected == true,
+                            data?.rzPosition ?: -1,
+                            data?.play_class_name ?: "null",
+                            data?.play_sec_name ?: "null",
+                            data?.title ?: "null",
+                            data?.play_odds ?: "null"
+                        )
+                        notifyItemChanged(position)
+                    }
+                }
+            }
+        }
+
+        fun resetData() {
+            for (item in this.data) {
+                if (item.isSelected) item.isSelected = false
+            }
+            notifyDataSetChanged()
+        }
+    }
+
+    /**
+     * 二字定位
+     */
+    var ezLeft = arrayListOf<String>()
+    var ezRight = arrayListOf<String>()
+    fun calculationEz(
+        isAdd: Boolean,
+        index: Int,
+        data: String,
+        play_sec_name: String,
+        play_sec_cname: String,
+        odds: String
+    ) {
+        if (index == 0) {
+            if (isAdd) ezLeft.add(data) else ezLeft.remove(data)
+        } else {
+            if (isAdd) ezRight.add(data) else ezRight.remove(data)
+        }
+        if (ezLeft.isNotEmpty() && ezRight.isNotEmpty()) {
+            val list3: ArrayList<List<String>> = ArrayList()
+            list3.add(ezLeft)
+            list3.add(ezRight)
+            val result = CalculationGame.getPermutations(list3)
+            if (!result.isNullOrEmpty()) {
+                betList.clear()
+                for (item in result) {
+                    addOrDeleteBetData(
+                        true,
+                        play_class_cname = item,
+                        play_class_name = item,
+                        play_sec_name = play_sec_name,
+                        play_odds = odds,
+                        play_sec_cname = play_sec_cname
+                    )
+                }
+            }
+        }
+    }
+
+    /**
+     * 三字定位
+     */
+    var sz1 = arrayListOf<String>()
+    var sz2 = arrayListOf<String>()
+    var sz3 = arrayListOf<String>()
+    fun calculationSz(
+        isAdd: Boolean,
+        index: Int,
+        data: String,
+        play_sec_name: String,
+        play_sec_cname: String,
+        odds: String
+    ) {
+        if (index == 0) {
+            if (isAdd) sz1.add(data) else sz1.remove(data)
+        } else if (index == 1) {
+            if (isAdd) sz2.add(data) else sz2.remove(data)
+        } else {
+            if (isAdd) sz3.add(data) else sz3.remove(data)
+        }
+        if (sz1.isNotEmpty() && sz2.isNotEmpty() && sz3.isNotEmpty()) {
+            val list3: ArrayList<List<String>> = ArrayList()
+            list3.add(sz1)
+            list3.add(sz2)
+            list3.add(sz3)
+            val result = CalculationGame.getPermutations(list3)
+            LogUtils.e("======>" + result)
+            if (!result.isNullOrEmpty()) {
+                betList.clear()
+                for (item in result) {
+                    addOrDeleteBetData(
+                        true,
+                        play_class_cname = item,
+                        play_class_name = item,
+                        play_sec_name = play_sec_name,
+                        play_odds = odds,
+                        play_sec_cname = play_sec_cname
+                    )
+                }
+            }
+        }else{
+            betList.clear()
+            RxBus.get().post(LotteryLiveBet(rightTop, betList))
+        }
+    }
+
 
     fun addOrDeleteBetData(
         isAdd: Boolean,
@@ -1518,6 +2145,7 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
             betList.add(bean)
         } else removeElement(betList, bean)
         RxBus.get().post(LotteryLiveBet(rightTop, betList))
+        if (betList.isNullOrEmpty())ViewUtils.setGone(contentHolder) else ViewUtils.setVisible(contentHolder)
     }
 
 
@@ -1537,21 +2165,43 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
         dmAdapter?.resetData()
         xgcTmAdapter?.resetData()
         xgcTmAdapter?.clear()
+        fc3DAdapter?.resetData()
+        fc3DAdapter?.clear()
         if (!boolean) {
             dmAdapter?.clear()
             rightTopAdapter?.clear()
             rightTopXgcAdapter?.clear()
+            fc3DTopAdapter?.clear()
         }
         betList.clear()
         kjContentList.clear()
         xgcLmSelectList.clear()
         xgcHxSelectList.clear()
         kjList.clear()
+        ezLeft.clear()
+        ezRight.clear()
+        sz1.clear()
+        sz2.clear()
+        sz3.clear()
         rightTop = "-1"
-        ViewUtils.setGone(tvHx)
         currentDouble = 0
         currentSingle = 0
         currentTriple = 0
+        if (currentLeft == "二字定位") {
+            ViewUtils.setVisible(layout3D)
+        } else {
+            ViewUtils.setGone(layout3D)
+        }
+        if (currentLeft == "三字定位") {
+            ViewUtils.setVisible(layout3D3z)
+        } else {
+            ViewUtils.setGone(layout3D3z)
+        }
+        if (currentLeft == "二字定位" || currentLeft == "三字定位") {
+            ViewUtils.setVisible(layoutOdds)
+        } else {
+            ViewUtils.setGone(layoutOdds)
+        }
     }
 
     override fun onFragmentPause() {
@@ -1567,10 +2217,18 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
         zhAdapter?.resetData()
         xgcTmAdapter?.resetData()
         dmAdapter?.resetData()
+        fc3DAdapter?.resetData()
+        rightTopXgcAdapter?.resetSelect()
+        fc3DTopAdapter?.resetSelect()
         currentDouble = 0
         currentSingle = 0
         currentTriple = 0
         kjList.clear()
+        ezLeft.clear()
+        ezRight.clear()
+        sz1.clear()
+        sz2.clear()
+        sz3.clear()
         rightTop = "-1"
         betList.clear()
         kjContentList.clear()
@@ -1578,7 +2236,22 @@ class LiveRoomBetFragmentContent : BaseNormalFragment() {
         xgcHxSelectList.clear()
         rightTopAdapter?.resetData()
         rightTopXgcAdapter?.resetData()
-        ViewUtils.setGone(tvHx)
+        if (currentLeft == "二字定位") {
+            ViewUtils.setVisible(layout3D)
+        } else {
+            ViewUtils.setGone(layout3D)
+        }
+        if (currentLeft == "三字定位") {
+            ViewUtils.setVisible(layout3D3z)
+        } else {
+            ViewUtils.setGone(layout3D3z)
+        }
+        if (currentLeft == "二字定位" || currentLeft == "三字定位") {
+            ViewUtils.setVisible(layoutOdds)
+        } else {
+            ViewUtils.setGone(layoutOdds)
+        }
+        myScrollView.scrollTo(0,0)
     }
 
     //背景变化香港彩

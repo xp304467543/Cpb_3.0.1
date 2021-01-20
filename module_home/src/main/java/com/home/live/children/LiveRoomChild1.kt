@@ -386,7 +386,7 @@ class LiveRoomChild1 : BaseNormalFragment<LiveRoomChild1Presenter>() {
                         return@setOnClickListener
                     }
                     try {
-                        if (UserInfoSp.getVipLevel()?.toInt() ?: 0 > 0) {
+                        if (UserInfoSp.getVipLevel() > 0) {
                             mOpenRedPopup?.show()
                         } else {
                             val dialog = context?.let { it1 -> DialogVipTips(it1) }

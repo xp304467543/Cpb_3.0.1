@@ -19,8 +19,8 @@
                 <!--在gradient这里设置不同的颜色就会产生渐变的效果-->
 
                 <gradient
-                    android:startColor ="#FF9800"
-                    android:endColor ="#FFC107" />
+                    android:startColor ="#F39B2C"
+                    android:endColor ="#FAB053" />
 
             </shape>
         </scale>

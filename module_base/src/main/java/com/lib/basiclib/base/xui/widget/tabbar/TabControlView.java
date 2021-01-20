@@ -366,6 +366,34 @@ public class TabControlView extends RadioGroup implements HasTypeface {
      * @param itemArray
      * @param valueArray
      */
+    public TabControlView setItems(ArrayList<String> itemArray,ArrayList<String> valueArray) throws Exception {
+        mItemMap.clear();
+        if (itemArray != null && valueArray != null) {
+            if (itemArray.size() != valueArray.size()) {
+                throw new Exception("Item labels and value arrays must be the same size");
+            }
+        }
+        if (itemArray != null) {
+            if (valueArray != null) {
+                for (int i = 0; i < itemArray.size(); i++) {
+                    mItemMap.put(itemArray.get(i), valueArray.get(i));
+                }
+            } else {
+                for (CharSequence item : itemArray) {
+                    mItemMap.put(item.toString(), item.toString());
+                }
+            }
+        }
+        update();
+        return this;
+    }
+
+    /**
+     * 为每一个选项设置 items and values
+     *
+     * @param itemArray
+     * @param valueArray
+     */
     private void setItems(CharSequence[] itemArray, CharSequence[] valueArray) throws Exception {
         if (itemArray != null && valueArray != null) {
             if (itemArray.length != valueArray.length) {

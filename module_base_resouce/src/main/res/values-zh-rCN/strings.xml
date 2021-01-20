@@ -70,7 +70,7 @@
     <string name="moments">友圈</string>
     <string name="moments_download">下载</string>
     <!-- ================================================================== Mine ================================================================== -->
-    <string name="mine_welcome">Hi~欢迎来到乐购</string>
+    <string name="mine_welcome">现在注册乐购用户,即可获得1880钻石礼包哦~</string>
     <string name="mine_login_text">登录开启你的娱乐世界</string>
     <string name="mine_balance">余额</string>
     <string name="mine_base_balance">0.00</string>
@@ -78,8 +78,8 @@
     <string name="mine_diamond">钻石</string>
     <string name="mine_diamond_balance">0</string>
     <string name="mine_exchange">兑换</string>
-    <string name="mine_deposit">存款</string>
-    <string name="mine_draw_money">取款</string>
+    <string name="mine_deposit">钱包</string>
+    <string name="mine_draw_money">推广</string>
     <string name="mine_attention">关注</string>
     <string name="mine_msg_center">消息中心</string>
     <string name="mine_my_check">我的账单</string>

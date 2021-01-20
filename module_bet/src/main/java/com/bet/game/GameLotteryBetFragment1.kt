@@ -542,7 +542,7 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
             "二字定位" -> {
                 fc3DTopAdapter = Right3DTopAdapter()
                 rvRightTop.adapter = fc3DTopAdapter
-                rvRightTop.layoutManager = GridLayoutManager(context, 3)
+                rvRightTop.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL,false)
                 if (fc3DAdapter == null) fc3DAdapter = Fc3dAdapter()
                 rvGameBetContent?.adapter = fc3DAdapter
                 val layoutManager = GridLayoutManager(context, 2)
@@ -557,7 +557,7 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
             "二字和数" -> {
                 fc3DTopAdapter = Right3DTopAdapter(false)
                 rvRightTop.adapter = fc3DTopAdapter
-                rvRightTop.layoutManager = GridLayoutManager(context, 3)
+                rvRightTop.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL,false)
                 fc3DAdapter = Fc3dAdapter()
                 rvGameBetContent?.adapter = fc3DAdapter
                 val layoutManager = GridLayoutManager(context, 4)
@@ -1038,7 +1038,7 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                             tv3d3z2.text = it[0].play_sec_info?.get(1) ?: "null"
                             tv3d3z3.text = it[0].play_sec_info?.get(2) ?: "null"
                         } catch (e: Exception) {
-                            ToastUtils.showToast("数据错误 X")
+                            ToastUtils.showToast("数据错误 !!!")
                         }
                     }
                     "二字和数" -> {
@@ -1252,8 +1252,6 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                                 betList.remove(count)
                             }
                         }
-
-
                     } else if (getItemViewType(position) == ITEM_TYPE_CONTENT_COUNT_2) {
                         if (kjList.isEmpty()) {
                             ToastUtils.showToast("请选择玩法")
@@ -1304,9 +1302,7 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                             }
                         }
                     }
-                    if (betList.isNotEmpty()) setVisible(bottomGameBetLayout) else setGone(
-                        bottomGameBetLayout
-                    )
+                    if (betList.isNotEmpty()) setVisible(bottomGameBetLayout) else setGone(bottomGameBetLayout)
                     LogUtils.e("======>" + betList)
                     mPresenter.setTotal()
                 }
@@ -1852,6 +1848,18 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                 notifyDataSetChanged()
             }
         }
+        fun resetSelect(){
+            for(res in data){
+                if (!res.play_sec_data.isNullOrEmpty()){
+                    for (result in res.play_sec_data){
+                        if (result.isSelected){
+                            result.isSelected = false
+                        }
+                    }
+                }
+            }
+            notifyDataSetChanged()
+        }
     }
 
 
@@ -1898,15 +1906,29 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                 isFirst = false
                 if (currentPos == position) return@setOnClickListener
                 currentPos = position
-                xgcTmAdapter?.resetData()
-                xgcTmAdapter?.clear()
+                if (currentLeft == "连码" || currentLeft == "连肖连尾"){
+                    xgcTmAdapter?.resetData()
+                    xgcTmAdapter?.clear()
+                    betList.clear()
+                    xgcLmSelectList.clear()
+                    setGone(bottomGameBetLayout)
+                }
                 rvGameBetContent?.removeAllViews()
-                betList.clear()
-                xgcLmSelectList.clear()
-                setGone(bottomGameBetLayout)
                 xgcTmAdapter?.refresh(getData()[currentPos]?.play_sec_data)
                 this.notifyDataSetChanged()
             }
+        }
+        fun resetSelect(){
+            for(res in data){
+                if (!res.play_sec_data.isNullOrEmpty()){
+                    for (result in res.play_sec_data){
+                        if (result.isSelected){
+                            result.isSelected = false
+                        }
+                    }
+                }
+            }
+            notifyDataSetChanged()
         }
     }
 
@@ -2047,7 +2069,7 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
         }
     }
 
-    fun judgeName(name: String): String {
+    private fun judgeName(name: String): String {
         return when (name) {
             "鼠" -> "mouse"
             "牛" -> "ox"
@@ -2061,7 +2083,7 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
             "鸡" -> "rooster"
             "狗" -> "dog"
             "猪" -> "pig"
-            else -> ""
+            else -> name
         }
     }
 
@@ -2088,7 +2110,7 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                 minSelect = 4
             }
             "3d_zxl" -> {
-                maxSelect = 9
+                maxSelect = 8
                 minSelect = 3
             }
         }
@@ -2333,6 +2355,9 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
                     )
                 }
             }
+        }else{
+            betList.clear()
+            setGone(bottomGameBetLayout)
         }
     }
 
@@ -2360,9 +2385,7 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
         } else if (rightTop.contains("三中三")) {
             if (betList.size > 2) setVisible(bottomGameBetLayout) else setGone(bottomGameBetLayout)
         } else {
-            if (betList.isNotEmpty()) setVisible(bottomGameBetLayout) else setGone(
-                bottomGameBetLayout
-            )
+            if (betList.isNotEmpty()) setVisible(bottomGameBetLayout) else setGone(bottomGameBetLayout)
         }
         mPresenter.setTotal()
     }
@@ -2410,6 +2433,8 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
         kjContentList.clear()
         xgcLmSelectList.clear()
         xgcHxSelectList.clear()
+        rightTopXgcAdapter?.resetSelect()
+        fc3DTopAdapter?.resetSelect()
         kjList.clear()
         ezLeft.clear()
         ezRight.clear()
@@ -2421,15 +2446,16 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
         currentDouble = 0
         currentSingle = 0
         currentTriple = 0
-        if (currentLeft == "二字定位") setVisible(layout3D) else {
-            setGone(layoutOdds)
-            setGone(layout3D)
+        if (currentLeft == "二字定位" || currentLeft == "三字定位") {
+            ViewUtils.setVisible(layoutOdds)
+        } else {
+            ViewUtils.setGone(layoutOdds)
         }
         if (currentLeft == "三字定位") {
-            setVisible(layout3D3z)
+            ViewUtils.setVisible(layout3D3z)
             setVisible(tvTitle)
         } else {
-            setGone(layout3D3z)
+            ViewUtils.setGone(layout3D3z)
             setGone(tvTitle)
         }
         myScrollView.scrollTo(0, 0)
@@ -2455,12 +2481,26 @@ class GameLotteryBetFragment1 : BaseNormalFragment<GameLotteryBetFragment1Presen
         sz1.clear()
         sz2.clear()
         sz3.clear()
+        rightTopXgcAdapter?.resetSelect()
+        fc3DTopAdapter?.resetSelect()
         xgcTmAdapter?.resetData()
         setGone(bottomGameBetLayout)
         setGone(layoutOdds)
         currentDouble = 0
         currentSingle = 0
         currentTriple = 0
+        if (currentLeft == "三字定位") {
+            ViewUtils.setVisible(layout3D3z)
+            setVisible(tvTitle)
+        } else {
+            ViewUtils.setGone(layout3D3z)
+            setGone(tvTitle)
+        }
+        if (currentLeft == "二字定位" || currentLeft == "三字定位") {
+            ViewUtils.setVisible(layoutOdds)
+        } else {
+            ViewUtils.setGone(layoutOdds)
+        }
     }
 
 

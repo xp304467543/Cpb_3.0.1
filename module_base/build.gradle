@@ -78,4 +78,11 @@ dependencies {
     api 'com.github.yyued:SVGAPlayer-Android:2.5.2'
     //引导页
     api 'com.qw:curtain:0.0.7'
+//    //SuperTextView
+//    api 'com.github.lygttpod:SuperTextView:2.4.2'
+    //阴影布局
+    api 'com.github.lihangleo2:ShadowLayout:3.1.8'
+    //条件选择器
+    api 'com.github.zyyoona7:pickerview:1.1.0'
+
 }

@@ -33,7 +33,7 @@ class MineCardRechargeAct : BaseNavActivity() {
         bt_go_recharge.setOnClickListener {
                     if (!FastClickUtil.isFastClick()) {
                 if (et_code.text.length < 18) {
-                    ToastUtils.showToast("请输入正确16位数账号")
+                    ToastUtils.showToast("请输入正确18位数账号")
                     return@setOnClickListener
                 }
                 showPageLoadingDialog()

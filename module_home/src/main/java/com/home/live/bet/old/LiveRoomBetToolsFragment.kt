@@ -23,6 +23,7 @@ class LiveRoomBetToolsFragment : BottomDialogFragment() {
 
     private var pagerAdapter: ViewPagerAdapter? = null
     override val layoutResId: Int = R.layout.old_fragment_live_bet_tool
+    var lotteryId = "0"
 
     override val resetHeight: Int = 0
 
@@ -33,12 +34,18 @@ class LiveRoomBetToolsFragment : BottomDialogFragment() {
     override fun initView() {
         setOnclick()
         livBetTab = rootView?.findViewById(R.id.livBetTab)
-
+        lotteryId = arguments?.getString("LOTTERY_ID") ?: "1"
         if (livBetTab != null) {
-            livBetTab?.newTab()?.setText("露珠走势")?.let { livBetTab?.addTab(it) }
-            livBetTab?.newTab()?.setText("历史开奖")?.let { livBetTab?.addTab(it) }
-            livBetTab?.newTab()?.setText("玩法规则")?.let { livBetTab?.addTab(it) }
+           
         }
+    if (lotteryId == "8"|| lotteryId == "5"|| lotteryId == "14"){
+        livBetTab?.newTab()?.setText("历史开奖")?.let { livBetTab?.addTab(it) }
+        livBetTab?.newTab()?.setText("玩法规则")?.let { livBetTab?.addTab(it) }
+    }else{
+        livBetTab?.newTab()?.setText("露珠走势")?.let { livBetTab?.addTab(it) }
+        livBetTab?.newTab()?.setText("历史开奖")?.let { livBetTab?.addTab(it) }
+        livBetTab?.newTab()?.setText("玩法规则")?.let { livBetTab?.addTab(it) }
+    }
     }
 
     override fun initData() {
@@ -48,13 +55,19 @@ class LiveRoomBetToolsFragment : BottomDialogFragment() {
     override fun initFragment() {
         liveBetViewPager = rootView?.findViewById(R.id.liveBetViewPager)
         liveBetViewPager?.removeAllViews()
-
        //初始化viewPager
-        val fragments= arrayListOf(
-            ServiceManager.get(LotteryService::class.java)?.getLuZhuFragment(arguments?.getString("LOTTERY_ID") ?: "1",arguments?.getString("issue") ?: "1"),
-            ServiceManager.get(LotteryService::class.java)?.getHistoryFragment(arguments?.getString("LOTTERY_ID") ?: "1",arguments?.getString("issue") ?: "1"),
-            LiveRoomBetToolsRulesFragment.newInstance(arguments?.getString("LOTTERY_ID") ?: "1")
-        )
+        val fragments=if (lotteryId == "8"|| lotteryId == "5"|| lotteryId == "14"){
+            arrayListOf(
+                ServiceManager.get(LotteryService::class.java)?.getHistoryFragment(arguments?.getString("LOTTERY_ID") ?: "1",arguments?.getString("issue") ?: "1"),
+                LiveRoomBetToolsRulesFragment.newInstance(arguments?.getString("LOTTERY_ID") ?: "1")
+            )
+        }else{
+            arrayListOf(
+                ServiceManager.get(LotteryService::class.java)?.getLuZhuFragment(arguments?.getString("LOTTERY_ID") ?: "1",arguments?.getString("issue") ?: "1"),
+                ServiceManager.get(LotteryService::class.java)?.getHistoryFragment(arguments?.getString("LOTTERY_ID") ?: "1",arguments?.getString("issue") ?: "1"),
+                LiveRoomBetToolsRulesFragment.newInstance(arguments?.getString("LOTTERY_ID") ?: "1")
+            )
+        }
         pagerAdapter = ViewPagerAdapter(childFragmentManager, fragments)
         liveBetViewPager?.adapter = pagerAdapter
         liveBetViewPager?.currentItem = 0

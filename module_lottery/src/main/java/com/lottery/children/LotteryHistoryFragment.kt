@@ -75,11 +75,7 @@ class LotteryHistoryFragment : BaseNormalFragment<LotteryHistoryFragmentPresente
             } else if (lotteryID == "8") {
                 arrayOf(LotteryConstant.TYPE_1, LotteryConstant.TYPE_5, LotteryConstant.TYPE_6)
             } else if (lotteryID == "5" || lotteryID == "14") {
-                arrayOf(
-                    LotteryConstant.TYPE_1,
-                    LotteryConstant.TYPE_2,
-                    LotteryConstant.TYPE_3
-                )
+                arrayOf(LotteryConstant.TYPE_1)
             } else {
                 arrayOf(
                     LotteryConstant.TYPE_1,

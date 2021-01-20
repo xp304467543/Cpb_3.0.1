@@ -22,6 +22,7 @@ object GlobalDialog {
 
     //未登录
     fun notLogged(context: Activity, horizontal: Boolean = false) {
+        loginTipsDialog?.dismiss()
         loginTipsDialog = DialogLoginTips(context, horizontal)
         if (loginTipsDialog?.isShowing==false) {
             if (context.isFinishing) {
@@ -58,6 +59,7 @@ object GlobalDialog {
     //登录提醒
     var otherLog: DialogGlobalTips? = null
     fun otherLogin(context: Context,isDisMiss:Boolean = false) {
+        otherLog?.dismiss()
         otherLog = DialogGlobalTips(context, "登录提醒", "确定", "", "您的账号已在其他设备登录\n" + "如非本人请联系客服")
         if (!otherLog?.isShowing!!) {
             if (PlayerUtils.scanForActivity(context).isFinishing) {

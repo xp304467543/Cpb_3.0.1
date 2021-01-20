@@ -84,7 +84,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme, IMode {
             tvAppMode.text = "纯净版"
             setTheme(UserInfoSp.getThem())
         }
-        if ((UserInfoSp.getVipLevel() ?: "0").toInt() > 0) {
+        if (UserInfoSp.getVipLevel() > 0) {
             titleList = arrayListOf("热门", "影视区")
             homeSwitchViewPager?.setScroll(true)
         } else homeSwitchViewPager?.setScroll(false)
@@ -246,7 +246,8 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme, IMode {
             Theme.ChristmasDay -> {
                 imgHomeUserRecharge.setTextColor(ViewUtils.getColor(R.color.color_SD))
                 imgHomeBg.setImageResource(R.drawable.ic_them_sd_top)
-                imgHomeUserRecharge.background = ViewUtils.getDrawable(R.mipmap.ic_home_top_recharge_sd)
+                imgHomeUserRecharge.background =
+                    ViewUtils.getDrawable(R.mipmap.ic_home_top_recharge_sd)
                 homeCustomer.background = ViewUtils.getDrawable(R.mipmap.ic_customer_sd)
             }
         }
@@ -335,7 +336,7 @@ class HomeFragment : BaseMvpFragment<HomePresenter>(), ITheme, IMode {
 
     @Subscribe(thread = EventThread.MAIN_THREAD)
     fun refresh(eventBean: HomeRefresh) {
-        if (UserInfoSp.getVipLevel() ?: "0" == "0") mPresenter.getHomeTitle()
+        if (UserInfoSp.getVipLevel() == 0) mPresenter.getHomeTitle()
     }
 
 

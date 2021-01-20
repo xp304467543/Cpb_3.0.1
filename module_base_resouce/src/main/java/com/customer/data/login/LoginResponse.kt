@@ -40,9 +40,12 @@ data class LoginInfoResponse(
     var followers: String = "0",
     var like: String = "0",
     var unique_id: String = "0",
-    var token: String = "0"
-
-
+    var token: String = "0",
+    var market_code:String? = "",
+    var free_watch_nums:String? = "",
+    var sum_watch_nums:String? = "",
+    var noble:Int = 0,
+    var vip:Int = 0
 )
 
 data class LoginFirstRecharge(var isfirst: String = "0")

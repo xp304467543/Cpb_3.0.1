@@ -23,7 +23,7 @@ object MomentsApi : BaseApi {
     private const val HOT_DISCUSS = "article/index"
 
     //主播动态列表
-    private const val ANCHOR_LIST = "api/v1_1//live/get_dynamic"
+    private const val ANCHOR_LIST = "api/v2//live/get_dynamic"
 
     //精品推荐
     private const val RECOMMEND_GOOD = "article/recommended"
@@ -41,16 +41,16 @@ object MomentsApi : BaseApi {
     private const val QUIZ_COMMENT_LIKE = "article/comment-like"
 
     //评论列表 Davis
-    private const val COMMENT_LIST = "api/v1_1/user/get_comment_list/"
+    private const val COMMENT_LIST = "api/v2/user/get_comment_list/"
 
     //评论回复 Davis
-    private const val COMMENT_ON_DAVIS = "api/v1_1/live/dynamic_comment/"
+    private const val COMMENT_ON_DAVIS = "api/v2/live/dynamic_comment/"
 
     //评论点赞 Davis
-    private const val COMMENT_ZAN = "api/v1_1/live/dynamic_like/"
+    private const val COMMENT_ZAN = "api/v2/live/dynamic_like/"
 
     //主播动态
-    private const val HOME_LIVE_ANCHOR_ANCHOR_DYNAMIC = "api/v1_1/live/get_anchor_dynamic/"
+    private const val HOME_LIVE_ANCHOR_ANCHOR_DYNAMIC = "api/v2/live/get_anchor_dynamic/"
 
 
 
@@ -231,7 +231,7 @@ object MomentsApi : BaseApi {
     }
 
     /**
-     * Davis 评论列表 /api/v1_1/user/get_comment_list/
+     * Davis 评论列表 /api/v2/user/get_comment_list/
      */
 
     fun getCommentList(

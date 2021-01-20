@@ -346,7 +346,7 @@ public class MarqueeTextView extends AppCompatTextView {
             mHandler.removeMessages(REDRAW_TEXT);
         }
         if (!mStopMarquee) {
-            mHandler.sendEmptyMessageDelayed(REDRAW_TEXT, 500);
+            mHandler.sendEmptyMessageDelayed(REDRAW_TEXT, 800);
         } else {
             mIsRolling = false;
         }

@@ -160,6 +160,7 @@ class   GameLotteryBetActivity : BaseMvpActivity<GameLotteryBetActivityPresenter
         }
         index = final.indexOf(intent.getStringExtra("gameLotteryName") ?: "")
         gameOptions = OptionsPickerBuilder(this) { _, options1, _, _ ->
+            gameOptions?.dismiss()
             isPlay = false
             tvGameLotteryName.text = list[options1].cname
             lotteryId = list[options1].lottery_id ?: "-1"
@@ -171,9 +172,34 @@ class   GameLotteryBetActivity : BaseMvpActivity<GameLotteryBetActivityPresenter
             .setTitleText("")
             .setSelectOptions(index)
             .setContentTextSize(18)
+            .setOutSideCancelable(false)
             .build()
         gameOptions?.setPicker(final)
     }
+
+    //底部弹框
+//    private var opt1SelectedPosition = 0
+//    private var lotterySelectDialog:BottomLotterySelectDialog?=null
+//    fun showPickerView(list: List<LotteryTypeResponse>) {
+//        val final = arrayListOf<String>()
+//        for (res in list) {
+//            final.add(res.cname ?: "未知")
+//        }
+//       if (lotterySelectDialog==null)  lotterySelectDialog = BottomLotterySelectDialog(this, final)
+//        lotterySelectDialog?.setCanceledOnTouchOutside(false)
+//        lotterySelectDialog?.tvLotteryWheelSure?.setOnClickListener {
+//            isPlay = false
+//            tvGameLotteryName.text = lotterySelectDialog?.lotteryPickerView?.opt1SelectedData as String
+//            opt1SelectedPosition = lotterySelectDialog?.lotteryPickerView?.opt1SelectedPosition?:0
+//            lotteryId = list[opt1SelectedPosition].lottery_id ?: "-1"
+//            mPresenter.getLotteryOpenCode(lotteryId)
+//            index = opt1SelectedPosition
+//            RxBus.get().post(ChangeLottery(lotteryId))
+//            lotterySelectDialog?.dismiss()
+//        }
+//        lotterySelectDialog?.lotteryPickerView?.opt1SelectedPosition = opt1SelectedPosition
+//
+//    }
 
     /**
      * 跳转mine

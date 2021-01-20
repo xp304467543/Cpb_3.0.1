@@ -396,12 +396,24 @@ object UserInfoSp {
     /**
      * 记录Vip等级
      */
-    fun setVipLevel(str: String) {
-        SpUtils.putString("VipLevel", str)
+    fun setVipLevel(str: Int) {
+        SpUtils.putInt("UserVipLevel", str)
     }
 
-    fun getVipLevel(): String? {
-        return SpUtils.getString("VipLevel", "0")
+    fun getVipLevel(): Int {
+        return SpUtils.getInt("UserVipLevel", 0)
+    }
+
+
+    /**
+     * 记录贵族等级
+     */
+    fun setNobleLevel(str: Int) {
+        SpUtils.putInt("noble", str)
+    }
+
+    fun getNobleLevel(): Int {
+        return SpUtils.getInt("noble", 0)
     }
 
     /**
